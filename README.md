@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Online Catering Reservation System
 
-## Getting Started
+## Project Overview
+The Online Catering Reservation System simplifies event booking for customers while providing caterers with an efficient way to manage reservations, payments, and menu offerings. Customers can browse menus, book catering services, and track their reservations, while caterers handle incoming orders, monitor payments, and schedule events. This system ensures a smooth transaction process between both parties with an intuitive dashboard and automated notifications.
 
-First, run the development server:
+## Team Members
+- Rey Daug - Front-End Web Developer & Project Manager
+- Samm Caagbay - Fullstack Web Developer & UI Designer
+- John Patrick Nacional - Researcher & Mobile Developer
+- Ervi Jude Arcillas - Researcher & Mobile Developer
 
+## Key Features by Role
+### Caterer Features:
+- Dashboard Overview – View new reservations, upcoming events, and pending payments.
+- Manage Reservations – Approve, reject, and update catering bookings.
+- Menu Management – Add, edit, or remove food items from the catering menu.
+- Payments & Transactions – Track pending and completed customer payments.
+- Event Calendar – View scheduled reservations visually in a calendar format.
+
+###  Customer Features:
+- Browse Menus – View available catering packages and individual menu items.
+- Make a Reservation – Select a date, choose a package, and submit booking requests.
+- Track Booking Status – Check if a reservation is confirmed, pending, or completed.Secure Payments – Pay for reservations online and receive payment confirmations.
+- Cancel/Modify Reservation – Adjust booking details before a set deadline.
+
+## Tech Stack
+### Frontend
+- Next.js
+- Typescript
+- TailwindCSS
+- shadcn/ui
+- Figma
+
+### Backend
+- MongoDB (NoSQL)
+- Mongoose (ODM)
+
+### Other Tools
+- Git & Github
+- Jira
+- Testing Framework (???)
+
+## Installation
+# Step-by-step instructions on how to install the project
+Create a folder to store and clone the system and follow this command
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [repository-url] ./
+npm install 
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Running the Project
+# Commands to run the project locally
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
+```# We will change this section after implementing `.env`'s```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## API Documentation
+```# We will change this section after implementing our custom express api```
 
-To learn more about Next.js, take a look at the following resources:
+### Endpoint 1
+```# This is just an example to guide us later```
+- Method: GET/POST/PUT/DELETE
+- Path: `/api/endpoint1`
+- Description: What this endpoint does
+- Required Parameters: List of required parameters
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Testing
+```# We will change this section after implementing a testing framework and such```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
+Guidelines for how your teammates can contribute to the project:
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Submit a pull request
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Known Issues
+```# There are no known issues as of the moment ```
