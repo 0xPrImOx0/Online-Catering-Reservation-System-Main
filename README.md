@@ -44,7 +44,7 @@ The Online Catering Reservation System simplifies event booking for customers wh
 # Step-by-step instructions on how to install the project
 Create a folder to store and clone the system and follow this command
 ```bash
-git clone [repository-url] ./
+git clone https://github.com/0xPrImOx0/Online-Catering-Reservation-System ./
 npm install 
 ```
 
