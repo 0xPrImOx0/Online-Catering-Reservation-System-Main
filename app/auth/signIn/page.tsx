@@ -31,10 +31,9 @@ import * as z from "zod";
 import { loginSchema } from "@/utils/formValidtion";
 import { toast } from "sonner";
 import ThemeMode from "@/components/ThemeMode";
+import { PasswordInput } from "@/components/ui/password-input";
 
-export default function Home() {
-  const { setTheme } = useTheme();
-
+export default function signIn() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -58,12 +57,11 @@ export default function Home() {
     }
   };
   return (
-    <div className={`flex flex-col lg:flex-row h-screen overflow-auto`}>
+    <div
+      className={`flex flex-col lg:flex-row h-screen overflow-auto border border-red-500`}
+    >
       <div className="flex flex-1 order-2 lg:order-1 justify-center items-center p-10">
-        <div className="absolute top-5 left-5">
-          <ThemeMode />
-        </div>
-        <Card className="w-[90%] md:w-[80%] lg:w-[75%] xl:w-[70%] 2xl:w-[50%] px-3 py-6">
+        <Card className="w-[70%] md:w-[50%] lg:w-[75%] xl:w-[70%] 2xl:w-[50%] px-3 py-6 min-w-[400px]">
           <CardHeader className="flex items-center text-center">
             <CardTitle>Login to your account</CardTitle>
             <CardDescription>
@@ -101,7 +99,7 @@ export default function Home() {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input placeholder="Password" {...field} />
+                          <PasswordInput placeholder="Password" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -110,7 +108,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col items-center ">
                   <Button className="w-full mb-5" type="submit">
-                    Submit
+                    Sign In
                   </Button>
                   <div className="flex w-full items-center justify-center mb-3">
                     <div className="flex-1 border-t-2 border-slate-300"></div>
@@ -122,20 +120,28 @@ export default function Home() {
                 </div>
               </form>
               <Button className="w-full py-5" variant="outline" asChild>
-                <Link href="/">Login with Facebook</Link>
+                <div className="space-x-1">
+                  <Image
+                    src={"/google.png"}
+                    width={20}
+                    height={20}
+                    alt="Google Icon"
+                  />
+                  <Link href="/">Sign In with Google</Link>
+                </div>
               </Button>
             </Form>
           </CardContent>
           <CardFooter className="flex flex-row justify-center">
             <p>Don't Have an Account?</p>
             <Button className="px-2 responsive-text" variant="link" asChild>
-              <Link href="/">Sign Up</Link>
+              <Link href="/auth/signUp">Sign Up</Link>
             </Button>
           </CardFooter>
         </Card>
       </div>
-      <div className="flex flex-1 justify-center items-center order-1 lg:order-2 min-h-[500px] border border-green-500">
-        <Skeleton className="h-[80%] w-[80%] rounded-xl" />
+      <div className="flex flex-1 justify-center items-center order-1 lg:order-2 min-h-[500px]">
+        <Skeleton className="flex w-[100%] h-[100%] rounded-none" />
       </div>
     </div>
   );
