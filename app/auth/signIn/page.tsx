@@ -97,7 +97,18 @@ export default function signIn() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel className="flex justify-between items-center">
+                          Password
+                          <Button
+                            className="p-0 text-gray-500 "
+                            variant="link"
+                            asChild
+                          >
+                            <Link href="/auth/forgotPassword">
+                              Forgot Password?
+                            </Link>
+                          </Button>
+                        </FormLabel>
                         <FormControl>
                           <PasswordInput placeholder="Password" {...field} />
                         </FormControl>
