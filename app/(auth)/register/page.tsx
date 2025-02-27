@@ -42,7 +42,7 @@ interface FormProps {
   confirmPassword: string;
 }
 
-export default function signUp() {
+export default function SignUp() {
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -193,8 +193,10 @@ export default function signUp() {
                   />
                 </div>
                 <div className="flex flex-col items-center ">
-                  <Button className="w-full mb-5" type="submit">
-                    Create an Account
+                  <Button className="w-full mb-5" type="submit" asChild>
+                    <Link href={"/register/customer-type"}>
+                      Create an Account
+                    </Link>
                   </Button>
                   <div className="flex w-full items-center justify-center mb-3">
                     <div className="flex-1 border-t-2 border-slate-300"></div>
@@ -221,7 +223,7 @@ export default function signUp() {
           <CardFooter className="flex flex-row justify-center">
             <p>Already Have an Account?</p>
             <Button className="px-2 responsive-text" variant="link" asChild>
-              <Link href="/auth/signIn">Sign In</Link>
+              <Link href="/login">Sign In</Link>
             </Button>
           </CardFooter>
         </Card>

@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-const page = () => {
+const ForgotPassword = () => {
   const form = useForm<z.infer<typeof forgotPasswordSchema>>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
@@ -91,4 +91,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ForgotPassword;

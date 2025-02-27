@@ -9,7 +9,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
-const page = () => {
+const UserType = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen space-y-10">
       <h2 className="font-bold text-3xl">What type of user are you?</h2>
@@ -42,4 +42,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default UserType;

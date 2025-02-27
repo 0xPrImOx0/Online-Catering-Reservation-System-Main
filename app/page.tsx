@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className={`flex flex-row justify-center items-center h-screen`}>
       <Button className="w-32 py-4 px-2" asChild>
-        <Link href="/auth/signIn">Login</Link>
+        <Link href="/login">Login</Link>
       </Button>
     </div>
   );

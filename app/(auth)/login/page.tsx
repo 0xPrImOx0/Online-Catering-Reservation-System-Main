@@ -33,7 +33,7 @@ import { toast } from "sonner";
 import ThemeMode from "@/components/ThemeMode";
 import { PasswordInput } from "@/components/ui/password-input";
 
-export default function signIn() {
+export default function SignIn() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -104,7 +104,7 @@ export default function signIn() {
                             variant="link"
                             asChild
                           >
-                            <Link href="/auth/forgotPassword">
+                            <Link href="/forgot-password">
                               Forgot Password?
                             </Link>
                           </Button>
@@ -118,8 +118,8 @@ export default function signIn() {
                   />
                 </div>
                 <div className="flex flex-col items-center ">
-                  <Button className="w-full mb-5" type="submit">
-                    Sign In
+                  <Button className="w-full mb-5" type="submit" asChild>
+                    <Link href={"/dashboard"}>Sign In</Link>
                   </Button>
                   <div className="flex w-full items-center justify-center mb-3">
                     <div className="flex-1 border-t-2 border-slate-300"></div>
@@ -146,7 +146,7 @@ export default function signIn() {
           <CardFooter className="flex flex-row justify-center">
             <p>Don't Have an Account?</p>
             <Button className="px-2 responsive-text" variant="link" asChild>
-              <Link href="/auth/signUp">Sign Up</Link>
+              <Link href="/register">Sign Up</Link>
             </Button>
           </CardFooter>
         </Card>
