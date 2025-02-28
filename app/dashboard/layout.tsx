@@ -13,7 +13,7 @@ export default function DashBoardLayout({
     <>
       <SidebarProvider>
         <div className="fixed top-0 left-0 z-50 w-full h-16 bg-sidebar dark:bg-sidebar shadow flex items-center pl-2">
-          <SidebarTrigger />
+          <SidebarTrigger className="w-10 h-10" />
           <p>sdawdwad</p>
           <ThemeToggle />
         </div>

@@ -2,6 +2,7 @@ import {
   BarChart3,
   Calendar,
   ChevronDown,
+  ChevronUp,
   Clock,
   CreditCard,
   FileText,
@@ -11,10 +12,12 @@ import {
   Package,
   Search,
   Settings,
+  Settings2,
   ShoppingBag,
   ShoppingCart,
   Star,
   User,
+  User2,
   Utensils,
 } from "lucide-react";
 import Link from "next/link";
@@ -23,6 +26,9 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -36,6 +42,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
+import Image from "next/image";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const sidebarItems = [
   {
@@ -112,82 +125,93 @@ const sidebarItems = [
       { title: "Budget Overview", icon: BarChart3, href: "/dashboard/budget" },
     ],
   },
-  {
-    title: "Settings",
-    icon: Settings,
-    href: "/dashboard/settings",
-  },
 ];
 
 export function DashboardSidebar() {
   return (
-    <Sidebar className="w-64 border-r my-16">
-      <SidebarHeader className="border-b border-sidebar-border">
-        <div className="flex h-14 items-center px-4">
-          <ShoppingBag className="mr-2 h-6 w-6" />
-          <span className="font-semibold">Gourmet Catering</span>
-        </div>
-      </SidebarHeader>
-      <SidebarContent>
-        {sidebarItems.map((item, index) => (
-          <SidebarMenu key={index}>
-            {item.children ? (
-              <>
-                <Collapsible defaultOpen className="group/collapsible">
-                  <SidebarMenuItem>
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuButton asChild>
-                        <span className="font-semibold justify-between w-full flex items-center">
-                          <div className="flex items-center">
-                            <item.icon className="h-4 w-4 mr-2" />
-                            {item.title}
-                          </div>
-                          <ChevronDown />
-                        </span>
-                      </SidebarMenuButton>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {item.children.map((child, childIndex) => (
-                          <SidebarMenuSubItem key={childIndex}>
-                            <SidebarMenuButton asChild>
-                              <Link href={child.href}>
-                                <child.icon className="h-4 w-4 mr-2" />
-                                <span>{child.title}</span>
-                              </Link>
-                            </SidebarMenuButton>
-                          </SidebarMenuSubItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  </SidebarMenuItem>
-                </Collapsible>
-              </>
-            ) : (
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href={item.href}>
-                    <item.icon className="h-4 w-4 mr-2" />
-                    <span>{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )}
-          </SidebarMenu>
-        ))}
-      </SidebarContent>
-      <SidebarFooter className="border-t border-sidebar-border p-4">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
-            <User className="h-4 w-4" />
-          </div>
-          <div>
-            <p className="text-sm font-medium">John Doe</p>
-            <p className="text-xs text-muted-foreground">
-              john.doe@example.com
+    <Sidebar className="w-64 border-r mt-16 pb-10 h-screen overflow-y-auto dark:bg-sidebar dark:border-sidebar-border">
+      <SidebarHeader className="border-b border-sidebar-border ">
+        <div className="flex h-14 items-center px-0">
+          <Image
+            src="/catering-logo.svg"
+            width={60}
+            height={60}
+            alt="Catering-Logo"
+          />
+          <div className="flex flex-col ml-1">
+            <span className="font-semibold">FoodSentinel</span>
+            <p className="font-light italic text-xs text-muted-foreground">
+              Catering Reservation System
             </p>
           </div>
         </div>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>
+            <div className="flex items-center">
+              <span className="font-semibold">Main</span>
+              <div className="border-b border-[bg-sidebar]" />
+            </div>
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            {sidebarItems.map((item, index) => (
+              <SidebarMenu key={index}>
+                {item.children ? (
+                  <>
+                    <Collapsible defaultOpen className="group/collapsible">
+                      <SidebarMenuItem>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuButton asChild>
+                            <span className="font-medium justify-between w-full flex items-center">
+                              <div className="flex items-center">
+                                <item.icon className="h-4 w-4 mr-4" />
+                                {item.title}
+                              </div>
+                              <ChevronDown />
+                            </span>
+                          </SidebarMenuButton>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.children.map((child, childIndex) => (
+                              <SidebarMenuSubItem key={childIndex}>
+                                <SidebarMenuButton asChild>
+                                  <Link href={child.href}>
+                                    <child.icon className="h-4 w-4 mr-0" />
+                                    <span>{child.title}</span>
+                                  </Link>
+                                </SidebarMenuButton>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </SidebarMenuItem>
+                    </Collapsible>
+                  </>
+                ) : (
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href={item.href} className="font-medium">
+                        <item.icon className="h-4 w-4 mr-2" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )}
+              </SidebarMenu>
+            ))}
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter className="border-t border-sidebar-border py-4 flex flex-row items-center ">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton>
+              <Settings className="h-6 w-6" /> Settings
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
