@@ -1,6 +1,11 @@
 "use client";
 
-import { ChevronDown, ChevronRight, type LucideIcon } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  type LucideIcon,
+} from "lucide-react";
 
 import {
   Collapsible,
@@ -20,6 +25,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { useState } from "react";
 
 export function NavMain({
   items,
@@ -28,7 +34,7 @@ export function NavMain({
     title: string;
     icon: LucideIcon;
     isActive?: boolean;
-    url?: string | undefined;
+    url?: string;
     children?: {
       title: string;
       icon: LucideIcon;
@@ -36,6 +42,22 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const [selectedItems, setSelectedItems] = useState<{
+    [key: number]: boolean;
+  }>(() =>
+    items.reduce((acc, item, index) => {
+      acc[index] = !!item.isActive; // Set initial state based on item.isActive
+      return acc;
+    }, {} as { [key: number]: boolean })
+  );
+
+  const toggleItem = (index: number) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -46,13 +68,22 @@ export function NavMain({
               <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title}>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      onClick={() => toggleItem(index)}
+                    >
                       <span className="font-medium justify-between w-full flex items-center">
                         <div className="flex items-center">
                           <item.icon className="h-4 w-4 mr-2" />
                           <span>{item.title}</span>
                         </div>
-                        <ChevronDown />
+                        {/* toggle a button */}
+                        {selectedItems[index] ? (
+                          <ChevronUp className="size-4" />
+                        ) : (
+                          <ChevronDown className="size-4" />
+                        )}
+
                         <span className="sr-only">Toggle</span>
                       </span>
                     </SidebarMenuButton>

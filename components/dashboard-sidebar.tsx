@@ -43,12 +43,6 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import Image from "next/image";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 
 const sidebarItems = [
   {
@@ -138,7 +132,7 @@ export function DashboardSidebar() {
             height={60}
             alt="Catering-Logo"
           />
-          <div className="flex flex-col ml-1">
+          <div className="rid flex-1 text-left text-sm leading-tight">
             <span className="font-semibold">FoodSentinel</span>
             <p className="font-light italic text-xs text-muted-foreground">
               Catering Reservation System

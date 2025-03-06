@@ -60,6 +60,7 @@ const data = {
     {
       title: "Account Management",
       icon: User,
+      isActive: true,
       children: [
         { title: "Profile", icon: User, url: "/dashboard/profile" },
         {
