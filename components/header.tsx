@@ -15,18 +15,27 @@ import {
 } from "@/components/ui/breadcrumb";
 import { usePathname } from "next/navigation";
 import * as React from "react";
+import { ThemeToggle } from "./thememode-regular";
 
 type UserType = "customer" | "caterer";
 
 export function Header({ userType }: { userType: UserType }) {
-  const { setTheme, theme } = useTheme();
   const pathname = usePathname();
 
   const getBreadcrumbs = () => {
     const paths = pathname.split("/").filter(Boolean);
     return paths.map((path, index) => {
+      let title = path.charAt(0).toUpperCase() + path.slice(1);
+
+      // Check if the last segment is "order-type"
+      if (index === paths.length - 1 && path.includes("-")) {
+        title = path
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
+      }
+
       const href = `/${paths.slice(0, index + 1).join("/")}`;
-      const title = path.charAt(0).toUpperCase() + path.slice(1);
       return { href, title };
     });
   };
@@ -34,18 +43,12 @@ export function Header({ userType }: { userType: UserType }) {
   const breadcrumbs = getBreadcrumbs();
 
   return (
-    <header className="flex h-16 items-center border-b bg-background px-6">
+    <header className="fixed top-0 left-0 z-50 w-full h-16 bg-sidebar dark:bg-sidebar shadow flex items-center pl-2">
       <SidebarTrigger />
       <Breadcrumb className="ml-4">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink
-              href={
-                userType === "customer" ? "/dashboard" : "/caterer-dashboard"
-              }
-            >
-              Home
-            </BreadcrumbLink>
+            <BreadcrumbLink href={"/dashboard"}>Food Cipher</BreadcrumbLink>
           </BreadcrumbItem>
           {breadcrumbs.map((crumb, index) => (
             <React.Fragment key={crumb.href}>
@@ -63,7 +66,7 @@ export function Header({ userType }: { userType: UserType }) {
           ))}
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="ml-auto flex items-center gap-4">
+      <div className="ml-auto flex items-center gap-4 mr-4">
         <form className="hidden sm:block">
           <div className="relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -74,18 +77,7 @@ export function Header({ userType }: { userType: UserType }) {
             />
           </div>
         </form>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        >
-          {theme === "light" ? (
-            <Moon className="h-[1.2rem] w-[1.2rem]" />
-          ) : (
-            <Sun className="h-[1.2rem] w-[1.2rem]" />
-          )}
-          <span className="sr-only">Toggle theme</span>
-        </Button>
+        <ThemeToggle />
         {userType === "customer" && (
           <Button variant="outline" size="sm" className="hidden md:flex">
             <ShoppingCart className="mr-2 h-4 w-4" />

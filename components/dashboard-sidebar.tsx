@@ -129,7 +129,7 @@ const sidebarItems = [
 
 export function DashboardSidebar() {
   return (
-    <Sidebar className="w-64 border-r mt-16 pb-10 h-screen overflow-y-auto dark:bg-sidebar dark:border-sidebar-border">
+    <Sidebar className="w-64 border-r mt-16 pb-10 h-screen overflow-y-auto overflow-x-hidden dark:bg-sidebar dark:border-sidebar-border">
       <SidebarHeader className="border-b border-sidebar-border ">
         <div className="flex h-14 items-center px-0">
           <Image
@@ -204,7 +204,7 @@ export function DashboardSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="border-t border-sidebar-border py-4 flex flex-row items-center ">
+      <SidebarFooter className="border-t border-sidebar-border pt-4 pb-10 flex flex-row items-center ">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton>
