@@ -44,6 +44,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
+import Logo from "../logo";
 
 const data = {
   user: {
@@ -172,23 +173,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className="flex h-14 items-center my-4">
-              <div>
-                <Image
-                  src="/catering-logo.png"
-                  width={75}
-                  height={75}
-                  priority={true}
-                  alt="Catering-Logo"
-                />
-              </div>
-              <div className="rid flex-1 text-left text-sm leading-tight">
-                <span className="font-semibold text-lg">Food Sentinel</span>
-                <p className="font-light italic text-xs text-muted-foreground">
-                  Catering Reservation System
-                </p>
-              </div>
-            </div>
+            <Logo withLabel={true} />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
