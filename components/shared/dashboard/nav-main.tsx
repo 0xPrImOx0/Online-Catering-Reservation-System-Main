@@ -79,9 +79,13 @@ export function NavMain({
                         </div>
                         {/* toggle a button */}
                         {selectedItems[index] ? (
-                          <ChevronUp className="size-4" />
+                          <span className="transition-transform duration-300 -rotate-180 ease-in-out">
+                            <ChevronDown className="size-4" />
+                          </span>
                         ) : (
-                          <ChevronDown className="size-4" />
+                          <span className="transition-transform duration-300 rotate-0 ease-in-out">
+                            <ChevronDown className="size-4" />
+                          </span>
                         )}
 
                         <span className="sr-only">Toggle</span>

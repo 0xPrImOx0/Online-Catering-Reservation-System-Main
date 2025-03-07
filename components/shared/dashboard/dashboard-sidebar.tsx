@@ -49,7 +49,7 @@ const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: "/daug-avatar.jpg",
   },
   navMain: [
     {
@@ -178,6 +178,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   src="/catering-logo.png"
                   width={75}
                   height={75}
+                  priority={true}
                   alt="Catering-Logo"
                 />
               </div>
