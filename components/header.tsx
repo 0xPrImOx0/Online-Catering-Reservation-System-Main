@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { usePathname } from "next/navigation";
 import * as React from "react";
-import { ThemeToggle } from "./thememode-regular";
 
 type UserType = "customer" | "caterer";
 
@@ -77,7 +76,6 @@ export function Header({ userType }: { userType: UserType }) {
             />
           </div>
         </form>
-        <ThemeToggle />
         {userType === "customer" && (
           <Button variant="outline" size="sm" className="hidden md:flex">
             <ShoppingCart className="mr-2 h-4 w-4" />

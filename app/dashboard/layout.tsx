@@ -1,10 +1,8 @@
 "use client";
 
 import { AppSidebar } from "@/components/shared/dashboard/dashboard-sidebar";
-import { DashboardSidebar } from "@/components/dashboard-sidebar";
 import { Header } from "@/components/header";
 import { SiteHeader } from "@/components/shared/dashboard/site-header";
-import { ThemeToggle } from "@/components/thememode-regular";
 import {
   SidebarInset,
   SidebarProvider,

@@ -1,7 +1,9 @@
 "use client";
 
-import ThemeMode from "@/components/ThemeMode";
+import Logo from "@/components/shared/logo";
+import ThemeMode from "@/components/theme/ThemeMode";
 import { useIsMobile } from "@/hooks/use-mobile";
+import clsx from "clsx";
 import { usePathname } from "next/navigation";
 
 export default function AuthLayout({
@@ -15,15 +17,21 @@ export default function AuthLayout({
   return (
     <>
       <div
-        className={`absolute top-5 z-10 ${
-          isMobile
-            ? "left-1/2 -translate-x-1/2"
-            : pathname === "/register"
-            ? "right-5"
-            : "left-5"
-        }`}
+        className={clsx(
+          "absolute top-0 z-10 flex flex-row items-center justify-between gap-x-2 w-full",
+          {
+            "left-1/2 -translate-x-1/2": isMobile,
+            "right-5 lg:w-1/2": pathname === "/register",
+            "left-0 lg:w-1/2": pathname === "/login",
+          }
+        )}
       >
-        <ThemeMode />
+        <div className="ml-5">
+          <Logo imageSize={50} />
+        </div>
+        <div className="mr-5">
+          <ThemeMode />
+        </div>
       </div>
       {children}
     </>
