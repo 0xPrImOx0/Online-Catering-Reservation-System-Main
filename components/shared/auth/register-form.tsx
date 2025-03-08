@@ -76,6 +76,31 @@ export const RegisterForm = ({ form, onSubmit }: RegisterFormProps) => {
                 </FormItem>
               )}
             />
+            {/* Phone Field */}
+            {/* <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem className="grid gap-2">
+                        <FormLabel htmlFor="phone">Phone Number</FormLabel>
+                        <FormControl>
+                          <PhoneInput
+                            {...field}
+                            defaultCountry="PH"
+                            placeholder="+63 912 345 6789"
+                          />
+                          <Input  //comment this out if you want to use this component
+                            id="phone"
+                            placeholder="555-123-4567"
+                            type="tel"
+                            autoComplete="tel"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  /> */}
             {/* Password Field */}
             <FormField
               control={form.control}

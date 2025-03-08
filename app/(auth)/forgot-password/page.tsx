@@ -1,5 +1,6 @@
 "use client";
 
+import ForgotPasswordForm from "@/components/shared/auth/forgot-password-form";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,16 +25,17 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { ForgotPasswordFormValues } from "../auth-types";
 
 const ForgotPassword = () => {
-  const form = useForm<z.infer<typeof forgotPasswordSchema>>({
+  const form = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
       email: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof forgotPasswordSchema>) => {
+  const onSubmit = (values: ForgotPasswordFormValues) => {
     try {
       console.log(values);
       toast(
@@ -48,45 +50,7 @@ const ForgotPassword = () => {
   };
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <Card className="w-[350px]">
-        <CardHeader className="text-center">
-          <CardTitle>Forgot your password?</CardTitle>
-          <CardDescription>
-            Enter your email address to receive a password reset link.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <div className="grid gap-4">
-                {/* Email Field */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem className="grid gap-2">
-                      <FormLabel htmlFor="email">Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          id="email"
-                          placeholder="johndoe@mail.com"
-                          type="email"
-                          autoComplete="email"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" className="w-full">
-                  Send Reset Link
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+      <ForgotPasswordForm form={form} onSubmit={onSubmit} />
     </div>
   );
 };

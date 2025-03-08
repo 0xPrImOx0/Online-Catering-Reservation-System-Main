@@ -21,3 +21,12 @@ export interface RegisterFormProps {
   form: UseFormReturn<RegisterFormValues>;
   onSubmit: (data: RegisterFormValues) => void;
 }
+
+export type ForgotPasswordFormValues = {
+  email: string;
+};
+
+export interface ForgotPasswordFormProps {
+  form: UseFormReturn<ForgotPasswordFormValues>;
+  onSubmit: (data: ForgotPasswordFormValues) => void;
+}
