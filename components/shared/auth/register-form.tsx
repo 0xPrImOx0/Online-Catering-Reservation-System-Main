@@ -117,8 +117,8 @@ export const RegisterForm = ({ form, onSubmit }: RegisterFormProps) => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full mt-4" asChild>
-              <Link href={"/register/customer-type"}>Create an Account</Link>
+            <Button type="submit" className="w-full mt-4">
+              Create an Account
             </Button>
           </form>
         </Form>

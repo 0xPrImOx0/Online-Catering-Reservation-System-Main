@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/utils/formValidtion";
 import { toast } from "sonner";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
