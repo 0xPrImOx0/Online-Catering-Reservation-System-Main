@@ -21,7 +21,7 @@ export default function AuthLayout({
           "absolute top-0 z-10 flex flex-row items-center justify-between gap-x-2 w-full",
           {
             "left-1/2 -translate-x-1/2": isMobile,
-            "right-5 lg:w-1/2": pathname === "/register",
+            "right-0 lg:w-1/2": pathname === "/register",
             "left-0 lg:w-1/2": pathname === "/login",
           }
         )}

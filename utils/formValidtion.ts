@@ -23,10 +23,10 @@ export const signUpSchema = z
       .string()
       .nonempty({ message: "Email Address is required" })
       .email({ message: "Invalid email address" }),
-    phone: z
-      .string()
-      .nonempty({ message: "Phone Number is required" })
-      .min(10, { message: "Phone number must be valid" }),
+    // phone: z
+    //   .string()
+    //   .nonempty({ message: "Phone Number is required" })
+    //   .min(10, { message: "Phone number must be valid" }),
     password: z
       .string()
       .nonempty({ message: "Password field is required" })
