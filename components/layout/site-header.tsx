@@ -12,7 +12,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SearchForm } from "@/components/shared/dashboard/search-form";
+import { SearchForm } from "@/components/shared/search-form";
 import { SidebarIcon } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
 import React from "react";

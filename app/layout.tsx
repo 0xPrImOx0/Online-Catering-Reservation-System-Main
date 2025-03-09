@@ -10,8 +10,8 @@ export const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Online Catering Reservation System",
-  description: "PIT made by Cipher Sentinels",
+  title: "Food Sentinel",
+  description: "An Online Catering Reservation System made by Cipher Sentinels",
 };
 
 export default function RootLayout({

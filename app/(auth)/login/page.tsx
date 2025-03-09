@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { LoginFormValues } from "../auth-types";
-import Logo from "@/components/shared/logo";
+import Logo from "@/components/icons/logo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/utils/formValidtion";
 import { toast } from "sonner";

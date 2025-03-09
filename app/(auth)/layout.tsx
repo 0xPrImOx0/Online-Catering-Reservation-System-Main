@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "@/components/shared/logo";
+import Logo from "@/components/icons/logo";
 import ThemeMode from "@/components/theme/ThemeMode";
 import { useIsMobile } from "@/hooks/use-mobile";
 import clsx from "clsx";
