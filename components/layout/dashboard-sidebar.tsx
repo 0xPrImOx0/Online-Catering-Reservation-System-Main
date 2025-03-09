@@ -2,14 +2,14 @@
 
 import * as React from "react";
 import {
-  Frame,
-  Home,
+  Boxes,
+  ChefHat,
+  ClipboardList,
+  HandCoins,
+  LayoutDashboard,
   LifeBuoy,
-  Map,
-  PieChart,
   Send,
-  ShoppingBag,
-  Utensils,
+  UsersRound,
 } from "lucide-react";
 
 import { NavMain } from "@/components/layout/nav-main";
@@ -35,33 +35,38 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      icon: Home,
+      icon: LayoutDashboard,
       url: "/dashboard",
     },
     {
       title: "Menus",
-      icon: Utensils,
+      icon: ChefHat,
       children: [],
+      url: "/menus",
     },
     {
       title: "Packages",
-      icon: Utensils,
+      icon: Boxes,
       children: [],
+      url: "/packages",
     },
     {
       title: "Reservations",
-      icon: ShoppingBag,
+      icon: ClipboardList,
       children: [],
+      url: "/reservations",
     },
     {
       title: "Payments",
-      icon: ShoppingBag,
+      icon: HandCoins,
       children: [],
+      url: "/payments",
     },
     {
       title: "Customers",
-      icon: ShoppingBag,
+      icon: UsersRound,
       children: [],
+      url: "/customers",
     },
   ],
   navSecondary: [

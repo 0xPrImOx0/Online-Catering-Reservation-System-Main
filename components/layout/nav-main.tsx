@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ChevronDown,
-  ChevronRight,
-  ChevronUp,
-  type LucideIcon,
-} from "lucide-react";
+import { ChevronDown, type LucideIcon } from "lucide-react";
 
 import {
   Collapsible,
@@ -17,7 +12,6 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -26,6 +20,8 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 export function NavMain({
   items,
@@ -58,10 +54,11 @@ export function NavMain({
     }));
   };
 
+  const pathname = usePathname();
+
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
-      <SidebarGroupContent>
+      <SidebarGroupContent className="space-y-3">
         {items.map((item, index) => (
           <SidebarMenu key={index}>
             {item.children?.length ? (
@@ -74,8 +71,8 @@ export function NavMain({
                     >
                       <span className="font-medium justify-between w-full flex items-center">
                         <div className="flex items-center">
-                          <item.icon className="h-4 w-4 mr-2" />
-                          <span>{item.title}</span>
+                          <item.icon className="h-6 w-6 mr-2" />
+                          <span className="">{item.title}</span>
                         </div>
                         {/* toggle a button */}
                         {selectedItems[index] ? (
@@ -110,9 +107,15 @@ export function NavMain({
               </Collapsible>
             ) : (
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href={item.url ?? "#"} className="font-medium">
-                    <item.icon className="h-4 w-4 mr-0" />
+                <SidebarMenuButton asChild className=" py-6">
+                  <Link
+                    href={item.url ?? "#"}
+                    className={clsx(
+                      "hover:bg-[#EBF2FE]",
+                      pathname === item.url && "text-[#3A7FF9] bg-[#EBF2FE]"
+                    )}
+                  >
+                    <item.icon className="min-h-5 min-w-5" />
                     <span>{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
