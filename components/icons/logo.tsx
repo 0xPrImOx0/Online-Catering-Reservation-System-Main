@@ -23,7 +23,7 @@ const Logo = ({ withLabel = false, imageSize }: LogoProps) => {
           withLabel ? "text-left" : "ml-2 text-center items-center"
         }`}
       >
-        <span className="font-semibold text-lg">Food Sentinel</span>
+        <span className="font-bold text-lg">Food Sentinel</span>
         {withLabel && (
           <p className="font-light italic text-xs text-muted-foreground">
             Catering Reservation System

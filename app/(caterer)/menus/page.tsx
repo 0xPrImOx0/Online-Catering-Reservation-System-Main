@@ -1,3 +1,9 @@
 export default function Page() {
-  return <main>Menus</main>;
+  return (
+    <main className="flex-1 overflow-auto">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold tracking-tight">Menus</h1>
+      </div>
+    </main>
+  );
 }

@@ -46,22 +46,19 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Bell,
   CalendarIcon,
-  ChevronDown,
+  ClipboardCheck,
+  ClipboardList,
+  ClipboardPen,
   CreditCard,
   Eye,
   Filter,
-  LayoutDashboard,
-  MessageSquare,
   MoreHorizontal,
   Search,
-  Settings,
-  Users,
-  Utensils,
 } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
+import MetricCards from "@/components/shared/MetricCards";
 
 // Sample data for the reservations
 const reservations = [
@@ -331,6 +328,33 @@ const reservations = [
   },
 ];
 
+const metricCards = [
+  {
+    title: "Total Reservations",
+    firstContent: "10",
+    secondContent: "All active bookings",
+    Icon: ClipboardList,
+  },
+  {
+    title: "Confirmed",
+    firstContent: "6",
+    secondContent: "Ready to serve",
+    Icon: ClipboardCheck,
+  },
+  {
+    title: "Pending",
+    firstContent: "4",
+    secondContent: "Awaiting confirmation",
+    Icon: ClipboardPen,
+  },
+  {
+    title: "Total Revenue",
+    firstContent: "$14,380",
+    secondContent: "From confirmed reservations",
+    Icon: CreditCard,
+  },
+];
+
 // Current date for reference
 const currentDate = new Date(2025, 2, 9); // March 9, 2025
 
@@ -389,508 +413,418 @@ export default function ReservationsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-transparent">
-      {/* Main content */}
-      <div className="flex flex-1 flex-col">
-        {/* Reservation content */}
-        <main className="flex-1 overflow-auto p-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold tracking-tight">Reservations</h1>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
-                <Filter className="mr-2 h-4 w-4" />
-                Filter
-              </Button>
-              <Button variant="outline" size="sm">
-                Export
-              </Button>
-            </div>
-          </div>
-
-          {/* Metrics cards */}
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Reservations
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{totalReservations}</div>
-                <p className="text-xs text-muted-foreground">
-                  All active bookings
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Confirmed
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-green-600">
-                  {confirmedReservations}
-                </div>
-                <p className="text-xs text-muted-foreground">Ready to serve</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Pending
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-yellow-600">
-                  {pendingReservations}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Awaiting confirmation
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Revenue
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-primary">
-                  ${totalRevenue.toLocaleString()}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  From confirmed reservations
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Filters */}
-          <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center">
-            <div className="flex flex-1 items-center gap-2">
-              <div className="relative flex-1 md:max-w-sm">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search reservations..."
-                  className="pl-8"
-                />
-              </div>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="w-[240px] justify-start text-left font-normal"
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, "PPP") : "Pick a date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    // selected={date}
-                    // onSelect={setDate}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-            <div className="flex items-center gap-2">
-              <Select defaultValue="all">
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="confirmed">Confirmed</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                  <SelectItem value="cancelled">Cancelled</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select defaultValue="all">
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Customer Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Customers</SelectItem>
-                  <SelectItem value="registered">Registered</SelectItem>
-                  <SelectItem value="guest">Guest</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {/* Tabs */}
-          <Tabs defaultValue="all" className="mt-6">
-            <TabsList>
-              <TabsTrigger value="all">All Reservations</TabsTrigger>
-              <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-              <TabsTrigger value="past">Past</TabsTrigger>
-            </TabsList>
-            <TabsContent value="all" className="mt-4">
-              {/* Reservations table */}
-              <div className="rounded-md border">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Reservation ID</TableHead>
-                      <TableHead>Customer</TableHead>
-                      <TableHead>Event Date/Time</TableHead>
-                      <TableHead>Total Price</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Payment</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {reservations.map((reservation) => (
-                      <TableRow
-                        key={reservation.id}
-                        className={
-                          isUrgent(reservation.eventDate) ? "bg-yellow-50" : ""
-                        }
-                      >
-                        <TableCell className="font-medium">
-                          {reservation.id}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <Avatar className="h-6 w-6">
-                              <AvatarFallback>
-                                {reservation.customer.name.charAt(0)}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <div className="font-medium">
-                                {reservation.customer.name}
-                              </div>
-                              <div className="text-xs text-muted-foreground">
-                                {reservation.customer.isRegistered
-                                  ? "Registered"
-                                  : "Guest"}
-                              </div>
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div>
-                            {format(reservation.eventDate, "MMM d, yyyy")}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            {format(reservation.eventDate, "h:mm a")}
-                          </div>
-                          {isUrgent(reservation.eventDate) && (
-                            <Badge
-                              variant="outline"
-                              className="mt-1 bg-yellow-100 text-yellow-800"
-                            >
-                              Due Soon
-                            </Badge>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          ${reservation.totalPrice.toLocaleString()}
-                        </TableCell>
-                        <TableCell>
-                          {getStatusBadge(reservation.status)}
-                        </TableCell>
-                        <TableCell>
-                          {getPaymentStatusBadge(reservation.payment.status)}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex justify-end gap-2">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() =>
-                                openReservationDetails(reservation)
-                              }
-                            >
-                              <Eye className="h-4 w-4" />
-                              <span className="sr-only">View details</span>
-                            </Button>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon">
-                                  <MoreHorizontal className="h-4 w-4" />
-                                  <span className="sr-only">More options</span>
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                  Edit Reservation
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                  Change Status
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                  Send Reminder
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem className="text-red-600">
-                                  Cancel Reservation
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </TabsContent>
-            <TabsContent value="upcoming">
-              {/* Upcoming reservations would be shown here */}
-              <div className="rounded-md border">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Reservation ID</TableHead>
-                      <TableHead>Customer</TableHead>
-                      <TableHead>Event Date/Time</TableHead>
-                      <TableHead>Total Price</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Payment</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {reservations
-                      .filter((r) => r.eventDate > currentDate)
-                      .map((reservation) => (
-                        <TableRow
-                          key={reservation.id}
-                          className={
-                            isUrgent(reservation.eventDate)
-                              ? "bg-yellow-50"
-                              : ""
-                          }
-                        >
-                          <TableCell className="font-medium">
-                            {reservation.id}
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <Avatar className="h-6 w-6">
-                                <AvatarFallback>
-                                  {reservation.customer.name.charAt(0)}
-                                </AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <div className="font-medium">
-                                  {reservation.customer.name}
-                                </div>
-                                <div className="text-xs text-muted-foreground">
-                                  {reservation.customer.isRegistered
-                                    ? "Registered"
-                                    : "Guest"}
-                                </div>
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div>
-                              {format(reservation.eventDate, "MMM d, yyyy")}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {format(reservation.eventDate, "h:mm a")}
-                            </div>
-                            {isUrgent(reservation.eventDate) && (
-                              <Badge
-                                variant="outline"
-                                className="mt-1 bg-yellow-100 text-yellow-800"
-                              >
-                                Due Soon
-                              </Badge>
-                            )}
-                          </TableCell>
-                          <TableCell>
-                            ${reservation.totalPrice.toLocaleString()}
-                          </TableCell>
-                          <TableCell>
-                            {getStatusBadge(reservation.status)}
-                          </TableCell>
-                          <TableCell>
-                            {getPaymentStatusBadge(reservation.payment.status)}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <div className="flex justify-end gap-2">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() =>
-                                  openReservationDetails(reservation)
-                                }
-                              >
-                                <Eye className="h-4 w-4" />
-                                <span className="sr-only">View details</span>
-                              </Button>
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="icon">
-                                    <MoreHorizontal className="h-4 w-4" />
-                                    <span className="sr-only">
-                                      More options
-                                    </span>
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem>
-                                    Edit Reservation
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    Change Status
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    Send Reminder
-                                  </DropdownMenuItem>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem className="text-red-600">
-                                    Cancel Reservation
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </TabsContent>
-            <TabsContent value="past">
-              {/* Past reservations would be shown here */}
-              <div className="rounded-md border">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Reservation ID</TableHead>
-                      <TableHead>Customer</TableHead>
-                      <TableHead>Event Date/Time</TableHead>
-                      <TableHead>Total Price</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Payment</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {reservations
-                      .filter((r) => r.eventDate <= currentDate)
-                      .map((reservation) => (
-                        <TableRow key={reservation.id}>
-                          <TableCell className="font-medium">
-                            {reservation.id}
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <Avatar className="h-6 w-6">
-                                <AvatarFallback>
-                                  {reservation.customer.name.charAt(0)}
-                                </AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <div className="font-medium">
-                                  {reservation.customer.name}
-                                </div>
-                                <div className="text-xs text-muted-foreground">
-                                  {reservation.customer.isRegistered
-                                    ? "Registered"
-                                    : "Guest"}
-                                </div>
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div>
-                              {format(reservation.eventDate, "MMM d, yyyy")}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {format(reservation.eventDate, "h:mm a")}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            ${reservation.totalPrice.toLocaleString()}
-                          </TableCell>
-                          <TableCell>
-                            {getStatusBadge(reservation.status)}
-                          </TableCell>
-                          <TableCell>
-                            {getPaymentStatusBadge(reservation.payment.status)}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <div className="flex justify-end gap-2">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() =>
-                                  openReservationDetails(reservation)
-                                }
-                              >
-                                <Eye className="h-4 w-4" />
-                                <span className="sr-only">View details</span>
-                              </Button>
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="icon">
-                                    <MoreHorizontal className="h-4 w-4" />
-                                    <span className="sr-only">
-                                      More options
-                                    </span>
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem>
-                                    View Details
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    Download Invoice
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>Archive</DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </TabsContent>
-          </Tabs>
-
-          {/* Pagination */}
-          <div className="mt-6 flex items-center justify-between">
-            <div className="text-sm text-muted-foreground">
-              Showing <strong>1</strong> to <strong>10</strong> of{" "}
-              <strong>{reservations.length}</strong> reservations
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" disabled>
-                Previous
-              </Button>
-              <Button variant="outline" size="sm">
-                Next
-              </Button>
-            </div>
-          </div>
-        </main>
+    <main className="flex-1 overflow-auto">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold tracking-tight">Reservations</h1>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm">
+            <Filter className="mr-2 h-4 w-4" />
+            Filter
+          </Button>
+          <Button variant="outline" size="sm">
+            Export
+          </Button>
+        </div>
       </div>
 
-      {/* Reservation Details Dialog */}
-    </div>
+      {/* Metrics cards */}
+      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {metricCards.map((metric) => (
+          <MetricCards metric={metric} key={metric.title} />
+        ))}
+      </div>
+
+      {/* Filters */}
+      <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center">
+        <div className="flex flex-1 items-center gap-2">
+          <div className="relative flex-1 md:max-w-sm">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search reservations..."
+              className="pl-8"
+            />
+          </div>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-[240px] justify-start text-left font-normal"
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(date, "PPP") : "Pick a date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                // selected={date}
+                // onSelect={setDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+        <div className="flex items-center gap-2">
+          <Select defaultValue="all">
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Statuses</SelectItem>
+              <SelectItem value="confirmed">Confirmed</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="cancelled">Cancelled</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select defaultValue="all">
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Customer Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Customers</SelectItem>
+              <SelectItem value="registered">Registered</SelectItem>
+              <SelectItem value="guest">Guest</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <Tabs defaultValue="all" className="mt-6">
+        <TabsList>
+          <TabsTrigger value="all">All Reservations</TabsTrigger>
+          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+          <TabsTrigger value="past">Past</TabsTrigger>
+        </TabsList>
+        <TabsContent value="all" className="mt-4">
+          {/* Reservations table */}
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Reservation ID</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Event Date/Time</TableHead>
+                  <TableHead>Total Price</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Payment</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {reservations.map((reservation) => (
+                  <TableRow
+                    key={reservation.id}
+                    className={
+                      isUrgent(reservation.eventDate) ? "bg-yellow-50" : ""
+                    }
+                  >
+                    <TableCell className="font-medium">
+                      {reservation.id}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Avatar className="h-6 w-6">
+                          <AvatarFallback>
+                            {reservation.customer.name.charAt(0)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="font-medium">
+                            {reservation.customer.name}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {reservation.customer.isRegistered
+                              ? "Registered"
+                              : "Guest"}
+                          </div>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div>{format(reservation.eventDate, "MMM d, yyyy")}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {format(reservation.eventDate, "h:mm a")}
+                      </div>
+                      {isUrgent(reservation.eventDate) && (
+                        <Badge
+                          variant="outline"
+                          className="mt-1 bg-yellow-100 text-yellow-800"
+                        >
+                          Due Soon
+                        </Badge>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      ${reservation.totalPrice.toLocaleString()}
+                    </TableCell>
+                    <TableCell>{getStatusBadge(reservation.status)}</TableCell>
+                    <TableCell>
+                      {getPaymentStatusBadge(reservation.payment.status)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => openReservationDetails(reservation)}
+                        >
+                          <Eye className="h-4 w-4" />
+                          <span className="sr-only">View details</span>
+                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                              <MoreHorizontal className="h-4 w-4" />
+                              <span className="sr-only">More options</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                              Edit Reservation
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>Change Status</DropdownMenuItem>
+                            <DropdownMenuItem>Send Reminder</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-red-600">
+                              Cancel Reservation
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+        <TabsContent value="upcoming">
+          {/* Upcoming reservations would be shown here */}
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Reservation ID</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Event Date/Time</TableHead>
+                  <TableHead>Total Price</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Payment</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {reservations
+                  .filter((r) => r.eventDate > currentDate)
+                  .map((reservation) => (
+                    <TableRow
+                      key={reservation.id}
+                      className={
+                        isUrgent(reservation.eventDate) ? "bg-yellow-50" : ""
+                      }
+                    >
+                      <TableCell className="font-medium">
+                        {reservation.id}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Avatar className="h-6 w-6">
+                            <AvatarFallback>
+                              {reservation.customer.name.charAt(0)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="font-medium">
+                              {reservation.customer.name}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {reservation.customer.isRegistered
+                                ? "Registered"
+                                : "Guest"}
+                            </div>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div>
+                          {format(reservation.eventDate, "MMM d, yyyy")}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {format(reservation.eventDate, "h:mm a")}
+                        </div>
+                        {isUrgent(reservation.eventDate) && (
+                          <Badge
+                            variant="outline"
+                            className="mt-1 bg-yellow-100 text-yellow-800"
+                          >
+                            Due Soon
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        ${reservation.totalPrice.toLocaleString()}
+                      </TableCell>
+                      <TableCell>
+                        {getStatusBadge(reservation.status)}
+                      </TableCell>
+                      <TableCell>
+                        {getPaymentStatusBadge(reservation.payment.status)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => openReservationDetails(reservation)}
+                          >
+                            <Eye className="h-4 w-4" />
+                            <span className="sr-only">View details</span>
+                          </Button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                                <span className="sr-only">More options</span>
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem>
+                                Edit Reservation
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>Change Status</DropdownMenuItem>
+                              <DropdownMenuItem>Send Reminder</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-red-600">
+                                Cancel Reservation
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+        <TabsContent value="past">
+          {/* Past reservations would be shown here */}
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Reservation ID</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Event Date/Time</TableHead>
+                  <TableHead>Total Price</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Payment</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {reservations
+                  .filter((r) => r.eventDate <= currentDate)
+                  .map((reservation) => (
+                    <TableRow key={reservation.id}>
+                      <TableCell className="font-medium">
+                        {reservation.id}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Avatar className="h-6 w-6">
+                            <AvatarFallback>
+                              {reservation.customer.name.charAt(0)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="font-medium">
+                              {reservation.customer.name}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {reservation.customer.isRegistered
+                                ? "Registered"
+                                : "Guest"}
+                            </div>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div>
+                          {format(reservation.eventDate, "MMM d, yyyy")}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {format(reservation.eventDate, "h:mm a")}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        ${reservation.totalPrice.toLocaleString()}
+                      </TableCell>
+                      <TableCell>
+                        {getStatusBadge(reservation.status)}
+                      </TableCell>
+                      <TableCell>
+                        {getPaymentStatusBadge(reservation.payment.status)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => openReservationDetails(reservation)}
+                          >
+                            <Eye className="h-4 w-4" />
+                            <span className="sr-only">View details</span>
+                          </Button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                                <span className="sr-only">More options</span>
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem>View Details</DropdownMenuItem>
+                              <DropdownMenuItem>
+                                Download Invoice
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>Archive</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+      </Tabs>
+
+      {/* Pagination */}
+      <div className="mt-6 flex items-center justify-between">
+        <div className="text-sm text-muted-foreground">
+          Showing <strong>1</strong> to <strong>10</strong> of{" "}
+          <strong>{reservations.length}</strong> reservations
+        </div>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" disabled>
+            Previous
+          </Button>
+          <Button variant="outline" size="sm">
+            Next
+          </Button>
+        </div>
+      </div>
+    </main>
   );
 }

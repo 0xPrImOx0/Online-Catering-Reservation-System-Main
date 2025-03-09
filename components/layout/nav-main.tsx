@@ -107,14 +107,14 @@ export function NavMain({
               </Collapsible>
             ) : (
               <SidebarMenuItem>
-                <SidebarMenuButton asChild className=" py-6">
-                  <Link
-                    href={item.url ?? "#"}
-                    className={clsx(
-                      "hover:bg-[#EBF2FE]",
-                      pathname === item.url && "text-[#3A7FF9] bg-[#EBF2FE]"
-                    )}
-                  >
+                <SidebarMenuButton
+                  asChild
+                  className={clsx(
+                    "py-6 hover:bg-[#EBF2FE] hover:text-[#3A7FF9]",
+                    pathname === item.url && "text-[#3A7FF9] bg-[#EBF2FE]"
+                  )}
+                >
+                  <Link href={item.url ?? "#"}>
                     <item.icon className="min-h-5 min-w-5" />
                     <span>{item.title}</span>
                   </Link>

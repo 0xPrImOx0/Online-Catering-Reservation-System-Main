@@ -40,6 +40,21 @@ export function SiteHeader() {
       if (paths[0] === "dashboard") {
         breadcrumbItems.push({ title: "Dashboard", url: "/dashboard" });
       }
+      if (paths[0] === "menus") {
+        breadcrumbItems.push({ title: "Menus", url: "/menus" });
+      }
+      if (paths[0] === "packages") {
+        breadcrumbItems.push({ title: "Packages", url: "/packages" });
+      }
+      if (paths[0] === "reservations") {
+        breadcrumbItems.push({ title: "Reservations", url: "/reservations" });
+      }
+      if (paths[0] === "payments") {
+        breadcrumbItems.push({ title: "Payments", url: "/payments" });
+      }
+      if (paths[0] === "customers") {
+        breadcrumbItems.push({ title: "Customers", url: "/customers" });
+      }
 
       // Add additional breadcrumb items based on the path
       if (paths.length > 1) {
