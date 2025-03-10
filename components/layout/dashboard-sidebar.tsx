@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+  BarChart,
   Boxes,
   ChefHat,
   ClipboardList,
@@ -67,6 +68,12 @@ const data = {
       icon: UsersRound,
       children: [],
       url: "/customers",
+    },
+    {
+      title: "Analytics",
+      icon: BarChart,
+      children: [],
+      url: "/analytics",
     },
   ],
   navSecondary: [

@@ -10,7 +10,6 @@ import {
 import {
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -110,8 +109,9 @@ export function NavMain({
                 <SidebarMenuButton
                   asChild
                   className={clsx(
-                    "py-6 hover:bg-[#EBF2FE] hover:text-[#3A7FF9]",
-                    pathname === item.url && "text-[#3A7FF9] bg-[#EBF2FE]"
+                    "py-6 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                    pathname === item.url &&
+                      "text-sidebar-accent-foreground bg-sidebar-accent"
                   )}
                 >
                   <Link href={item.url ?? "#"}>
