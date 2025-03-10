@@ -4,12 +4,14 @@ import * as React from "react";
 import {
   BarChart,
   Boxes,
+  BriefcaseBusiness,
   ChefHat,
   ClipboardList,
   HandCoins,
   LayoutDashboard,
   LifeBuoy,
   Send,
+  User,
   UsersRound,
 } from "lucide-react";
 
@@ -26,6 +28,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Logo from "@/components/icons/logo";
+import { Separator } from "../ui/separator";
 
 const data = {
   user: {
@@ -78,14 +81,14 @@ const data = {
   ],
   navSecondary: [
     {
-      title: "About Us",
-      url: "#",
-      icon: LifeBuoy,
+      title: "Account Settings",
+      url: "/account-settings",
+      icon: User,
     },
     {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
+      title: "Business Settings",
+      url: "/business-settings",
+      icon: BriefcaseBusiness,
     },
   ],
   // projects: [
@@ -121,13 +124,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        <Separator />
         <NavMain items={data.navMain} />
-        {/* <NavProjects projects={data.projects} /> */}
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <Separator />
+        <NavSecondary items={data.navSecondary} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
+      {/* <SidebarFooter>
+      </SidebarFooter> */}
       <SidebarRail />
     </Sidebar>
   );

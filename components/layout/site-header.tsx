@@ -16,6 +16,8 @@ import { SearchForm } from "@/components/shared/search-form";
 import { SidebarIcon } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
 import React from "react";
+import { NavUser } from "./nav-user";
+import ThemeMode from "../theme/ThemeMode";
 
 export function SiteHeader() {
   const { toggleSidebar } = useSidebar();
@@ -45,6 +47,7 @@ export function SiteHeader() {
         "reservations",
         "payments",
         "customers",
+        "analytics",
       ];
 
       // Add first level breadcrumb if it's a valid route
@@ -74,8 +77,16 @@ export function SiteHeader() {
     generateBreadcrumbs();
   }, [pathname]);
 
+  const data = {
+    user: {
+      name: "Rey Daug",
+      email: "m@example.com",
+      avatar: "/daug-avatar.jpg",
+    },
+  };
+
   return (
-    <header className="fle sticky top-0 z-50 w-full items-center border-b bg-background">
+    <header className="flex sticky top-0 z-50 w-full items-center border-b bg-background pr-4">
       <div className="flex h-[--header-height] w-full items-center gap-2 px-4">
         <Button
           className="h-8 w-8"
@@ -104,7 +115,9 @@ export function SiteHeader() {
             ))}
           </BreadcrumbList>
         </Breadcrumb>
-        <SearchForm className="w-full sm:ml-auto sm:w-auto" />
+      </div>
+      <div className="flex items-center gap-3">
+        <NavUser user={data.user} />
       </div>
     </header>
   );

@@ -57,7 +57,7 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupContent className="space-y-3">
+      <SidebarGroupContent className="space-y-2">
         {items.map((item, index) => (
           <SidebarMenu key={index}>
             {item.children?.length ? (
@@ -108,8 +108,9 @@ export function NavMain({
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
+                  key={item.title}
                   className={clsx(
-                    "py-6 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                    "py-5 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                     pathname === item.url &&
                       "text-sidebar-accent-foreground bg-sidebar-accent"
                   )}
