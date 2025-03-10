@@ -29,6 +29,7 @@ export function SiteHeader() {
     const generateBreadcrumbs = () => {
       const paths = pathname.split("/").filter(Boolean);
 
+      // Default breadcrumbs for empty path
       if (paths.length === 0) {
         setBreadcrumbs([{ title: "Dashboard" }]);
         return;
@@ -36,24 +37,22 @@ export function SiteHeader() {
 
       const breadcrumbItems: { title: string; url?: string }[] = [];
 
-      // Always add Dashboard as the first item
-      if (paths[0] === "dashboard") {
-        breadcrumbItems.push({ title: "Dashboard", url: "/dashboard" });
-      }
-      if (paths[0] === "menus") {
-        breadcrumbItems.push({ title: "Menus", url: "/menus" });
-      }
-      if (paths[0] === "packages") {
-        breadcrumbItems.push({ title: "Packages", url: "/packages" });
-      }
-      if (paths[0] === "reservations") {
-        breadcrumbItems.push({ title: "Reservations", url: "/reservations" });
-      }
-      if (paths[0] === "payments") {
-        breadcrumbItems.push({ title: "Payments", url: "/payments" });
-      }
-      if (paths[0] === "customers") {
-        breadcrumbItems.push({ title: "Customers", url: "/customers" });
+      // Map of valid first-level routes
+      const validRoutes = [
+        "dashboard",
+        "menus",
+        "packages",
+        "reservations",
+        "payments",
+        "customers",
+      ];
+
+      // Add first level breadcrumb if it's a valid route
+      const firstSegment = paths[0];
+      if (validRoutes.includes(firstSegment)) {
+        const title =
+          firstSegment.charAt(0).toUpperCase() + firstSegment.slice(1);
+        breadcrumbItems.push({ title, url: `/${firstSegment}` });
       }
 
       // Add additional breadcrumb items based on the path
