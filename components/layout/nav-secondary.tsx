@@ -30,10 +30,9 @@ export function NavSecondary({
       <SidebarGroupContent className="space-y-2">
         <SidebarMenu>
           {items.map((item) => (
-            <SidebarMenuItem>
+            <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 asChild
-                key={item.title}
                 className={clsx(
                   "py-5 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                   pathname === item.url &&

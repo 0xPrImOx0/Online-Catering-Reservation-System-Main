@@ -10,6 +10,7 @@ import {
   LogOut,
   Moon,
   Sparkles,
+  Sun,
   User,
 } from "lucide-react";
 
@@ -31,6 +32,9 @@ import {
 } from "@/components/ui/sidebar";
 import ThemeMode from "../theme/ThemeMode";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import { useState } from "react";
+import clsx from "clsx";
 
 export function NavUser({
   user,
@@ -42,6 +46,7 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const { setTheme, theme } = useTheme();
 
   return (
     <SidebarMenu>
@@ -90,17 +95,20 @@ export function NavUser({
                 <BriefcaseBusiness />
                 Business Settings
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Moon />
-                Dark Mode
+              <DropdownMenuItem
+                onClick={() =>
+                  theme === "dark" ? setTheme("light") : setTheme("dark")
+                }
+              >
+                <Moon className={clsx(theme === "dark" && "hidden")} />
+                <Sun className={clsx(theme === "light" && "hidden")} />
+                <span>{theme === "dark" ? "Light" : "Dark"} Mode</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive" asChild>
-              <Link href={"/login"}>
-                <LogOut />
-                Log out
-              </Link>
+            <DropdownMenuItem className="text-destructive">
+              <LogOut />
+              Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
