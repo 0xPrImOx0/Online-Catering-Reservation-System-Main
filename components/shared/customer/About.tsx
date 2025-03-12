@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export default function About() {
   return (
-    <section className="py-16 container">
+    <section className="py-16 ">
       <h2 className="text-3xl font-bold mb-8 text-center">
         About our catering service
       </h2>

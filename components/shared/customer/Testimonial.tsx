@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function Testimonial() {
   return (
-    <section className="py-16 container grid md:grid-cols-2 gap-8">
+    <section className="py-16  grid md:grid-cols-2 gap-8">
       <div className="bg-muted relative min-h-[300px]">
         <Image
           src="/placeholder.svg?height=400&width=600"

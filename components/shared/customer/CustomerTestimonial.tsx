@@ -1,11 +1,11 @@
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
-import Image from 'next/image';
-import React from 'react'
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import Image from "next/image";
+import React from "react";
 
 export default function CustomerTestimonial() {
   return (
     <section className="py-16 bg-muted">
-      <div className="container">
+      <div className="">
         <h2 className="text-3xl font-bold mb-2 text-center">
           What our clients say
         </h2>

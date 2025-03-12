@@ -15,7 +15,6 @@ export default function Home() {
       {/* Navigation */}
       <CustomerSiteHeader />
       <main className="flex-1">
-        {/* Hero Section */}
         <Hero />
 
         {/* About Section */}
@@ -31,7 +30,7 @@ export default function Home() {
         <CustomerTestimonial />
 
         {/* Contact/Information Section */}
-        <section className="py-16 container">
+        <section className="py-16 ">
           <div className="bg-muted p-8 rounded-lg flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h2 className="text-2xl font-bold mb-2">
@@ -49,7 +48,7 @@ export default function Home() {
         </section>
 
         {/* Blog Section */}
-        <section className="py-16 container">
+        <section className="py-16 ">
           <h2 className="text-3xl font-bold mb-2 text-center">Latest blog</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-12">
             {/* Blog Post 1 */}
@@ -135,7 +134,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t py-12">
-        <div className="container grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className=" grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <h3 className="font-semibold mb-4">Company</h3>
             <ul className="space-y-2">
@@ -260,7 +259,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="container mt-8 pt-8 border-t">
+        <div className=" mt-8 pt-8 border-t">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-xs text-muted-foreground">
               © 2023 GourmetCater. All rights reserved.
