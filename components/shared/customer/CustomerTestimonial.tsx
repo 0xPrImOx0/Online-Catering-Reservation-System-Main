@@ -73,12 +73,12 @@ export default function CustomerTestimonial() {
               </div>
             </div>
           </div>
-          <button className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 h-10 w-10 rounded-full bg-background shadow flex items-center justify-center">
+          {/* <button className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 h-10 w-10 rounded-full bg-background shadow flex items-center justify-center">
             <ChevronLeft className="h-6 w-6" />
           </button>
           <button className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 h-10 w-10 rounded-full bg-background shadow flex items-center justify-center">
             <ChevronRight className="h-6 w-6" />
-          </button>
+          </button> */}
         </div>
       </div>
     </section>
