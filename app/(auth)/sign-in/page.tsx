@@ -1,26 +1,25 @@
 "use client";
 
-import { RegisterForm } from "@/components/shared/auth/register-form";
+import { LoginForm } from "@/components/shared/auth/sign-in-form";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
-import { RegisterFormValues } from "../auth-types";
+import { LoginFormValues } from "../auth-types";
+import Logo from "@/components/icons/logo";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpSchema } from "@/utils/formValidtion";
+import { loginSchema } from "@/utils/formValidtion";
 import { toast } from "sonner";
 
-export default function RegisterPage() {
-  const form = useForm<RegisterFormValues>({
-    resolver: zodResolver(signUpSchema),
+export default function LoginPage() {
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
-      fullName: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
-  const onSubmit = (values: RegisterFormValues) => {
+  const onSubmit = (values: LoginFormValues) => {
     try {
       console.log(values);
       toast(
@@ -35,15 +34,15 @@ export default function RegisterPage() {
   };
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="relative hidden bg-muted lg:block">
-        <Skeleton className="flex w-[100%] h-[100%] rounded-none" />
-      </div>
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex flex-1 items-center justify-center">
           <Card className="w-full max-w-sm p-2 space-y-3">
-            <RegisterForm form={form} onSubmit={onSubmit} />
+            <LoginForm form={form} onSubmit={onSubmit} />
           </Card>
         </div>
+      </div>
+      <div className="relative hidden bg-muted lg:block">
+        <Skeleton className="flex w-[100%] h-[100%] rounded-none" />
       </div>
     </div>
   );

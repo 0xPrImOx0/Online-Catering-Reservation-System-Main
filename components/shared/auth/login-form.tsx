@@ -96,7 +96,7 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
       </CardContent>
       <CardFooter className="text-sm flex justify-center space-x-2">
         <p>Don&apos;t have an account?</p>
-        <Link href="/register" className="underline underline-offset-4">
+        <Link href="/sign-up" className="underline underline-offset-4">
           Sign up
         </Link>
       </CardFooter>

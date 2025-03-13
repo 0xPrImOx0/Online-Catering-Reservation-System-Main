@@ -159,7 +159,7 @@ export const RegisterForm = ({ form, onSubmit }: RegisterFormProps) => {
       </CardContent>
       <CardFooter className="text-sm flex justify-center space-x-2">
         <p>Already Have an Account?</p>
-        <Link href="/login" className="underline underline-offset-4">
+        <Link href="/sign-in" className="underline underline-offset-4">
           Sign in
         </Link>
       </CardFooter>

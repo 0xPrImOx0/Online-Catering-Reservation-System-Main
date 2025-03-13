@@ -96,9 +96,9 @@ export default function CustomerSiteHeader() {
               </button>
             </>
           ) : (
-            <Link href={"/register"}>
+            <Link href={"/sign-in"}>
               <Button variant={"ghost"}>
-                <User /> Register
+                <User /> Sign In
               </Button>
             </Link>
           )}
