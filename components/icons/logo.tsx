@@ -5,11 +5,16 @@ import React from "react";
 interface LogoProps {
   withLabel?: boolean;
   imageSize?: number;
+  withTitle?: boolean;
 }
 
-const Logo = ({ withLabel = false, imageSize = 75 }: LogoProps) => {
+const Logo = ({
+  withLabel = false,
+  imageSize = 75,
+  withTitle = true,
+}: LogoProps) => {
   return (
-    <div className="flex items-center my-2">
+    <div className="flex items-center my-2 max-w-fit mx-auto">
       <div>
         <Image
           src="/catering-logo.png"
@@ -25,7 +30,7 @@ const Logo = ({ withLabel = false, imageSize = 75 }: LogoProps) => {
           withLabel ? "text-left" : "ml-2 text-center items-center"
         )}
       >
-        <span className="font-bold text-lg">Food Sentinel</span>
+        {withTitle && <span className="font-bold text-lg">Food Sentinel</span>}
         {withLabel && (
           <p className="font-light italic text-xs text-muted-foreground">
             Catering Reservation System

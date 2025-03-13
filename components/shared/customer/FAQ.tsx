@@ -2,11 +2,9 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ChevronDown, ChevronUp, PlusIcon } from "lucide-react";
-import Image from "next/image";
+import { PlusIcon } from "lucide-react";
 import React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
@@ -32,7 +30,7 @@ export default function FAQ() {
     },
   ];
   return (
-    <section className="flex items-center py-24 justify-between">
+    <section className="flex items-center py-24 justify-between max-w-[1200px] mx-auto">
       <Skeleton className="min-w-[500px] h-[400px]" />
 
       <div className="mx-auto min-w-[600px]">
