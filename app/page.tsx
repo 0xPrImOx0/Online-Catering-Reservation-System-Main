@@ -14,22 +14,12 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
       <CustomerSiteHeader />
-      <main className="flex-1">
+      <main className="flex-1 max-w-[1440px]">
         <Hero />
-
-        {/* About Section */}
         <About />
-
-        {/* Featured Packages */}
         <Featured />
-
-        {/* Testimonial CTA */}
         <Testimonial />
-
-        {/* Customer Testimonials */}
         <CustomerTestimonial />
-
-        {/* Contact/Information Section */}
         <section className="py-16 ">
           <div className="bg-muted p-8 rounded-lg flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
@@ -46,8 +36,6 @@ export default function Home() {
             </Button>
           </div>
         </section>
-
-        {/* Blog Section */}
         <section className="py-16 ">
           <h2 className="text-3xl font-bold mb-2 text-center">Latest blog</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-12">

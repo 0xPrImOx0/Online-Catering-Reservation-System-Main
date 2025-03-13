@@ -2,30 +2,60 @@
 import Link from "next/link";
 import Logo from "../icons/logo";
 import { useState } from "react";
-import { NavUser } from "./nav-user";
 import { Button } from "../ui/button";
 import { User } from "lucide-react";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 export default function CustomerSiteHeader() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const pathname = usePathname();
   const PageLink = ({ href, title }: { href: string; title: string }) => {
     return (
-      <Link href={href} className="text-sm hover:underline underline-offset-4">
+      <Link
+        href={href}
+        className={clsx(
+          "text-sm hover:underline underline-offset-4",
+          pathname === href && "underline"
+        )}
+      >
         {title}
       </Link>
     );
   };
 
+  const links = [
+    {
+      title: "Home",
+      href: "/",
+    },
+    {
+      title: "Packages",
+      href: "/packages",
+    },
+    {
+      title: "Menus",
+      href: "/menus",
+    },
+    {
+      title: "Book Now",
+      href: "/book-now",
+    },
+    {
+      title: "About Us",
+      href: "/about-us",
+    },
+  ];
+
   return (
-    <header className="border-b ">
+    <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ">
       <div className="flex mx-[2%] items-center justify-between">
         <div className="flex flex-1 items-center gap-4">
           <Logo imageSize={40} />
           <nav className="hidden md:flex gap-6 flex-1 justify-center">
-            <PageLink title="Home" href={"/"} />
-            <PageLink title="Packages" href={"/packages"} />
-            <PageLink title="Book With Us" href={"/book-now"} />
-            <PageLink title="About" href={"/about-us"} />
+            {links.map((link) => (
+              <PageLink key={link.title} title={link.title} href={link.href} />
+            ))}
           </nav>
         </div>
         <div className="flex gap-4">
@@ -64,7 +94,7 @@ export default function CustomerSiteHeader() {
             </>
           ) : (
             <Link href={"/register"}>
-              <Button variant={"outline"}>
+              <Button variant={"ghost"}>
                 <User /> Register
               </Button>
             </Link>

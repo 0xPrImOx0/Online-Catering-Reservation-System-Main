@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export default function About() {
   return (
-    <section className="py-16 ">
+    <section className="min-h-[60vh] flex flex-col justify-center">
       <h2 className="text-3xl font-bold mb-8 text-center">
         About our catering service
       </h2>
@@ -17,8 +17,13 @@ export default function About() {
         Aliquam posuere consequat libero consequat aliquam.
       </p>
       <div className="flex justify-center gap-4">
-        <Button variant="outline">Our Story</Button>
-        <Button className="bg-black text-white hover:bg-gray-800">
+        <Button variant="outline" size={"landing"}>
+          Who are we
+        </Button>
+        <Button
+          className="bg-black text-white hover:bg-gray-800"
+          size={"landing"}
+        >
           Our Menus
         </Button>
       </div>

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Featured() {
   return (
-    <section className="py-16 bg-muted">
+    <section className="py-16 px-[2%]">
       <div className="">
         <h2 className="text-3xl font-bold mb-2 text-center">
           Featured Packages
