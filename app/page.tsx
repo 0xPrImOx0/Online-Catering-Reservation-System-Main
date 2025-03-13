@@ -21,7 +21,12 @@ export default function Home() {
         <About />
         <Featured />
         <Testimonial />
-        <FooterCTA />
+        <FooterCTA
+          title="Need more information?"
+          description="Contact us today to discuss your event needs and check availability."
+          buttonLabel="Contact Us"
+          href="/contact-us"
+        />
       </main>
 
       <Footer />

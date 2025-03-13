@@ -1,15 +1,18 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type FooterCTAProps = {
-  title?: string;
-  description?: string;
-  buttonLabel?: string;
+  title: string;
+  description: string;
+  buttonLabel: string;
+  href: string;
 };
 
 export default function FooterCTA({
-  title = "Need more information?",
-  description = "Contact us today to discuss your event needs and check availability.",
-  buttonLabel = "Contact Us",
+  title,
+  description,
+  buttonLabel,
+  href,
 }: FooterCTAProps) {
   return (
     <section className="my-24 px-[2%]">
@@ -20,8 +23,8 @@ export default function FooterCTA({
           </h2>
           <p className="text-background">{description}</p>
         </div>
-        <Button variant={"outline"} size={"landing"}>
-          {buttonLabel}
+        <Button variant={"outline"} size={"landing"} asChild>
+          <Link href={href}>{buttonLabel}</Link>
         </Button>
       </div>
     </section>

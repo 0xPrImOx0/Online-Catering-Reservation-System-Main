@@ -115,7 +115,8 @@ export default function Page() {
         <FooterCTA
           title="Ready to Book Your Catering?"
           description="Secure your date and menu selection now to ensure availability for your upcoming event."
-          buttonLabel="Reserve Now"
+          buttonLabel="Book Now"
+          href="/book-now"
         />
       </div>
     </main>
