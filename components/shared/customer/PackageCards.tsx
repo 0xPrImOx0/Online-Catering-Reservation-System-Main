@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 type featureProps = {
   features: {
@@ -15,15 +14,15 @@ type featureProps = {
   };
 };
 
-export default function FeaturedCards({ features }: featureProps) {
+export default function PackageCards({ features }: featureProps) {
   const { image, alt, categories, title, description, portion, price } =
     features;
   return (
-    <Card className="border  rounded-lg overflow-hidden max-w-[400px] min-h-[520px]">
+    <Card className="border rounded-lg overflow-hidden max-w-[400px] min-h-[520px]">
       <div className="aspect-video relative bg-muted">
         <Image src={image} alt={alt} fill className="object-cover" />
       </div>
-      <div className="p-8 flex flex-col justify-between">
+      <div className="p-6 flex flex-col justify-between">
         <div className="flex gap-2 mb-3">
           {categories.map((category) => (
             <Badge variant="outline" key={category} className=" border-black">

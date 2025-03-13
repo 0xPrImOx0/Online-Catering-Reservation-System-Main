@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import FeaturedCards from "./FeaturedCards";
+import PackageCards from "./PackageCards";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -80,7 +80,7 @@ export default function Featured() {
         <div className="flex flex-wrap items-center justify-center gap-10">
           {/* Package Showcase */}
           {featuredPackages.map((feature, index) => (
-            <FeaturedCards features={feature} key={index} />
+            <PackageCards features={feature} key={index} />
           ))}
         </div>
       </div>

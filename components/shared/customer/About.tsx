@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function About() {
   return (
@@ -17,14 +18,15 @@ export default function About() {
         Aliquam posuere consequat libero consequat aliquam.
       </p>
       <div className="flex justify-center gap-4">
-        <Button variant="outline" size={"landing"}>
-          Who are we
+        <Button variant="outline" size={"landing"} asChild>
+          <Link href={"/about-us"}>Who are we</Link>
         </Button>
         <Button
           className="bg-black text-white hover:bg-gray-800"
           size={"landing"}
+          asChild
         >
-          Our Menus
+          <Link href={"/menus"}>Our Menus</Link>
         </Button>
       </div>
     </section>
