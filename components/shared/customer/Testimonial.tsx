@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ChevronRight } from "lucide-react";
+import { BookOpen, ChevronRight } from "lucide-react";
 
 export default function Testimonial() {
   return (
@@ -18,7 +18,9 @@ export default function Testimonial() {
           <p className="mt-4 font-semibold">— Sarah & Michael</p>
         </div>
         <div className="flex">
-          <Button size={"landing"}>Read More</Button>
+          <Button size={"landing"}>
+            <BookOpen /> Read More
+          </Button>
           <Button size={"landing"} variant={"link"}>
             Book Now <ChevronRight />
           </Button>

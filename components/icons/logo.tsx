@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface LogoProps {
@@ -14,7 +15,7 @@ const Logo = ({
   withTitle = true,
 }: LogoProps) => {
   return (
-    <div className="flex items-center my-2 max-w-fit mx-auto">
+    <Link href={"/"} className="flex items-center my-2 max-w-fit mx-auto">
       <div>
         <Image
           src="/catering-logo.png"
@@ -37,7 +38,7 @@ const Logo = ({
           </p>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 

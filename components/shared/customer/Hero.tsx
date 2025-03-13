@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ClipboardCheck } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -15,7 +15,7 @@ export default function Hero() {
         </p>
         <div className="mt-4 space-x-4">
           <Button className="" size={"landing"}>
-            Book Now
+            <ClipboardCheck /> Book Now
           </Button>
           <Button className="" variant={"link"} size={"landing"}>
             Lorem Ipsum Link <ChevronRight />

@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Star } from "lucide-react";
+import { BookOpen, ClipboardCheck, Star } from "lucide-react";
 import packages from "@/lib/packages";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import PackageCards from "@/components/shared/customer/PackageCards";
@@ -117,6 +117,7 @@ export default function Page() {
           description="Secure your date and menu selection now to ensure availability for your upcoming event."
           buttonLabel="Book Now"
           href="/book-now"
+          Icon={ClipboardCheck}
         />
       </div>
     </main>

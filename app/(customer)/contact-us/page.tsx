@@ -1,9 +1,8 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import ContactForm from "@/components/shared/customer/ContactForm";
 import ContactInfo from "@/components/shared/customer/ContactInfo";
 import FAQ from "@/components/shared/customer/FAQ";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
+import { ClipboardCheck } from "lucide-react";
 
 export default function ContactPage() {
   return (
@@ -26,6 +25,7 @@ export default function ContactPage() {
           buttonLabel="Book Now"
           href="/book-now"
           px={false}
+          Icon={ClipboardCheck}
         />
       </div>
     </main>

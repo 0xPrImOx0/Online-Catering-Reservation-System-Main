@@ -10,6 +10,7 @@ import Testimonial from "@/components/shared/customer/Testimonial";
 import CustomerTestimonial from "@/components/shared/customer/CustomerTestimonial";
 import Footer from "@/components/shared/customer/Footer";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
+import { Phone } from "lucide-react";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
           description="Contact us today to discuss your event needs and check availability."
           buttonLabel="Contact Us"
           href="/contact-us"
+          Icon={Phone}
         />
       </main>
 

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Info, UtensilsCrossed } from "lucide-react";
 import Link from "next/link";
 
 export default function About() {
@@ -19,14 +20,18 @@ export default function About() {
       </p>
       <div className="flex justify-center gap-4">
         <Button variant="outline" size={"landing"} asChild>
-          <Link href={"/about-us"}>Who are we</Link>
+          <Link href={"/about-us"}>
+            <Info /> Who are we
+          </Link>
         </Button>
         <Button
           className="bg-black text-white hover:bg-gray-800"
           size={"landing"}
           asChild
         >
-          <Link href={"/menus"}>Our Menus</Link>
+          <Link href={"/menus"}>
+            <UtensilsCrossed /> Our Menus
+          </Link>
         </Button>
       </div>
     </section>

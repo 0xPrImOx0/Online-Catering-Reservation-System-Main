@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
+import { LucideIcon } from "lucide-react";
 import Link from "next/link";
 
 type FooterCTAProps = {
@@ -7,7 +8,8 @@ type FooterCTAProps = {
   description: string;
   buttonLabel: string;
   href: string;
-  px?: boolean
+  px?: boolean;
+  Icon: LucideIcon;
 };
 
 export default function FooterCTA({
@@ -15,7 +17,8 @@ export default function FooterCTA({
   description,
   buttonLabel,
   href,
-  px = true
+  px = true,
+  Icon,
 }: FooterCTAProps) {
   return (
     <section className={clsx("my-24", px && "px-[2%]")}>
@@ -27,7 +30,9 @@ export default function FooterCTA({
           <p className="text-background">{description}</p>
         </div>
         <Button variant={"outline"} size={"landing"} asChild>
-          <Link href={href}>{buttonLabel}</Link>
+          <Link href={href}>
+            <Icon /> {buttonLabel}
+          </Link>
         </Button>
       </div>
     </section>
