@@ -1,4 +1,7 @@
+import { Button } from "@/components/ui/button";
 import FeaturedCards from "./FeaturedCards";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Featured() {
   const featuredPackages = [
@@ -64,7 +67,7 @@ export default function Featured() {
     },
   ];
   return (
-    <section className="py-16 px-[2%]">
+    <section className="py-16 px-[2%] flex flex-col items-center gap-14">
       <div className="">
         <h2 className="text-3xl font-bold mb-2 text-center">
           Featured Packages
@@ -81,6 +84,11 @@ export default function Featured() {
           ))}
         </div>
       </div>
+      <Button size={"landing"} variant={"outline"} asChild>
+        <Link href={"/packages"}>
+          View More Packages <ChevronRight />
+        </Link>
+      </Button>
     </section>
   );
 }

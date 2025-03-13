@@ -30,16 +30,16 @@ export default function CustomerSiteHeader() {
       href: "/",
     },
     {
-      title: "Packages",
-      href: "/packages",
-    },
-    {
       title: "Menus",
       href: "/menus",
     },
     {
-      title: "Book Now",
-      href: "/book-now",
+      title: "Packages",
+      href: "/packages",
+    },
+    {
+      title: "Testimonials",
+      href: "/testimonials",
     },
     {
       title: "About Us",
@@ -103,6 +103,9 @@ export default function CustomerSiteHeader() {
               </Button>
             </Link>
           )}
+          <Button asChild>
+            <Link href="/book-now">Book Here</Link>
+          </Button>
         </div>
       </div>
     </header>
