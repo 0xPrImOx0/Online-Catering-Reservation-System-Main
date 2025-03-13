@@ -45,6 +45,10 @@ export default function CustomerSiteHeader() {
       title: "About Us",
       href: "/about-us",
     },
+    {
+      title: "Contact Us",
+      href: "/contact-us",
+    },
   ];
 
   return (

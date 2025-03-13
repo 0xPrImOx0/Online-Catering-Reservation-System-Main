@@ -9,7 +9,7 @@ export default function CustomerLayout({
   return (
     <div>
       <CustomerSiteHeader />
-      <div className="max-w-[1440px]">{children}</div>
+      <div className="max-w-[1440px] px-[2%]">{children}</div>
     </div>
   );
 }
