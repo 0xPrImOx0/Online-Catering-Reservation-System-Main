@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import clsx from "clsx";
 import Link from "next/link";
 
 type FooterCTAProps = {
@@ -6,6 +7,7 @@ type FooterCTAProps = {
   description: string;
   buttonLabel: string;
   href: string;
+  px?: boolean
 };
 
 export default function FooterCTA({
@@ -13,9 +15,10 @@ export default function FooterCTA({
   description,
   buttonLabel,
   href,
+  px = true
 }: FooterCTAProps) {
   return (
-    <section className="my-24 px-[2%]">
+    <section className={clsx("my-24", px && "px-[2%]")}>
       <div className="bg-foreground rounded-lg px-[2%] py-10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
           <h2 className="text-3xl text-background font-extrabold mb-3">
