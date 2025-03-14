@@ -17,7 +17,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
       <CustomerSiteHeader />
-      <main className="flex-1 max-w-[1440px]">
+      <main className="flex-1 max-w-[1440px] mx-auto">
         <Hero />
         <About />
         <Featured />
