@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -7,7 +5,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { ClipboardCheck, Star } from "lucide-react";
 import packages from "@/lib/packages";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
@@ -15,14 +12,14 @@ import PackageCards from "@/components/shared/customer/PackageCards";
 
 export default function Page() {
   return (
-    <main className="flex-1 bg-black">
+    <main className="flex-1">
       <div className=" py-12">
         <h1 className="text-5xl font-bold text-center mb-12">Our Packages</h1>
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Select>
-            <SelectTrigger className="w-full border-foreground text-foreground sm:w-[200px]">
+            <SelectTrigger className="w-full text-foreground sm:w-[200px]">
               <SelectValue placeholder="Menu Type" />
             </SelectTrigger>
             <SelectContent>

@@ -5,7 +5,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -47,6 +46,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   CalendarIcon,
+  ChevronDown,
   ClipboardCheck,
   ClipboardList,
   ClipboardPen,
@@ -59,274 +59,11 @@ import {
 import Link from "next/link";
 import { format } from "date-fns";
 import MetricCards from "@/components/shared/MetricCards";
+import { reservations } from "@/lib/reservation-dummy";
+import clsx from "clsx";
+import StatusBadge from "@/components/shared/status-badge";
 
 // Sample data for the reservations
-const reservations = [
-  {
-    id: "RES-1234",
-    customer: {
-      name: "Ashley Wilson",
-      email: "ashley.wilson@example.com",
-      phone: "+1 (555) 123-4567",
-      isRegistered: true,
-    },
-    eventDate: new Date(2025, 2, 10, 18, 0), // March 10, 2025, 6:00 PM
-    totalPrice: 2580,
-    status: "Confirmed",
-    createdDate: new Date(2025, 2, 1),
-    guests: 75,
-    address: "123 Wedding Venue, Springfield, IL",
-    specialInstructions:
-      "Bride has nut allergy. Please ensure all dishes are nut-free.",
-    items: [
-      { name: "Wedding Package - Premium", quantity: 1, price: 2000 },
-      { name: "Additional Appetizers", quantity: 3, price: 180 },
-      { name: "Champagne Toast", quantity: 1, price: 400 },
-    ],
-    payment: {
-      status: "Paid",
-      date: new Date(2025, 2, 5),
-      amount: 2580,
-    },
-    isUrgent: true,
-  },
-  {
-    id: "RES-1235",
-    customer: {
-      name: "Tech Inc.",
-      email: "events@techinc.com",
-      phone: "+1 (555) 987-6543",
-      isRegistered: true,
-    },
-    eventDate: new Date(2025, 2, 11, 12, 0), // March 11, 2025, 12:00 PM
-    totalPrice: 1200,
-    status: "Confirmed",
-    createdDate: new Date(2025, 2, 3),
-    guests: 30,
-    address: "456 Tech Inc. HQ, Springfield, IL",
-    specialInstructions: "Vegetarian options needed for 10 guests.",
-    items: [
-      { name: "Corporate Lunch Package", quantity: 1, price: 900 },
-      { name: "Premium Dessert Platter", quantity: 2, price: 300 },
-    ],
-    payment: {
-      status: "Paid",
-      date: new Date(2025, 2, 7),
-      amount: 1200,
-    },
-    isUrgent: true,
-  },
-  {
-    id: "RES-1236",
-    customer: {
-      name: "Smith Family",
-      email: "john.smith@example.com",
-      phone: "+1 (555) 456-7890",
-      isRegistered: true,
-    },
-    eventDate: new Date(2025, 2, 14, 17, 0), // March 14, 2025, 5:00 PM
-    totalPrice: 950,
-    status: "Pending",
-    createdDate: new Date(2025, 2, 4),
-    guests: 25,
-    address: "789 Community Center, Springfield, IL",
-    specialInstructions: "Family-style service preferred.",
-    items: [
-      { name: "Family Gathering Package", quantity: 1, price: 750 },
-      { name: "Additional Sides", quantity: 4, price: 200 },
-    ],
-    payment: {
-      status: "Pending",
-      date: null,
-      amount: 950,
-    },
-    isUrgent: false,
-  },
-  {
-    id: "RES-1237",
-    customer: {
-      name: "Guest Order",
-      email: "maria@example.com",
-      phone: "+1 (555) 234-5678",
-      isRegistered: false,
-    },
-    eventDate: new Date(2025, 2, 15, 19, 30), // March 15, 2025, 7:30 PM
-    totalPrice: 350,
-    status: "Pending",
-    createdDate: new Date(2025, 2, 5),
-    guests: 10,
-    address: "101 Residential St, Springfield, IL",
-    specialInstructions: "Delivery requested by 7:15 PM.",
-    items: [
-      { name: "Dinner Party Package - Basic", quantity: 1, price: 300 },
-      { name: "Specialty Drinks", quantity: 10, price: 50 },
-    ],
-    payment: {
-      status: "Pending",
-      date: null,
-      amount: 350,
-    },
-    isUrgent: false,
-  },
-  {
-    id: "RES-1238",
-    customer: {
-      name: "Johnson Wedding",
-      email: "johnson.wedding@example.com",
-      phone: "+1 (555) 876-5432",
-      isRegistered: true,
-    },
-    eventDate: new Date(2025, 3, 5, 16, 0), // April 5, 2025, 4:00 PM
-    totalPrice: 3200,
-    status: "Confirmed",
-    createdDate: new Date(2025, 1, 15),
-    guests: 100,
-    address: "200 Elegant Venue, Springfield, IL",
-    specialInstructions:
-      "Gluten-free options for 15 guests. Custom cake topper will be provided.",
-    items: [
-      { name: "Wedding Package - Deluxe", quantity: 1, price: 2800 },
-      { name: "Premium Bar Service", quantity: 1, price: 400 },
-    ],
-    payment: {
-      status: "Paid",
-      date: new Date(2025, 1, 20),
-      amount: 3200,
-    },
-    isUrgent: false,
-  },
-  {
-    id: "RES-1239",
-    customer: {
-      name: "Community Center",
-      email: "events@communitycenter.org",
-      phone: "+1 (555) 345-6789",
-      isRegistered: true,
-    },
-    eventDate: new Date(2025, 2, 20, 11, 0), // March 20, 2025, 11:00 AM
-    totalPrice: 1500,
-    status: "Confirmed",
-    createdDate: new Date(2025, 1, 25),
-    guests: 50,
-    address: "300 Community Way, Springfield, IL",
-    specialInstructions: "Buffet style. Need setup by 10:30 AM.",
-    items: [
-      { name: "Community Event Package", quantity: 1, price: 1200 },
-      { name: "Additional Appetizers", quantity: 5, price: 300 },
-    ],
-    payment: {
-      status: "Paid",
-      date: new Date(2025, 2, 1),
-      amount: 1500,
-    },
-    isUrgent: false,
-  },
-  {
-    id: "RES-1240",
-    customer: {
-      name: "Birthday Celebration",
-      email: "birthday@example.com",
-      phone: "+1 (555) 567-8901",
-      isRegistered: false,
-    },
-    eventDate: new Date(2025, 2, 25, 18, 30), // March 25, 2025, 6:30 PM
-    totalPrice: 750,
-    status: "Pending",
-    createdDate: new Date(2025, 2, 8),
-    guests: 20,
-    address: "400 Party Place, Springfield, IL",
-    specialInstructions:
-      "Birthday cake for 50th celebration. Blue and silver theme.",
-    items: [
-      { name: "Birthday Package - Standard", quantity: 1, price: 600 },
-      { name: "Custom Cake", quantity: 1, price: 150 },
-    ],
-    payment: {
-      status: "Pending",
-      date: null,
-      amount: 750,
-    },
-    isUrgent: false,
-  },
-  {
-    id: "RES-1241",
-    customer: {
-      name: "Corporate Training",
-      email: "training@corporation.com",
-      phone: "+1 (555) 678-9012",
-      isRegistered: true,
-    },
-    eventDate: new Date(2025, 3, 2, 9, 0), // April 2, 2025, 9:00 AM
-    totalPrice: 900,
-    status: "Confirmed",
-    createdDate: new Date(2025, 2, 1),
-    guests: 25,
-    address: "500 Corporate Blvd, Springfield, IL",
-    specialInstructions:
-      "Continental breakfast and lunch. Coffee service all day.",
-    items: [{ name: "All-Day Corporate Package", quantity: 1, price: 900 }],
-    payment: {
-      status: "Paid",
-      date: new Date(2025, 2, 5),
-      amount: 900,
-    },
-    isUrgent: false,
-  },
-  {
-    id: "RES-1242",
-    customer: {
-      name: "Retirement Party",
-      email: "retirement@example.com",
-      phone: "+1 (555) 789-0123",
-      isRegistered: false,
-    },
-    eventDate: new Date(2025, 3, 10, 17, 0), // April 10, 2025, 5:00 PM
-    totalPrice: 1100,
-    status: "Pending",
-    createdDate: new Date(2025, 2, 7),
-    guests: 35,
-    address: "600 Garden Venue, Springfield, IL",
-    specialInstructions:
-      "Surprise party. Contact secondary number for details.",
-    items: [
-      { name: "Celebration Package", quantity: 1, price: 850 },
-      { name: "Premium Wine Selection", quantity: 1, price: 250 },
-    ],
-    payment: {
-      status: "Pending",
-      date: null,
-      amount: 1100,
-    },
-    isUrgent: false,
-  },
-  {
-    id: "RES-1243",
-    customer: {
-      name: "Charity Gala",
-      email: "gala@charity.org",
-      phone: "+1 (555) 890-1234",
-      isRegistered: true,
-    },
-    eventDate: new Date(2025, 3, 15, 19, 0), // April 15, 2025, 7:00 PM
-    totalPrice: 5000,
-    status: "Confirmed",
-    createdDate: new Date(2025, 1, 10),
-    guests: 150,
-    address: "700 Grand Hall, Springfield, IL",
-    specialInstructions:
-      "Formal plated dinner. Special dietary needs list will be provided 1 week before event.",
-    items: [
-      { name: "Gala Package - Premium", quantity: 1, price: 4500 },
-      { name: "Specialty Dessert Station", quantity: 1, price: 500 },
-    ],
-    payment: {
-      status: "Paid",
-      date: new Date(2025, 1, 15),
-      amount: 5000,
-    },
-    isUrgent: false,
-  },
-];
 
 const metricCards = [
   {
@@ -355,55 +92,42 @@ const metricCards = [
   },
 ];
 
+type reservationType = {
+  id: string;
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    isRegistered: boolean;
+  };
+  eventDate: Date; // March 10, 2025, 6:00 PM
+  totalPrice: number;
+  status: string;
+  createdDate: Date;
+  guests: number;
+  address: string;
+  specialInstructions: string;
+  items: [{ name: string; quantity: number; price: number }];
+  payment: {
+    status: string;
+    date: Date;
+    amount: number;
+  };
+  isUrgent: boolean;
+};
+
 // Current date for reference
 const currentDate = new Date(2025, 2, 9); // March 9, 2025
 
 export default function ReservationsPage() {
-  const [selectedReservation, setSelectedReservation] = useState([]);
+  const [selectedReservation, setSelectedReservation] =
+    useState<reservationType | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [date, setDate] = useState(null);
-
-  // Calculate metrics
-  const totalReservations = reservations.length;
-  const confirmedReservations = reservations.filter(
-    (r) => r.status === "Confirmed"
-  ).length;
-  const pendingReservations = reservations.filter(
-    (r) => r.status === "Pending"
-  ).length;
-  const totalRevenue = reservations
-    .filter((r) => r.payment.status === "Paid")
-    .reduce((sum, r) => sum + r.totalPrice, 0);
 
   const openReservationDetails = (reservation: any) => {
     setSelectedReservation(reservation);
     setIsDetailsOpen(true);
-  };
-
-  const getStatusBadge = (status: any) => {
-    switch (status) {
-      case "Confirmed":
-        return <Badge className="bg-green-100 text-green-800">Confirmed</Badge>;
-      case "Pending":
-        return <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>;
-      case "Completed":
-        return <Badge className="bg-gray-100 text-gray-800">Completed</Badge>;
-      case "Cancelled":
-        return <Badge className="bg-red-100 text-red-800">Cancelled</Badge>;
-      default:
-        return <Badge>{status}</Badge>;
-    }
-  };
-
-  const getPaymentStatusBadge = (status: any) => {
-    switch (status) {
-      case "Paid":
-        return <Badge className="bg-green-100 text-green-800">Paid</Badge>;
-      case "Pending":
-        return <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>;
-      default:
-        return <Badge>{status}</Badge>;
-    }
   };
 
   const isUrgent = (eventDate: any) => {
@@ -514,7 +238,7 @@ export default function ReservationsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {reservations.map((reservation) => (
+                {reservations.map((reservation: any) => (
                   <TableRow
                     key={reservation.id}
                     className={
@@ -560,9 +284,11 @@ export default function ReservationsPage() {
                     <TableCell>
                       ${reservation.totalPrice.toLocaleString()}
                     </TableCell>
-                    <TableCell>{getStatusBadge(reservation.status)}</TableCell>
                     <TableCell>
-                      {getPaymentStatusBadge(reservation.payment.status)}
+                      <StatusBadge status={reservation.status} />
+                    </TableCell>
+                    <TableCell>
+                      <StatusBadge status={reservation.payment.status} />
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
@@ -595,6 +321,274 @@ export default function ReservationsPage() {
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
+                        {selectedReservation && (
+                          <Dialog
+                            open={isDetailsOpen}
+                            onOpenChange={setIsDetailsOpen}
+                          >
+                            <DialogContent className="max-w-3xl">
+                              <DialogHeader>
+                                <DialogTitle>Reservation Details</DialogTitle>
+                                <DialogDescription>
+                                  {selectedReservation.id} - Created on{" "}
+                                  {format(
+                                    selectedReservation.createdDate,
+                                    "MMM d, yyyy"
+                                  )}
+                                </DialogDescription>
+                              </DialogHeader>
+
+                              <div className="grid gap-6 md:grid-cols-2">
+                                {/* Customer Information */}
+                                <div>
+                                  <h3 className="mb-2 font-semibold">
+                                    Customer Information
+                                  </h3>
+                                  <div className="rounded-lg border p-4">
+                                    <div className="mb-4 flex items-center gap-3">
+                                      <Avatar className="h-10 w-10">
+                                        <AvatarFallback>
+                                          {selectedReservation.customer.name.charAt(
+                                            0
+                                          )}
+                                        </AvatarFallback>
+                                      </Avatar>
+                                      <div>
+                                        <div className="font-medium">
+                                          {selectedReservation.customer.name}
+                                        </div>
+                                        <div className="text-sm text-muted-foreground">
+                                          {selectedReservation.customer
+                                            .isRegistered
+                                            ? "Registered Customer"
+                                            : "Guest Order"}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="grid gap-2 text-sm">
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">
+                                          Email:
+                                        </span>
+                                        <span>
+                                          {selectedReservation.customer.email}
+                                        </span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">
+                                          Phone:
+                                        </span>
+                                        <span>
+                                          {selectedReservation.customer.phone}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Event Details */}
+                                <div>
+                                  <h3 className="mb-2 font-semibold">
+                                    Event Details
+                                  </h3>
+                                  <div className="rounded-lg border p-4">
+                                    <div className="grid gap-2 text-sm">
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">
+                                          Date:
+                                        </span>
+                                        <span>
+                                          {format(
+                                            selectedReservation.eventDate,
+                                            "MMMM d, yyyy"
+                                          )}
+                                        </span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">
+                                          Time:
+                                        </span>
+                                        <span>
+                                          {format(
+                                            selectedReservation.eventDate,
+                                            "h:mm a"
+                                          )}
+                                        </span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">
+                                          Guests:
+                                        </span>
+                                        <span>
+                                          {selectedReservation.guests}
+                                        </span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">
+                                          Status:
+                                        </span>
+                                        <span>
+                                          <StatusBadge
+                                            status={selectedReservation.status}
+                                          />
+                                        </span>
+                                      </div>
+                                      <Separator className="my-2" />
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">
+                                          Address:
+                                        </span>
+                                        <span className="text-right">
+                                          {selectedReservation.address}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Order Items */}
+                                <div className="md:col-span-2">
+                                  <h3 className="mb-2 font-semibold">
+                                    Order Items
+                                  </h3>
+                                  <div className="rounded-lg border">
+                                    <Table>
+                                      <TableHeader>
+                                        <TableRow>
+                                          <TableHead>Item</TableHead>
+                                          <TableHead className="text-right">
+                                            Quantity
+                                          </TableHead>
+                                          <TableHead className="text-right">
+                                            Price
+                                          </TableHead>
+                                          <TableHead className="text-right">
+                                            Total
+                                          </TableHead>
+                                        </TableRow>
+                                      </TableHeader>
+                                      <TableBody>
+                                        {selectedReservation.items.map(
+                                          (item, index) => (
+                                            <TableRow key={index}>
+                                              <TableCell>{item.name}</TableCell>
+                                              <TableCell className="text-right">
+                                                {item.quantity}
+                                              </TableCell>
+                                              <TableCell className="text-right">
+                                                ${item.price / item.quantity}
+                                              </TableCell>
+                                              <TableCell className="text-right">
+                                                ${item.price}
+                                              </TableCell>
+                                            </TableRow>
+                                          )
+                                        )}
+                                      </TableBody>
+                                    </Table>
+                                    <div className="flex justify-between border-t p-4">
+                                      <span className="font-medium">Total</span>
+                                      <span className="font-bold">
+                                        ${selectedReservation.totalPrice}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Payment Information */}
+                                <div>
+                                  <h3 className="mb-2 font-semibold">
+                                    Payment Information
+                                  </h3>
+                                  <div className="rounded-lg border p-4">
+                                    <div className="mb-3 flex items-center justify-between">
+                                      <span className="text-muted-foreground">
+                                        Status:
+                                      </span>
+                                      <span>
+                                        <StatusBadge
+                                          status={
+                                            selectedReservation.payment.status
+                                          }
+                                        />
+                                      </span>
+                                    </div>
+                                    {selectedReservation.payment.status ===
+                                      "paid" && (
+                                      <>
+                                        <div className="flex items-center justify-between">
+                                          <span className="text-muted-foreground">
+                                            Date:
+                                          </span>
+                                          <span>
+                                            {format(
+                                              selectedReservation.payment.date,
+                                              "MMM d, yyyy"
+                                            )}
+                                          </span>
+                                        </div>
+                                        <div className="mt-2 flex items-center justify-between">
+                                          <span className="text-muted-foreground">
+                                            Amount:
+                                          </span>
+                                          <span className="font-medium">
+                                            $
+                                            {selectedReservation.payment.amount}
+                                          </span>
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {/* Special Instructions */}
+                                <div>
+                                  <h3 className="mb-2 font-semibold">
+                                    Special Instructions
+                                  </h3>
+                                  <div className="rounded-lg border p-4">
+                                    <p className="text-sm">
+                                      {selectedReservation.specialInstructions}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <DialogFooter className="flex items-center justify-between sm:justify-between">
+                                <div className="flex gap-2">
+                                  <Button variant="outline">
+                                    Print Details
+                                  </Button>
+                                  <Button variant="outline">
+                                    Send to Email
+                                  </Button>
+                                </div>
+                                <div className="flex gap-2">
+                                  <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                      <Button variant="outline">
+                                        Change Status
+                                        <ChevronDown className="ml-2 h-4 w-4" />
+                                      </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                      <DropdownMenuItem>
+                                        Mark as Confirmed
+                                      </DropdownMenuItem>
+                                      <DropdownMenuItem>
+                                        Mark as Completed
+                                      </DropdownMenuItem>
+                                      <DropdownMenuItem>
+                                        Mark as Cancelled
+                                      </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                  </DropdownMenu>
+                                  <Button>Edit Reservation</Button>
+                                </div>
+                              </DialogFooter>
+                            </DialogContent>
+                          </Dialog>
+                        )}
                       </div>
                     </TableCell>
                   </TableRow>
@@ -604,209 +598,10 @@ export default function ReservationsPage() {
           </div>
         </TabsContent>
         <TabsContent value="upcoming">
-          {/* Upcoming reservations would be shown here */}
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Reservation ID</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Event Date/Time</TableHead>
-                  <TableHead>Total Price</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Payment</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {reservations
-                  .filter((r) => r.eventDate > currentDate)
-                  .map((reservation) => (
-                    <TableRow
-                      key={reservation.id}
-                      className={
-                        isUrgent(reservation.eventDate) ? "bg-yellow-50" : ""
-                      }
-                    >
-                      <TableCell className="font-medium">
-                        {reservation.id}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Avatar className="h-6 w-6">
-                            <AvatarFallback>
-                              {reservation.customer.name.charAt(0)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="font-medium">
-                              {reservation.customer.name}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {reservation.customer.isRegistered
-                                ? "Registered"
-                                : "Guest"}
-                            </div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div>
-                          {format(reservation.eventDate, "MMM d, yyyy")}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {format(reservation.eventDate, "h:mm a")}
-                        </div>
-                        {isUrgent(reservation.eventDate) && (
-                          <Badge
-                            variant="outline"
-                            className="mt-1 bg-yellow-100 text-yellow-800"
-                          >
-                            Due Soon
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        ${reservation.totalPrice.toLocaleString()}
-                      </TableCell>
-                      <TableCell>
-                        {getStatusBadge(reservation.status)}
-                      </TableCell>
-                      <TableCell>
-                        {getPaymentStatusBadge(reservation.payment.status)}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => openReservationDetails(reservation)}
-                          >
-                            <Eye className="h-4 w-4" />
-                            <span className="sr-only">View details</span>
-                          </Button>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="icon">
-                                <MoreHorizontal className="h-4 w-4" />
-                                <span className="sr-only">More options</span>
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem>
-                                Edit Reservation
-                              </DropdownMenuItem>
-                              <DropdownMenuItem>Change Status</DropdownMenuItem>
-                              <DropdownMenuItem>Send Reminder</DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem className="text-red-600">
-                                Cancel Reservation
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </div>
+          {/* Upcoming reseryvations would be shown here */}
         </TabsContent>
         <TabsContent value="past">
           {/* Past reservations would be shown here */}
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Reservation ID</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Event Date/Time</TableHead>
-                  <TableHead>Total Price</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Payment</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {reservations
-                  .filter((r) => r.eventDate <= currentDate)
-                  .map((reservation) => (
-                    <TableRow key={reservation.id}>
-                      <TableCell className="font-medium">
-                        {reservation.id}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Avatar className="h-6 w-6">
-                            <AvatarFallback>
-                              {reservation.customer.name.charAt(0)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="font-medium">
-                              {reservation.customer.name}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {reservation.customer.isRegistered
-                                ? "Registered"
-                                : "Guest"}
-                            </div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div>
-                          {format(reservation.eventDate, "MMM d, yyyy")}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {format(reservation.eventDate, "h:mm a")}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        ${reservation.totalPrice.toLocaleString()}
-                      </TableCell>
-                      <TableCell>
-                        {getStatusBadge(reservation.status)}
-                      </TableCell>
-                      <TableCell>
-                        {getPaymentStatusBadge(reservation.payment.status)}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => openReservationDetails(reservation)}
-                          >
-                            <Eye className="h-4 w-4" />
-                            <span className="sr-only">View details</span>
-                          </Button>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="icon">
-                                <MoreHorizontal className="h-4 w-4" />
-                                <span className="sr-only">More options</span>
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem>View Details</DropdownMenuItem>
-                              <DropdownMenuItem>
-                                Download Invoice
-                              </DropdownMenuItem>
-                              <DropdownMenuItem>Archive</DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </div>
         </TabsContent>
       </Tabs>
 

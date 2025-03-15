@@ -1,5 +1,5 @@
 import MetricCards from "@/components/shared/MetricCards";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,12 +16,8 @@ import {
   DollarSign,
   Filter,
 } from "lucide-react";
-import Link from "next/link";
 
 export default function DashboardPage() {
-  // Current date for reference
-  const currentDate = new Date(2025, 2, 9); // March 9, 2025
-
   const metricCards = [
     {
       title: "Revenue",
