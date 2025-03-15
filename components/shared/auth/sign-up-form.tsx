@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "../../ui/card";
 import { Google } from "../svg-logo";
-import { RegisterFormProps } from "@/app/(auth)/auth-types";
+import { SignUpFormProps } from "@/app/(auth)/auth-types";
 import {
   Form,
   FormControl,
@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/ui/password-input";
 
-export const RegisterForm = ({ form, onSubmit }: RegisterFormProps) => {
+export const SignUpForm = ({ form, onSubmit }: SignUpFormProps) => {
   return (
     <>
       <CardHeader className="flex flex-col items-center space-y-1 pb-1 text-center">

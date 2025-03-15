@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import {
   CardContent,
@@ -11,7 +10,7 @@ import {
   CardTitle,
 } from "../../ui/card";
 import { Google } from "../svg-logo";
-import { LoginFormProps } from "@/app/(auth)/auth-types";
+import { SignInFormProps } from "@/app/(auth)/auth-types";
 import {
   Form,
   FormControl,
@@ -22,15 +21,15 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/ui/password-input";
 
-export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
+export const SignInForm = ({ form, onSubmit }: SignInFormProps) => {
   return (
     <>
       <CardHeader className="flex flex-col items-center space-y-1 pb-1 text-center">
         <CardTitle className="text-2xl font-bold">
-          Login to your account
+          Sing-in to your account
         </CardTitle>
         <CardDescription className="text-balance text-sm text-muted-foreground">
-          Enter your email below to login to your account
+          Enter your email below to Sing-in to your account
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
@@ -80,7 +79,7 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
               )}
             />
             <Button type="submit" className="w-full mt-4">
-              Login
+              SignIn
             </Button>
           </form>
         </Form>
@@ -91,7 +90,7 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
         </div>
         <Button variant="outline" className="w-full">
           <Google />
-          Login with Google
+          SignIn with Google
         </Button>
       </CardContent>
       <CardFooter className="text-sm flex justify-center space-x-2">

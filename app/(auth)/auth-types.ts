@@ -1,25 +1,25 @@
 import { UseFormReturn } from "react-hook-form";
 
-export type LoginFormValues = {
+export type SignInFormValues = {
   email: string;
   password: string;
 };
 
-export interface LoginFormProps {
-  form: UseFormReturn<LoginFormValues>;
-  onSubmit: (data: LoginFormValues) => void;
+export interface SignInFormProps {
+  form: UseFormReturn<SignInFormValues>;
+  onSubmit: (data: SignInFormValues) => void;
 }
 
-export type RegisterFormValues = {
+export type SignUpFormValues = {
   fullName: string;
   email: string;
   password: string;
   confirmPassword: string;
 };
 
-export interface RegisterFormProps {
-  form: UseFormReturn<RegisterFormValues>;
-  onSubmit: (data: RegisterFormValues) => void;
+export interface SignUpFormProps {
+  form: UseFormReturn<SignUpFormValues>;
+  onSubmit: (data: SignUpFormValues) => void;
 }
 
 export type ForgotPasswordFormValues = {

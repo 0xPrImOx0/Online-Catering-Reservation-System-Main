@@ -8,14 +8,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, ClipboardCheck, Star } from "lucide-react";
+import { ClipboardCheck, Star } from "lucide-react";
 import packages from "@/lib/packages";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import PackageCards from "@/components/shared/customer/PackageCards";
 
 export default function Page() {
   return (
-    <main className="flex-1">
+    <main className="flex-1 bg-black">
       <div className=" py-12">
         <h1 className="text-5xl font-bold text-center mb-12">Our Packages</h1>
 

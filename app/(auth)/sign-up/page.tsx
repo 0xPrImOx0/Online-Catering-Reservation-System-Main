@@ -1,16 +1,16 @@
 "use client";
 
-import { RegisterForm } from "@/components/shared/auth/sign-up-form";
+import { SignUpForm } from "@/components/shared/auth/sign-up-form";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
-import { RegisterFormValues } from "../auth-types";
+import { SignUpFormValues } from "../auth-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/utils/formValidtion";
 import { toast } from "sonner";
 
 export default function RegisterPage() {
-  const form = useForm<RegisterFormValues>({
+  const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       fullName: "",
@@ -20,7 +20,7 @@ export default function RegisterPage() {
     },
   });
 
-  const onSubmit = (values: RegisterFormValues) => {
+  const onSubmit = (values: SignUpFormValues) => {
     try {
       console.log(values);
       toast(
@@ -41,7 +41,7 @@ export default function RegisterPage() {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex flex-1 items-center justify-center">
           <Card className="w-full max-w-sm p-2 space-y-3">
-            <RegisterForm form={form} onSubmit={onSubmit} />
+            <SignUpForm form={form} onSubmit={onSubmit} />
           </Card>
         </div>
       </div>

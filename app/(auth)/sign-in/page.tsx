@@ -1,17 +1,16 @@
 "use client";
 
-import { LoginForm } from "@/components/shared/auth/sign-in-form";
+import { SignInForm } from "@/components/shared/auth/sign-in-form";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
-import { LoginFormValues } from "../auth-types";
-import Logo from "@/components/icons/logo";
+import { SignInFormValues } from "../auth-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/utils/formValidtion";
 import { toast } from "sonner";
 
 export default function LoginPage() {
-  const form = useForm<LoginFormValues>({
+  const form = useForm<SignInFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -19,7 +18,7 @@ export default function LoginPage() {
     },
   });
 
-  const onSubmit = (values: LoginFormValues) => {
+  const onSubmit = (values: SignInFormValues) => {
     try {
       console.log(values);
       toast(
@@ -37,7 +36,7 @@ export default function LoginPage() {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex flex-1 items-center justify-center">
           <Card className="w-full max-w-sm p-2 space-y-3">
-            <LoginForm form={form} onSubmit={onSubmit} />
+            <SignInForm form={form} onSubmit={onSubmit} />
           </Card>
         </div>
       </div>
