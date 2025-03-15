@@ -3,13 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  ClipboardCheck,
-  ClipboardList,
-  ClipboardPen,
-  CreditCard,
-  Plus,
-} from "lucide-react";
+import { Plus } from "lucide-react";
 import MetricCards from "@/components/shared/MetricCards";
 import { reservations } from "@/lib/reservation-dummy";
 import ReservationTable from "@/components/shared/caterer/ReservationTable";
@@ -17,48 +11,7 @@ import DateSelector from "@/components/shared/DateSelector";
 import SearchInput from "@/components/shared/SearchInput";
 import CustomSelect from "@/components/shared/CustomSelect";
 import CustomPagination from "@/components/shared/CustomPagination";
-
-const metricCards = [
-  {
-    title: "Total Reservations",
-    firstContent: "10",
-    secondContent: "All active bookings",
-    Icon: ClipboardList,
-  },
-  {
-    title: "Confirmed",
-    firstContent: "6",
-    secondContent: "Ready to serve",
-    Icon: ClipboardCheck,
-  },
-  {
-    title: "Pending",
-    firstContent: "4",
-    secondContent: "Awaiting confirmation",
-    Icon: ClipboardPen,
-  },
-  {
-    title: "Total Revenue",
-    firstContent: "$14,380",
-    secondContent: "From confirmed reservations",
-    Icon: CreditCard,
-  },
-];
-
-const items = {
-  status: [
-    { value: "all", title: "All Statuses" },
-    { value: "confirmed", title: "Confirmed" },
-    { value: "pending", title: "Pending" },
-    { value: "completed", title: "Completed" },
-    { value: "cancelled", title: "Cancelled" },
-  ],
-  customerType: [
-    { value: "all", title: "All Customers" },
-    { value: "registered", title: "Registered" },
-    { value: "guest", title: "Guest" },
-  ],
-};
+import { metricCards, items } from "./metadata";
 
 // Current date for reference
 
