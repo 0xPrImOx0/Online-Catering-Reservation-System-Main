@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 interface LogoProps {
@@ -14,8 +15,13 @@ const Logo = ({
   imageSize = 75,
   withTitle = true,
 }: LogoProps) => {
+  const pathname = usePathname();
+
   return (
-    <Link href={"/"} className="flex items-center my-2 max-w-fit mx-auto">
+    <Link
+      href={pathname.includes("/caterer") ? "/caterer/dashboard" : "/"}
+      className="flex items-center my-2 max-w-fit mx-auto"
+    >
       <div>
         <Image
           src="/catering-logo.png"

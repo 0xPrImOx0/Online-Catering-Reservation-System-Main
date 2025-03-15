@@ -3,7 +3,7 @@ import Link from "next/link";
 import Logo from "../icons/logo";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { ClipboardCheck, User } from "lucide-react";
+import { Calendar, ClipboardCheck, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
@@ -100,7 +100,7 @@ export default function CustomerSiteHeader() {
           )}
           <Button asChild>
             <Link href="/book-now">
-              <ClipboardCheck /> Book Now
+              <Calendar /> Book Now
             </Link>
           </Button>
         </div>
