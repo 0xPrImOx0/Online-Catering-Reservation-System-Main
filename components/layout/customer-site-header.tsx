@@ -47,7 +47,7 @@ export default function CustomerSiteHeader() {
   };
 
   return (
-    <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ">
+    <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex mx-[2%] items-center justify-between">
         <div className="flex flex-1 items-center gap-4">
           <Logo imageSize={40} />
