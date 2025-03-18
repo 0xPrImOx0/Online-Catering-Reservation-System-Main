@@ -55,4 +55,28 @@ const registeredCustomers = [
   },
 ];
 
-export { metricCards, registeredCustomers };
+const concerns = [
+  {
+    name: "Maria Garcia",
+    time: "2h ago",
+    concern: "Can you confirm delivery by 7 pm for our event this Saturday?",
+  },
+  {
+    name: "John Davis",
+    time: "5h Ago",
+    concern: "Need to add 5 more vegetarian meals to out corporate lunch order",
+  },
+  {
+    name: "Guest",
+    time: "1d ago",
+    concern: "Do you offer gluten-free options for your birthday packages?",
+  },
+  {
+    name: "Karen Wilson",
+    time: "2d ago",
+    concern:
+      "Need to reschedule our family reunion catering from April 10 to April 17.",
+  },
+];
+
+export { metricCards, registeredCustomers, concerns };
