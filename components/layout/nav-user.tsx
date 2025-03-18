@@ -1,15 +1,10 @@
 "use client";
 
 import {
-  BadgeCheck,
-  Bell,
   BriefcaseBusiness,
   ChevronDown,
-  ChevronsUpDown,
-  CreditCard,
   LogOut,
   Moon,
-  Sparkles,
   Sun,
   User,
 } from "lucide-react";
@@ -30,10 +25,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import ThemeMode from "../theme/ThemeMode";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { useState } from "react";
 import clsx from "clsx";
 
 export function NavUser({
@@ -85,15 +78,17 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <User />
-                Account Settings
+              <DropdownMenuItem asChild>
+                <Link href={"/caterer/account-settings"}>
+                  <User />
+                  Account Settings
+                </Link>
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BriefcaseBusiness />
-                Business Settings
+              <DropdownMenuItem asChild>
+                <Link href={"/caterer/business-settings"}>
+                  <BriefcaseBusiness />
+                  Business Settings
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() =>
@@ -106,9 +101,11 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">
-              <LogOut />
-              Log out
+            <DropdownMenuItem className="text-destructive" asChild>
+              <Link href={"/sign-in"}>
+                <LogOut />
+                Log out
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

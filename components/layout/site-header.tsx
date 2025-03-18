@@ -75,12 +75,10 @@ export function SiteHeader() {
     generateBreadcrumbs();
   }, [pathname]);
 
-  const data = {
-    user: {
+  const user = {
       name: "Rey Daug",
       email: "m@example.com",
       avatar: "/daug-avatar.jpg",
-    },
   };
 
   return (
@@ -115,7 +113,7 @@ export function SiteHeader() {
         </Breadcrumb>
       </div>
       <div className="flex items-center gap-3">
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </div>
     </header>
   );
