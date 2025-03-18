@@ -1,8 +1,6 @@
 import ReservationTable from "@/components/shared/caterer/ReservationTable";
 import MetricCards from "@/components/shared/MetricCards";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { reservations } from "@/lib/reservation-dummy";
 import {
   Calendar,
@@ -13,9 +11,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { concerns, metricCards, registeredCustomers } from "./metadata";
-import { avatarFallBack } from "@/utils/avatarFallback";
-import RecentConcerns from "@/components/shared/customer/RecentConcerns";
-import RecentCustomers from "@/components/shared/customer/RecentCustomers";
+import RecentConcerns from "@/components/shared/caterer/RecentConcerns";
+import RecentCustomers from "@/components/shared/caterer/RecentCustomers";
 
 const RecentHeaders = ({
   title,
@@ -30,7 +27,9 @@ const RecentHeaders = ({
     <div className="flex items-center justify-between">
       <div className="flex items-center">
         <Icon className="mr-2 h-5 w-5 text-muted-foreground" />
-        <h2 className="text-xl font-semibold">Recent {title === 'Customers' ? "Registered Customers" : title}</h2>
+        <h2 className="text-xl font-semibold">
+          Recent {title === "Customers" ? "Registered Customers" : title}
+        </h2>
       </div>
       <Button variant={"outline"} size={"sm"} asChild>
         <Link href={`/caterer/${link}`}>View All {title}</Link>
@@ -71,11 +70,7 @@ export default function DashboardPage() {
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           {/* Recent Registered Customers */}
           <div>
-            <RecentHeaders
-              title="Customers"
-              link="customers"
-              Icon={Users}
-            />
+            <RecentHeaders title="Customers" link="customers" Icon={Users} />
             <RecentCustomers registeredCustomers={registeredCustomers} />
           </div>
 

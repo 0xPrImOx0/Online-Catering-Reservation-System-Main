@@ -42,7 +42,7 @@ export default function ReservationsPage() {
       {/* Search Bar and Filters */}
       <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center">
         <div className="flex flex-1 items-center gap-2">
-          <SearchInput query={query} setQuery={setQuery} />
+          <SearchInput query={query} setQuery={setQuery} reservation />
           <DateSelector date={date} setDate={setDate} />
         </div>
         <div className="flex items-center gap-2">
