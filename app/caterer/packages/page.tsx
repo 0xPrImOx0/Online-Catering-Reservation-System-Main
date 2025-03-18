@@ -49,144 +49,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-
-// Sample data for packages
-const packages = [
-  {
-    id: 1,
-    name: "Wedding Bliss",
-    eventType: "Wedding",
-    totalPrice: 1200.0,
-    description:
-      "An elegant wedding feast with premium dishes for your special day.",
-    image: "/placeholder.svg?height=300&width=300",
-    lastUpdated: "Mar 05, 2025",
-    numberOfOrders: 15,
-    revenueGenerated: 18000.0,
-    lastOrdered: "Mar 08, 2025",
-    dishes: [
-      { id: 1, name: "Grilled Salmon", price: 22.99 },
-      { id: 2, name: "Beef Wellington", price: 28.99 },
-      { id: 3, name: "Chocolate Mousse", price: 8.99 },
-      { id: 4, name: "Champagne Toast", price: 12.5 },
-      { id: 5, name: "Caprese Salad", price: 9.99 },
-    ],
-  },
-  {
-    id: 2,
-    name: "Birthday Bash",
-    eventType: "Birthday",
-    totalPrice: 450.0,
-    description:
-      "A fun and festive birthday package with crowd-pleasing favorites.",
-    image: "/placeholder.svg?height=300&width=300",
-    lastUpdated: "Feb 28, 2025",
-    numberOfOrders: 28,
-    revenueGenerated: 12600.0,
-    lastOrdered: "Mar 10, 2025",
-    dishes: [
-      { id: 6, name: "Gourmet Burgers", price: 15.99 },
-      { id: 7, name: "Loaded Nachos", price: 12.99 },
-      { id: 8, name: "Birthday Cake", price: 35.0 },
-      { id: 9, name: "Fruit Punch", price: 8.99 },
-    ],
-  },
-  {
-    id: 3,
-    name: "Corporate Lunch",
-    eventType: "Corporate",
-    totalPrice: 350.0,
-    description:
-      "Professional catering for business meetings and corporate events.",
-    image: "/placeholder.svg?height=300&width=300",
-    lastUpdated: "Mar 01, 2025",
-    numberOfOrders: 42,
-    revenueGenerated: 14700.0,
-    lastOrdered: "Mar 09, 2025",
-    dishes: [
-      { id: 10, name: "Sandwich Platter", price: 45.99 },
-      { id: 11, name: "Caesar Salad", price: 35.99 },
-      { id: 12, name: "Assorted Cookies", price: 25.0 },
-      { id: 13, name: "Coffee Service", price: 30.0 },
-    ],
-  },
-  {
-    id: 4,
-    name: "Vegan Delight",
-    eventType: "Special Diet",
-    totalPrice: 550.0,
-    description:
-      "Plant-based menu options for health-conscious and vegan guests.",
-    image: "/placeholder.svg?height=300&width=300",
-    lastUpdated: "Mar 03, 2025",
-    numberOfOrders: 8,
-    revenueGenerated: 4400.0,
-    lastOrdered: "Mar 07, 2025",
-    dishes: [
-      { id: 14, name: "Quinoa Stuffed Peppers", price: 18.99 },
-      { id: 15, name: "Vegan Buddha Bowl", price: 16.99 },
-      { id: 16, name: "Avocado Chocolate Mousse", price: 9.99 },
-      { id: 17, name: "Fresh Fruit Platter", price: 32.0 },
-    ],
-  },
-  {
-    id: 5,
-    name: "Graduation Party",
-    eventType: "Graduation",
-    totalPrice: 650.0,
-    description:
-      "Celebrate academic achievements with this festive food package.",
-    image: "/placeholder.svg?height=300&width=300",
-    lastUpdated: "Feb 25, 2025",
-    numberOfOrders: 12,
-    revenueGenerated: 7800.0,
-    lastOrdered: "Mar 06, 2025",
-    dishes: [
-      { id: 18, name: "Finger Sandwiches", price: 40.0 },
-      { id: 19, name: "Chicken Wings", price: 45.99 },
-      { id: 20, name: "Graduation Cake", price: 55.0 },
-      { id: 21, name: "Sparkling Cider", price: 18.99 },
-    ],
-  },
-  {
-    id: 6,
-    name: "Baby Shower",
-    eventType: "Baby Shower",
-    totalPrice: 400.0,
-    description:
-      "Sweet and savory treats perfect for celebrating new arrivals.",
-    image: "/placeholder.svg?height=300&width=300",
-    lastUpdated: "Mar 02, 2025",
-    numberOfOrders: 18,
-    revenueGenerated: 7200.0,
-    lastOrdered: "Mar 10, 2025",
-    dishes: [
-      { id: 22, name: "Tea Sandwiches", price: 35.0 },
-      { id: 23, name: "Fruit & Cheese Platter", price: 42.99 },
-      { id: 24, name: "Cupcake Tower", price: 48.0 },
-      { id: 25, name: "Sparkling Lemonade", price: 22.99 },
-    ],
-  },
-];
-
-// Sample data for available dishes (for add/edit package)
-const availableDishes = [
-  { id: 1, name: "Grilled Salmon", price: 22.99, category: "Main" },
-  { id: 2, name: "Beef Wellington", price: 28.99, category: "Main" },
-  { id: 3, name: "Chocolate Mousse", price: 8.99, category: "Dessert" },
-  { id: 4, name: "Champagne Toast", price: 12.5, category: "Beverage" },
-  { id: 5, name: "Caprese Salad", price: 9.99, category: "Appetizer" },
-  { id: 6, name: "Gourmet Burgers", price: 15.99, category: "Main" },
-  { id: 7, name: "Loaded Nachos", price: 12.99, category: "Appetizer" },
-  { id: 8, name: "Birthday Cake", price: 35.0, category: "Dessert" },
-  { id: 9, name: "Fruit Punch", price: 8.99, category: "Beverage" },
-  { id: 10, name: "Sandwich Platter", price: 45.99, category: "Main" },
-  { id: 11, name: "Caesar Salad", price: 35.99, category: "Appetizer" },
-  { id: 12, name: "Assorted Cookies", price: 25.0, category: "Dessert" },
-  { id: 13, name: "Coffee Service", price: 30.0, category: "Beverage" },
-  { id: 14, name: "Quinoa Stuffed Peppers", price: 18.99, category: "Main" },
-  { id: 15, name: "Vegan Buddha Bowl", price: 16.99, category: "Main" },
-];
+import { availableMenus, cateringPackages } from "./metadata";
+import { formatCurrency } from "@/utils/format-currency";
 
 export default function PackageManagement() {
   // Simple state for dialog visibility
@@ -195,17 +59,8 @@ export default function PackageManagement() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [currentPackage, setCurrentPackage] = useState(packages[0]);
-  const [selectedDishes, setSelectedDishes] = useState<number[]>([]);
-
-  // Format currency
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(amount);
-  };
+  const [currentPackage, setCurrentPackage] = useState(cateringPackages[0]);
+  const [selectedMenus, setSelectedMenus] = useState<number[]>([]);
 
   return (
     <div className=" mx-auto py-6 max-w-7xl">
@@ -297,7 +152,7 @@ export default function PackageManagement() {
       {/* Packages Grid */}
       {viewMode === "grid" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {packages.map((pkg) => (
+          {cateringPackages.map((pkg) => (
             <div
               key={pkg.id}
               className="bg-white rounded-lg border shadow-sm overflow-hidden hover:shadow-md transition-shadow"
@@ -381,7 +236,7 @@ export default function PackageManagement() {
         </div>
       ) : (
         <div className="space-y-4">
-          {packages.map((pkg) => (
+          {cateringPackages.map((pkg) => (
             <div
               key={pkg.id}
               className="bg-white rounded-lg border shadow-sm overflow-hidden hover:shadow-md transition-shadow"
@@ -489,7 +344,7 @@ export default function PackageManagement() {
               <p className="text-sm mb-4">{currentPackage.description}</p>
 
               <h3 className="font-medium text-sm text-muted-foreground mb-2">
-                Included Dishes
+                Included Menus
               </h3>
               <div className="border rounded-md divide-y mb-4">
                 {currentPackage.dishes.map((dish) => (
@@ -601,9 +456,9 @@ export default function PackageManagement() {
               />
             </div>
             <div>
-              <Label className="mb-2">Select Dishes</Label>
+              <Label className="mb-2">Select Menus</Label>
               <div className="border rounded-md p-2 max-h-60 overflow-y-auto">
-                {availableDishes.map((dish) => (
+                {availableMenus.map((dish) => (
                   <div
                     key={dish.id}
                     className="flex items-center space-x-2 py-2 border-b last:border-0"
@@ -612,10 +467,10 @@ export default function PackageManagement() {
                       id={`dish-${dish.id}`}
                       onCheckedChange={(checked) => {
                         if (checked) {
-                          setSelectedDishes([...selectedDishes, dish.id]);
+                          setSelectedMenus([...selectedMenus, dish.id]);
                         } else {
-                          setSelectedDishes(
-                            selectedDishes.filter((id) => id !== dish.id)
+                          setSelectedMenus(
+                            selectedMenus.filter((id) => id !== dish.id)
                           );
                         }
                       }}
@@ -734,9 +589,9 @@ export default function PackageManagement() {
               />
             </div>
             <div>
-              <Label className="mb-2">Select Dishes</Label>
+              <Label className="mb-2">Select Menus</Label>
               <div className="border rounded-md p-2 max-h-60 overflow-y-auto">
-                {availableDishes.map((dish) => {
+                {availableMenus.map((dish) => {
                   const isSelected = currentPackage.dishes.some(
                     (d) => d.id === dish.id
                   );

@@ -23,12 +23,10 @@ import { Button } from "@/components/ui/button";
 import { Eye, MoreHorizontal } from "lucide-react";
 import ReservationDialog from "./ReservationDialog";
 import { useState } from "react";
-import { reservationType } from "@/app/caterer/reservations/reservation-types";
-
-type ReservationTableProps = {
-  reservations: reservationType[];
-  dashboard?: boolean;
-};
+import {
+  ReservationTableProps,
+  reservationType,
+} from "@/app/caterer/caterer-types";
 
 export default function ReservationTable({
   reservations,

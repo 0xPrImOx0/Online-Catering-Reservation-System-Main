@@ -1,4 +1,4 @@
-const packages = [
+const cateringPackages = [
   {
     image: "/placeholder.svg?height=200&width=400",
     alt: "Birthday Party Package",
@@ -141,4 +141,4 @@ const packages = [
   },
 ];
 
-export default packages;
+export default cateringPackages;

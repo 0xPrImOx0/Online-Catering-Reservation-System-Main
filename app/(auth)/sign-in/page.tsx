@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { SignInFormValues } from "../auth-types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/utils/formValidtion";
+import { loginSchema } from "@/utils/form-validation";
 import { toast } from "sonner";
 
 export default function LoginPage() {

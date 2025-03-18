@@ -13,6 +13,7 @@ import DeleteMenuDialog from "@/components/shared/caterer/DeleteMenuDialog";
 import SearchInput from "@/components/shared/SearchInput";
 import CustomSelect from "@/components/shared/CustomSelect";
 import ViewModeButtons from "@/components/shared/ViewModeButtons";
+import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton";
 
 export default function MenuManagement() {
   // State responsible for opening/closing the dialogs for dialog visibility
@@ -26,6 +27,10 @@ export default function MenuManagement() {
 
   return (
     <main className="flex-1 overflow-auto space-y-8 px-1">
+      <HeaderWithAddButton
+        title="Menu"
+        setIsAddInstanceOpen={setIsAddMenuOpen}
+      />
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight">Menus</h1>
         <div className="flex items-center gap-2">

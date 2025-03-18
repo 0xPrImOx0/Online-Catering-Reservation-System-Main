@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { SignUpFormValues } from "../auth-types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpSchema } from "@/utils/formValidtion";
+import { signUpSchema } from "@/utils/form-validation";
 import { toast } from "sonner";
 
 export default function RegisterPage() {

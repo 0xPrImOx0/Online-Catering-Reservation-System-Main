@@ -17,7 +17,7 @@ import { metricCards, items } from "./metadata";
 
 export default function ReservationsPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [query, setQuery] = useState<string | "">("");
+  const [query, setQuery] = useState("");
 
   return (
     <main className="flex-1 overflow-auto px-[4px]">

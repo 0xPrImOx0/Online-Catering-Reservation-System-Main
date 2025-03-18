@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { avatarFallBack } from "@/utils/avatarFallback";
+import { avatarFallBack } from "@/utils/avatar-fallback";
 
 type RegisteredCustomersProps = {
   registeredCustomers: {

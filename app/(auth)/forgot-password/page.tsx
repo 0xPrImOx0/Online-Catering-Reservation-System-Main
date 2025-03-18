@@ -1,7 +1,7 @@
 "use client";
 
 import ForgotPasswordForm from "@/components/shared/auth/forgot-password-form";
-import { forgotPasswordSchema } from "@/utils/formValidtion";
+import { forgotPasswordSchema } from "@/utils/form-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
