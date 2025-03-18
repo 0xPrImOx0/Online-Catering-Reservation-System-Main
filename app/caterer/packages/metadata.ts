@@ -5,13 +5,13 @@ const cateringPackages = [
     eventType: "Wedding",
     totalPrice: 1200.0,
     description:
-      "An elegant wedding feast with premium dishes for your special day.",
+      "An elegant wedding feast with premium menus for your special day.",
     image: "/placeholder.svg?height=300&width=300",
     lastUpdated: "Mar 05, 2025",
     numberOfOrders: 15,
     revenueGenerated: 18000.0,
     lastOrdered: "Mar 08, 2025",
-    dishes: [
+    menus: [
       { id: 1, name: "Grilled Salmon", price: 22.99 },
       { id: 2, name: "Beef Wellington", price: 28.99 },
       { id: 3, name: "Chocolate Mousse", price: 8.99 },
@@ -31,7 +31,7 @@ const cateringPackages = [
     numberOfOrders: 28,
     revenueGenerated: 12600.0,
     lastOrdered: "Mar 10, 2025",
-    dishes: [
+    menus: [
       { id: 6, name: "Gourmet Burgers", price: 15.99 },
       { id: 7, name: "Loaded Nachos", price: 12.99 },
       { id: 8, name: "Birthday Cake", price: 35.0 },
@@ -50,7 +50,7 @@ const cateringPackages = [
     numberOfOrders: 42,
     revenueGenerated: 14700.0,
     lastOrdered: "Mar 09, 2025",
-    dishes: [
+    menus: [
       { id: 10, name: "Sandwich Platter", price: 45.99 },
       { id: 11, name: "Caesar Salad", price: 35.99 },
       { id: 12, name: "Assorted Cookies", price: 25.0 },
@@ -69,7 +69,7 @@ const cateringPackages = [
     numberOfOrders: 8,
     revenueGenerated: 4400.0,
     lastOrdered: "Mar 07, 2025",
-    dishes: [
+    menus: [
       { id: 14, name: "Quinoa Stuffed Peppers", price: 18.99 },
       { id: 15, name: "Vegan Buddha Bowl", price: 16.99 },
       { id: 16, name: "Avocado Chocolate Mousse", price: 9.99 },
@@ -88,7 +88,7 @@ const cateringPackages = [
     numberOfOrders: 12,
     revenueGenerated: 7800.0,
     lastOrdered: "Mar 06, 2025",
-    dishes: [
+    menus: [
       { id: 18, name: "Finger Sandwiches", price: 40.0 },
       { id: 19, name: "Chicken Wings", price: 45.99 },
       { id: 20, name: "Graduation Cake", price: 55.0 },
@@ -107,7 +107,7 @@ const cateringPackages = [
     numberOfOrders: 18,
     revenueGenerated: 7200.0,
     lastOrdered: "Mar 10, 2025",
-    dishes: [
+    menus: [
       { id: 22, name: "Tea Sandwiches", price: 35.0 },
       { id: 23, name: "Fruit & Cheese Platter", price: 42.99 },
       { id: 24, name: "Cupcake Tower", price: 48.0 },
@@ -134,4 +134,15 @@ const availableMenus = [
   { id: 15, name: "Vegan Buddha Bowl", price: 16.99, category: "Main" },
 ];
 
-export { cateringPackages, availableMenus };
+const selectorItems = [
+  { value: "default", title: "Default" },
+  { value: "name-asc", title: "Name (A-Z)" },
+  { value: "name-desc", title: "Name (Z-A)" },
+  { value: "price-asc", title: " Price (Low-High)" },
+  { value: "price-desc", title: "Price (High-Low)" },
+  { value: "orders-desc", title: "Most Orders" },
+  { value: "orders-asc", title: "Least Orders" },
+  { value: "revenue-desc", title: "Highest Revenue" },
+];
+
+export { cateringPackages, availableMenus, selectorItems };

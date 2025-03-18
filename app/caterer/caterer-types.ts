@@ -1,7 +1,8 @@
+import { SetStateBoolean } from "@/types/global-types";
 import { Dispatch, SetStateAction } from "react";
 
 // Menu Item Related Props
-type MenuItem = {
+export type MenuItem = {
   id: number;
   name: string;
   category: string;
@@ -19,38 +20,38 @@ type MenuItem = {
 export type MenuItemsProps = {
   menuItems: MenuItem[];
   setCurrentMenu: Dispatch<SetStateAction<MenuItem>>;
-  setIsEditMenuOpen: Dispatch<SetStateAction<boolean>>;
-  setIsDetailsOpen: Dispatch<SetStateAction<boolean>>;
-  setIsDeleteDialogOpen: Dispatch<SetStateAction<boolean>>;
+  setIsEditMenuOpen: SetStateBoolean;
+  setIsDetailsOpen: SetStateBoolean;
+  setIsDeleteDialogOpen: SetStateBoolean;
 };
 
 export type MenuInfoDialogProps = {
   currentMenu: MenuItem;
   isDetailsOpen: boolean;
-  setIsDetailsOpen: Dispatch<SetStateAction<boolean>>;
-  setIsEditMenuOpen: Dispatch<SetStateAction<boolean>>;
+  setIsDetailsOpen: SetStateBoolean;
+  setIsEditMenuOpen: SetStateBoolean;
 };
 
 export type AddMenuDialogProps = {
   isAddMenuOpen: boolean;
-  setIsAddMenuOpen: Dispatch<SetStateAction<boolean>>;
+  setIsAddMenuOpen: SetStateBoolean;
 };
 
 export type EditMenuDialogProps = {
   currentMenu: MenuItem;
   isEditMenuOpen: boolean;
-  setIsEditMenuOpen: Dispatch<SetStateAction<boolean>>;
+  setIsEditMenuOpen: SetStateBoolean;
 };
 
 export type DeleteMenuDialogProps = {
   currentMenu: MenuItem;
   isDeleteDialogOpen: boolean;
-  setIsDeleteDialogOpen: Dispatch<SetStateAction<boolean>>;
+  setIsDeleteDialogOpen: SetStateBoolean;
 };
 
 export type HeaderWithAddButtonProps = {
   title: string;
-  setIsAddInstanceOpen: Dispatch<SetStateAction<boolean>>;
+  setIsAddInstanceOpen: SetStateBoolean;
 };
 
 //Reservation Related Types
@@ -81,4 +82,62 @@ export type reservationType = {
 export type ReservationTableProps = {
   reservations: reservationType[];
   dashboard?: boolean;
+};
+
+//Packages Related Props
+
+type PackageMenuItem = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+export type PackageItem = {
+  id: number;
+  name: string;
+  eventType: string;
+  totalPrice: number;
+  description: string;
+  image: string;
+  lastUpdated: string;
+  numberOfOrders: number;
+  revenueGenerated: number;
+  lastOrdered: string;
+  menus: PackageMenuItem[];
+};
+
+export type PackageGridModeProps = {
+  cateringPackages: PackageItem[];
+  setCurrentPackage: Dispatch<SetStateAction<PackageItem>>;
+  setIsEditPackageOpen: SetStateBoolean;
+  setIsDeleteDialogOpen: SetStateBoolean;
+  setIsDetailsOpen: SetStateBoolean;
+};
+
+export type PackageDetailsProps = {
+  currentPackage: PackageItem;
+  isDetailsOpen: boolean;
+  setIsDetailsOpen: SetStateBoolean;
+  setIsEditPackageOpen: SetStateBoolean;
+};
+
+export type AddPackageDialogProps = {
+  availableMenus: PackageMenuItem[];
+  isAddPackageOpen: boolean;
+  setIsAddPackageOpen: SetStateBoolean;
+  setSelectedMenus: Dispatch<SetStateAction<number[]>>;
+  selectedMenus: number[];
+};
+
+export type EditPackageDialogProps = {
+  currentPackage: PackageItem;
+  isEditPackageOpen: boolean;
+  setIsEditPackageOpen: SetStateBoolean;
+  availableMenus: PackageMenuItem[];
+};
+
+export type DeletePackageDialogProps = {
+  currentPackage: PackageItem;
+  isDeleteDialogOpen: boolean;
+  setIsDeleteDialogOpen: SetStateBoolean;
 };
