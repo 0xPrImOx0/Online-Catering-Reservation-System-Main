@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { PlusIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { menuItems, selectorItems } from "./metadata";
 import MenuGridMode from "@/components/shared/caterer/MenuGridMode";
 import MenuListMode from "@/components/shared/caterer/MenuListMode";

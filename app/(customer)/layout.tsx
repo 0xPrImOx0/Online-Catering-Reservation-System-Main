@@ -11,7 +11,6 @@ export default function CustomerLayout({
     <div>
       <CustomerSiteHeader />
       <div className="max-w-[1440px] mx-auto px-[2%]">{children}</div>
-
       <Footer />
     </div>
   );

@@ -2,16 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import {
-  ArrowUpRight,
-  DollarSign,
-  Filter,
-  MoreHorizontal,
-  Search,
-} from "lucide-react";
-
+import { ArrowUpRight, DollarSign, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -20,125 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-
-// Sample data for chart
-const chartData = [
-  { month: "Jan", value: 38 },
-  { month: "Feb", value: 52 },
-  { month: "Mar", value: 45 },
-  { month: "Apr", value: 78 },
-  { month: "May", value: 90 },
-  { month: "Jun", value: 85 },
-  { month: "Jul", value: 92 },
-];
-
-// Sample data for trending packages
-const trendingPackages = [
-  {
-    id: 1,
-    name: "Wedding Bliss",
-    eventType: "Wedding",
-    price: 1200.0,
-    sales: 524,
-    percentChange: 12,
-    image: "/placeholder.svg?height=80&width=80",
-  },
-  {
-    id: 2,
-    name: "Birthday Bash",
-    eventType: "Birthday",
-    price: 450.0,
-    sales: 224,
-    percentChange: 12,
-    image: "/placeholder.svg?height=80&width=80",
-  },
-  {
-    id: 3,
-    name: "Corporate Lunch",
-    eventType: "Corporate",
-    price: 350.0,
-    sales: 124,
-    percentChange: 12,
-    image: "/placeholder.svg?height=80&width=80",
-  },
-  {
-    id: 4,
-    name: "Graduation Party",
-    eventType: "Graduation",
-    price: 650.0,
-    sales: 104,
-    percentChange: 12,
-    image: "/placeholder.svg?height=80&width=80",
-  },
-];
-
-// Sample data for most favorite dishes
-const favoriteDishes = [
-  {
-    id: 1,
-    name: "Grilled Salmon",
-    image: "/placeholder.svg?height=200&width=300",
-    likes: 12500,
-  },
-  {
-    id: 2,
-    name: "Beef Wellington",
-    image: "/placeholder.svg?height=200&width=300",
-    likes: 12500,
-  },
-  {
-    id: 3,
-    name: "Chocolate Mousse",
-    image: "/placeholder.svg?height=200&width=300",
-    likes: 12500,
-  },
-  {
-    id: 4,
-    name: "Caesar Salad",
-    image: "/placeholder.svg?height=200&width=300",
-    likes: 12500,
-  },
-];
-
-// Sample data for most selling dishes
-const mostSellingDishes = [
-  {
-    id: 1,
-    name: "Grilled Salmon",
-    category: "Main",
-    price: 15.24,
-    image: "/placeholder.svg?height=80&width=80",
-    servesFor: "4 Person",
-    prepTime: "24mins",
-  },
-  {
-    id: 2,
-    name: "Beef Wellington",
-    category: "Main",
-    price: 15.24,
-    image: "/placeholder.svg?height=80&width=80",
-    servesFor: "4 Person",
-    prepTime: "24mins",
-  },
-  {
-    id: 3,
-    name: "Chocolate Mousse",
-    category: "Dessert",
-    price: 15.24,
-    image: "/placeholder.svg?height=80&width=80",
-    servesFor: "4 Person",
-    prepTime: "24mins",
-  },
-  {
-    id: 4,
-    name: "Caesar Salad",
-    category: "Appetizer",
-    price: 15.24,
-    image: "/placeholder.svg?height=80&width=80",
-    servesFor: "4 Person",
-    prepTime: "24mins",
-  },
-];
+import { chartData, favoriteMenus, mostSellingMenus, trendingPackages } from "./metadata";
 
 export default function AnalyticsDashboard() {
   const [timeFrame, setTimeFrame] = useState("monthly");
@@ -384,18 +258,18 @@ export default function AnalyticsDashboard() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {favoriteDishes.map((dish) => (
-            <div key={dish.id} className="rounded-lg overflow-hidden border">
+          {favoriteMenus.map((menu) => (
+            <div key={menu.id} className="rounded-lg overflow-hidden border">
               <div className="h-40 w-full relative">
                 <Image
-                  src={dish.image || "/placeholder.svg"}
-                  alt={dish.name}
+                  src={menu.image || "/placeholder.svg"}
+                  alt={menu.name}
                   fill
                   className="object-cover"
                 />
               </div>
               <div className="p-3">
-                <h3 className="font-medium mb-2">{dish.name}</h3>
+                <h3 className="font-medium mb-2">{menu.name}</h3>
                 <div className="flex items-center justify-between">
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -426,7 +300,7 @@ export default function AnalyticsDashboard() {
                     >
                       <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
                     </svg>
-                    <span>{formatNumber(dish.likes)}</span>
+                    <span>{formatNumber(menu.likes)}</span>
                   </div>
                 </div>
               </div>
@@ -452,15 +326,15 @@ export default function AnalyticsDashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {mostSellingDishes.map((dish) => (
+          {mostSellingMenus.map((menu) => (
             <div
-              key={dish.id}
+              key={menu.id}
               className="flex items-center gap-4 p-4 border rounded-lg"
             >
               <div className="h-16 w-16 rounded-md overflow-hidden">
                 <Image
-                  src={dish.image || "/placeholder.svg"}
-                  alt={dish.name}
+                  src={menu.image || "/placeholder.svg"}
+                  alt={menu.name}
                   width={64}
                   height={64}
                   className="h-full w-full object-cover"
@@ -468,24 +342,24 @@ export default function AnalyticsDashboard() {
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-medium">{dish.name}</h3>
+                  <h3 className="font-medium">{menu.name}</h3>
                   <Button variant="ghost" size="icon" className="h-8 w-8">
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-bold">
-                    {formatCurrency(dish.price)}
+                    {formatCurrency(menu.price)}
                   </span>
                   <Badge
                     variant="outline"
                     className="text-xs bg-indigo-50 text-indigo-600 border-indigo-200"
                   >
-                    {dish.category}
+                    {menu.category}
                   </Badge>
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  Serves for {dish.servesFor} {dish.prepTime}
+                  Serves for {menu.servesFor} {menu.prepTime}
                 </div>
               </div>
             </div>

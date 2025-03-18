@@ -14,7 +14,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   DropdownMenu,
@@ -54,7 +53,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Bell,
   Check,
   Edit,
   Eye,
@@ -64,13 +62,13 @@ import {
   Reply,
   Search,
   Trash2,
-  UserPlus,
   Users,
 } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { concerns, customers } from "./metadata";
-import { ConcernType, CustomerType } from "./customer-type";
+import { ConcernType, CustomerType } from "../caterer-types";
+// import { ConcernType, CustomerType } from "./customer-type";
 
 export default function CustomersPage() {
   const [selectedCustomer, setSelectedCustomer] = useState<CustomerType | null>(
