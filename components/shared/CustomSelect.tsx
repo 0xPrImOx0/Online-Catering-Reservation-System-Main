@@ -6,16 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-
-type CustomSelectProps = {
-  defaultValue: string;
-  placeholder: string;
-  items: {
-    value: string;
-    title: string;
-  }[];
-  size?: "sm" | "lg";
-};
+import { CustomSelectProps } from "@/types/component-types";
+import { SortAsc } from "lucide-react";
 
 export default function CustomSelect({
   defaultValue,
@@ -26,9 +18,15 @@ export default function CustomSelect({
   return (
     <Select defaultValue={defaultValue}>
       <SelectTrigger
-        className={clsx("", { "w-[180px]": size === "sm", "": size === "lg" })}
+        className={clsx({
+          "w-[200px] max-w-[200px]": size === "sm",
+          "": size === "lg",
+        })}
       >
-        <SelectValue placeholder={placeholder} />
+        <div className="flex items-center">
+          <SortAsc className="mr-2 h-4 w-4" />
+          <SelectValue className="" placeholder={placeholder} />
+        </div>
       </SelectTrigger>
       <SelectContent>
         {items.map(({ value, title }) => (
