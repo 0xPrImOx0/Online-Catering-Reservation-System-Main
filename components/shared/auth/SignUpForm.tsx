@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../ui/card";
-import { Google } from "../svg-logo";
+import { Google } from "../Google";
 import { SignUpFormProps } from "@/app/(auth)/auth-types";
 import {
   Form,

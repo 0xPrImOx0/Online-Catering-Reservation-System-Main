@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../ui/card";
-import { Google } from "../svg-logo";
+import { Google } from "../Google";
 import { SignInFormProps } from "@/app/(auth)/auth-types";
 import {
   Form,

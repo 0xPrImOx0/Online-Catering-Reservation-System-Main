@@ -31,19 +31,6 @@ export default function MenuManagement() {
         title="Menu"
         setIsAddInstanceOpen={setIsAddMenuOpen}
       />
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Menus</h1>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size={"landing"}
-            onClick={() => setIsAddMenuOpen((prev) => !prev)}
-          >
-            <PlusIcon strokeWidth={2.5} className="min-w-5 min-h-5" />
-            Create Menu
-          </Button>
-        </div>
-      </div>
 
       {/* Search and View Controls */}
       <div className="flex justify-between mb-6">

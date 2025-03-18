@@ -1,6 +1,6 @@
 "use client";
 
-import { SignUpForm } from "@/components/shared/auth/sign-up-form";
+import { SignUpForm } from "@/components/shared/auth/SignUpForm";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";

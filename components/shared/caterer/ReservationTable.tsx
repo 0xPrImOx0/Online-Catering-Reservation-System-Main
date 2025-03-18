@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
-import StatusBadge from "../status-badge";
+import StatusBadge from "../StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Eye, MoreHorizontal } from "lucide-react";
 import ReservationDialog from "./ReservationDialog";

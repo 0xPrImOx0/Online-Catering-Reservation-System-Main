@@ -12,12 +12,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SearchForm } from "@/components/shared/search-form";
 import { SidebarIcon } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
 import React from "react";
 import { NavUser } from "./nav-user";
-import ThemeMode from "../theme/ThemeMode";
 
 export function SiteHeader() {
   const { toggleSidebar } = useSidebar();

@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronDown } from "lucide-react";
 import { format } from "date-fns";
-import StatusBadge from "../status-badge";
+import StatusBadge from "../StatusBadge";
 import {
   Table,
   TableBody,
