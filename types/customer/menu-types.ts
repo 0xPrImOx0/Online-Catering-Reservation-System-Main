@@ -44,3 +44,5 @@ export type CalculationParams = {
   price: number;
   servingSize: number;
 };
+
+export type StarSize = "small" | "medium" | "large";
