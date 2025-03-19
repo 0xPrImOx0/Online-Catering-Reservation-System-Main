@@ -9,6 +9,8 @@ import { ClipboardCheck, Star } from "lucide-react";
 import packages from "@/lib/packages";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import PackageCards from "@/components/shared/customer/PackageCards";
+import CustomSelect from "@/components/shared/CustomSelect";
+import { dietaryOptions, menuTypes, priceOptions } from "./menu-metadata";
 
 export default function Page() {
   return (
@@ -18,46 +20,26 @@ export default function Page() {
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Select>
-            <SelectTrigger className="w-full text-foreground sm:w-[200px]">
-              <SelectValue placeholder="Menu Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Menus</SelectItem>
-              <SelectItem value="breakfast">Breakfast</SelectItem>
-              <SelectItem value="lunch">Lunch</SelectItem>
-              <SelectItem value="dinner">Dinner</SelectItem>
-              <SelectItem value="cocktail">Cocktail Hour</SelectItem>
-              <SelectItem value="dessert">Desserts</SelectItem>
-            </SelectContent>
-          </Select>
+          <CustomSelect
+            defaultValue="all"
+            placeholder="Menu Type"
+            size="md"
+            items={menuTypes}
+          />
 
-          <Select>
-            <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Dietary Options" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Options</SelectItem>
-              <SelectItem value="vegetarian">Vegetarian</SelectItem>
-              <SelectItem value="vegan">Vegan</SelectItem>
-              <SelectItem value="gluten-free">Gluten-Free</SelectItem>
-              <SelectItem value="dairy-free">Dairy-Free</SelectItem>
-              <SelectItem value="nut-free">Nut-Free</SelectItem>
-            </SelectContent>
-          </Select>
+          <CustomSelect
+            defaultValue="all"
+            placeholder="Dietary Options"
+            size="md"
+            items={dietaryOptions}
+          />
 
-          <Select>
-            <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Price Range" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Prices</SelectItem>
-              <SelectItem value="budget">Budget ($15-25/person)</SelectItem>
-              <SelectItem value="standard">Standard ($25-40/person)</SelectItem>
-              <SelectItem value="premium">Premium ($40-60/person)</SelectItem>
-              <SelectItem value="luxury">Luxury ($60+/person)</SelectItem>
-            </SelectContent>
-          </Select>
+          <CustomSelect
+            defaultValue="all"
+            placeholder="Price Range"
+            size="md"
+            items={priceOptions}
+          />
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-10">

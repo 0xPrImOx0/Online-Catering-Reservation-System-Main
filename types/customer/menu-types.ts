@@ -7,7 +7,7 @@ export type CategoryProps =
   | "Pork"
   | "Noodle"
   | "Chicken"
-  | "Fish"
+  | "Seafood"
   | "Vegetable"
   | "Dessert"
   | "Beverage";

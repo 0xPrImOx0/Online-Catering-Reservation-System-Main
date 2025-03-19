@@ -20,6 +20,7 @@ export default function CustomSelect({
       <SelectTrigger
         className={clsx({
           "w-[200px] max-w-[200px]": size === "sm",
+          "w-[250px] max-w-[250px]": size === "md",
           "": size === "lg",
         })}
       >

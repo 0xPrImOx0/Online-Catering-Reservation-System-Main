@@ -7,7 +7,7 @@ export type SearchInputProps = {
   placeholderTitle: string;
 };
 
-//Custom Select Types 
+//Custom Select Types
 export type CustomSelectProps = {
   defaultValue: string;
   placeholder: string;
@@ -15,7 +15,7 @@ export type CustomSelectProps = {
     value: string;
     title: string;
   }[];
-  size?: "sm" | "lg";
+  size?: "sm" | "md" | "lg";
 };
 
 //View Mode Props

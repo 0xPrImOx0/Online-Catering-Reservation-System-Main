@@ -261,3 +261,29 @@ export const menuItems: MenuItem[] = [
     },
   },
 ];
+
+export const menuTypes = [
+  { value: "all", title: "All Menu Types" },
+  { value: "breakfast", title: "Breakfast" },
+  { value: "lunch", title: "Lunch" },
+  { value: "dinner", title: "Dinner" },
+  { value: "cocktail", title: "Cocktail Hour" },
+  { value: "dessert", title: "Desserts" },
+];
+
+export const dietaryOptions = [
+  { value: "all", title: "All Dietary Options" },
+  { value: "vegetarian", title: "Vegetarian" },
+  { value: "vegan", title: "Vegan" },
+  { value: "gluten-free", title: "Gluten-Free" },
+  { value: "dairy-free", title: "Dairy-Free" },
+  { value: "nut-free", title: "Nut-Free" },
+];
+
+export const priceOptions = [
+  { value: "all", title: "All Price Options" },
+  { value: "budget", title: "Budget ($15-25/person)" },
+  { value: "standard", title: "Standard ($25-40/person)" },
+  { value: "premium", title: "Premium ($40-60/person)" },
+  { value: "luxury", title: "Luxury ($60+/person)" },
+];
