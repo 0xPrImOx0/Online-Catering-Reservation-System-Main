@@ -51,3 +51,9 @@ export interface MenuDetailsDialogProps {
   item: MenuItem;
   children: React.ReactNode;
 }
+
+export interface MenuImageDialogProps {
+  item: MenuItem;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}

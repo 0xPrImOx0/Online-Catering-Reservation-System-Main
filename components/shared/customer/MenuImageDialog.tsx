@@ -1,22 +1,16 @@
 "use client";
 
 import { useRef } from "react";
-import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { X } from "lucide-react";
-import type { MenuItem } from "../types";
 import Image from "next/image";
-
-interface MenuImageDialogProps {
-  item: MenuItem;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
+import { MenuImageDialogProps } from "@/types/customer/menu-types";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 
 export function MenuImageDialog({
   item,
@@ -28,6 +22,9 @@ export function MenuImageDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="p-0 overflow-hidden bg-transparent border-0 shadow-none">
+        <VisuallyHidden>
+          <DialogTitle>{item.name}</DialogTitle>
+        </VisuallyHidden>
         <div className="relative w-auto h-auto">
           <TooltipProvider>
             <Tooltip>
@@ -36,12 +33,13 @@ export function MenuImageDialog({
                   <div className="relative" ref={imageRef}>
                     <Image
                       src={item.imageUrl || "/placeholder.svg"}
+                      width={1500}
+                      height={725}
                       alt={item.name}
-                      className="object-contain max-h-[85vh] max-w-[85vw] rounded-lg"
                     />
-                    <DialogClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/70 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black transition-colors">
+                    {/* <DialogClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/70 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black transition-colors">
                       <X className="h-5 w-5" />
-                    </DialogClose>
+                    </DialogClose> */}
                   </div>
                 </div>
               </TooltipTrigger>

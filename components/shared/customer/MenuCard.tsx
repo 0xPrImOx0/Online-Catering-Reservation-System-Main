@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -18,18 +19,29 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Flame } from "lucide-react";
-import type { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
+import { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
+import { RenderStarRatings } from "../CustomStarRating";
+import { useMenuCalculations } from "@/hooks/useMenuCalculations";
+import { MenuDetailsDialog } from "./MenuDetailsDialog";
+import { MenuImageDialog } from "./MenuImageDialog";
 
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(30);
+  const [showImageDialog, setShowImageDialog] = useState(false);
+
+  const { calculateSavings, calculateSavingsPercentage, calculatePricePerPax } =
+    useMenuCalculations();
 
   return (
-    <Card className="overflow-hidden border-border flex flex-col h-full hover:shadow-lg transition-shadow duration-300">
+    <Card className="overflow-hidden border border-gray-200 bg-white shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
       <div className="relative h-48 w-full overflow-hidden">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <button className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none">
+              <button
+                className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none"
+                onClick={() => setShowImageDialog(true)}
+              >
                 <Image
                   src={item.imageUrl || "/placeholder.svg"}
                   alt={item.name}
@@ -62,8 +74,25 @@ export function MenuCard({ item }: MenuCardProps) {
           )}
         </div>
 
+        <div className="absolute bottom-3 left-3">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="bg-black/70 backdrop-blur-sm rounded px-2.5 py-1.5">
+                  {RenderStarRatings(item.rating, "medium")}
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  {item.rating} out of 5 ({item.ratingCount} reviews)
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+
         <div className="absolute bottom-3 right-3">
-          <div className="bg-background/70 text-foreground backdrop-blur-sm rounded px-2.5 py-1.5 font-bold dark:bg-background/80">
+          <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2.5 py-1.5 font-bold">
             ${item.prices[selectedServing].toFixed(2)}
           </div>
         </div>
@@ -75,17 +104,55 @@ export function MenuCard({ item }: MenuCardProps) {
             <CardTitle className="text-xl font-serif break-words">
               {item.name}
             </CardTitle>
-            <CardDescription className="mt-1">
+            <CardDescription className="text-gray-600 mt-1">
               {item.shortDescription}
             </CardDescription>
           </div>
+          <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto">
+            {calculateSavingsPercentage({
+              regularPricePerPax: item.regularPricePerPax,
+              price: item.prices[selectedServing],
+              servingSize: selectedServing,
+            }).toFixed(0)}
+            % OFF
+          </Badge>
         </div>
       </CardHeader>
 
       <CardContent className="flex-grow">
         <div className="space-y-4">
+          <div className="bg-gray-50 p-3 rounded-md border border-gray-100">
+            <div className="flex justify-between items-center mb-2">
+              <p className="text-sm font-medium text-gray-700">
+                Price per person:
+              </p>
+              <p className="font-bold">
+                $
+                {calculatePricePerPax(
+                  item.prices[selectedServing],
+                  selectedServing
+                ).toFixed(2)}
+                /pax
+              </p>
+            </div>
+            <div className="flex justify-between items-center">
+              <p className="text-sm font-medium text-gray-700">You save:</p>
+              <p className="font-bold text-emerald-600">
+                $
+                {calculateSavings({
+                  regularPricePerPax: item.regularPricePerPax,
+                  price: item.prices[selectedServing],
+                  servingSize: selectedServing,
+                }).toFixed(2)}
+              </p>
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              Regular price: ${item.regularPricePerPax.toFixed(2)}/person
+            </p>
+          </div>
+
           <div>
-            <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
+            <p className="text-xs font-medium uppercase text-gray-500 mb-1">
               Allergens:
             </p>
             <div className="flex flex-wrap gap-1.5">
@@ -96,13 +163,13 @@ export function MenuCard({ item }: MenuCardProps) {
                   </Badge>
                 ))
               ) : (
-                <span className="text-xs text-muted-foreground">None</span>
+                <span className="text-xs text-gray-600">None</span>
               )}
             </div>
           </div>
 
           <div className="pt-1">
-            <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
+            <p className="text-xs font-medium uppercase text-gray-500 mb-1">
               Select serving size:
             </p>
             <div className="flex gap-1.5">
@@ -112,7 +179,11 @@ export function MenuCard({ item }: MenuCardProps) {
                   variant={selectedServing === size ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedServing(size as ServingSize)}
-                  className={`text-xs px-2.5 py-1 h-auto`}
+                  className={`text-xs px-2.5 py-1 h-auto ${
+                    selectedServing === size
+                      ? "bg-black text-white"
+                      : "border-gray-300"
+                  }`}
                 >
                   {size} pax
                 </Button>
@@ -121,6 +192,21 @@ export function MenuCard({ item }: MenuCardProps) {
           </div>
         </div>
       </CardContent>
+
+      <CardFooter className="pt-0 pb-4 mt-auto">
+        <MenuDetailsDialog item={item}>
+          <Button className="w-full bg-black hover:bg-gray-800 text-white transition-colors">
+            View Details
+          </Button>
+        </MenuDetailsDialog>
+      </CardFooter>
+
+      {/* Image Dialog */}
+      <MenuImageDialog
+        item={item}
+        open={showImageDialog}
+        onOpenChange={setShowImageDialog}
+      />
     </Card>
   );
 }
