@@ -10,7 +10,13 @@ import packages from "@/lib/packages";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import PackageCards from "@/components/shared/customer/PackageCards";
 import CustomSelect from "@/components/shared/CustomSelect";
-import { dietaryOptions, menuTypes, priceOptions } from "./menu-metadata";
+import {
+  dietaryOptions,
+  menuItems,
+  menuTypes,
+  priceOptions,
+} from "./menu-metadata";
+import { MenuCard } from "@/components/shared/customer/MenuCard";
 
 export default function Page() {
   return (
@@ -21,21 +27,21 @@ export default function Page() {
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <CustomSelect
-            defaultValue="all"
+            defaultValue=""
             placeholder="Menu Type"
             size="md"
             items={menuTypes}
           />
 
           <CustomSelect
-            defaultValue="all"
+            defaultValue=""
             placeholder="Dietary Options"
             size="md"
             items={dietaryOptions}
           />
 
           <CustomSelect
-            defaultValue="all"
+            defaultValue=""
             placeholder="Price Range"
             size="md"
             items={priceOptions}
@@ -44,8 +50,8 @@ export default function Page() {
 
         <div className="flex flex-wrap items-center justify-center gap-10">
           {/* Package Showcase */}
-          {packages.map((item, index) => (
-            <PackageCards features={item} key={index} />
+          {menuItems.map((item) => (
+            <MenuCard key={item.id} item={item} />
           ))}
         </div>
 
