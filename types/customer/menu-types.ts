@@ -38,3 +38,9 @@ export interface MenuItem {
 export interface MenuCardProps {
   item: MenuItem;
 }
+
+export type CalculationParams = {
+  regularPricePerPax: number;
+  price: number;
+  servingSize: number;
+};

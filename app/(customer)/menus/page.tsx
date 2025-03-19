@@ -20,7 +20,7 @@ import { MenuCard } from "@/components/shared/customer/MenuCard";
 
 export default function Page() {
   return (
-    <main className="flex-1">
+    <main className="px-20">
       <div className=" py-12">
         <h1 className="text-5xl font-bold text-center mb-12">Our Menus</h1>
 
