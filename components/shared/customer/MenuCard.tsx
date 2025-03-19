@@ -18,13 +18,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Flame } from "lucide-react";
-import { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
+import type { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
 
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(30);
 
   return (
-    <Card className="overflow-hidden border border-gray-200 bg-white shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+    <Card className="overflow-hidden border-border flex flex-col h-full hover:shadow-lg transition-shadow duration-300">
       <div className="relative h-48 w-full overflow-hidden">
         <TooltipProvider>
           <Tooltip>
@@ -63,7 +63,7 @@ export function MenuCard({ item }: MenuCardProps) {
         </div>
 
         <div className="absolute bottom-3 right-3">
-          <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2.5 py-1.5 font-bold">
+          <div className="bg-background/70 text-foreground backdrop-blur-sm rounded px-2.5 py-1.5 font-bold dark:bg-background/80">
             ${item.prices[selectedServing].toFixed(2)}
           </div>
         </div>
@@ -75,7 +75,7 @@ export function MenuCard({ item }: MenuCardProps) {
             <CardTitle className="text-xl font-serif break-words">
               {item.name}
             </CardTitle>
-            <CardDescription className="text-gray-600 mt-1">
+            <CardDescription className="mt-1">
               {item.shortDescription}
             </CardDescription>
           </div>
@@ -85,7 +85,7 @@ export function MenuCard({ item }: MenuCardProps) {
       <CardContent className="flex-grow">
         <div className="space-y-4">
           <div>
-            <p className="text-xs font-medium uppercase text-gray-500 mb-1">
+            <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
               Allergens:
             </p>
             <div className="flex flex-wrap gap-1.5">
@@ -96,13 +96,13 @@ export function MenuCard({ item }: MenuCardProps) {
                   </Badge>
                 ))
               ) : (
-                <span className="text-xs text-gray-600">None</span>
+                <span className="text-xs text-muted-foreground">None</span>
               )}
             </div>
           </div>
 
           <div className="pt-1">
-            <p className="text-xs font-medium uppercase text-gray-500 mb-1">
+            <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
               Select serving size:
             </p>
             <div className="flex gap-1.5">
@@ -112,11 +112,7 @@ export function MenuCard({ item }: MenuCardProps) {
                   variant={selectedServing === size ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedServing(size as ServingSize)}
-                  className={`text-xs px-2.5 py-1 h-auto ${
-                    selectedServing === size
-                      ? "bg-black text-white"
-                      : "border-gray-300"
-                  }`}
+                  className={`text-xs px-2.5 py-1 h-auto`}
                 >
                   {size} pax
                 </Button>
