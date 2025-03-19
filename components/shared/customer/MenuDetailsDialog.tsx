@@ -29,7 +29,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] bg-background max-h-[85vh] overflow-y-auto p-0">
+      <DialogContent className="max-w-[450px] md:max-w-[600px] bg-background max-h-[85vh] overflow-y-auto p-0">
         <div className="sticky top-0 z-10 bg-background">
           <div className="relative h-60 w-full">
             <Image
