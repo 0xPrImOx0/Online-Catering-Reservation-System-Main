@@ -1,7 +1,7 @@
 import { StarSize } from "@/types/customer/menu-types";
 import { Star } from "lucide-react";
 
-export function renderPreciseStars(rating: number, size: StarSize = "small") {
+export function RenderStarRatings(rating: number, size: StarSize = "small") {
   const starSize =
     size === "small" ? "w-4 h-4" : size === "medium" ? "w-5 h-5" : "w-6 h-6";
   const gap =

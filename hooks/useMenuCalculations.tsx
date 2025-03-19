@@ -1,7 +1,7 @@
 import { CalculationParams } from "@/types/customer/menu-types";
 import { useCallback } from "react";
 
-export function useCalculations() {
+export function useMenuCalculations() {
   const calculateSavings = useCallback(
     ({ regularPricePerPax, price, servingSize }: CalculationParams): number =>
       regularPricePerPax * servingSize - price,

@@ -46,3 +46,8 @@ export type CalculationParams = {
 };
 
 export type StarSize = "small" | "medium" | "large";
+
+export interface MenuDetailsDialogProps {
+  item: MenuItem;
+  children: React.ReactNode;
+}

@@ -19,20 +19,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Flame, X } from "lucide-react";
-import type { MenuItem, ServingSize } from "../types";
-import { renderPreciseStars, calculateSavings } from "../utils/star-rating";
+import {
+  MenuDetailsDialogProps,
+  ServingSize,
+} from "@/types/customer/menu-types";
+import { RenderStarRatings } from "../CustomStarRating";
+import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 
-interface MenuDetailsDialogProps {
-  item: MenuItem;
-  selectedServing: ServingSize;
-  children: React.ReactNode;
-}
-
-export function MenuDetailsDialog({
-  item,
-  selectedServing,
-  children,
-}: MenuDetailsDialogProps) {
+export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
+  const { calculateSavings } = useMenuCalculations();
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -73,7 +68,7 @@ export function MenuDetailsDialog({
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div>{renderPreciseStars(item.rating, "large")}</div>
+                    <div>{RenderStarRatings(item.rating, "large")}</div>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
@@ -165,11 +160,11 @@ export function MenuDetailsDialog({
                     </p>
                     <p className="text-sm text-emerald-600">
                       Save $
-                      {calculateSavings(
-                        item.regularPricePerPax,
-                        item.prices[size as ServingSize],
-                        size
-                      ).toFixed(2)}
+                      {calculateSavings({
+                        regularPricePerPax: item.regularPricePerPax,
+                        price: item.prices[size as ServingSize],
+                        servingSize: size,
+                      }).toFixed(2)}
                     </p>
                   </div>
                 </div>
