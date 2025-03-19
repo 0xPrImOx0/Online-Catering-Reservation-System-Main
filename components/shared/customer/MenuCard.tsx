@@ -19,11 +19,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Flame } from "lucide-react";
-import { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
+import type { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
 import { RenderStarRatings } from "../CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { MenuDetailsDialog } from "./MenuDetailsDialog";
 import { MenuImageDialog } from "./MenuImageDialog";
+import { cn } from "@/lib/utils";
 
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(30);
@@ -33,13 +34,13 @@ export function MenuCard({ item }: MenuCardProps) {
     useMenuCalculations();
 
   return (
-    <Card className="overflow-hidden border border-gray-200 bg-white shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+    <Card className="overflow-hidden border shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
       <div className="relative h-48 w-full overflow-hidden">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <button
-                className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none"
+                className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 onClick={() => setShowImageDialog(true)}
               >
                 <Image
@@ -59,7 +60,9 @@ export function MenuCard({ item }: MenuCardProps) {
         <div className="absolute top-2 right-2 flex gap-2">
           <Badge
             variant={item.available ? "default" : "destructive"}
-            className={item.available ? "bg-emerald-600" : ""}
+            className={
+              item.available ? "bg-emerald-600 hover:bg-emerald-700" : ""
+            }
           >
             {item.available ? "Available" : "Unavailable"}
           </Badge>
@@ -67,7 +70,7 @@ export function MenuCard({ item }: MenuCardProps) {
           {item.spicy && (
             <Badge
               variant="outline"
-              className="bg-red-500 text-white border-red-500 flex items-center gap-1"
+              className="bg-red-500 text-white border-red-500 flex items-center gap-1 hover:bg-red-600"
             >
               <Flame className="h-3 w-3" /> Spicy
             </Badge>
@@ -104,11 +107,11 @@ export function MenuCard({ item }: MenuCardProps) {
             <CardTitle className="text-xl font-serif break-words">
               {item.name}
             </CardTitle>
-            <CardDescription className="text-gray-600 mt-1">
+            <CardDescription className="mt-1">
               {item.shortDescription}
             </CardDescription>
           </div>
-          <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto">
+          <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
             {calculateSavingsPercentage({
               regularPricePerPax: item.regularPricePerPax,
               price: item.prices[selectedServing],
@@ -121,9 +124,9 @@ export function MenuCard({ item }: MenuCardProps) {
 
       <CardContent className="flex-grow">
         <div className="space-y-4">
-          <div className="bg-gray-50 p-3 rounded-md border border-gray-100">
+          <div className="bg-muted p-3 rounded-md border">
             <div className="flex justify-between items-center mb-2">
-              <p className="text-sm font-medium text-gray-700">
+              <p className="text-sm font-medium text-foreground">
                 Price per person:
               </p>
               <p className="font-bold">
@@ -136,8 +139,8 @@ export function MenuCard({ item }: MenuCardProps) {
               </p>
             </div>
             <div className="flex justify-between items-center">
-              <p className="text-sm font-medium text-gray-700">You save:</p>
-              <p className="font-bold text-emerald-600">
+              <p className="text-sm font-medium text-foreground">You save:</p>
+              <p className="font-bold text-emerald-600 dark:text-emerald-500">
                 $
                 {calculateSavings({
                   regularPricePerPax: item.regularPricePerPax,
@@ -146,13 +149,13 @@ export function MenuCard({ item }: MenuCardProps) {
                 }).toFixed(2)}
               </p>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               Regular price: ${item.regularPricePerPax.toFixed(2)}/person
             </p>
           </div>
 
           <div>
-            <p className="text-xs font-medium uppercase text-gray-500 mb-1">
+            <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
               Allergens:
             </p>
             <div className="flex flex-wrap gap-1.5">
@@ -163,13 +166,13 @@ export function MenuCard({ item }: MenuCardProps) {
                   </Badge>
                 ))
               ) : (
-                <span className="text-xs text-gray-600">None</span>
+                <span className="text-xs text-muted-foreground">None</span>
               )}
             </div>
           </div>
 
           <div className="pt-1">
-            <p className="text-xs font-medium uppercase text-gray-500 mb-1">
+            <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
               Select serving size:
             </p>
             <div className="flex gap-1.5">
@@ -179,11 +182,11 @@ export function MenuCard({ item }: MenuCardProps) {
                   variant={selectedServing === size ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedServing(size as ServingSize)}
-                  className={`text-xs px-2.5 py-1 h-auto ${
-                    selectedServing === size
-                      ? "bg-black text-white"
-                      : "border-gray-300"
-                  }`}
+                  className={cn(
+                    "text-xs px-2.5 py-1 h-auto",
+                    selectedServing === size &&
+                      "bg-primary text-primary-foreground"
+                  )}
                 >
                   {size} pax
                 </Button>
@@ -195,7 +198,7 @@ export function MenuCard({ item }: MenuCardProps) {
 
       <CardFooter className="pt-0 pb-4 mt-auto">
         <MenuDetailsDialog item={item}>
-          <Button className="w-full bg-black hover:bg-gray-800 text-white transition-colors">
+          <Button className="w-full" variant="default">
             View Details
           </Button>
         </MenuDetailsDialog>
