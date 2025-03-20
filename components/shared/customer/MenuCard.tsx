@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils";
 import { CategoryBadge } from "./MenuCategoryBadge";
 
 export function MenuCard({ item }: MenuCardProps) {
-  const [selectedServing, setSelectedServing] = useState<ServingSize>(30);
+  const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const [showImageDialog, setShowImageDialog] = useState(false);
 
   const { calculateSavings, calculateSavingsPercentage, calculatePricePerPax } =
@@ -101,7 +101,14 @@ export function MenuCard({ item }: MenuCardProps) {
 
         <div className="absolute bottom-3 right-3">
           <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2.5 py-1.5 font-bold">
-            ${item.prices[selectedServing].toFixed(2)}
+            $
+            {item.prices
+              .find(
+                (p) =>
+                  p.minimumPax <= selectedServing &&
+                  p.maximumPax >= selectedServing
+              )
+              ?.price.toFixed(2) || "N/A"}
           </div>
         </div>
       </div>
@@ -119,7 +126,12 @@ export function MenuCard({ item }: MenuCardProps) {
           <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
             {calculateSavingsPercentage({
               regularPricePerPax: item.regularPricePerPax,
-              price: item.prices[selectedServing],
+              price:
+                item.prices.find(
+                  (p) =>
+                    p.minimumPax <= selectedServing &&
+                    p.maximumPax >= selectedServing
+                )?.price || 0,
               servingSize: selectedServing,
             }).toFixed(0)}
             % OFF
@@ -137,7 +149,11 @@ export function MenuCard({ item }: MenuCardProps) {
               <p className="font-bold">
                 $
                 {calculatePricePerPax(
-                  item.prices[selectedServing],
+                  item.prices.find(
+                    (p) =>
+                      p.minimumPax <= selectedServing &&
+                      p.maximumPax >= selectedServing
+                  )?.price || 0,
                   selectedServing
                 ).toFixed(2)}
                 /pax
@@ -149,7 +165,12 @@ export function MenuCard({ item }: MenuCardProps) {
                 $
                 {calculateSavings({
                   regularPricePerPax: item.regularPricePerPax,
-                  price: item.prices[selectedServing],
+                  price:
+                    item.prices.find(
+                      (p) =>
+                        p.minimumPax <= selectedServing &&
+                        p.maximumPax >= selectedServing
+                    )?.price || 0,
                   servingSize: selectedServing,
                 }).toFixed(2)}
               </p>
@@ -181,32 +202,36 @@ export function MenuCard({ item }: MenuCardProps) {
               Select serving size:
             </p>
             <div className="flex gap-1.5">
-              {[30, 50, 100].map((size) => (
-                <Button
-                  key={size}
-                  variant={selectedServing === size ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedServing(size as ServingSize)}
-                  className={cn(
-                    "text-xs px-2.5 py-1 h-auto",
-                    selectedServing === size &&
-                      "bg-primary text-primary-foreground"
-                  )}
-                >
-                  {size} pax
-                </Button>
-              ))}
+              {[6, 10, 15, 20].map((size, index) => {
+                const start = index === 0 ? 4 : [8, 13, 18][index - 1];
+
+                return (
+                  <Button
+                    key={size}
+                    variant={selectedServing === size ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedServing(size as ServingSize)}
+                    className={cn(
+                      "text-xs px-2.5 py-1 h-auto",
+                      selectedServing === size &&
+                        "bg-primary text-primary-foreground"
+                    )}
+                  >
+                    {start} - {size} pax
+                  </Button>
+                );
+              })}
             </div>
           </div>
         </div>
       </CardContent>
 
       <CardFooter className="pt-0 pb-4 mt-auto">
-        <MenuDetailsDialog item={item}>
+        {/* <MenuDetailsDialog item={item}>
           <Button className="w-full" variant="default">
             View Details
           </Button>
-        </MenuDetailsDialog>
+        </MenuDetailsDialog> */}
       </CardFooter>
 
       {/* Image Dialog */}
