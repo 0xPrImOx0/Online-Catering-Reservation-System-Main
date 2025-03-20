@@ -57,3 +57,8 @@ export interface MenuImageDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+export interface CategoryBadgeProps {
+  category: CategoryProps;
+  size?: "small" | "medium";
+}
