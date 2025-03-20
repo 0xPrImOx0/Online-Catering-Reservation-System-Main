@@ -23,6 +23,7 @@ import type {
 } from "@/types/customer/menu-types";
 import { RenderStarRatings } from "../CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
+import { CategoryBadge } from "./MenuCategoryBadge";
 
 export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
   const { calculateSavings } = useMenuCalculations();
@@ -47,6 +48,9 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               >
                 {item.available ? "Available" : "Unavailable"}
               </Badge>
+
+              <CategoryBadge category={item.category} />
+
               {item.spicy && (
                 <Badge
                   variant="outline"

@@ -62,7 +62,9 @@ export function MenuCard({ item }: MenuCardProps) {
           <Badge
             variant={item.available ? "default" : "destructive"}
             className={
-              item.available ? "bg-emerald-600 hover:bg-emerald-700" : ""
+              item.available
+                ? "bg-emerald-600 hover:bg-emerald-700"
+                : "bg-red-500"
             }
           >
             {item.available ? "Available" : "Unavailable"}
