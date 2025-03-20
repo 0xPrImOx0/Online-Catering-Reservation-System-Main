@@ -25,6 +25,7 @@ import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { MenuDetailsDialog } from "./MenuDetailsDialog";
 import { MenuImageDialog } from "./MenuImageDialog";
 import { cn } from "@/lib/utils";
+import { CategoryBadge } from "./MenuCategoryBadge";
 
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(30);
@@ -66,6 +67,8 @@ export function MenuCard({ item }: MenuCardProps) {
           >
             {item.available ? "Available" : "Unavailable"}
           </Badge>
+
+          <CategoryBadge category={item.category} />
 
           {item.spicy && (
             <Badge
