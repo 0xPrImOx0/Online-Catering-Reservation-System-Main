@@ -27,7 +27,7 @@ export default function Page() {
           <div className="space-y-4 flex flex-col items-center md:items-start text-center sm:text-left lg:w-[280px]">
             <Logo withLabel imageSize={100} />
             <p className="text-sm text-muted-foreground max-w-xs text-center md:text-justify">
-              Exceptional catering services for all your special events.
+              Savor the Heart of Filipino Cuisine.
             </p>
           </div>
           <div className="sm:mt-0 flex flex-col items-center md:items-start text-center md:text-left lg:ml-20 xl:ml-10">

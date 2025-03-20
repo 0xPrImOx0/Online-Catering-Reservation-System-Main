@@ -1,5 +1,6 @@
-export type ServingSize = 30 | 50 | 100;
+export type ServingSize = 6 | 10 | 15 | 20;
 
+// Define the types
 export type CategoryProps =
   | "Soup"
   | "Salad"
@@ -12,6 +13,32 @@ export type CategoryProps =
   | "Dessert"
   | "Beverage";
 
+export type AllergenProps =
+  | "Gluten"
+  | "Milk"
+  | "Eggs"
+  | "Nuts"
+  | "Shellfish"
+  | "Soy";
+
+// Update the interfaces to match the new data structure
+export interface NutritionInfo {
+  calories: string; // Now includes "kcal" unit
+  protein: string; // Now includes "g" unit
+  fat: string; // Now includes "g" unit
+  carbs: string; // Now includes "g" unit
+  sodium: string; // Now includes "mg" unit
+  fiber: string; // Now includes "g" unit
+  sugar: string; // Now includes "g" unit
+  cholesterol: string; // Now includes "mg" unit
+}
+
+export interface PriceInfo {
+  minimumPax: number;
+  maximumPax: number;
+  price: number;
+}
+
 export interface MenuItem {
   id: number;
   name: string;
@@ -20,19 +47,16 @@ export interface MenuItem {
   shortDescription: string;
   fullDescription: string;
   ingredients: string[];
-  allergens: string[];
+  allergens: AllergenProps[];
   preparationMethod: string;
-  prices: {
-    [key in ServingSize]: number;
-  };
+  prices: PriceInfo[]; // Now an array of price tiers
   regularPricePerPax: number;
   imageUrl: string;
   rating: number;
   ratingCount: number;
   spicy: boolean;
-  nutritionalInfo: {
-    [key: string]: string;
-  };
+  perServing: string; // New property for serving size
+  nutritionInfo: NutritionInfo;
 }
 
 export interface MenuCardProps {
