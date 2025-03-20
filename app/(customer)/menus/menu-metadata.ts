@@ -264,11 +264,16 @@ export const menuItems: MenuItem[] = [
 
 export const menuTypes = [
   { value: "all", title: "All Menu Types" },
-  { value: "breakfast", title: "Breakfast" },
-  { value: "lunch", title: "Lunch" },
-  { value: "dinner", title: "Dinner" },
-  { value: "cocktail", title: "Cocktail Hour" },
-  { value: "dessert", title: "Desserts" },
+  { value: "soup", title: "Soup" },
+  { value: "salad", title: "Salad" },
+  { value: "beef", title: "Beef" },
+  { value: "pork", title: "Pork" },
+  { value: "noodle", title: "Noodle" },
+  { value: "chicken", title: "Chicken" },
+  { value: "seafood", title: "Seafood" },
+  { value: "vegetable", title: "Vegetable" },
+  { value: "dessert", title: "Dessert" },
+  { value: "beverage", title: "Beverage" },
 ];
 
 export const dietaryOptions = [
