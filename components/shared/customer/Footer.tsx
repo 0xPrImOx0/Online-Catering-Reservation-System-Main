@@ -1,8 +1,23 @@
+import Logo from "@/components/icons/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { ChefHat, MapPin, Phone } from "lucide-react";
+import { links } from "@/lib/customer-links";
+import { MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+
+const FooterLinks = ({ href, title }: { href: string; title: string }) => {
+  return (
+    <li>
+      <Link
+        href={href}
+        className="text-muted-foreground hover:text-foreground transition-colors"
+      >
+        {title}
+      </Link>
+    </li>
+  );
+};
 
 export default function Footer() {
   return (
@@ -10,10 +25,7 @@ export default function Footer() {
       <div className="container py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <ChefHat className="h-6 w-6" />
-              <span className="text-xl font-bold">DelightfulCatering</span>
-            </div>
+            <Logo withLabel />
             <p className="text-sm text-muted-foreground">
               Exceptional catering services for all your special events.
             </p>
@@ -21,46 +33,9 @@ export default function Footer() {
           <div>
             <h3 className="text-sm font-medium mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  href="/"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/menus"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Menus
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/packages"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Packages
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  About Us
-                </Link>
-              </li>
+              {links.map(({ href, title }) => (
+                <FooterLinks href={href} title={title} key={href} />
+              ))}
             </ul>
           </div>
           <div>

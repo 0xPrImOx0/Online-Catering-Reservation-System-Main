@@ -1,14 +1,5 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ClipboardCheck, Star } from "lucide-react";
-import packages from "@/lib/packages";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
-import PackageCards from "@/components/shared/customer/PackageCards";
 import CustomSelect from "@/components/shared/CustomSelect";
 import {
   dietaryOptions,
@@ -103,6 +94,7 @@ export default function Page() {
           buttonLabel="Book Now"
           href="/book-now"
           Icon={ClipboardCheck}
+          px={false}
         />
       </div>
     </main>

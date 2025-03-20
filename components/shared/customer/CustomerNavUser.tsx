@@ -40,7 +40,7 @@ export default function CustomerNavUser({ user }: CustomerNavUserProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant={"outline"}
+          variant={"ghost"}
           size={"landing"}
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >

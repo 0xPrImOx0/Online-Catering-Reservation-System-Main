@@ -7,33 +7,11 @@ import { Calendar, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import CustomerNavUser from "../shared/customer/CustomerNavUser";
+import { links } from "@/lib/customer-links";
 
 export default function CustomerSiteHeader() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const pathname = usePathname();
-  const links = [
-    {
-      title: "Home",
-      href: "/",
-    },
-    {
-      title: "Menus",
-      href: "/menus",
-    },
-    {
-      title: "Packages",
-      href: "/packages",
-    },
-    {
-      title: "Contact Us",
-      href: "/contact-us",
-    },
-    {
-      title: "About Us",
-      href: "/about-us",
-    },
-  ];
-
   const user = {
     name: "Rey Daug",
     email: "m@example.com",
@@ -44,11 +22,16 @@ export default function CustomerSiteHeader() {
       <Link
         href={href}
         className={clsx(
-          "text-sm font-medium border-b-2 pb-1  hover:border-black underline-offset-4",
-          pathname === href ? "border-foreground" : "border-transparent"
+          "text-sm font-medium relative pb-1 hover:text-foreground underline-offset-4 group"
         )}
       >
         {title}
+        <span
+          className={clsx(
+            "absolute left-0 bottom-0 h-[2px] bg-foreground transition-all duration-300 ease-in-out",
+            pathname === href ? "w-full" : "w-0 group-hover:w-full"
+          )}
+        />
       </Link>
     );
   };

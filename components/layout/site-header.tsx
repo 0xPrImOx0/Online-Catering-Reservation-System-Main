@@ -114,6 +114,7 @@ export function SiteHeader() {
       </div>
       <div className="flex items-center gap-3">
         <NavUser user={user} />
+        
       </div>
     </header>
   );

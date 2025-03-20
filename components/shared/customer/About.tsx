@@ -24,11 +24,7 @@ export default function About() {
             <Info /> Who are we
           </Link>
         </Button>
-        <Button
-          className="bg-black text-white hover:bg-gray-800"
-          size={"landing"}
-          asChild
-        >
+        <Button size={"landing"} asChild>
           <Link href={"/menus"}>
             <UtensilsCrossed /> Our Menus
           </Link>

@@ -25,7 +25,6 @@ export default function Home() {
           Icon={Phone}
         />
       </main>
-
       <Footer />
     </div>
   );
