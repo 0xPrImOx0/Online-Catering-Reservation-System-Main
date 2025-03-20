@@ -4,7 +4,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 1,
     name: "Herb-Crusted Prime Rib",
-    category: ["Pork"],
+    category: "Pork",
     available: true,
     shortDescription: "Slow-roasted prime rib with a fragrant herb crust",
     fullDescription:
@@ -47,7 +47,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 2,
     name: "Truffle Mushroom Risotto",
-    category: ["Chicken"],
+    category: "Chicken",
     available: true,
     shortDescription: "Creamy Arborio rice with wild mushrooms and truffle oil",
     fullDescription:
@@ -90,7 +90,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 3,
     name: "Seared Scallops with Champagne Sauce",
-    category: ["Beverage"],
+    category: "Beverage",
     available: false,
     shortDescription:
       "Perfectly seared scallops with a delicate champagne reduction",
@@ -134,7 +134,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 4,
     name: "Duck Confit with Cherry Reduction",
-    category: ["Chicken"],
+    category: "Chicken",
     available: true,
     shortDescription: "Tender duck leg confit with a tart-sweet cherry sauce",
     fullDescription:
@@ -149,7 +149,7 @@ export const menuItems: MenuItem[] = [
       "Fingerling potatoes",
       "Seasonal vegetables",
     ],
-    allergens: [],
+    allergens: ["None"],
     preparationMethod:
       "Traditional confit method where duck legs are cured overnight, then slowly cooked in duck fat at low temperature for 6-8 hours until tender.",
     prices: {
@@ -177,7 +177,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 5,
     name: "Lobster Thermidor",
-    category: ["Seafood"],
+    category: "Seafood",
     available: true,
     shortDescription: "Classic lobster dish with a rich brandy cream sauce",
     fullDescription:
@@ -220,7 +220,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 6,
     name: "Spicy Thai Curry",
-    category: ["Chicken"],
+    category: "Chicken",
     available: true,
     shortDescription: "Aromatic curry with lemongrass, chili, and coconut milk",
     fullDescription:

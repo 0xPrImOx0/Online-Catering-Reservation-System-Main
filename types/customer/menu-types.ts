@@ -15,7 +15,7 @@ export type CategoryProps =
 export interface MenuItem {
   id: number;
   name: string;
-  category: CategoryProps[];
+  category: CategoryProps;
   available: boolean;
   shortDescription: string;
   fullDescription: string;
