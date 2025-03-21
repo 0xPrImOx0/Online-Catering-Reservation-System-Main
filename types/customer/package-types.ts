@@ -80,3 +80,8 @@ export interface PackageImageDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+export interface PackageCardProps {
+  pkg: CateringPackage | PlatedPackage;
+  openImageDialog: (url: string, title: string) => void;
+}
