@@ -1,21 +1,38 @@
+import { CustomPaginationProps } from "@/types/component-types";
 import { Button } from "../ui/button";
 
-type PaginationProps = {
-  length: number;
-  title: string;
-};
-export default function CustomPagination({ length, title }: PaginationProps) {
+export default function CustomPagination({
+  startIndex,
+  endIndex,
+  currentPage,
+  totalItems,
+  itemsPerPage,
+  onPageChange,
+  title = "menus",
+}: CustomPaginationProps) {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
   return (
-    <div className="mt-6 flex items-center justify-between">
-      <div className="text-sm text-muted-foreground">
-        Showing <strong>1</strong> to <strong>10</strong> of{" "}
-        <strong>{length}</strong> <span>{title}</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm" disabled>
+    <div className="flex justify-between items-center mt-4">
+      <p className="">
+        Showing{" "}
+        <span className="font-bold">{`${
+          startIndex === 0 ? "1" : startIndex
+        } - ${endIndex > totalItems ? totalItems : endIndex}`}</span>{" "}
+        out of <span className="font-bold">{totalItems}</span> {title}
+      </p>
+      <div className="space-x-2">
+        <Button
+          variant="outline"
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
           Previous
         </Button>
-        <Button variant="outline" size="sm">
+        <Button
+          variant="outline"
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
           Next
         </Button>
       </div>

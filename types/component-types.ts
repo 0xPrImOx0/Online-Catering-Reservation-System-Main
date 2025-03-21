@@ -23,3 +23,14 @@ export type ViewModeButtonsProps = {
   viewMode: "grid" | "list";
   setViewMode: Dispatch<SetStateAction<"grid" | "list">>;
 };
+
+//  Custom Pagination Types
+export type CustomPaginationProps = {
+  startIndex: number;
+  endIndex: number;
+  currentPage: number;
+  totalItems: number;
+  itemsPerPage: number;
+  onPageChange: (e: number) => void;
+  title?: string;
+};

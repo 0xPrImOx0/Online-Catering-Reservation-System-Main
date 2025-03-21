@@ -40,17 +40,20 @@ export function MenuCard({ item }: MenuCardProps) {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <button
+              <Button
+                size="custom"
+                variant="ghost"
                 className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 onClick={() => setShowImageDialog(true)}
               >
                 <Image
                   src={item.imageUrl || "/placeholder.svg"}
                   alt={item.name}
-                  fill
-                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  width={192}
+                  height={375}
+                  className="w-full object-cover  transition-transform duration-500 hover:scale-"
                 />
-              </button>
+              </Button>
             </TooltipTrigger>
             <TooltipContent>
               <p>{item.name}</p>
