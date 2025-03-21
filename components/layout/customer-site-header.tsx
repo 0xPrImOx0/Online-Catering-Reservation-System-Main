@@ -41,7 +41,7 @@ export default function CustomerSiteHeader() {
       <div className="flex mx-[2%] items-center justify-between">
         <div className="flex flex-1 items-center gap-4">
           <Logo imageSize={40} />
-          <nav className="hidden md:flex gap-10 flex-1 justify-center">
+          <nav className="max-nav-md:hidden flex gap-10 flex-1 justify-center">
             {links.map((link) => (
               <PageLink key={link.title} title={link.title} href={link.href} />
             ))}

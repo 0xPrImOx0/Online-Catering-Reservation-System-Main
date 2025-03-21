@@ -6,6 +6,7 @@ import Testimonial from "@/components/shared/customer/Testimonial";
 import Footer from "@/components/shared/customer/Footer";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import { Phone } from "lucide-react";
+import { Fascinate } from "next/font/google";
 
 export default function Home() {
   return (
