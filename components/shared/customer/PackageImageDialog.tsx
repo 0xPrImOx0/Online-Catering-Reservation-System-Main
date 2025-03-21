@@ -14,11 +14,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image from "next/image";
-import { PackageImageDialogProps } from "@/types/customer/package-types";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 import { X } from "lucide-react";
+import { PackageImageDialogProps } from "@/types/customer/package-types";
 
-export function MenuImageDialog({
+export function PakcageImageDialog({
   item,
   open,
   onOpenChange,

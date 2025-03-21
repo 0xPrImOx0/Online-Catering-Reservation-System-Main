@@ -75,8 +75,16 @@ export interface FormData extends BookingFormData {
   selectedDishes: Record<PackageCategory, string[]>;
 }
 
+export interface ImageDialogState {
+  open: boolean;
+  url: string;
+  title: string;
+  width: number;
+  height: number;
+}
+
 export interface PackageImageDialogProps {
-  item: CateringPackage;
+  item: CateringPackage | PlatedPackage | EventPackage;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -94,4 +102,9 @@ export interface PackageDetailsDialogProps {
 
 export interface PackageBookFormProps {
   package: CateringPackage | PlatedPackage;
+}
+
+export interface EventTypeCardProps {
+  eventType: EventType;
+  onSelect: (eventType: EventType) => void;
 }
