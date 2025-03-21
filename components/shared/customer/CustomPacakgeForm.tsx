@@ -32,8 +32,8 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Check } from "lucide-react";
-import { formSteps } from "../data/package-data";
-import { filipinoDishes } from "../filipino-dishes";
+import { formSteps } from "@/app/(customer)/packages/packages-metadata";
+import { menuItems } from "@/app/(customer)/menus/menu-metadata";
 import { PackageCategory, FormData } from "@/types/customer/package-types";
 
 export default function CustomPackageForm() {
@@ -86,7 +86,7 @@ export default function CustomPackageForm() {
 
   // Function to get dishes by category
   const getDishesByCategory = (category: PackageCategory) => {
-    return filipinoDishes.filter((dish) => dish.category === category);
+    return menuItems.filter((dish) => dish.category === category);
   };
 
   // Function to go to next form step
@@ -425,7 +425,7 @@ export default function CustomPackageForm() {
                           <h4 className="text-sm font-medium">{category}</h4>
                           <ul className="text-sm space-y-1 mt-1">
                             {dishIds.map((id) => {
-                              const dish = filipinoDishes.find(
+                              const dish = menuItems.find(
                                 (d) => d.id.toString() === id
                               );
                               return dish ? (
