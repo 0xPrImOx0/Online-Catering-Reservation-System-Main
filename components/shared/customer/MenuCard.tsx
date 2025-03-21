@@ -24,7 +24,6 @@ import { RenderStarRatings } from "../CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { MenuDetailsDialog } from "./MenuDetailsDialog";
 import { MenuImageDialog } from "./MenuImageDialog";
-import { cn } from "@/lib/utils";
 import { CategoryBadge } from "./MenuCategoryBadge";
 
 export function MenuCard({ item }: MenuCardProps) {
@@ -67,8 +66,8 @@ export function MenuCard({ item }: MenuCardProps) {
             variant={item.available ? "default" : "destructive"}
             className={
               item.available
-                ? "bg-emerald-600 hover:bg-emerald-700"
-                : "bg-red-500"
+                ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                : "bg-red-500 text-white"
             }
           >
             {item.available ? "Available" : "Unavailable"}

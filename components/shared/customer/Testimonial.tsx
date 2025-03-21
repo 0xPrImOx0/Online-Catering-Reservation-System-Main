@@ -4,9 +4,9 @@ import { BookOpen, ChevronRight } from "lucide-react";
 
 export default function Testimonial() {
   return (
-    <section className="flex flex-wrap justify-center gap-10 my-10 px-[2%]">
-      <Skeleton className="max-w-[500px] w-full h-[550px]" />
-      <div className="flex flex-col justify-center">
+    <section className="flex  flex-wrap justify-center gap-10 my-10 px-[2%]">
+      <Skeleton className="min-w-[400px] max-w-[500px] flex-1 h-[550px]" />
+      <div className="flex flex-col justify-center flex-1">
         <h2 className="text-3xl font-bold mb-6">Testimonial</h2>
         <div className="mb-6">
           <blockquote className="text-lg italic">

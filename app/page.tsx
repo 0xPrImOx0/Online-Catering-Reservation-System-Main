@@ -24,6 +24,7 @@ export default function Home() {
           buttonLabel="Contact Us"
           href="/contact-us"
           Icon={Phone}
+          px
         />
       </main>
       <Footer />

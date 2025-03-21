@@ -31,7 +31,7 @@ export default function MenuInfoDialog({
         <div className="grid gap-4 py-4">
           <div className="rounded-md overflow-hidden border h-60 w-full">
             <Image
-              src={currentMenu.image || "/placeholder.svg"}
+              src={currentMenu.imageUrl || "/placeholder.svg"}
               alt={currentMenu.name}
               width={600}
               height={400}
@@ -42,7 +42,7 @@ export default function MenuInfoDialog({
             <h3 className="font-medium text-sm text-muted-foreground mb-2">
               Description
             </h3>
-            <p className="text-sm mb-4">{currentMenu.description}</p>
+            <p className="text-sm mb-4">{currentMenu.shortDescription}</p>
 
             <h3 className="font-medium text-sm text-muted-foreground mb-2">
               Ingredients
@@ -55,27 +55,25 @@ export default function MenuInfoDialog({
                   Price
                 </h3>
                 <p className="text-lg font-medium">
-                  ${currentMenu.price.toFixed(2)}
+                  ${currentMenu.prices[0].price}
                 </p>
               </div>
               <div>
                 <h3 className="font-medium text-sm text-muted-foreground mb-1">
                   Times Ordered
                 </h3>
-                <p className="text-lg font-medium">
-                  {currentMenu.timesOrdered}
-                </p>
+                <p className="text-lg font-medium">10 times</p>
               </div>
-              <div>
+              {/* <div>
                 <h3 className="font-medium text-sm text-muted-foreground mb-1">
                   In Packages
                 </h3>
                 <p className="text-lg font-medium">{currentMenu.inPackages}</p>
-              </div>
+              </div> */}
             </div>
 
             <div className="text-xs text-muted-foreground mt-4">
-              Last updated: {currentMenu.lastUpdated}
+              Last updated: March 30, 2025
             </div>
           </div>
         </div>

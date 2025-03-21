@@ -17,7 +17,7 @@ export default function FooterCTA({
   description,
   buttonLabel,
   href,
-  px = true,
+  px = false,
   Icon,
 }: FooterCTAProps) {
   return (
