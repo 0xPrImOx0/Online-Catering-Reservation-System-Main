@@ -1,6 +1,15 @@
 "use client";
 
-import { ChevronDown, LogOut, Moon, Settings, Sun, User } from "lucide-react";
+import {
+  ChevronDown,
+  ClipboardCheck,
+  LogOut,
+  LucideIcon,
+  Moon,
+  Settings,
+  Sun,
+  User,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -17,6 +26,7 @@ import { useTheme } from "next-themes";
 import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { links, registeredLinks } from "@/lib/customer-links";
 
 type CustomerNavUserProps = {
   user: {
@@ -26,9 +36,29 @@ type CustomerNavUserProps = {
   };
 };
 
+type DropdownLinkProps = {
+  data: {
+    title: string;
+    href: string;
+    Icon: LucideIcon;
+  };
+};
+
 export default function CustomerNavUser({ user }: CustomerNavUserProps) {
   const { setTheme, theme } = useTheme();
   const isMobile = useIsMobile();
+
+  const DropdownLink = ({ data }: DropdownLinkProps) => {
+    const { title, href, Icon } = data;
+    return (
+      <DropdownMenuItem className="text-base" asChild key={title}>
+        <Link href={href}>
+          <Icon />
+          {title}
+        </Link>
+      </DropdownMenuItem>
+    );
+  };
 
   return (
     <DropdownMenu>
@@ -36,7 +66,7 @@ export default function CustomerNavUser({ user }: CustomerNavUserProps) {
         <Button
           variant={"ghost"}
           size={isMobile ? "custom" : "landing"}
-          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          className="data-[state=open]:bg-sidebar-accent p-1 data-[state=open]:text-sidebar-accent-foreground"
         >
           <Avatar className="h-8 w-8 rounded-full">
             <AvatarImage src={user.avatar} alt={user.name} />
@@ -49,7 +79,7 @@ export default function CustomerNavUser({ user }: CustomerNavUserProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+        className="max-sm:w-[90vw] sm:min-w-56 rounded-lg"
         side={"bottom"}
         align="end"
         sideOffset={4}
@@ -66,24 +96,26 @@ export default function CustomerNavUser({ user }: CustomerNavUserProps) {
             </div>
           </div>
         </DropdownMenuLabel>
+        {isMobile && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              {links.map((data) => (
+                <DropdownLink data={data} />
+              ))}
+            </DropdownMenuGroup>
+          </>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href={"/book-now"}>
-              <User />
-              Book Now!
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href={"/settings"}>
-              <Settings />
-              Settings
-            </Link>
-          </DropdownMenuItem>
+          {registeredLinks.map((data) => (
+            <DropdownLink data={data} />
+          ))}
           <DropdownMenuItem
             onClick={() =>
               theme === "dark" ? setTheme("light") : setTheme("dark")
             }
+            className="text-base"
           >
             <Moon className={clsx(theme === "dark" && "hidden")} />
             <Sun className={clsx(theme === "light" && "hidden")} />
@@ -91,8 +123,11 @@ export default function CustomerNavUser({ user }: CustomerNavUserProps) {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive" asChild>
-          <Link href={"/sign-in"}>
+        <DropdownMenuItem
+          className="text-destructive dark:text-red-500"
+          asChild
+        >
+          <Link href={"/sign-in"} className="text-base">
             <LogOut />
             Log out
           </Link>
