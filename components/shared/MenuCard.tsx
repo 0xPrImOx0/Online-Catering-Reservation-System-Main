@@ -55,7 +55,7 @@ export function MenuCard({ item }: MenuCardProps) {
                   alt={item.name}
                   height={192}
                   width={375}
-                  className="w-full object-cover overflow-hidden  transition-transform duration-500 hover:scale-105"
+                  className="w-full object-cover overflow-hidden transition-transform duration-500 hover:scale-105"
                 />
               </Button>
             </TooltipTrigger>

@@ -1,70 +1,46 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ClipboardCheck, Star } from "lucide-react";
-import packages from "@/lib/packages";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
-import PackageCards from "@/components/shared/customer/PackageCards";
+import CustomSelect from "@/components/shared/CustomSelect";
+import {
+  dietaryOptions,
+  menuTypes,
+  priceOptions,
+} from "../menus/menu-metadata";
+import CateringPackages from "@/components/shared/customer/CateringPackages";
 
 export default function Page() {
   return (
-    <main className="flex-1">
+    <main className="px-16">
       <div className=" py-12">
         <h1 className="text-5xl font-bold text-center mb-12">Our Packages</h1>
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Select>
-            <SelectTrigger className="w-full text-foreground sm:w-[200px]">
-              <SelectValue placeholder="Menu Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Menus</SelectItem>
-              <SelectItem value="breakfast">Breakfast</SelectItem>
-              <SelectItem value="lunch">Lunch</SelectItem>
-              <SelectItem value="dinner">Dinner</SelectItem>
-              <SelectItem value="cocktail">Cocktail Hour</SelectItem>
-              <SelectItem value="dessert">Desserts</SelectItem>
-            </SelectContent>
-          </Select>
+          <CustomSelect
+            defaultValue=""
+            placeholder="Menu Type"
+            size="md"
+            items={menuTypes}
+          />
 
-          <Select>
-            <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Dietary Options" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Options</SelectItem>
-              <SelectItem value="vegetarian">Vegetarian</SelectItem>
-              <SelectItem value="vegan">Vegan</SelectItem>
-              <SelectItem value="gluten-free">Gluten-Free</SelectItem>
-              <SelectItem value="dairy-free">Dairy-Free</SelectItem>
-              <SelectItem value="nut-free">Nut-Free</SelectItem>
-            </SelectContent>
-          </Select>
+          <CustomSelect
+            defaultValue=""
+            placeholder="Dietary Options"
+            size="md"
+            items={dietaryOptions}
+          />
 
-          <Select>
-            <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Price Range" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Prices</SelectItem>
-              <SelectItem value="budget">Budget ($15-25/person)</SelectItem>
-              <SelectItem value="standard">Standard ($25-40/person)</SelectItem>
-              <SelectItem value="premium">Premium ($40-60/person)</SelectItem>
-              <SelectItem value="luxury">Luxury ($60+/person)</SelectItem>
-            </SelectContent>
-          </Select>
+          <CustomSelect
+            defaultValue=""
+            placeholder="Price Range"
+            size="md"
+            items={priceOptions}
+          />
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-10">
           {/* Package Showcase */}
-          {packages.map((item, index) => (
-            <PackageCards features={item} key={index} />
-          ))}
+          <CateringPackages />
         </div>
 
         {/* Testimonials */}
