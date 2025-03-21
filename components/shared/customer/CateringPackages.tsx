@@ -91,19 +91,24 @@ export default function CateringPackages() {
           </div>
         </TabsContent>
 
-        <TabsContent value="event" className="mt-6 mx-20">
+        <TabsContent
+          value="event"
+          className="mt-6 -mx-8 sm:mx-0 md:mx-20 lg:mx-8 xl:mx-20"
+        >
           {selectedEventType ? (
             <>
-              <div className="flex items-center mb-6">
+              <div className="flex items-center mb-2">
                 <Button
                   variant="ghost"
-                  className="flex items-center gap-1"
+                  className="flex text-base items-center gap-1 self-start -px-4"
                   onClick={() => setSelectedEventType(null)}
                 >
                   <ChevronRight className="h-4 w-4 rotate-180" />
                   Back to Event Types
                 </Button>
-                <h2 className="text-xl font-bold ml-4">
+              </div>
+              <div className="flex items-center justify-center mb-6">
+                <h2 className="text-2xl font-bold ml-4">
                   {selectedEventType} Packages
                 </h2>
               </div>
@@ -125,8 +130,8 @@ export default function CateringPackages() {
                 </div>
 
                 {serviceType === "Plated" && (
-                  <div className="p-4 bg-muted rounded-lg flex items-start gap-3 mb-4 md:mx-[15%] lg:mx-[10%]">
-                    <Info className="h-5 w-5 text-muted-foreground mt-0.5" />
+                  <div className="p-4 bg-muted rounded-lg flex items-start gap-3 mb-4">
+                    <Info className="size-5  text-muted-foreground mt-0.5" />
                     <div>
                       <h3 className="font-medium">Plated Service Fee</h3>
                       <p className="text-sm text-muted-foreground">
@@ -139,7 +144,7 @@ export default function CateringPackages() {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:mx-[15%] lg:mx-[10%]">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {eventPackages[selectedEventType].map((pkg) => {
                   // Create a modified package with service fee if plated service is selected
                   const displayPkg =
