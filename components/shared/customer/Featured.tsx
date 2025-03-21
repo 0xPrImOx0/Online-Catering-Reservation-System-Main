@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
-import PackageCards from "./PackageCards";
+import PackageCards from "./PackageCardsDraft";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { featuredPackages } from "@/lib/homepage-metadata";
 
 export default function Featured() {
-
   return (
     <section className="py-16 md:px-[2%] flex flex-col items-center gap-14">
       <div className="">

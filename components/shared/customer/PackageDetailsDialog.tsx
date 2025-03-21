@@ -8,7 +8,7 @@ import { Check, X } from "lucide-react";
 import Image from "next/image";
 import PackageBookForm from "./PackageBookForm";
 import { menuItems } from "@/app/(customer)/menus/menu-metadata";
-import {
+import type {
   PackageDetailsDialogProps,
   PlatedPackage,
 } from "@/types/customer/package-types";
@@ -23,58 +23,61 @@ export default function PackageDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl w-full p-0 h-[90vh] flex flex-col">
-        {/* Image Section */}
-        <div className="relative w-full" style={{ height: "35%" }}>
-          <Image
-            src={pkg.imageUrl || "/placeholder.svg"}
-            alt={pkg.name}
-            fill
-            className="object-cover"
-          />
-          <div className="absolute top-2 right-2">
-            <Badge
-              variant={isAvailable ? "default" : "destructive"}
-              className={
-                isAvailable
-                  ? "bg-emerald-600 hover:bg-emerald-700"
-                  : "bg-red-500"
-              }
-            >
-              {isAvailable ? "Available" : "Unavailable"}
-            </Badge>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute top-2 left-2 bg-black/50 hover:bg-black/70 text-white"
-            onClick={() => onOpenChange(false)}
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Title and Description Section */}
-        <div className="p-6 bg-background">
-          <DialogTitle className="text-2xl font-bold">{pkg.name}</DialogTitle>
-          <p className="text-muted-foreground mt-2">{pkg.description}</p>
-
-          <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground p-4 rounded-lg">
-            <div>
-              <span className="text-xl font-bold">
-                ₱{pkg.pricePerPax.toLocaleString()} per pax
-              </span>
-              {isPlated && (
-                <span className="text-xs block text-primary-foreground/80">
-                  Includes {(pkg as PlatedPackage).serviceHours} hours service
-                </span>
-              )}
+      <DialogContent className="max-w-xl w-full p-0 max-h-[85vh] flex flex-col overflow-hidden">
+        {/* Sticky Header Section */}
+        <div className="sticky top-0 z-10 bg-background shadow-md border-t-slate-400">
+          {/* Image with fixed height */}
+          <div className="relative w-full h-[200px]">
+            <Image
+              src={pkg.imageUrl || "/placeholder.svg"}
+              alt={pkg.name}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute top-4 right-16">
+              <Badge
+                variant={isAvailable ? "default" : "destructive"}
+                className={
+                  isAvailable
+                    ? "bg-emerald-600 hover:bg-emerald-700"
+                    : "bg-red-500"
+                }
+              >
+                {isAvailable ? "Available" : "Unavailable"}
+              </Badge>
             </div>
-            <PackageBookForm package={pkg} />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white"
+              onClick={() => onOpenChange(false)}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+
+          {/* Title and Description Section */}
+          <div className="p-6 bg-background border-b border-border">
+            <DialogTitle className="text-2xl font-bold">{pkg.name}</DialogTitle>
+            <p className="text-muted-foreground mt-2">{pkg.description}</p>
+
+            <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
+              <div>
+                <span className="text-lg font-bold">
+                  ₱ {pkg.pricePerPax.toFixed(2)} per pax
+                </span>
+                {isPlated && (
+                  <span className="text-xs block text-primary-foreground/80">
+                    Includes {(pkg as PlatedPackage).serviceHours} hours service
+                  </span>
+                )}
+              </div>
+              <PackageBookForm package={pkg} />
+            </div>
           </div>
         </div>
 
-        {/* Content Section */}
+        {/* Scrollable Content Section */}
         <div className="overflow-y-auto p-6 flex-grow">
           <div className="grid gap-6">
             <Card className="p-4">

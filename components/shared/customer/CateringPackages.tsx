@@ -108,7 +108,7 @@ export default function CateringPackages() {
                 </h2>
               </div>
 
-              <div className="mb-6">
+              <div className="mb-10 space-y-10">
                 <div className="flex justify-center space-x-4 mb-4">
                   <Button
                     variant={serviceType === "Buffet" ? "default" : "outline"}
@@ -125,7 +125,7 @@ export default function CateringPackages() {
                 </div>
 
                 {serviceType === "Plated" && (
-                  <div className="p-4 bg-muted rounded-lg flex items-start gap-3 mb-4">
+                  <div className="p-4 bg-muted rounded-lg flex items-start gap-3 mb-4 md:mx-[15%] lg:mx-[10%]">
                     <Info className="h-5 w-5 text-muted-foreground mt-0.5" />
                     <div>
                       <h3 className="font-medium">Plated Service Fee</h3>
@@ -139,7 +139,7 @@ export default function CateringPackages() {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:mx-[15%] lg:mx-[10%]">
                 {eventPackages[selectedEventType].map((pkg) => {
                   // Create a modified package with service fee if plated service is selected
                   const displayPkg =

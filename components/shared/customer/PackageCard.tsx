@@ -37,7 +37,7 @@ export default function PackageCard({
     <Card className="w-full flex flex-col h-full">
       <CardHeader className="p-0 relative overflow-hidden rounded-t-lg z-0">
         <div
-          className="relative h-48 w-full cursor-pointer border-"
+          className="relative h-52 w-full cursor-pointer"
           onClick={() => openImageDialog(pkg.imageUrl, pkg.name)}
         >
           <TooltipProvider>
@@ -122,14 +122,16 @@ export default function PackageCard({
 
           <div>
             <h4 className="font-medium mb-2">Menu Options:</h4>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-2">
               {pkg.options
                 .filter((option) => option.required)
                 .map((option, index) => (
                   <div key={index} className="flex items-center gap-1">
-                    <Badge variant="default" className="text-xs">
+                    <Badge
+                      variant="outline"
+                      className="text-xs whitespace-nowrap"
+                    >
                       {option.count} {option.category}
-                      {option.count > 1 ? "s" : ""}
                     </Badge>
                   </div>
                 ))}
@@ -175,7 +177,13 @@ export default function PackageCard({
         </Button>
       </CardFooter>
 
-      <PackageDialog pkg={pkg} open={dialogOpen} onOpenChange={setDialogOpen} />
+      <section className="mt-auto">
+        <PackageDialog
+          pkg={pkg}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+        />
+      </section>
     </Card>
   );
 }
