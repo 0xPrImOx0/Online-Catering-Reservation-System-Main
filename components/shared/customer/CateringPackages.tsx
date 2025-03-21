@@ -48,7 +48,7 @@ export default function CateringPackages() {
         className="w-full"
         onValueChange={setActiveTab}
       >
-        <TabsList className="flex flex-wrap justify-center mb-6 gap-2">
+        <TabsList className="flex flex-wrap justify-center mb-6 gap-4 h-12">
           <TabsTrigger value="buffet">Buffet Packages</TabsTrigger>
           <TabsTrigger value="plated">Plated Course Packages</TabsTrigger>
           <TabsTrigger value="event">Event Packages</TabsTrigger>
@@ -67,7 +67,7 @@ export default function CateringPackages() {
           </div>
         </TabsContent>
 
-        <TabsContent value="plated" className="mt-6">
+        <TabsContent value="plated" className="mt-6 space-y-8">
           <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
             <Info className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
