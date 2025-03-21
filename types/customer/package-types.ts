@@ -75,10 +75,8 @@ export interface FormData extends BookingFormData {
   selectedDishes: Record<PackageCategory, string[]>;
 }
 
-export interface ImageDialogState {
+export interface PackageImageDialogProps {
+  item: CateringPackage;
   open: boolean;
-  url: string;
-  title: string;
-  width: number;
-  height: number;
+  onOpenChange: (open: boolean) => void;
 }
