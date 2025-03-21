@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Check, Clock, Users, Star } from "lucide-react";
+import { Check, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import {
   PackageCardProps,

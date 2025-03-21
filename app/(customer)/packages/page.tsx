@@ -10,7 +10,7 @@ import CateringPackages from "@/components/shared/customer/CateringPackages";
 
 export default function Page() {
   return (
-    <main className="flex-1">
+    <main className="px-16">
       <div className=" py-12">
         <h1 className="text-5xl font-bold text-center mb-12">Our Packages</h1>
 
