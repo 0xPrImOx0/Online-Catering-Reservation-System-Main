@@ -158,6 +158,17 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               Pricing
             </h4>
             <div className="space-y-2">
+              <div className="flex justify-between items-center p-2 bg-muted rounded py-3">
+                <div>
+                  <p className="font-medium">Regular price per pax</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold">
+                    ${item.regularPricePerPax.toFixed(2)}
+                  </p>
+                </div>
+              </div>
+
               {[30, 50, 100].map((size) => (
                 <div
                   key={size}
