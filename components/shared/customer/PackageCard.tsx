@@ -40,12 +40,21 @@ export default function PackageCard({
           className="relative h-48 w-full cursor-pointer border-"
           onClick={() => openImageDialog(pkg.imageUrl, pkg.name)}
         >
-          <Image
-            src={pkg.imageUrl || "/placeholder.svg"}
-            alt={pkg.name}
-            fill
-            className="w-full object-cover overflow-hidden transition-transform duration-500 hover:scale-105"
-          />
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Image
+                  src={pkg.imageUrl || "/placeholder.svg"}
+                  alt={pkg.name}
+                  fill
+                  className="w-full object-cover overflow-hidden transition-transform duration-500 hover:scale-105"
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{pkg.name}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <div className="absolute top-2 right-2">
             <Badge
               variant={isAvailable ? "default" : "destructive"}
@@ -77,8 +86,8 @@ export default function PackageCard({
             </TooltipProvider>
           </div>
           <div className="absolute bottom-3 right-3">
-            <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2.5 py-1.5 font-bold">
-              &#8369; {pkg.pricePerPax.toFixed(2)} per pax
+            <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2 py-1 font-bold">
+              &#8369; {pkg.pricePerPax.toFixed(2)} / pax
             </div>
           </div>
         </div>

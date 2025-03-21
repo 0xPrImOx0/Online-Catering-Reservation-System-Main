@@ -3,7 +3,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import PackageBookForm from "./PackageBookForm";
@@ -56,7 +56,7 @@ export default function PackageDialog({
 
         {/* Title and Description Section */}
         <div className="p-6 bg-background">
-          <h2 className="text-2xl font-bold">{pkg.name}</h2>
+          <DialogTitle className="text-2xl font-bold">{pkg.name}</DialogTitle>
           <p className="text-muted-foreground mt-2">{pkg.description}</p>
 
           <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground p-4 rounded-lg">

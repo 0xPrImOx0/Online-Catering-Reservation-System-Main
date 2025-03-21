@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import Image from "next/image";
@@ -22,6 +23,9 @@ export default function ImageDialog({
       }}
     >
       <DialogContent className="max-w-[90vw] max-h-[90vh] p-0 overflow-hidden flex items-center justify-center">
+        <VisuallyHidden>
+          <DialogTitle>Image</DialogTitle>
+        </VisuallyHidden>
         <div className="relative">
           <Image
             src={imageDialog.url || "/placeholder.svg"}
