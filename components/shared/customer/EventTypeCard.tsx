@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { EventTypeCardProps } from "@/types/customer/package-types";
+import type { EventTypeCardProps } from "@/types/customer/package-types";
 
 export default function EventTypeCard({
   eventType,
@@ -21,15 +21,17 @@ export default function EventTypeCard({
       className="w-full cursor-pointer hover:border-primary transition-colors flex flex-col h-full"
       onClick={() => onSelect(eventType)}
     >
-      <CardHeader>
-        <div className="relative h-48 w-full mb-4">
+      <div className="w-full">
+        <div className="relative w-full pt-[60%]">
           <Image
             src={`/placeholder.svg?height=300&width=400&text=${eventType}`}
             alt={eventType}
             fill
-            className="object-cover rounded-t-lg"
+            className="object-cover rounded-t-lg absolute top-0 left-0"
           />
         </div>
+      </div>
+      <CardHeader>
         <CardTitle>{eventType} Events</CardTitle>
         <CardDescription>
           Specialized catering packages for {eventType.toLowerCase()} events and
