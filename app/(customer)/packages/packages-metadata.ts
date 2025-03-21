@@ -31,6 +31,8 @@ export const buffetPackages: CateringPackage[] = [
       "Food warmers and serving utensils",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "buffet-b",
@@ -57,6 +59,8 @@ export const buffetPackages: CateringPackage[] = [
       "Basic dessert station",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "buffet-c",
@@ -85,6 +89,8 @@ export const buffetPackages: CateringPackage[] = [
       "Welcome drinks",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "buffet-d",
@@ -115,6 +121,8 @@ export const buffetPackages: CateringPackage[] = [
       "Basic coffee station",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "buffet-e",
@@ -148,6 +156,8 @@ export const buffetPackages: CateringPackage[] = [
       "Fruit station",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "buffet-f",
@@ -183,6 +193,8 @@ export const buffetPackages: CateringPackage[] = [
       "Ice cream station",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
 ];
 
@@ -217,6 +229,8 @@ export const platedPackages: PlatedPackage[] = [
       "Course-by-course serving",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "plated-b",
@@ -249,6 +263,8 @@ export const platedPackages: PlatedPackage[] = [
       "Course-by-course serving",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "plated-c",
@@ -283,6 +299,8 @@ export const platedPackages: PlatedPackage[] = [
       "Course-by-course serving",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "plated-d",
@@ -319,6 +337,8 @@ export const platedPackages: PlatedPackage[] = [
       "Course-by-course serving",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "plated-e",
@@ -358,6 +378,8 @@ export const platedPackages: PlatedPackage[] = [
       "Course-by-course serving",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
   {
     id: "plated-f",
@@ -399,6 +421,8 @@ export const platedPackages: PlatedPackage[] = [
       "Course-by-course serving",
     ],
     imageUrl: "/placeholder.svg?height=300&width=400",
+    rating: 4.5,
+    ratingCount: 200,
   },
 ];
 
@@ -441,6 +465,8 @@ export const eventPackages: Record<EventType, EventPackage[]> = {
         "Welcome drinks",
       ],
       imageUrl: "/placeholder.svg?height=300&width=400",
+      rating: 4.5,
+      ratingCount: 200,
     },
     // More birthday packages...
   ],
@@ -475,6 +501,8 @@ export const eventPackages: Record<EventType, EventPackage[]> = {
         "Basic toast setup",
       ],
       imageUrl: "/placeholder.svg?height=300&width=400",
+      rating: 4.5,
+      ratingCount: 200,
     },
     // More wedding packages...
   ],
@@ -507,6 +535,8 @@ export const eventPackages: Record<EventType, EventPackage[]> = {
         "Basic coffee and tea station",
       ],
       imageUrl: "/placeholder.svg?height=300&width=400",
+      rating: 4.5,
+      ratingCount: 200,
     },
     // More corporate packages...
   ],
@@ -539,6 +569,8 @@ export const eventPackages: Record<EventType, EventPackage[]> = {
         "Welcome drinks",
       ],
       imageUrl: "/placeholder.svg?height=300&width=400",
+      rating: 4.5,
+      ratingCount: 200,
     },
     // More graduation packages...
   ],

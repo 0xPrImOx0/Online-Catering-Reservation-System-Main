@@ -32,6 +32,8 @@ export interface CateringPackage {
   options: PackageOption[];
   inclusions: string[];
   imageUrl: string;
+  rating: number;
+  ratingCount: number;
 }
 
 export interface PlatedPackage extends CateringPackage {
@@ -50,6 +52,8 @@ export interface EventPackage {
   options: PackageOption[];
   inclusions: string[];
   imageUrl: string;
+  rating: number;
+  ratingCount: number;
 }
 
 export interface FormStepType {

@@ -17,6 +17,13 @@ import {
   PlatedPackage,
 } from "@/types/customer/package-types";
 import PackageDialog from "./PackageDetailsDialog";
+import { RenderStarRatings } from "../CustomStarRating";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function PackageCard({
   pkg,
@@ -28,16 +35,16 @@ export default function PackageCard({
 
   return (
     <Card className="w-full flex flex-col h-full">
-      <CardHeader className="p-0 relative">
+      <CardHeader className="p-0 relative overflow-hidden rounded-t-lg z-0">
         <div
-          className="relative h-48 w-full cursor-pointer"
+          className="relative h-48 w-full cursor-pointer border-"
           onClick={() => openImageDialog(pkg.imageUrl, pkg.name)}
         >
           <Image
             src={pkg.imageUrl || "/placeholder.svg"}
             alt={pkg.name}
             fill
-            className="object-cover w-full"
+            className="w-full object-cover overflow-hidden transition-transform duration-500 hover:scale-105"
           />
           <div className="absolute top-2 right-2">
             <Badge
@@ -51,23 +58,28 @@ export default function PackageCard({
               {isAvailable ? "Available" : "Unavailable"}
             </Badge>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 flex justify-between items-end p-2 bg-gradient-to-t from-black/70 to-transparent">
-            <div className="flex items-center tooltip-container">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star
-                  key={star}
-                  className={`h-4 w-4 ${
-                    star <= Math.round(4.7)
-                      ? "fill-yellow-400 text-yellow-400"
-                      : "text-gray-400"
-                  }`}
-                />
-              ))}
-              <span className="tooltip">4.7 from 238 customers</span>
+
+          {/* Star Ratings */}
+          <div className="absolute bottom-3 left-3">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="bg-black/70 backdrop-blur-sm rounded px-2.5 py-1.5">
+                    {RenderStarRatings(pkg.rating, "medium")}
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    {pkg.rating} out of 5 ({pkg.ratingCount} reviews)
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          <div className="absolute bottom-3 right-3">
+            <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2.5 py-1.5 font-bold">
+              &#8369; {pkg.pricePerPax.toFixed(2)} per pax
             </div>
-            <span className="text-white font-bold">
-              ₱{pkg.pricePerPax.toLocaleString()} per pax
-            </span>
           </div>
         </div>
       </CardHeader>

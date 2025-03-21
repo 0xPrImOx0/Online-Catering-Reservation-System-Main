@@ -15,7 +15,6 @@ import {
   eventPackages,
   eventTypes,
 } from "@/app/(customer)/packages/packages-metadata";
-import "./styles/catering-styles.css";
 import { Button } from "@/components/ui/button";
 import PackageCard from "./PackageCard";
 import EventTypeCard from "./EventTypeCard";
