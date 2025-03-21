@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
-import type { CateringPackage, PlatedPackage } from "../types/catering-types";
-import BookNowButton from "./BookNowButton";
-import { filipinoDishes } from "../filipino-dishes";
-import { PackageDetailsDialogProps } from "@/types/customer/package-types";
+import PackageBookForm from "./PackageBookForm";
+import { menuItems } from "@/app/(customer)/menus/menu-metadata";
+import {
+  PackageDetailsDialogProps,
+  PlatedPackage,
+} from "@/types/customer/package-types";
 
 export default function PackageDialog({
   pkg,
@@ -68,7 +70,7 @@ export default function PackageDialog({
                 </span>
               )}
             </div>
-            <BookNowButton package={pkg} />
+            <PackageBookForm package={pkg} />
           </div>
         </div>
 
@@ -155,7 +157,7 @@ export default function PackageDialog({
                     <div key={index} className="space-y-2">
                       <h4 className="font-medium">{option.category} Options</h4>
                       <ul className="text-sm space-y-1">
-                        {filipinoDishes
+                        {menuItems
                           .filter((dish) => dish.category === option.category)
                           .slice(0, 3)
                           .map((dish) => (
