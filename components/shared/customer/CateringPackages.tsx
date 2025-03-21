@@ -3,21 +3,24 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Info, ChevronRight } from "lucide-react";
-import { EventType } from "@/types/customer/package-types";
+import {
+  CateringPackage,
+  EventType,
+  PlatedPackage,
+  ServiceType,
+} from "@/types/customer/package-types";
 import {
   buffetPackages,
   platedPackages,
   eventPackages,
   eventTypes,
 } from "@/app/(customer)/packages/packages-metadata";
-import PackageCard from "./components/PackageCard";
-import EventTypeCard from "./components/EventTypeCard";
-import CustomPackageForm from "./components/CustomPackageForm";
-import ImageDialog, { useImageDialog } from "./components/ImageDialog";
 import "./styles/catering-styles.css";
 import { Button } from "@/components/ui/button";
-
-type ServiceType = "Buffet" | "Plated";
+import PackageCard from "./PackageCard";
+import EventTypeCard from "./EventTypeCard";
+import ImageDialog, { useImageDialog } from "./PackageImageDialog";
+import CustomPackageForm from "./CustomPacakgeForm";
 
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState("buffet");
@@ -155,13 +158,17 @@ export default function CateringPackages() {
                             "Table-side service",
                             "Course-by-course serving",
                           ],
+                          // Add the missing properties required by PlatedPackage type
+                          serviceCharge: 100 * pkg.serviceHours,
+                          recommendedPax: pkg.minimumPax,
+                          maximumPax: pkg.minimumPax * 2, // Setting a reasonable maximum as 2x the minimum
                         }
                       : pkg;
 
                   return (
                     <PackageCard
                       key={pkg.id}
-                      pkg={displayPkg}
+                      pkg={displayPkg as CateringPackage | PlatedPackage}
                       openImageDialog={openImageDialog}
                     />
                   );
