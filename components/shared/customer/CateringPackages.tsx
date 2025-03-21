@@ -48,11 +48,19 @@ export default function CateringPackages() {
         className="w-full"
         onValueChange={setActiveTab}
       >
-        <TabsList className="flex flex-wrap justify-center mb-6 gap-4 h-12">
-          <TabsTrigger value="buffet">Buffet Packages</TabsTrigger>
-          <TabsTrigger value="plated">Plated Course Packages</TabsTrigger>
-          <TabsTrigger value="event">Event Packages</TabsTrigger>
-          <TabsTrigger value="custom">Custom Package</TabsTrigger>
+        <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mb-4 gap-2 sm:gap-4 h-auto">
+          <TabsTrigger value="buffet" className="py-2 px-4">
+            Buffet Packages
+          </TabsTrigger>
+          <TabsTrigger value="plated" className="py-2 px-4">
+            Plated Course Packages
+          </TabsTrigger>
+          <TabsTrigger value="event" className="py-2 px-4">
+            Event Packages
+          </TabsTrigger>
+          <TabsTrigger value="custom" className="py-2 px-4">
+            Custom Package
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="buffet" className="mt-6">

@@ -10,6 +10,12 @@ import {
   ImageDialogState,
   PackageImageDialogProps,
 } from "@/types/customer/package-types";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function ImageDialog({
   imageDialog,
@@ -22,27 +28,36 @@ export default function ImageDialog({
         if (!open) closeImageDialog();
       }}
     >
-      <DialogContent className="max-w-[90vw] max-h-[90vh] p-0 overflow-hidden flex items-center justify-center">
+      <DialogContent className="p-0 overflow-hidden bg-transparent border-0 shadow-none">
         <VisuallyHidden>
-          <DialogTitle>Image</DialogTitle>
+          <DialogTitle>{imageDialog.title}</DialogTitle>
         </VisuallyHidden>
-        <div className="relative">
-          <Image
-            src={imageDialog.url || "/placeholder.svg"}
-            alt={imageDialog.title}
-            width={800}
-            height={600}
-            className="object-contain"
-            style={{ maxHeight: "80vh", maxWidth: "90vw" }}
-          />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 text-white"
-            onClick={closeImageDialog}
-          >
-            <X className="h-4 w-4" />
-          </Button>
+        <div className="relative w-auto h-auto">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="relative">
+                  <Image
+                    src={imageDialog.url || "/placeholder.svg"}
+                    alt={imageDialog.title}
+                    width={1500}
+                    height={725}
+                  />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 text-white"
+                    onClick={closeImageDialog}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-base">{imageDialog.title}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </DialogContent>
     </Dialog>

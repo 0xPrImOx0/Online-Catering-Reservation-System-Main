@@ -1,7 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
@@ -37,7 +42,6 @@ export function MenuImageDialog({
                       width={1500}
                       height={725}
                       alt={item.name}
-                      
                     />
                     <DialogClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/70 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black transition-colors">
                       <X className="h-5 w-5" />
@@ -46,7 +50,7 @@ export function MenuImageDialog({
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{item.name}</p>
+                <p className="text-base">{item.name}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
