@@ -25,14 +25,16 @@ import {
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Check, Clock, Info, Users } from "lucide-react";
-import { bookingSteps } from "../data/package-data";
+import { bookingSteps } from "@/app/(customer)/packages/packages-metadata";
 import {
   BookingFormData,
-  PackageBookNowProps,
+  PackageBookFormProps,
   PlatedPackage,
 } from "@/types/customer/package-types";
 
-export default function PackageBookForm({ package: pkg }: PackageBookNowProps) {
+export default function PackageBookForm({
+  package: pkg,
+}: PackageBookFormProps) {
   const [bookingDialogOpen, setBookingDialogOpen] = useState(false);
   const [bookingStep, setBookingStep] = useState(0);
   const [bookingComplete, setBookingComplete] = useState(false);
