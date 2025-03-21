@@ -1,20 +1,12 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ClipboardCheck, Star } from "lucide-react";
-import packages from "@/lib/packages";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
-import PackageCards from "@/components/shared/customer/PackageCards";
 import CustomSelect from "@/components/shared/CustomSelect";
 import {
   dietaryOptions,
   menuTypes,
   priceOptions,
 } from "../menus/menu-metadata";
+import CateringPackages from "@/components/shared/customer/CateringPackages";
 
 export default function Page() {
   return (
@@ -48,9 +40,7 @@ export default function Page() {
 
         <div className="flex flex-wrap items-center justify-center gap-10">
           {/* Package Showcase */}
-          {packages.map((item, index) => (
-            <PackageCards features={item} key={index} />
-          ))}
+          <CateringPackages />
         </div>
 
         {/* Testimonials */}

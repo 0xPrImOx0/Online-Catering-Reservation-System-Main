@@ -84,9 +84,8 @@ export interface ImageDialogState {
 }
 
 export interface PackageImageDialogProps {
-  item: CateringPackage | PlatedPackage | EventPackage;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  imageDialog: ImageDialogState;
+  closeImageDialog: () => void;
 }
 
 export interface PackageCardProps {

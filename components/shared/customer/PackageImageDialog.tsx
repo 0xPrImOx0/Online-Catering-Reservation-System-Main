@@ -1,61 +1,95 @@
 "use client";
 
-import { useRef } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import Image from "next/image";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
+import { useState } from "react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { PackageImageDialogProps } from "@/types/customer/package-types";
+import Image from "next/image";
+import {
+  ImageDialogState,
+  PackageImageDialogProps,
+} from "@/types/customer/package-types";
 
-export function PakcageImageDialog({
-  item,
-  open,
-  onOpenChange,
+export default function ImageDialog({
+  imageDialog,
+  closeImageDialog,
 }: PackageImageDialogProps) {
-  const imageRef = useRef<HTMLImageElement | null>(null);
-
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="p-0 overflow-hidden bg-transparent border-0 shadow-none">
-        <VisuallyHidden>
-          <DialogTitle>{item.name}</DialogTitle>
-        </VisuallyHidden>
-        <div className="relative w-auto h-auto">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="relative">
-                  <div className="relative z-10" ref={imageRef}>
-                    <Image
-                      src={item.imageUrl || "/placeholder.svg"}
-                      width={1500}
-                      height={725}
-                      alt={item.name}
-                    />
-                    <DialogClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/70 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black transition-colors">
-                      <X className="h-5 w-5" />
-                    </DialogClose>
-                  </div>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{item.name}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+    <Dialog
+      open={imageDialog.open}
+      onOpenChange={(open) => {
+        if (!open) closeImageDialog();
+      }}
+    >
+      <DialogContent className="max-w-[90vw] max-h-[90vh] p-0 overflow-hidden flex items-center justify-center">
+        <div className="relative">
+          <Image
+            src={imageDialog.url || "/placeholder.svg"}
+            alt={imageDialog.title}
+            width={800}
+            height={600}
+            className="object-contain"
+            style={{ maxHeight: "80vh", maxWidth: "90vw" }}
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 text-white"
+            onClick={closeImageDialog}
+          >
+            <X className="h-4 w-4" />
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
   );
 }
+
+// Helper function to open image dialog
+export const useImageDialog = () => {
+  const [imageDialog, setImageDialog] = useState<ImageDialogState>({
+    open: false,
+    url: "",
+    title: "",
+    width: 0,
+    height: 0,
+  });
+
+  const openImageDialog = (url: string, title: string) => {
+    // Set the dialog to open immediately with default dimensions
+    setImageDialog({
+      open: true,
+      url,
+      title,
+      width: 800,
+      height: 600,
+    });
+
+    // Then try to get the natural dimensions if possible
+    const img = new window.Image() as HTMLImageElement;
+    img.crossOrigin = "anonymous";
+
+    img.onload = () => {
+      // Only update the dimensions once the image has loaded
+      setImageDialog((prev) => ({
+        ...prev,
+        width: img.naturalWidth || 800,
+        height: img.naturalHeight || 600,
+      }));
+    };
+
+    img.onerror = () => {
+      // Keep using the default dimensions if there's an error
+      console.log("Failed to load image dimensions, using defaults");
+    };
+
+    // Set the source after setting up the handlers
+    img.src = url;
+  };
+
+  const closeImageDialog = () => {
+    setImageDialog({ open: false, url: "", title: "", width: 0, height: 0 });
+  };
+
+  return { imageDialog, openImageDialog, closeImageDialog };
+};

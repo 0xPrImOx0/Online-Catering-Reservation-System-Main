@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Info, ChevronRight } from "lucide-react";
-import type { EventType } from "./types/catering-types";
+import { EventType } from "@/types/customer/package-types";
 import {
   buffetPackages,
   platedPackages,
   eventPackages,
   eventTypes,
-} from "./data/package-data";
+} from "@/app/(customer)/packages/packages-metadata";
 import PackageCard from "./components/PackageCard";
 import EventTypeCard from "./components/EventTypeCard";
 import CustomPackageForm from "./components/CustomPackageForm";
