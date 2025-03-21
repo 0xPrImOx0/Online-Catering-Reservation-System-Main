@@ -91,7 +91,7 @@ export default function CateringPackages() {
           </div>
         </TabsContent>
 
-        <TabsContent value="event" className="mt-6">
+        <TabsContent value="event" className="mt-6 mx-20">
           {selectedEventType ? (
             <>
               <div className="flex items-center mb-6">
