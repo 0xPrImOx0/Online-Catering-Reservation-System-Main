@@ -85,3 +85,13 @@ export interface PackageCardProps {
   pkg: CateringPackage | PlatedPackage;
   openImageDialog: (url: string, title: string) => void;
 }
+
+export interface PackageDetailsDialogProps {
+  pkg: CateringPackage | PlatedPackage;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export interface PackageBookFormProps {
+  package: CateringPackage | PlatedPackage;
+}
