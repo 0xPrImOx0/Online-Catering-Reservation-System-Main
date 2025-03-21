@@ -30,6 +30,7 @@ import { CategoryBadge } from "./MenuCategoryBadge";
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const [showImageDialog, setShowImageDialog] = useState(false);
+  const [menuPricePax, setMenuPricePax] = useState(item.prices[0].price);
 
   const { calculateSavings, calculateSavingsPercentage, calculatePricePerPax } =
     useMenuCalculations();
@@ -49,9 +50,9 @@ export function MenuCard({ item }: MenuCardProps) {
                 <Image
                   src={item.imageUrl || "/placeholder.svg"}
                   alt={item.name}
-                  width={192}
-                  height={375}
-                  className="w-full object-cover  transition-transform duration-500 hover:scale-"
+                  height={192}
+                  width={375}
+                  className="w-full object-cover overflow-hidden  transition-transform duration-500 hover:scale-105"
                 />
               </Button>
             </TooltipTrigger>
@@ -104,14 +105,8 @@ export function MenuCard({ item }: MenuCardProps) {
 
         <div className="absolute bottom-3 right-3">
           <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2.5 py-1.5 font-bold">
-            $
-            {item.prices
-              .find(
-                (p) =>
-                  p.minimumPax <= selectedServing &&
-                  p.maximumPax >= selectedServing
-              )
-              ?.price.toFixed(2) || "N/A"}
+            &#8369;
+            {menuPricePax.toFixed(2)}
           </div>
         </div>
       </div>
@@ -129,12 +124,7 @@ export function MenuCard({ item }: MenuCardProps) {
           <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
             {calculateSavingsPercentage({
               regularPricePerPax: item.regularPricePerPax,
-              price:
-                item.prices.find(
-                  (p) =>
-                    p.minimumPax <= selectedServing &&
-                    p.maximumPax >= selectedServing
-                )?.price || 0,
+              price: menuPricePax,
               servingSize: selectedServing,
             }).toFixed(0)}
             % OFF
@@ -150,36 +140,24 @@ export function MenuCard({ item }: MenuCardProps) {
                 Price per person:
               </p>
               <p className="font-bold">
-                $
-                {calculatePricePerPax(
-                  item.prices.find(
-                    (p) =>
-                      p.minimumPax <= selectedServing &&
-                      p.maximumPax >= selectedServing
-                  )?.price || 0,
-                  selectedServing
-                ).toFixed(2)}
+                &#8369;
+                {item.regularPricePerPax}
                 /pax
               </p>
             </div>
             <div className="flex justify-between items-center">
               <p className="text-sm font-medium text-foreground">You save:</p>
               <p className="font-bold text-emerald-600 dark:text-emerald-500">
-                $
+                &#8369;
                 {calculateSavings({
                   regularPricePerPax: item.regularPricePerPax,
-                  price:
-                    item.prices.find(
-                      (p) =>
-                        p.minimumPax <= selectedServing &&
-                        p.maximumPax >= selectedServing
-                    )?.price || 0,
+                  price: menuPricePax,
                   servingSize: selectedServing,
                 }).toFixed(2)}
               </p>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Regular price: ${item.regularPricePerPax.toFixed(2)}/person
+              Regular price: &#8369;{item.regularPricePerPax.toFixed(2)}/person
             </p>
           </div>
 
@@ -205,22 +183,25 @@ export function MenuCard({ item }: MenuCardProps) {
               Select serving size:
             </p>
             <div className="flex gap-1.5">
-              {[6, 10, 15, 20].map((size, index) => {
-                const start = index === 0 ? 4 : [8, 13, 18][index - 1];
-
+              {item.prices.map(({ minimumPax, maximumPax, price }) => {
                 return (
                   <Button
-                    key={size}
-                    variant={selectedServing === size ? "default" : "outline"}
+                    key={minimumPax}
+                    variant={
+                      selectedServing === maximumPax ? "default" : "outline"
+                    }
                     size="sm"
-                    onClick={() => setSelectedServing(size as ServingSize)}
+                    onClick={() => {
+                      setSelectedServing(maximumPax as ServingSize);
+                      setMenuPricePax(price);
+                    }}
                     className={cn(
                       "text-xs px-2.5 py-1 h-auto",
-                      selectedServing === size &&
+                      selectedServing === maximumPax &&
                         "bg-primary text-primary-foreground"
                     )}
                   >
-                    {start} - {size} pax
+                    {minimumPax} - {maximumPax} pax
                   </Button>
                 );
               })}
@@ -230,11 +211,11 @@ export function MenuCard({ item }: MenuCardProps) {
       </CardContent>
 
       <CardFooter className="pt-0 pb-4 mt-auto">
-        {/* <MenuDetailsDialog item={item}>
+        <MenuDetailsDialog item={item}>
           <Button className="w-full" variant="default">
             View Details
           </Button>
-        </MenuDetailsDialog> */}
+        </MenuDetailsDialog>
       </CardFooter>
 
       {/* Image Dialog */}

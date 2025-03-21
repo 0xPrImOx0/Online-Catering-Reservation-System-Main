@@ -24,9 +24,11 @@ import type {
 import { RenderStarRatings } from "../CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { CategoryBadge } from "./MenuCategoryBadge";
+import { useState } from "react";
 
 export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
   const { calculateSavings } = useMenuCalculations();
+  const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -36,8 +38,10 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
             <Image
               src={item.imageUrl || "/placeholder.svg"}
               alt={item.name}
-              fill
-              className="object-cover"
+              priority
+              width={600}
+              height={240}
+              className="object-cover max-h-[240px] overflow-hidden"
             />
             <div className="absolute top-2 right-2 flex gap-2">
               <Badge
@@ -129,7 +133,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               Nutritional Information
             </h4>
             <div className="grid grid-cols-2 gap-2">
-              {Object.entries(item.nutritionalInfo).map(([key, value]) => (
+              {Object.entries(item.nutritionInfo).map(([key, value]) => (
                 <div
                   key={key}
                   className="flex justify-between p-2 bg-muted rounded"
@@ -164,33 +168,33 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                 </div>
                 <div className="text-right">
                   <p className="font-bold">
-                    ${item.regularPricePerPax.toFixed(2)}
+                    &#8369;{item.regularPricePerPax.toFixed(2)}
                   </p>
                 </div>
               </div>
 
-              {[30, 50, 100].map((size) => (
+              {item.prices.map(({ minimumPax, maximumPax, price }) => (
                 <div
-                  key={size}
+                  key={price}
                   className="flex justify-between items-center p-2 bg-muted rounded"
                 >
                   <div>
-                    <p className="font-medium">{size} pax</p>
+                    <p className="font-medium">
+                      {`${minimumPax} - ${maximumPax}`} pax
+                    </p>
                     <p className="text-sm text-muted-foreground">
-                      ${(item.prices[size as ServingSize] / size).toFixed(2)}{" "}
-                      per person
+                      &#8369;{price}{" "}
+                      <span className="text-[10px]">fixed price*</span>
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold">
-                      ${item.prices[size as ServingSize].toFixed(2)}
-                    </p>
+                    <p className="font-bold">&#8369;{price}</p>
                     <p className="text-sm text-emerald-600 dark:text-emerald-400">
-                      Save $
+                      Save &#8369;
                       {calculateSavings({
                         regularPricePerPax: item.regularPricePerPax,
-                        price: item.prices[size as ServingSize],
-                        servingSize: size,
+                        price: price,
+                        servingSize: maximumPax,
                       }).toFixed(2)}
                     </p>
                   </div>
