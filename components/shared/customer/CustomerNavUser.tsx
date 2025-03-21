@@ -101,7 +101,7 @@ export default function CustomerNavUser({ user }: CustomerNavUserProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               {links.map((data) => (
-                <DropdownLink data={data} />
+                <DropdownLink data={data} key={data.title} />
               ))}
             </DropdownMenuGroup>
           </>
@@ -109,7 +109,7 @@ export default function CustomerNavUser({ user }: CustomerNavUserProps) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {registeredLinks.map((data) => (
-            <DropdownLink data={data} />
+            <DropdownLink data={data} key={data.title} />
           ))}
           <DropdownMenuItem
             onClick={() =>

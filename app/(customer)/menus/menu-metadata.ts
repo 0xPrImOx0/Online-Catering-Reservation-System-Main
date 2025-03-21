@@ -49,7 +49,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 65,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/sinigang-na-baboy-7.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/sinigang-baboy-7.jpg",
     rating: 4.7,
     ratingCount: 238,
     spicy: false,
@@ -111,7 +111,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 85,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2017/01/bulalo-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2013/11/bulalo-5.jpg",
     rating: 4.8,
     ratingCount: 186,
     spicy: false,
@@ -173,7 +173,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 55,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/02/tinolang-manok-3.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2013/03/chicken-tinola-4.jpg",
     rating: 4.5,
     ratingCount: 172,
     spicy: false,
@@ -235,7 +235,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 70,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2019/01/nilagang-baka-2.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2019/07/beef-nilaga-3.jpg",
     rating: 4.6,
     ratingCount: 154,
     spicy: false,
@@ -297,7 +297,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 50,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/arroz-caldo-3.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2013/11/arroz-caldo-manok-3.jpg",
     rating: 4.4,
     ratingCount: 198,
     spicy: false,
@@ -361,7 +361,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 35,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2019/07/ensaladang-talong-2.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2018/05/grilled-eggplant-with-salted-egg-salad-2.jpg",
     rating: 4.3,
     ratingCount: 142,
     spicy: false,
@@ -423,7 +423,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 75,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2014/01/kinilaw-na-tuna-3.jpg",
+      "https://i0.wp.com/thenotsocreativecook.com/wp-content/uploads/2023/06/Kinilaw-na-Tuna-4.jpg?w=1142&ssl=1",
     rating: 4.6,
     ratingCount: 168,
     spicy: true,
@@ -485,7 +485,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 40,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2019/04/green-mango-salad-1.jpg",
+      "https://www.manilaspoon.com/wp-content/uploads/2020/05/Mango-Salad-2449.jpg",
     rating: 4.4,
     ratingCount: 132,
     spicy: true,
@@ -547,7 +547,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 75,
     imageUrl:
-      "https://www.angsarap.net/wp-content/uploads/2019/02/Lato-Salad-Wide.jpg",
+      "https://farm6.static.flickr.com/5012/5477901105_476c6d5011_z.jpg",
     rating: 4.2,
     ratingCount: 98,
     spicy: false,
@@ -608,8 +608,7 @@ export const menuItems: MenuItem[] = [
       },
     ],
     regularPricePerPax: 50,
-    imageUrl:
-      "https://i0.wp.com/www.angsarap.net/wp-content/uploads/2014/09/Pinakbet-Wide.jpg",
+    imageUrl: "/menus/pinakbet-salad.png",
     rating: 4.0,
     ratingCount: 86,
     spicy: false,
@@ -677,7 +676,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 85,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2015/01/caldereta-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2019/04/spicy-beef-caldereta-2.jpg",
     rating: 4.8,
     ratingCount: 245,
     spicy: true,
@@ -743,7 +742,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 80,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/02/beef-mechado-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/05/beef-mechado-1.jpg",
     rating: 4.6,
     ratingCount: 178,
     spicy: false,
@@ -805,7 +804,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 90,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/bistek-4.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2018/07/bistek-1.jpg",
     rating: 4.7,
     ratingCount: 210,
     spicy: false,
@@ -871,7 +870,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 100,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/kare-kare-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/01/kare-kare-with-oxtail-1.jpg",
     rating: 4.9,
     ratingCount: 256,
     spicy: false,
@@ -938,7 +937,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 110,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2014/12/beef-morcon-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/07/beef-morcon-5-1-500x500.jpg",
     rating: 4.8,
     ratingCount: 168,
     spicy: false,
@@ -1000,7 +999,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 85,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/lechon-kawali-6.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/10/crispy-lechon-kawali-6.jpg",
     rating: 4.9,
     ratingCount: 285,
     spicy: false,
@@ -1062,7 +1061,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 70,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/pork-adobo-6.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2013/02/pork-adobo-1-3.jpg",
     rating: 4.8,
     ratingCount: 320,
     spicy: false,
@@ -1123,7 +1122,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 110,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/crispy-pata-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/03/crispy-pata-1-3.jpg",
     rating: 4.9,
     ratingCount: 275,
     spicy: false,
@@ -1186,7 +1185,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 65,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2014/01/sisig-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2018/12/sisig-2.jpg",
     rating: 4.7,
     ratingCount: 310,
     spicy: true,
@@ -1249,7 +1248,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 60,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/lechon-paksiw-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2019/12/lechon-paksiw-1.jpg",
     rating: 4.5,
     ratingCount: 185,
     spicy: false,
@@ -1317,7 +1316,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 60,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/pancit-canton-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/12/pancit-canton-6.jpg",
     rating: 4.7,
     ratingCount: 245,
     spicy: false,
@@ -1383,7 +1382,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 55,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/pancit-bihon-6.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2017/08/pancit-bihon-guisado-2-1.jpg",
     rating: 4.6,
     ratingCount: 230,
     spicy: false,
@@ -1449,7 +1448,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 70,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/pancit-palabok-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2017/03/filipino-pancit-palabok-2.jpg",
     rating: 4.8,
     ratingCount: 210,
     spicy: false,
@@ -1515,7 +1514,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 85,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2019/04/pancit-malabon-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/03/pancit-malabon-2.jpg",
     rating: 4.7,
     ratingCount: 185,
     spicy: false,
@@ -1580,7 +1579,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 50,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2018/11/sotanghon-guisado-4.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2015/05/pancit-sotanghon-guisado-5.jpg",
     rating: 4.5,
     ratingCount: 175,
     spicy: false,
@@ -1644,7 +1643,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 65,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/chicken-adobo-7.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2020/06/filipino-chicken-adobo-with-potatoes-1.jpg",
     rating: 4.8,
     ratingCount: 310,
     spicy: false,
@@ -1707,7 +1706,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 70,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/07/chicken-inasal-6.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2020/06/authentic-chicken-inasal-9.jpg",
     rating: 4.9,
     ratingCount: 285,
     spicy: false,
@@ -1773,7 +1772,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 60,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/chicken-afritada-6.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2021/10/chicken-afritada-1.jpg",
     rating: 4.5,
     ratingCount: 195,
     spicy: false,
@@ -1838,7 +1837,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 65,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2018/05/filipino-fried-chicken-4.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2018/04/crispy-filipino-style-fried-chicken.jpg",
     rating: 4.7,
     ratingCount: 240,
     spicy: false,
@@ -1903,7 +1902,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 65,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2019/01/chicken-binakol-4.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2016/04/Chicken-Binakol-4.jpg",
     rating: 4.6,
     ratingCount: 165,
     spicy: false,
@@ -1968,7 +1967,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 80,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/sinigang-na-hipon-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2019/05/sinigang-hipon-calamansi-2.jpg",
     rating: 4.7,
     ratingCount: 210,
     spicy: false,
@@ -2030,7 +2029,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 90,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2014/01/inihaw-na-pusit-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2013/06/inihaw-na-pusit-8.jpg",
     rating: 4.8,
     ratingCount: 185,
     spicy: true,
@@ -2096,7 +2095,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 80,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/escabeche-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2020/06/lapu-lapu-escabeche-1.jpg",
     rating: 4.6,
     ratingCount: 175,
     spicy: false,
@@ -2160,7 +2159,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 110,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2019/06/ginataang-alimasag-4.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/10/ginataang-alimasag-3.jpg",
     rating: 4.9,
     ratingCount: 165,
     spicy: true,
@@ -2222,8 +2221,7 @@ export const menuItems: MenuItem[] = [
       },
     ],
     regularPricePerPax: 95,
-    imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2014/01/kinilaw-na-tanigue-3.jpg",
+    imageUrl: "https://assets.unileversolutions.com/v1/113557930.jpg",
     rating: 4.5,
     ratingCount: 145,
     spicy: true,
@@ -2289,7 +2287,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 50,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/pinakbet-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2013/04/pinakbet-tagalog-7-1200.jpg",
     rating: 4.5,
     ratingCount: 185,
     spicy: false,
@@ -2351,7 +2349,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 45,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/ginisang-ampalaya-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2019/07/ginisang-ampalaya-at-hipon-8.jpg",
     rating: 4.2,
     ratingCount: 165,
     spicy: false,
@@ -2413,7 +2411,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 65,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/laing-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2019/05/laing-9.jpg",
     rating: 4.7,
     ratingCount: 195,
     spicy: true,
@@ -2477,7 +2475,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 45,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/ginataang-kalabasa-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2019/07/ginataang-kalabasa-with-sitaw-and-shrimp.jpg",
     rating: 4.4,
     ratingCount: 155,
     spicy: false,
@@ -2544,7 +2542,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 55,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/chopsuey-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2013/07/chop-suey-1-1.jpg",
     rating: 4.5,
     ratingCount: 175,
     spicy: false,
@@ -2610,7 +2608,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 60,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/04/halo-halo-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2021/07/halo-halo-7.jpg",
     rating: 4.9,
     ratingCount: 320,
     spicy: false,
@@ -2669,7 +2667,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 50,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/12/leche-flan-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2020/04/creamy-leche-flan-3.jpg",
     rating: 4.8,
     ratingCount: 285,
     spicy: false,
@@ -2728,7 +2726,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 40,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/biko-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2018/09/biko-with-latik-1.jpg",
     rating: 4.6,
     ratingCount: 210,
     spicy: false,
@@ -2791,7 +2789,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 45,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/12/bibingka-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2019/10/special-bibingka-4.jpg",
     rating: 4.7,
     ratingCount: 230,
     spicy: false,
@@ -2850,7 +2848,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 55,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/04/ube-halaya-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2019/09/ube-halaya-3.jpg",
     rating: 4.8,
     ratingCount: 245,
     spicy: false,
@@ -2912,7 +2910,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 35,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2013/01/sagot-gulaman-5.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2018/12/sago-at-gulaman-5.jpg",
     rating: 4.6,
     ratingCount: 210,
     spicy: false,
@@ -2964,7 +2962,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 30,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2019/01/calamansi-juice-2.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2013/05/calamansi-juice.jpg",
     rating: 4.5,
     ratingCount: 185,
     spicy: false,
@@ -3021,7 +3019,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 45,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2019/05/buko-juice-2.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/07/buko-lychee-juice-7.jpg",
     rating: 4.7,
     ratingCount: 195,
     spicy: false,
@@ -3080,7 +3078,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 45,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2018/12/tablea-tsokolate-3.jpg",
+      "https://www.kawalingpinoy.com/wp-content/uploads/2014/12/tsokolate-2.jpg",
     rating: 4.8,
     ratingCount: 175,
     spicy: false,
@@ -3139,7 +3137,7 @@ export const menuItems: MenuItem[] = [
     ],
     regularPricePerPax: 35,
     imageUrl:
-      "https://www.kawalingpinoy.com/wp-content/uploads/2018/11/salabat-2.jpg",
+      "https://kitchenconfidante.com/wp-content/uploads/2018/11/Homemade-Fresh-Ginger-Tea-Filipino-Salabat-kitchenconfidante.com-5618.jpg",
     rating: 4.4,
     ratingCount: 165,
     spicy: false,
