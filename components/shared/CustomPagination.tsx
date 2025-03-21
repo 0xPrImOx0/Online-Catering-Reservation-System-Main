@@ -1,5 +1,6 @@
 import { CustomPaginationProps } from "@/types/component-types";
 import { Button } from "../ui/button";
+import clsx from "clsx";
 
 export default function CustomPagination({
   startIndex,
@@ -25,6 +26,7 @@ export default function CustomPagination({
           variant="outline"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
+          className={clsx({ "cursor-pointer": currentPage === 1 })}
         >
           Previous
         </Button>

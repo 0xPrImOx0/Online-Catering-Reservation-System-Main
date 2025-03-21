@@ -1,3 +1,4 @@
+import { MenuItem } from "@/types/customer/menu-types";
 import { SetStateBoolean } from "@/types/global-types";
 import { Dispatch, SetStateAction } from "react";
 
@@ -23,25 +24,8 @@ export type ConcernType = {
   isRegistered: boolean;
 };
 
-
-// Menu Item Related Props
-export type MenuItem = {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  description: string;
-  ingredients: string;
-  image: string;
-  lastUpdated: string;
-  timesOrdered: number;
-  inPackages: number;
-  rating: number;
-  likes: number;
-};
-
 export type MenuItemsProps = {
-  menuItems: MenuItem[];
+  menuItem: MenuItem;
   setCurrentMenu: Dispatch<SetStateAction<MenuItem>>;
   setIsEditMenuOpen: SetStateBoolean;
   setIsDetailsOpen: SetStateBoolean;

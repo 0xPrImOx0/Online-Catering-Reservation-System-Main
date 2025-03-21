@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { menuItems, selectorItems } from "./metadata";
+import { selectorItems } from "./metadata";
 import MenuGridMode from "@/components/shared/caterer/MenuGridMode";
 import MenuListMode from "@/components/shared/caterer/MenuListMode";
 import MenuInfoDialog from "@/components/shared/caterer/MenuInfoDialog";
@@ -12,6 +12,7 @@ import SearchInput from "@/components/shared/SearchInput";
 import CustomSelect from "@/components/shared/CustomSelect";
 import ViewModeButtons from "@/components/shared/ViewModeButtons";
 import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton";
+import { menuItems } from "@/lib/menu-metadata";
 
 export default function MenuManagement() {
   // State responsible for opening/closing the dialogs for dialog visibility
@@ -49,21 +50,31 @@ export default function MenuManagement() {
 
       {/* Menu Items Grid */}
       {viewMode === "grid" ? (
-        <MenuGridMode
-          menuItems={menuItems}
-          setCurrentMenu={setCurrentMenu}
-          setIsEditMenuOpen={setIsEditMenuOpen}
-          setIsDetailsOpen={setIsDetailsOpen}
-          setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {menuItems.map((menuItem) => (
+            <MenuGridMode
+              key={menuItem.id}
+              menuItem={menuItem}
+              setCurrentMenu={setCurrentMenu}
+              setIsEditMenuOpen={setIsEditMenuOpen}
+              setIsDetailsOpen={setIsDetailsOpen}
+              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+            />
+          ))}
+        </div>
       ) : (
-        <MenuListMode
-          menuItems={menuItems}
-          setCurrentMenu={setCurrentMenu}
-          setIsEditMenuOpen={setIsEditMenuOpen}
-          setIsDetailsOpen={setIsDetailsOpen}
-          setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-        />
+        <div className="space-y-4">
+          {menuItems.map((menuItem) => (
+            <MenuListMode
+              key={menuItem.id}
+              menuItem={menuItem}
+              setCurrentMenu={setCurrentMenu}
+              setIsEditMenuOpen={setIsEditMenuOpen}
+              setIsDetailsOpen={setIsDetailsOpen}
+              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+            />
+          ))}
+        </div>
       )}
 
       {/* Menu Details Dialog */}
