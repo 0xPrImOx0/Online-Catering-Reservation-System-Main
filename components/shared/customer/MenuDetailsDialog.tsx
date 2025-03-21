@@ -16,7 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Flame, Pencil, X } from "lucide-react";
+import { Flame, Pencil, PencilOff, X } from "lucide-react";
 import type {
   MenuDetailsDialogProps,
   ServingSize,
@@ -33,7 +33,9 @@ import { Textarea } from "@/components/ui/textarea";
 
 export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
   const { calculateSavings } = useMenuCalculations();
-  const [isOnEditMode, setIsOnEditMode] = useState(false);
+  const [isHeaderEditMode, setIsHeaderEditMode] = useState(false);
+  const [editFullDesc, setEditFullDesc] = useState(false);
+  const [editIngredients, setEditIngredients] = useState(false);
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const pathname = usePathname();
 
@@ -44,12 +46,48 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
     data: string;
     type?: "input" | "textarea";
   }) => {
-    return !isOnEditMode ? (
+    return !isHeaderEditMode ? (
       data
     ) : type === "input" ? (
       <Input className="w-full" defaultValue={data} />
     ) : (
       <Textarea defaultValue={data} rows={3} />
+    );
+  };
+
+  const TitleWithEditMode = ({
+    title,
+    onClick,
+  }: {
+    title: string;
+    onClick: () => void;
+  }) => {
+    return (
+      <div className="flex items-center justify-between">
+        <h4 className="font-medium mb-2 text-lg text-foreground">{title}</h4>
+        <div className="flex gap-2">
+          {editFullDesc && (
+            <Button
+              onClick={onClick}
+              className="flex gap-1 text-destructive"
+              variant={"ghost"}
+              size={"custom"}
+            >
+              <X className="h-4 w-4" />
+              Cancel
+            </Button>
+          )}
+          <Button
+            onClick={onClick}
+            className={clsx("flex gap-1", { "text-green-700": editFullDesc })}
+            variant={"ghost"}
+            size={"custom"}
+          >
+            <Pencil className="h-4 w-4" />
+            {editFullDesc ? "Save" : "Edit"}
+          </Button>
+        </div>
+      </div>
     );
   };
 
@@ -67,36 +105,74 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               height={240}
               className="object-cover max-h-[240px] overflow-hidden"
             />
+
             <div className="absolute top-2 right-2 flex gap-2">
               <Badge
                 variant={item.available ? "default" : "destructive"}
-                className={
-                  item.available ? "bg-emerald-600 dark:bg-emerald-500" : ""
-                }
+                className={clsx({
+                  "bg-emerald-600 dark:bg-emerald-500": item.available,
+                })}
               >
-                {item.available ? "Available" : "Unavailable"}
+                {isHeaderEditMode ? (
+                  <>
+                    <Pencil className="h-3 w-3 mr-1" /> Edit Availability
+                  </>
+                ) : item.available ? (
+                  "Available"
+                ) : (
+                  "Unavailable"
+                )}
               </Badge>
 
-              <CategoryBadge category={item.category} />
+              {isHeaderEditMode ? (
+                <Badge
+                  variant="outline"
+                  className={`flex items-center gap-1 bg-amber-100 text-amber-800 border-amber-200`}
+                >
+                  <Pencil className="h3 w-3" /> Edit Category
+                </Badge>
+              ) : (
+                <CategoryBadge category={item.category} />
+              )}
 
-              {item.spicy && (
+              {item.spicy ? (
                 <Badge
                   variant="outline"
                   className="bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 flex items-center gap-1"
                 >
                   <Flame className="h-3 w-3" /> Spicy
                 </Badge>
+              ) : (
+                isHeaderEditMode && (
+                  <Badge
+                    variant="outline"
+                    className="bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 flex items-center gap-1"
+                  >
+                    <Pencil className="h-3 w-3" />
+                    Edit Spice
+                  </Badge>
+                )
               )}
+
               <DialogClose className="h-8 w-8 rounded-full bg-black/70 dark:bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black dark:hover:bg-white/30 transition-colors">
                 <X className="h-4 w-4" />
               </DialogClose>
             </div>
             {pathname.includes("/caterer") && (
               <Button
-                onClick={() => setIsOnEditMode((prev) => !prev)}
+                onClick={() => setIsHeaderEditMode((prev) => !prev)}
                 className="absolute bottom-2 right-2 bg-black/70 dark:bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black dark:hover:bg-white/30 transition-colors hover:text-white"
               >
-                <Pencil /> Edit Menu
+                {!isHeaderEditMode ? (
+                  <>
+                    <Pencil />
+                    Edit Header
+                  </>
+                ) : (
+                  <>
+                    <PencilOff /> Cancel Edit
+                  </>
+                )}
               </Button>
             )}
           </div>
@@ -104,7 +180,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
             <div className="flex items-center justify-between">
               <DialogTitle
                 className={clsx("text-2xl text-foreground", {
-                  "font-serif": !isOnEditMode,
+                  "font-serif": !isHeaderEditMode,
                 })}
               >
                 <InputOnEditMode data={item.name} />
@@ -130,18 +206,25 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
 
         <div className="p-6 space-y-6">
           <div>
-            <h4 className="font-medium mb-2 text-lg text-foreground">
-              Description
-            </h4>
-            <p className="text-muted-foreground text-justify">
-              {item.fullDescription}
-            </p>
+            <TitleWithEditMode
+              title="Description"
+              onClick={() => setEditFullDesc((prev) => !prev)}
+            />
+
+            {!editFullDesc ? (
+              <p className="text-muted-foreground text-justify">
+                {item.fullDescription}
+              </p>
+            ) : (
+              <Textarea defaultValue={item.fullDescription} rows={3} />
+            )}
           </div>
 
           <div>
-            <h4 className="font-medium mb-2 text-lg text-foreground">
-              Ingredients
-            </h4>
+            <TitleWithEditMode
+              title="ingredients"
+              onClick={() => setEditIngredients((prev) => !prev)}
+            />
             <p className="text-muted-foreground text-justify">
               {item.ingredients.join(", ")}
             </p>
@@ -174,7 +257,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                   key={key}
                   className="flex justify-between p-2 bg-muted rounded"
                 >
-                  <span className="font-medium">{key}</span>
+                  <span className="font-medium capitalize">{key}</span>
                   <span>{value}</span>
                 </div>
               ))}

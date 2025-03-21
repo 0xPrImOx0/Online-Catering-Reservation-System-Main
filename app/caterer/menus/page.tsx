@@ -2,11 +2,7 @@
 
 import { useState } from "react";
 import { selectorItems } from "./metadata";
-import MenuGridCard from "@/components/shared/caterer/MenuGridCard";
 import MenuListCard from "@/components/shared/caterer/MenuListCard";
-import MenuInfoDialog from "@/components/shared/caterer/MenuInfoDialog";
-import AddMenuDialog from "@/components/shared/caterer/AddMenuDialog";
-import EditMenuDialog from "@/components/shared/caterer/EditMenuDialog";
 import DeleteMenuDialog from "@/components/shared/caterer/DeleteMenuDialog";
 import SearchInput from "@/components/shared/SearchInput";
 import CustomSelect from "@/components/shared/CustomSelect";
@@ -58,7 +54,7 @@ export default function MenuManagement() {
         </div>
       ) : (
         <div className="space-y-4">
-          {menuItems.map((menuItem) => (
+          {/* {menuItems.map((menuItem) => (
             <MenuListCard
               key={menuItem.id}
               menuItem={menuItem}
@@ -67,30 +63,9 @@ export default function MenuManagement() {
               setIsDetailsOpen={setIsDetailsOpen}
               setIsDeleteDialogOpen={setIsDeleteDialogOpen}
             />
-          ))}
+          ))} */}
         </div>
       )}
-
-      {/* Menu Details Dialog */}
-      <MenuInfoDialog
-        currentMenu={currentMenu}
-        isDetailsOpen={isDetailsOpen}
-        setIsDetailsOpen={setIsDetailsOpen}
-        setIsEditMenuOpen={setIsEditMenuOpen}
-      />
-
-      {/* Add Menu Dialog */}
-      <AddMenuDialog
-        isAddMenuOpen={isAddMenuOpen}
-        setIsAddMenuOpen={setIsAddMenuOpen}
-      />
-
-      {/* Edit Menu Dialog */}
-      <EditMenuDialog
-        currentMenu={currentMenu}
-        isEditMenuOpen={isEditMenuOpen}
-        setIsEditMenuOpen={setIsEditMenuOpen}
-      />
 
       {/* Delete Confirmation Dialog */}
       <DeleteMenuDialog

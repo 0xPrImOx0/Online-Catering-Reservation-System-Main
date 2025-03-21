@@ -26,7 +26,6 @@ import { MenuDetailsDialog } from "./customer/MenuDetailsDialog";
 import { MenuImageDialog } from "./customer/MenuImageDialog";
 import { CategoryBadge } from "./customer/MenuCategoryBadge";
 import { usePathname } from "next/navigation";
-import EditMenuDialog from "./caterer/EditMenuDialog";
 
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
@@ -35,7 +34,7 @@ export function MenuCard({ item }: MenuCardProps) {
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const { calculateSavings, calculateSavingsPercentage, calculatePricePerPax } =
+  const { calculateSavings, calculateSavingsPercentage } =
     useMenuCalculations();
 
   return (
@@ -124,7 +123,7 @@ export function MenuCard({ item }: MenuCardProps) {
               {item.shortDescription}
             </CardDescription>
           </div>
-          {pathname.includes("/caterer") ? null : (
+          {!pathname.includes("/caterer") && (
             <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
               {calculateSavingsPercentage({
                 regularPricePerPax: item.regularPricePerPax,
@@ -220,7 +219,7 @@ export function MenuCard({ item }: MenuCardProps) {
         <MenuDetailsDialog item={item}>
           <Button className="w-full" variant="default">
             View Details
-          </Button> 
+          </Button>
         </MenuDetailsDialog>
         {/* {pathname.includes("/caterer") && (
           <Button
