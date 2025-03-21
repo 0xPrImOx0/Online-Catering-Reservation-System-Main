@@ -12,7 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Check, Clock, Users, Star } from "lucide-react";
 import Image from "next/image";
-import { PackageCardProps } from "@/types/customer/package-types";
+import {
+  PackageCardProps,
+  PlatedPackage,
+} from "@/types/customer/package-types";
+import PackageDialog from "./PackageDetailsDialog";
 
 export default function PackageCard({
   pkg,
