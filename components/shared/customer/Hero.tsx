@@ -4,9 +4,9 @@ import { Calendar, ChevronRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="grid md:grid-cols-2 min-h-[85vh]">
+    <section className="grid md:grid-cols-2 lg:min-h-[750px]">
       <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
-        <h1 className="text-5xl font-bold mb-4 ">
+        <h1 className="text-3xl font-bold mb-4 lg:text-5xl">
           Experience the very best catering for your special events
         </h1>
         <p className="text-muted-foreground mb-6">
@@ -22,9 +22,7 @@ export default function Hero() {
           </Button>
         </div>
       </div>
-      <div className="bg-muted relative min-h-[300px] md:min-h-[500px]">
-        <Skeleton />
-      </div>
+      <Skeleton className="min-h-[300px] md:min-h-[500px w-full" />
     </section>
   );
 }

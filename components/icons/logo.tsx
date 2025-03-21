@@ -22,7 +22,9 @@ const Logo = ({
   return (
     <Link
       href={pathname.includes("/caterer") ? "/caterer/dashboard" : "/"}
-      className="flex items-center my-2 max-w-fit"
+      className={clsx("flex items-center my-2 max-w-fit", {
+        "mx-auto": pathname === "/about-us",
+      })}
     >
       <div>
         <Image

@@ -42,13 +42,7 @@ export default function DashboardPage() {
   return (
     <main className="flex-1 overflow-auto space-y-8">
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-          <Button variant="outline" size="sm">
-            <Filter className="mr-2 h-4 w-4" />
-            Filter
-          </Button>
-        </div>
+        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
 
         {/* Metrics cards */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
