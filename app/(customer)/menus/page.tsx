@@ -1,13 +1,8 @@
 import { ClipboardCheck, Star } from "lucide-react";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import CustomSelect from "@/components/shared/CustomSelect";
-import {
-  dietaryOptions,
-  menuItems,
-  menuTypes,
-  priceOptions,
-} from "./menu-metadata";
-import { MenuCard } from "@/components/shared/customer/MenuCard";
+import { dietaryOptions, menuTypes, priceOptions } from "./menu-metadata";
+import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
 
 export default function Page() {
   return (
@@ -39,12 +34,7 @@ export default function Page() {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-          {/* Package Showcase */}
-          {menuItems.map((item) => (
-            <MenuCard key={item.id} item={item} />
-          ))}
-        </div>
+        <PaginatedMenus />
 
         {/* Testimonials */}
         <section className="my-16 py-8 rounded-lg">

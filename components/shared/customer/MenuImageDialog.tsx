@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import { MenuImageDialogProps } from "@/types/customer/menu-types";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
+import { X } from "lucide-react";
 
 export function MenuImageDialog({
   item,
@@ -30,16 +31,17 @@ export function MenuImageDialog({
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="relative">
-                  <div className="relative" ref={imageRef}>
+                  <div className="relative z-10" ref={imageRef}>
                     <Image
                       src={item.imageUrl || "/placeholder.svg"}
                       width={1500}
                       height={725}
                       alt={item.name}
+                      
                     />
-                    {/* <DialogClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/70 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black transition-colors">
+                    <DialogClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/70 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black transition-colors">
                       <X className="h-5 w-5" />
-                    </DialogClose> */}
+                    </DialogClose>
                   </div>
                 </div>
               </TooltipTrigger>
