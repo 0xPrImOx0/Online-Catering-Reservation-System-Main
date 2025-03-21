@@ -182,7 +182,7 @@ export function MenuCard({ item }: MenuCardProps) {
             <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
               Select serving size:
             </p>
-            <div className="flex gap-1.5">
+            <div className="flex gap-2 flex-wrap">
               {item.prices.map(({ minimumPax, maximumPax, price }) => {
                 return (
                   <Button
@@ -195,11 +195,7 @@ export function MenuCard({ item }: MenuCardProps) {
                       setSelectedServing(maximumPax as ServingSize);
                       setMenuPricePax(price);
                     }}
-                    className={cn(
-                      "text-xs px-2.5 py-1 h-auto",
-                      selectedServing === maximumPax &&
-                        "bg-primary text-primary-foreground"
-                    )}
+                    className="text-xs w-[90px] py-1 h-auto"
                   >
                     {minimumPax} - {maximumPax} pax
                   </Button>
