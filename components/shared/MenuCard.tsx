@@ -20,22 +20,26 @@ import {
 } from "@/components/ui/tooltip";
 import { Flame } from "lucide-react";
 import type { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
-import { RenderStarRatings } from "../CustomStarRating";
+import { RenderStarRatings } from "./CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
-import { MenuDetailsDialog } from "./MenuDetailsDialog";
-import { MenuImageDialog } from "./MenuImageDialog";
-import { CategoryBadge } from "./MenuCategoryBadge";
+import { MenuDetailsDialog } from "./customer/MenuDetailsDialog";
+import { MenuImageDialog } from "./customer/MenuImageDialog";
+import { CategoryBadge } from "./customer/MenuCategoryBadge";
+import { usePathname } from "next/navigation";
+import EditMenuDialog from "./caterer/EditMenuDialog";
 
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const [showImageDialog, setShowImageDialog] = useState(false);
   const [menuPricePax, setMenuPricePax] = useState(item.prices[0].price);
+  const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const { calculateSavings, calculateSavingsPercentage, calculatePricePerPax } =
     useMenuCalculations();
 
   return (
-    <Card className="overflow-hidden border shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+    <Card className="min-w-[325px] flex-1 overflow-hidden border shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
       <div className="relative h-48 w-full overflow-hidden">
         <TooltipProvider>
           <Tooltip>
@@ -120,97 +124,113 @@ export function MenuCard({ item }: MenuCardProps) {
               {item.shortDescription}
             </CardDescription>
           </div>
-          <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
-            {calculateSavingsPercentage({
-              regularPricePerPax: item.regularPricePerPax,
-              price: menuPricePax,
-              servingSize: selectedServing,
-            }).toFixed(0)}
-            % OFF
-          </Badge>
+          {pathname.includes("/caterer") ? null : (
+            <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
+              {calculateSavingsPercentage({
+                regularPricePerPax: item.regularPricePerPax,
+                price: menuPricePax,
+                servingSize: selectedServing,
+              }).toFixed(0)}
+              % OFF
+            </Badge>
+          )}
         </div>
       </CardHeader>
 
       <CardContent className="flex-grow">
-        <div className="space-y-4">
-          <div className="bg-muted p-3 rounded-md border">
-            <div className="flex justify-between items-center mb-2">
-              <p className="text-sm font-medium text-foreground">
-                Price per person:
-              </p>
-              <p className="font-bold">
-                &#8369;
-                {item.regularPricePerPax}
-                /pax
+        {pathname.includes("/caterer") ? (
+          <div></div>
+        ) : (
+          <div className="space-y-4">
+            <div className="bg-muted p-3 rounded-md border">
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-sm font-medium text-foreground">
+                  Price per person:
+                </p>
+                <p className="font-bold">
+                  &#8369;
+                  {item.regularPricePerPax}
+                  /pax
+                </p>
+              </div>
+              <div className="flex justify-between items-center">
+                <p className="text-sm font-medium text-foreground">You save:</p>
+                <p className="font-bold text-emerald-600 dark:text-emerald-500">
+                  &#8369;
+                  {calculateSavings({
+                    regularPricePerPax: item.regularPricePerPax,
+                    price: menuPricePax,
+                    servingSize: selectedServing,
+                  }).toFixed(2)}
+                </p>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Regular price: &#8369;{item.regularPricePerPax.toFixed(2)}
+                /person
               </p>
             </div>
-            <div className="flex justify-between items-center">
-              <p className="text-sm font-medium text-foreground">You save:</p>
-              <p className="font-bold text-emerald-600 dark:text-emerald-500">
-                &#8369;
-                {calculateSavings({
-                  regularPricePerPax: item.regularPricePerPax,
-                  price: menuPricePax,
-                  servingSize: selectedServing,
-                }).toFixed(2)}
-              </p>
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Regular price: &#8369;{item.regularPricePerPax.toFixed(2)}/person
-            </p>
-          </div>
 
-          <div>
-            <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
-              Allergens:
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {item.allergens.length > 0 ? (
-                item.allergens.map((allergen) => (
-                  <Badge key={allergen} variant="outline" className="text-xs">
-                    {allergen}
-                  </Badge>
-                ))
-              ) : (
-                <span className="text-xs text-muted-foreground">None</span>
-              )}
+            <div>
+              <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
+                Allergens:
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {item.allergens.length > 0 ? (
+                  item.allergens.map((allergen) => (
+                    <Badge key={allergen} variant="outline" className="text-xs">
+                      {allergen}
+                    </Badge>
+                  ))
+                ) : (
+                  <span className="text-xs text-muted-foreground">None</span>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="pt-1">
-            <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
-              Select serving size:
-            </p>
-            <div className="flex gap-2 flex-wrap">
-              {item.prices.map(({ minimumPax, maximumPax, price }) => {
-                return (
-                  <Button
-                    key={minimumPax}
-                    variant={
-                      selectedServing === maximumPax ? "default" : "outline"
-                    }
-                    size="sm"
-                    onClick={() => {
-                      setSelectedServing(maximumPax as ServingSize);
-                      setMenuPricePax(price);
-                    }}
-                    className="text-xs w-[90px] py-1 h-auto"
-                  >
-                    {minimumPax} - {maximumPax} pax
-                  </Button>
-                );
-              })}
+            <div className="pt-1">
+              <p className="text-xs font-medium uppercase text-muted-foreground mb-1">
+                Select serving size:
+              </p>
+              <div className="flex gap-2 flex-wrap">
+                {item.prices.map(({ minimumPax, maximumPax, price }) => {
+                  return (
+                    <Button
+                      key={minimumPax}
+                      variant={
+                        selectedServing === maximumPax ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => {
+                        setSelectedServing(maximumPax as ServingSize);
+                        setMenuPricePax(price);
+                      }}
+                      className="text-xs w-[90px] py-1 h-auto"
+                    >
+                      {minimumPax} - {maximumPax} pax
+                    </Button>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </CardContent>
 
-      <CardFooter className="pt-0 pb-4 mt-auto">
+      <CardFooter className="flex flex-col gap-2">
         <MenuDetailsDialog item={item}>
           <Button className="w-full" variant="default">
             View Details
-          </Button>
+          </Button> 
         </MenuDetailsDialog>
+        {/* {pathname.includes("/caterer") && (
+          <Button
+            className="w-full"
+            variant="outline"
+            onClick={() => setIsEditMenuOpen((prev) => !prev)}
+          >
+            Edit Details
+          </Button>
+        )} */}
       </CardFooter>
 
       {/* Image Dialog */}

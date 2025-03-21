@@ -10,7 +10,7 @@ import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
 
 export default function Page() {
   return (
-    <main className="px-20">
+    <main className="px-[2%]">
       <div className=" py-12">
         <h1 className="text-5xl font-bold text-center mb-12">Our Menus</h1>
 

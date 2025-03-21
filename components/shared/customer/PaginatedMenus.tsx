@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
-import { MenuCard } from "./MenuCard";
+import { MenuCard } from "../MenuCard";
 import CustomPagination from "../CustomPagination";
 import { menuItems } from "@/lib/menu-metadata";
 
@@ -24,7 +24,7 @@ export default function PaginatedMenus() {
   return (
     <>
       <div
-        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10"
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
         ref={menuListRef}
       >
         {/* Package Showcase */}

@@ -16,7 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Flame, X } from "lucide-react";
+import { Flame, Pencil, X } from "lucide-react";
 import type {
   MenuDetailsDialogProps,
   ServingSize,
@@ -25,10 +25,34 @@ import { RenderStarRatings } from "../CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { CategoryBadge } from "./MenuCategoryBadge";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import clsx from "clsx";
+import { Textarea } from "@/components/ui/textarea";
 
 export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
   const { calculateSavings } = useMenuCalculations();
+  const [isOnEditMode, setIsOnEditMode] = useState(false);
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
+  const pathname = usePathname();
+
+  const InputOnEditMode = ({
+    data,
+    type = "input",
+  }: {
+    data: string;
+    type?: "input" | "textarea";
+  }) => {
+    return !isOnEditMode ? (
+      data
+    ) : type === "input" ? (
+      <Input className="w-full" defaultValue={data} />
+    ) : (
+      <Textarea defaultValue={data} rows={3} />
+    );
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -67,11 +91,23 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                 <X className="h-4 w-4" />
               </DialogClose>
             </div>
+            {pathname.includes("/caterer") && (
+              <Button
+                onClick={() => setIsOnEditMode((prev) => !prev)}
+                className="absolute bottom-2 right-2 bg-black/70 dark:bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black dark:hover:bg-white/30 transition-colors hover:text-white"
+              >
+                <Pencil /> Edit Menu
+              </Button>
+            )}
           </div>
           <div className="p-6 pb-2 border-b border-border">
             <div className="flex items-center justify-between">
-              <DialogTitle className="text-2xl font-serif text-foreground">
-                {item.name}
+              <DialogTitle
+                className={clsx("text-2xl text-foreground", {
+                  "font-serif": !isOnEditMode,
+                })}
+              >
+                <InputOnEditMode data={item.name} />
               </DialogTitle>
               <TooltipProvider>
                 <Tooltip>
@@ -87,7 +123,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               </TooltipProvider>
             </div>
             <DialogDescription className="text-muted-foreground mt-2">
-              {item.shortDescription}
+              <InputOnEditMode data={item.shortDescription} type="textarea" />
             </DialogDescription>
           </div>
         </div>

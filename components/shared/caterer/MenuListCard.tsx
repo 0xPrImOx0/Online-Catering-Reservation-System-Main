@@ -5,7 +5,7 @@ import StarRating from "../StarRating";
 import { Edit, ThumbsUp, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function MenuListMode({
+export default function MenuListCard({
   menuItem,
   setCurrentMenu,
   setIsEditMenuOpen,

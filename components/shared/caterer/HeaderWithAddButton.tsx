@@ -7,12 +7,13 @@ export default function HeaderWithAddButton({
   setIsAddInstanceOpen,
 }: HeaderWithAddButtonProps) {
   return (
-    <div className="flex items-center justify-between">
-      <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+    <div className="flex justify-between items-start">
+      <h1 className="text-2xl font-bold tracking-tight ">{title}</h1>
       <div className="flex items-center gap-2">
         <Button
           variant="outline"
           size={"landing"}
+          className=""
           onClick={() => setIsAddInstanceOpen((prev) => !prev)}
         >
           <PlusIcon strokeWidth={2.5} className="min-w-5 min-h-5" />

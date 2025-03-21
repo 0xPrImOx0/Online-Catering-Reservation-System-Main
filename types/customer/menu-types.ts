@@ -14,13 +14,23 @@ export type CategoryProps =
   | "Beverage";
 
 export type AllergenProps =
-  | "Gluten"
   | "Milk"
   | "Eggs"
-  | "Nuts"
+  | "Fish"
   | "Shellfish"
-  | "Soy";
-
+  | "Tree nuts"
+  | "Peanuts"
+  | "Wheat"
+  | "Soybeans"
+  | "Sesame"
+  | "Gluten"
+  | "Mustard"
+  | "Celery"
+  | "Lupin"
+  | "Molluscs"
+  | "Sulphites"
+  | "Soy"
+  | "Nuts";
 // Update the interfaces to match the new data structure
 export interface NutritionInfo {
   calories: string; // Now includes "kcal" unit

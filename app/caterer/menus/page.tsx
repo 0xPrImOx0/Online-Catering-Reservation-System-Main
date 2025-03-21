@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { selectorItems } from "./metadata";
-import MenuGridMode from "@/components/shared/caterer/MenuGridMode";
-import MenuListMode from "@/components/shared/caterer/MenuListMode";
+import MenuGridCard from "@/components/shared/caterer/MenuGridCard";
+import MenuListCard from "@/components/shared/caterer/MenuListCard";
 import MenuInfoDialog from "@/components/shared/caterer/MenuInfoDialog";
 import AddMenuDialog from "@/components/shared/caterer/AddMenuDialog";
 import EditMenuDialog from "@/components/shared/caterer/EditMenuDialog";
@@ -13,6 +13,7 @@ import CustomSelect from "@/components/shared/CustomSelect";
 import ViewModeButtons from "@/components/shared/ViewModeButtons";
 import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton";
 import { menuItems } from "@/lib/menu-metadata";
+import { MenuCard } from "@/components/shared/MenuCard";
 
 export default function MenuManagement() {
   // State responsible for opening/closing the dialogs for dialog visibility
@@ -25,7 +26,7 @@ export default function MenuManagement() {
   const [query, setQuery] = useState("");
 
   return (
-    <main className="flex-1 overflow-auto space-y-8 px-1">
+    <main className="space-y-8">
       <HeaderWithAddButton
         title="Menu"
         setIsAddInstanceOpen={setIsAddMenuOpen}
@@ -50,22 +51,15 @@ export default function MenuManagement() {
 
       {/* Menu Items Grid */}
       {viewMode === "grid" ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {menuItems.map((menuItem) => (
-            <MenuGridMode
-              key={menuItem.id}
-              menuItem={menuItem}
-              setCurrentMenu={setCurrentMenu}
-              setIsEditMenuOpen={setIsEditMenuOpen}
-              setIsDetailsOpen={setIsDetailsOpen}
-              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-            />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {menuItems.map((item) => (
+            <MenuCard key={item.id} item={item} />
           ))}
         </div>
       ) : (
         <div className="space-y-4">
           {menuItems.map((menuItem) => (
-            <MenuListMode
+            <MenuListCard
               key={menuItem.id}
               menuItem={menuItem}
               setCurrentMenu={setCurrentMenu}

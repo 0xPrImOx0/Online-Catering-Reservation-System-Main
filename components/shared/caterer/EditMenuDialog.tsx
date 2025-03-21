@@ -35,23 +35,44 @@ export default function EditMenuDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2 md:col-span-1">
+          <div className="space-y-4">
+            <div className=" ">
               <Label htmlFor="edit-name" className="mb-2">
                 Menu Name
               </Label>
               <Input id="edit-name" defaultValue={currentMenu.name} />
             </div>
-            <div className="col-span-2 md:col-span-1">
+            <div>
+              <Label htmlFor="edit-description" className="mb-2">
+                Description
+              </Label>
+              <Textarea
+                id="edit-description"
+                defaultValue={currentMenu.shortDescription}
+                rows={3}
+              />
+            </div>
+            <div>
+              <Label htmlFor="edit-ingredients" className="mb-2">
+                Ingredients
+              </Label>
+              <Textarea
+                id="edit-ingredients"
+                defaultValue={currentMenu.ingredients}
+                rows={3}
+              />
+            </div>
+            <div className=" ">
               <Label htmlFor="edit-category" className="mb-2">
                 Category
               </Label>
+              {/* needs to be in a metadata but next time */}
               <Select defaultValue={currentMenu.category}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Appetizer">Appetizer</SelectItem>
+                  <SelectItem value="Soup">Soup</SelectItem>
                   <SelectItem value="Main">Main</SelectItem>
                   <SelectItem value="Dessert">Dessert</SelectItem>
                   <SelectItem value="Beverage">Beverage</SelectItem>
@@ -68,27 +89,7 @@ export default function EditMenuDialog({
               type="number"
               step="0.01"
               min="0"
-              defaultValue={currentMenu.price}
-            />
-          </div>
-          <div>
-            <Label htmlFor="edit-description" className="mb-2">
-              Description
-            </Label>
-            <Textarea
-              id="edit-description"
-              defaultValue={currentMenu.description}
-              rows={3}
-            />
-          </div>
-          <div>
-            <Label htmlFor="edit-ingredients" className="mb-2">
-              Ingredients
-            </Label>
-            <Textarea
-              id="edit-ingredients"
-              defaultValue={currentMenu.ingredients}
-              rows={2}
+              defaultValue={currentMenu.prices[0].price}
             />
           </div>
           <div>
@@ -96,7 +97,7 @@ export default function EditMenuDialog({
             <div className="flex items-center gap-4">
               <div className="h-16 w-16 rounded-md border overflow-hidden">
                 <Image
-                  src={currentMenu.image || "/placeholder.svg"}
+                  src={currentMenu.imageUrl || "/placeholder.svg"}
                   alt="Menu preview"
                   width={64}
                   height={64}
