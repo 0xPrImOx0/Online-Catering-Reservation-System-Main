@@ -5,9 +5,13 @@ import FAQ from "@/components/shared/customer/FAQ";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { principles, teams } from "./metadata";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function AboutPage() {
   const { leadership, culinary, event, service } = teams;
+
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   return (
     <main className="flex-1">
       {/* Hero Section */}
@@ -163,6 +167,79 @@ export default function AboutPage() {
 
       {/* FAQ Section */}
       <FAQ />
+
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 bg-gradient-to-b from-muted/30 to-muted/80 -z-10" />
+        <div className="absolute inset-0 opacity-10 -z-10">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+          <div className="h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]" />
+        </div>
+
+        <div className="container px-4 sm:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
+              Why Choose Food Sentinel
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Experience catering excellence that sets us apart from the rest
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                className={cn(
+                  "group relative flex flex-col p-6 rounded-xl transition-all duration-300",
+                  "bg-background border border-border hover:border-primary/20",
+                  "hover:shadow-[0_0_25px_-5px_rgba(0,0,0,0.1)]"
+                )}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                <div
+                  className={cn(
+                    "flex h-14 w-14 items-center justify-center rounded-full mb-5 transition-all duration-300",
+                    "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground"
+                  )}
+                >
+                  {feature.icon}
+                </div>
+
+                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                  {feature.title}
+                </h3>
+
+                <p className="text-muted-foreground">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <motion.div
+              className="inline-block"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <a
+                href="#book-now"
+                className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-primary-foreground bg-primary rounded-md shadow-sm hover:bg-primary/90 transition-colors"
+              >
+                Book Your Event Now
+              </a>
+            </motion.div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
