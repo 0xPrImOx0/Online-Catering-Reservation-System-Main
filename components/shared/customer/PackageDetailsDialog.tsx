@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import PackageBookForm from "./PackageBookForm";
-import { menuItems } from "@/app/(customer)/menus/menu-metadata";
+import { menuItems } from "@/lib/menu-metadata";
 import type {
   PackageDetailsDialogProps,
   PlatedPackage,
@@ -80,9 +80,9 @@ export default function PackageDialog({
         {/* Scrollable Content Section */}
         <div className="overflow-y-auto p-6 flex-grow">
           <div className="grid gap-6">
-            <Card className="p-4">
-              <h3 className="text-lg font-semibold mb-3">Package Details</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card className="p-4">
+                <h3 className="text-lg font-semibold mb-3">Package Details</h3>
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">
@@ -109,23 +109,21 @@ export default function PackageDialog({
                     </div>
                   )}
                 </div>
-                <div className="space-y-2">
-                  <h4 className="font-medium mb-2">Menu Options:</h4>
-                  {pkg.options
-                    .filter((option) => option.required)
-                    .map((option, index) => (
-                      <div key={index} className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          {option.category}:
-                        </span>
-                        <span>
-                          {option.count} selection{option.count > 1 ? "s" : ""}
-                        </span>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            </Card>
+              </Card>
+              <Card className="p-4 space-y-2">
+                <h4 className="font-medium mb-2">Menu Options:</h4>
+                {pkg.options.map((option, index) => (
+                  <div key={index} className="flex justify-between">
+                    <span className="text-muted-foreground">
+                      {option.category}:
+                    </span>
+                    <span>
+                      {option.count} selection{option.count > 1 ? "s" : ""}
+                    </span>
+                  </div>
+                ))}
+              </Card>
+            </div>
 
             <Card className="p-4">
               <h3 className="text-lg font-semibold mb-3">Inclusions</h3>

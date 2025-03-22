@@ -123,18 +123,16 @@ export default function PackageCard({
           <div>
             <h4 className="font-medium mb-2">Menu Options:</h4>
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-2">
-              {pkg.options
-                .filter((option) => option.required)
-                .map((option, index) => (
-                  <div key={index} className="flex items-center gap-1">
-                    <Badge
-                      variant="outline"
-                      className="text-xs whitespace-nowrap"
-                    >
-                      {option.count} {option.category}
-                    </Badge>
-                  </div>
-                ))}
+              {pkg.options.map((option, index) => (
+                <div key={index} className="flex items-center gap-1">
+                  <Badge
+                    variant="outline"
+                    className="text-xs whitespace-nowrap"
+                  >
+                    {option.count} {option.category}
+                  </Badge>
+                </div>
+              ))}
             </div>
           </div>
 

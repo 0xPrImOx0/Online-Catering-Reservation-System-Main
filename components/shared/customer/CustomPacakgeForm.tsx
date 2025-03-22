@@ -33,7 +33,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Check } from "lucide-react";
 import { formSteps } from "@/app/(customer)/packages/packages-metadata";
-import { menuItems } from "@/app/(customer)/menus/menu-metadata";
+import { menuItems } from "@/lib/menu-metadata";
 import { PackageCategory, FormData } from "@/types/customer/package-types";
 
 export default function CustomPackageForm() {

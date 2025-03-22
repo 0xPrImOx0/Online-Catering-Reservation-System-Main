@@ -18,7 +18,6 @@ export type EventType = "Birthday" | "Wedding" | "Corporate" | "Graduation";
 export interface PackageOption {
   category: PackageCategory;
   count: number;
-  required: boolean;
 }
 
 export interface CateringPackage {
