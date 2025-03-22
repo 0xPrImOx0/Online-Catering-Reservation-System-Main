@@ -111,7 +111,7 @@ export default function PackageDialog({
                 </div>
               </Card>
               <Card className="p-4 space-y-2">
-                <h4 className="font-medium mb-2">Menu Options:</h4>
+                <h4 className="text-lg font-semibold mb-3">Menu Options:</h4>
                 {pkg.options.map((option, index) => (
                   <div key={index} className="flex justify-between">
                     <span className="text-muted-foreground">
@@ -152,30 +152,25 @@ export default function PackageDialog({
                 Sample Menu Selection
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {pkg.options
-                  .filter((option) => option.required)
-                  .map((option, index) => (
-                    <div key={index} className="space-y-2">
-                      <h4 className="font-medium">{option.category} Options</h4>
-                      <ul className="text-sm space-y-1">
-                        {menuItems
-                          .filter((dish) => dish.category === option.category)
-                          .slice(0, 3)
-                          .map((dish) => (
-                            <li
-                              key={dish.id}
-                              className="flex items-center gap-2"
-                            >
-                              <Check className="h-3 w-3 text-primary" />
-                              {dish.name}
-                            </li>
-                          ))}
-                        <li className="text-sm text-muted-foreground">
-                          ...and more options available
-                        </li>
-                      </ul>
-                    </div>
-                  ))}
+                {pkg.options.map((option, index) => (
+                  <div key={index} className="space-y-2">
+                    <h4 className="font-medium">{option.category} Options</h4>
+                    <ul className="text-sm space-y-1">
+                      {menuItems
+                        .filter((dish) => dish.category === option.category)
+                        .slice(0, 3)
+                        .map((dish) => (
+                          <li key={dish.id} className="flex items-center gap-2">
+                            <Check className="h-3 w-3 text-primary" />
+                            {dish.name}
+                          </li>
+                        ))}
+                      <li className="text-sm text-muted-foreground">
+                        ...and more options available
+                      </li>
+                    </ul>
+                  </div>
+                ))}
               </div>
             </Card>
           </div>

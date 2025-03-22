@@ -201,7 +201,7 @@ export const platedPackages: PlatedPackage[] = [
     id: "plated-a",
     name: "Plated Set A - Basic Feast",
     description:
-      "A simple yet satisfying selection of Filipino favorites for small gatherings. Served directly to your guests' tables by our professional staff.",
+      "A simple yet satisfying selection of Filipino favorites for small gatherings.",
     pricePerPax: 370, // 350 + (4 * 100) / 20
     minimumPax: 20,
     recommendedPax: 30,
@@ -232,7 +232,7 @@ export const platedPackages: PlatedPackage[] = [
     id: "plated-b",
     name: "Plated Set B - Family Celebration",
     description:
-      "A hearty selection of dishes perfect for family celebrations and small parties. Served directly to your guests' tables by our professional staff.",
+      "A hearty selection of dishes perfect for family celebrations and small parties.",
     pricePerPax: 465, // 450 + (4.5 * 100) / 30
     minimumPax: 30,
     recommendedPax: 50,
@@ -265,7 +265,7 @@ export const platedPackages: PlatedPackage[] = [
     id: "plated-c",
     name: "Plated Set C - Fiesta Favorites",
     description:
-      "A complete Filipino fiesta experience with a wide variety of traditional dishes. Served directly to your guests' tables by our professional staff.",
+      "A complete Filipino fiesta experience with a wide variety of traditional dishes.",
     pricePerPax: 560, // 550 + (5 * 100) / 50
     minimumPax: 50,
     recommendedPax: 80,
@@ -300,7 +300,7 @@ export const platedPackages: PlatedPackage[] = [
     id: "plated-d",
     name: "Plated Set D - Premium Celebration",
     description:
-      "An elevated dining experience featuring premium Filipino dishes for special occasions. Served directly to your guests' tables by our professional staff.",
+      "An elevated dining experience featuring premium Filipino dishes for special occasions.",
     pricePerPax: 661, // 650 + (5.5 * 100) / 50
     minimumPax: 50,
     recommendedPax: 100,
@@ -338,7 +338,7 @@ export const platedPackages: PlatedPackage[] = [
     id: "plated-e",
     name: "Plated Set E - Grand Feast",
     description:
-      "A grand Filipino feast featuring a comprehensive selection of dishes for large celebrations. Served directly to your guests' tables by our professional staff.",
+      "A grand Filipino feast featuring a comprehensive selection of dishes for large celebrations.",
     pricePerPax: 758, // 750 + (6 * 100) / 80
     minimumPax: 80,
     recommendedPax: 120,
@@ -379,7 +379,7 @@ export const platedPackages: PlatedPackage[] = [
     id: "plated-f",
     name: "Plated Set F - Royal Filipino Banquet",
     description:
-      "The ultimate Filipino banquet experience featuring our finest dishes and premium service. Served directly to your guests' tables by our professional staff.",
+      "The ultimate Filipino banquet experience featuring our finest dishes and premium service.",
     pricePerPax: 957, // 950 + (6.5 * 100) / 100
     minimumPax: 100,
     recommendedPax: 150,
