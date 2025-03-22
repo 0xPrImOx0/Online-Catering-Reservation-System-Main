@@ -1,17 +1,18 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
 import Logo from "@/components/icons/logo";
 import FAQ from "@/components/shared/customer/FAQ";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
-import { principles, teams } from "./metadata";
+import { features, principles, teams } from "./metadata";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function AboutPage() {
   const { leadership, culinary, event, service } = teams;
 
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   return (
     <main className="flex-1">
       {/* Hero Section */}
@@ -195,8 +196,6 @@ export default function AboutPage() {
                   "bg-background border border-border hover:border-primary/20",
                   "hover:shadow-[0_0_25px_-5px_rgba(0,0,0,0.1)]"
                 )}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -210,7 +209,7 @@ export default function AboutPage() {
                     "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground"
                   )}
                 >
-                  {feature.icon}
+                  <feature.icon className={"size-6"} />
                 </div>
 
                 <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
