@@ -6,7 +6,7 @@ import Testimonial from "@/components/shared/customer/Testimonial";
 import Footer from "@/components/shared/customer/Footer";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import { Phone } from "lucide-react";
-import { Fascinate } from "next/font/google";
+import { UsersGuide } from "@/components/shared/customer/UsersGuide";
 
 export default function Home() {
   return (
@@ -26,6 +26,8 @@ export default function Home() {
           Icon={Phone}
           px
         />
+
+        <UsersGuide />
       </main>
       <Footer />
     </div>
