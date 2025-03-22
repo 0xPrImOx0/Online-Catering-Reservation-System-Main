@@ -48,7 +48,7 @@ export default function CateringPackages() {
         className="w-full"
         onValueChange={setActiveTab}
       >
-        <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mb-4 gap-2 sm:gap-4 h-auto">
+        <TabsList className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-4 gap-2 sm:gap-4 h-auto">
           <TabsTrigger value="buffet" className="py-2 px-4">
             Buffet Packages
           </TabsTrigger>
@@ -77,10 +77,10 @@ export default function CateringPackages() {
 
         <TabsContent value="plated" className="mt-6 space-y-8">
           <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
-            <Info className="h-5 w-5 text-muted-foreground mt-0.5" />
-            <div>
+            <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative" />
+            <div className="space-y-2">
               <h3 className="font-medium">Plated Course Service</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground text-justify">
                 Our plated course packages include professional waitstaff who
                 will serve each course directly to your guests&apos; tables. An
                 additional service fee of ₱100 per hour is included in the price
@@ -99,10 +99,7 @@ export default function CateringPackages() {
           </div>
         </TabsContent>
 
-        <TabsContent
-          value="event"
-          className="mt-6 -mx-8 sm:mx-0 md:mx-20 lg:mx-8 xl:mx-20"
-        >
+        <TabsContent value="event" className="mt-6 sm:mx-0 lg:mx-8 xl:mx-20">
           {selectedEventType ? (
             <>
               <div className="flex items-center mb-2">

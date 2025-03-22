@@ -23,7 +23,7 @@ export default function PackageDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xl w-full p-0 max-h-[85vh] flex flex-col overflow-hidden">
+      <DialogContent className="max-w-md md:max-w-xl w-full p-0 max-h-[85vh] flex flex-col overflow-hidden rounded-md">
         {/* Sticky Header Section */}
         <div className="sticky top-0 z-10 bg-background shadow-md border-t-slate-400">
           {/* Image with fixed height */}
