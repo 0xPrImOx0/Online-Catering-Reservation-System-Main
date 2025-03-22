@@ -21,7 +21,7 @@ export default function CustomSelect({
         className={clsx({
           "w-[200px] max-w-[200px]": size === "sm",
           "w-[250px] max-w-[250px]": size === "md",
-          "": size === "lg",
+          "w-full": size === "lg",
         })}
       >
         <div className="flex items-center">

@@ -39,11 +39,6 @@ export type MenuInfoDialogProps = {
   setIsEditMenuOpen: SetStateBoolean;
 };
 
-export type AddMenuDialogProps = {
-  isAddMenuOpen: boolean;
-  setIsAddMenuOpen: SetStateBoolean;
-};
-
 export type EditMenuDialogProps = {
   currentMenu: MenuItem;
   isEditMenuOpen: boolean;

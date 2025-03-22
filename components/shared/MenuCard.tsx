@@ -31,7 +31,6 @@ export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const [showImageDialog, setShowImageDialog] = useState(false);
   const [menuPricePax, setMenuPricePax] = useState(item.prices[0].price);
-  const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const { calculateSavings, calculateSavingsPercentage } =
@@ -221,15 +220,6 @@ export function MenuCard({ item }: MenuCardProps) {
             View Details
           </Button>
         </MenuDetailsDialog>
-        {/* {pathname.includes("/caterer") && (
-          <Button
-            className="w-full"
-            variant="outline"
-            onClick={() => setIsEditMenuOpen((prev) => !prev)}
-          >
-            Edit Details
-          </Button>
-        )} */}
       </CardFooter>
 
       {/* Image Dialog */}

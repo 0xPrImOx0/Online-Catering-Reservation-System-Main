@@ -24,72 +24,14 @@ import type {
 import { RenderStarRatings } from "../CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { CategoryBadge } from "./MenuCategoryBadge";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import clsx from "clsx";
-import { Textarea } from "@/components/ui/textarea";
+import { Card } from "@/components/ui/card";
 
 export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
   const { calculateSavings } = useMenuCalculations();
-  const [isHeaderEditMode, setIsHeaderEditMode] = useState(false);
-  const [editFullDesc, setEditFullDesc] = useState(false);
-  const [editIngredients, setEditIngredients] = useState(false);
-  const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const pathname = usePathname();
-
-  const InputOnEditMode = ({
-    data,
-    type = "input",
-  }: {
-    data: string;
-    type?: "input" | "textarea";
-  }) => {
-    return !isHeaderEditMode ? (
-      data
-    ) : type === "input" ? (
-      <Input className="w-full" defaultValue={data} />
-    ) : (
-      <Textarea defaultValue={data} rows={3} />
-    );
-  };
-
-  const TitleWithEditMode = ({
-    title,
-    onClick,
-  }: {
-    title: string;
-    onClick: () => void;
-  }) => {
-    return (
-      <div className="flex items-center justify-between">
-        <h4 className="font-medium mb-2 text-lg text-foreground">{title}</h4>
-        <div className="flex gap-2">
-          {editFullDesc && (
-            <Button
-              onClick={onClick}
-              className="flex gap-1 text-destructive"
-              variant={"ghost"}
-              size={"custom"}
-            >
-              <X className="h-4 w-4" />
-              Cancel
-            </Button>
-          )}
-          <Button
-            onClick={onClick}
-            className={clsx("flex gap-1", { "text-green-700": editFullDesc })}
-            variant={"ghost"}
-            size={"custom"}
-          >
-            <Pencil className="h-4 w-4" />
-            {editFullDesc ? "Save" : "Edit"}
-          </Button>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <Dialog>
@@ -112,78 +54,26 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                 className={clsx({
                   "bg-emerald-600 dark:bg-emerald-500": item.available,
                 })}
-              >
-                {isHeaderEditMode ? (
-                  <>
-                    <Pencil className="h-3 w-3 mr-1" /> Edit Availability
-                  </>
-                ) : item.available ? (
-                  "Available"
-                ) : (
-                  "Unavailable"
-                )}
-              </Badge>
+              ></Badge>
+              <CategoryBadge category={item.category} />
 
-              {isHeaderEditMode ? (
-                <Badge
-                  variant="outline"
-                  className={`flex items-center gap-1 bg-amber-100 text-amber-800 border-amber-200`}
-                >
-                  <Pencil className="h3 w-3" /> Edit Category
-                </Badge>
-              ) : (
-                <CategoryBadge category={item.category} />
-              )}
-
-              {item.spicy ? (
+              {item.spicy && (
                 <Badge
                   variant="outline"
                   className="bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 flex items-center gap-1"
                 >
                   <Flame className="h-3 w-3" /> Spicy
                 </Badge>
-              ) : (
-                isHeaderEditMode && (
-                  <Badge
-                    variant="outline"
-                    className="bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 flex items-center gap-1"
-                  >
-                    <Pencil className="h-3 w-3" />
-                    Edit Spice
-                  </Badge>
-                )
               )}
-
               <DialogClose className="h-8 w-8 rounded-full bg-black/70 dark:bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black dark:hover:bg-white/30 transition-colors">
                 <X className="h-4 w-4" />
               </DialogClose>
             </div>
-            {pathname.includes("/caterer") && (
-              <Button
-                onClick={() => setIsHeaderEditMode((prev) => !prev)}
-                className="absolute bottom-2 right-2 bg-black/70 dark:bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black dark:hover:bg-white/30 transition-colors hover:text-white"
-              >
-                {!isHeaderEditMode ? (
-                  <>
-                    <Pencil />
-                    Edit Header
-                  </>
-                ) : (
-                  <>
-                    <PencilOff /> Cancel Edit
-                  </>
-                )}
-              </Button>
-            )}
           </div>
           <div className="p-6 pb-2 border-b border-border">
             <div className="flex items-center justify-between">
-              <DialogTitle
-                className={clsx("text-2xl text-foreground", {
-                  "font-serif": !isHeaderEditMode,
-                })}
-              >
-                <InputOnEditMode data={item.name} />
+              <DialogTitle className="text-2xl text-foreground font-serif">
+                {item.name}
               </DialogTitle>
               <TooltipProvider>
                 <Tooltip>
@@ -199,32 +89,25 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               </TooltipProvider>
             </div>
             <DialogDescription className="text-muted-foreground mt-2">
-              <InputOnEditMode data={item.shortDescription} type="textarea" />
+              data={item.shortDescription}
             </DialogDescription>
           </div>
         </div>
 
         <div className="p-6 space-y-6">
           <div>
-            <TitleWithEditMode
-              title="Description"
-              onClick={() => setEditFullDesc((prev) => !prev)}
-            />
-
-            {!editFullDesc ? (
-              <p className="text-muted-foreground text-justify">
-                {item.fullDescription}
-              </p>
-            ) : (
-              <Textarea defaultValue={item.fullDescription} rows={3} />
-            )}
+            <h4 className="font-medium mb-2 text-lg text-foreground">
+              Description
+            </h4>
+            <p className="text-muted-foreground text-justify">
+              {item.fullDescription}
+            </p>
           </div>
 
           <div>
-            <TitleWithEditMode
-              title="ingredients"
-              onClick={() => setEditIngredients((prev) => !prev)}
-            />
+            <h4 className="font-medium mb-2 text-lg text-foreground">
+              Ingredients
+            </h4>
             <p className="text-muted-foreground text-justify">
               {item.ingredients.join(", ")}
             </p>
@@ -253,13 +136,13 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
             </h4>
             <div className="grid grid-cols-2 gap-2">
               {Object.entries(item.nutritionInfo).map(([key, value]) => (
-                <div
+                <Card
                   key={key}
-                  className="flex justify-between p-2 bg-muted rounded"
+                  className="flex justify-between p-2"
                 >
-                  <span className="font-medium capitalize">{key}</span>
-                  <span>{value}</span>
-                </div>
+                  <span className="capitalize">{key}</span>
+                  <span className="font-bold">{value}</span>
+                </Card>
               ))}
             </div>
             <p className="text-xs text-muted-foreground mt-2">
@@ -281,7 +164,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               Pricing
             </h4>
             <div className="space-y-2">
-              <div className="flex justify-between items-center p-2 bg-muted rounded py-3">
+              <Card className="flex justify-between items-center p-2 rounded py-3">
                 <div>
                   <p className="font-medium">Regular price per pax</p>
                 </div>
@@ -290,24 +173,23 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                     &#8369;{item.regularPricePerPax.toFixed(2)}
                   </p>
                 </div>
-              </div>
+              </Card>
 
               {item.prices.map(({ minimumPax, maximumPax, price }) => (
-                <div
+                <Card
                   key={price}
-                  className="flex justify-between items-center p-2 bg-muted rounded"
+                  className="flex justify-between items-center p-2"
                 >
                   <div>
                     <p className="font-medium">
                       {`${minimumPax} - ${maximumPax}`} pax
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      &#8369;{price}{" "}
-                      <span className="text-[10px]">fixed price*</span>
+                      &#8369;{price.toFixed(2)} per person
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold">&#8369;{price}</p>
+                    <p className="font-bold">&#8369;{price.toFixed(2)}</p>
                     <p className="text-sm text-emerald-600 dark:text-emerald-400">
                       Save &#8369;
                       {calculateSavings({
@@ -317,7 +199,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                       }).toFixed(2)}
                     </p>
                   </div>
-                </div>
+                </Card>
               ))}
             </div>
           </div>

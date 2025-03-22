@@ -1,3 +1,5 @@
+import { SetStateBoolean } from "../global-types";
+
 export type ServingSize = 6 | 10 | 15 | 20;
 
 // Define the types
@@ -95,4 +97,9 @@ export interface MenuImageDialogProps {
 export interface CategoryBadgeProps {
   category: CategoryProps;
   size?: "small" | "medium";
+}
+
+export interface AddMenuDialogProps {
+  isAddMenuOpen: boolean;
+  setIsAddMenuOpen: SetStateBoolean;
 }

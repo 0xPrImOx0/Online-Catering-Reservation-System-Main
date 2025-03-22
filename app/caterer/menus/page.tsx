@@ -10,6 +10,7 @@ import ViewModeButtons from "@/components/shared/ViewModeButtons";
 import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton";
 import { menuItems } from "@/lib/menu-metadata";
 import { MenuCard } from "@/components/shared/MenuCard";
+import { AddMenuDialog } from "@/components/shared/caterer/AddMenuDialog";
 
 export default function MenuManagement() {
   // State responsible for opening/closing the dialogs for dialog visibility
@@ -66,6 +67,11 @@ export default function MenuManagement() {
           ))} */}
         </div>
       )}
+
+      <AddMenuDialog
+        isAddMenuOpen={isAddMenuOpen}
+        setIsAddMenuOpen={setIsAddMenuOpen}
+      />
 
       {/* Delete Confirmation Dialog */}
       <DeleteMenuDialog
