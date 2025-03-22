@@ -32,11 +32,8 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
-<<<<<<< HEAD
     "emblor": "^1.4.7",
-=======
     "framer-motion": "^12.5.0",
->>>>>>> 7896beb8444fc091bdce83db3f8ce7a84b1da9f7
     "lucide-react": "^0.475.0",
     "next": "15.1.7",
     "next-themes": "^0.4.4",

@@ -108,6 +108,15 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
             <h4 className="font-medium mb-2 text-lg text-foreground">
               Ingredients
             </h4>
+            {item.ingredients.length > 0 ? (
+                item.ingredients.map((ingredient) => (
+                  <Badge key={ingredient} variant="outline">
+                    {ingredient}
+                  </Badge>
+                ))
+              ) : (
+                <span className="text-muted-foreground">None</span>
+              )}
             <p className="text-muted-foreground text-justify">
               {item.ingredients.join(", ")}
             </p>
