@@ -17,6 +17,7 @@ export default function Home() {
         <Hero />
         <About />
         <Featured />
+        <UsersGuide />
         <Testimonial />
         <FooterCTA
           title="Need more information?"
@@ -26,8 +27,6 @@ export default function Home() {
           Icon={Phone}
           px
         />
-
-        <UsersGuide />
       </main>
       <Footer />
     </div>

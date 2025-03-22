@@ -3,7 +3,7 @@ import React from "react";
 
 export const UsersGuide = () => {
   return (
-    <section id="how-it-works" className="py-16 md:py-24 bg-muted/50">
+    <section id="how-it-works" className="my-16 md:my-24 lg:my-32 md:mx-[2%]">
       <div className="container">
         <div className="flex flex-col items-center text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
