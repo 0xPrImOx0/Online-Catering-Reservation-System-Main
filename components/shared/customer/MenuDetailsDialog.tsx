@@ -54,7 +54,9 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                 className={clsx({
                   "bg-emerald-600 dark:bg-emerald-500": item.available,
                 })}
-              ></Badge>
+              >
+                {item.available ? "Available" : "Unavailable"}
+              </Badge>
               <CategoryBadge category={item.category} />
 
               {item.spicy && (
@@ -108,18 +110,20 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
             <h4 className="font-medium mb-2 text-lg text-foreground">
               Ingredients
             </h4>
-            {item.ingredients.length > 0 ? (
+            <div className="flex gap-2 flex-wrap">
+              {item.ingredients.length > 0 ? (
                 item.ingredients.map((ingredient) => (
-                  <Badge key={ingredient} variant="outline">
+                  <Badge key={ingredient} variant="outline" className="font-medium">
                     {ingredient}
                   </Badge>
                 ))
               ) : (
                 <span className="text-muted-foreground">None</span>
               )}
-            <p className="text-muted-foreground text-justify">
+            </div>
+            {/* <p className="text-muted-foreground text-justify">
               {item.ingredients.join(", ")}
-            </p>
+            </p> */}
           </div>
 
           <div>
@@ -145,10 +149,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
             </h4>
             <div className="grid grid-cols-2 gap-2">
               {Object.entries(item.nutritionInfo).map(([key, value]) => (
-                <Card
-                  key={key}
-                  className="flex justify-between p-2"
-                >
+                <Card key={key} className="flex justify-between p-2">
                   <span className="capitalize">{key}</span>
                   <span className="font-bold">{value}</span>
                 </Card>

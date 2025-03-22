@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -9,22 +7,11 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Flame, Pencil, PencilOff, X } from "lucide-react";
-import type {
-  AddMenuDialogProps,
-  MenuDetailsDialogProps,
-  ServingSize,
-} from "@/types/customer/menu-types";
-import { RenderStarRatings } from "../CustomStarRating";
-import { useMenuCalculations } from "@/hooks/useMenuCalculations";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
+import type { AddMenuDialogProps } from "@/types/customer/menu-types";
 import { Input } from "@/components/ui/input";
 import clsx from "clsx";
 import { Textarea } from "@/components/ui/textarea";
-import { CategoryBadge } from "../customer/MenuCategoryBadge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -35,8 +22,8 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { categories } from "@/lib/menu-select";
-import CustomSelect from "../CustomSelect";
 import ArrayInput from "../ArrayInput";
+import { useState } from "react";
 
 type LabelGroupProps = {
   title: string;
@@ -52,6 +39,7 @@ export function AddMenuDialog({
   setIsAddMenuOpen,
 }: AddMenuDialogProps) {
 
+  const [ingredients, setIngredients] = useState([])
   const renderFieldType = ({
     type,
     title,
@@ -83,7 +71,9 @@ export function AddMenuDialog({
             </SelectTrigger>
             <SelectContent>
               {selectData?.map((data) => (
-                <SelectItem key={data} value={data}>{data}</SelectItem>
+                <SelectItem key={data} value={data}>
+                  {data}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -180,7 +170,7 @@ export function AddMenuDialog({
             title="Serving Per Person"
             placeholder="How much serving size per person?"
           />
-          <ArrayInput />
+          <ArrayInput tags={ingredients} title="Ingredients" />
 
           <div>
             <h4 className="font-medium mb-2 text-lg text-foreground">

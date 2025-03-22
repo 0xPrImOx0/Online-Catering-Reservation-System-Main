@@ -30,29 +30,14 @@ interface TagInputProps {
 // Cast TagInput to a JSX-compatible type
 const TagInput = TagInputComponent as unknown as React.FC<TagInputProps>;
 
-const tags: Tag[] = [
-  {
-    id: "1",
-    text: "Sport",
-  },
-  {
-    id: "2",
-    text: "Coding",
-  },
-  {
-    id: "3",
-    text: "Travel",
-  },
-];
-
-export default function ArrayInput() {
+export default function ArrayInput({ tags, title }: { tags: Tag[], title:string }) {
   const id = useId();
   const [exampleTags, setExampleTags] = useState<Tag[]>(tags);
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
 
   return (
-    <div className="*:not-first:mt-2">
-      <Label htmlFor={id}>Input with tags</Label>
+    <div className="space-y-2">
+      <Label htmlFor={id} className="">{title}</Label>
       <TagInput
         id={id}
         tags={exampleTags}
@@ -62,10 +47,10 @@ export default function ArrayInput() {
         placeholder="Add a tag"
         styleClasses={{
           tagList: {
-            container: "gap-1",
+            container: "gap-2",
           },
           input:
-            "rounded-md transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+            "rounded-md transition-[color,box-shadow] placeholder:text-muted-foreground/70 ",
           tag: {
             body: "relative h-7 bg-background border border-input hover:bg-background rounded-md font-medium text-xs ps-2 pe-7",
             closeButton:
