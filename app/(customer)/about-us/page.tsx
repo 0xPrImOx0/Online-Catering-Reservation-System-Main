@@ -169,14 +169,8 @@ export default function AboutPage() {
       {/* FAQ Section */}
       <FAQ />
 
+      {/* Why Choose Us Section */}
       <section className="py-20 md:py-28 relative overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-b from-muted/30 to-muted/80 -z-10" />
-        <div className="absolute inset-0 opacity-10 -z-10">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-          <div className="h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]" />
-        </div>
-
         <div className="container px-4 sm:px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
@@ -229,12 +223,12 @@ export default function AboutPage() {
               transition={{ duration: 0.5, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              <a
-                href="#book-now"
+              <Link
+                href="/book-now"
                 className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-primary-foreground bg-primary rounded-md shadow-sm hover:bg-primary/90 transition-colors"
               >
                 Book Your Event Now
-              </a>
+              </Link>
             </motion.div>
           </div>
         </div>
