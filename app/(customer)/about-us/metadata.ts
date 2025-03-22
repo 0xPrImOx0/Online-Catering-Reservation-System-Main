@@ -98,4 +98,43 @@ const teams = {
   ],
 };
 
-export {teams, principles}
+const features = [
+  {
+    icon: <Award className="h-6 w-6" />,
+    title: "Award-Winning Cuisine",
+    description:
+      "Our culinary team has received numerous accolades for their innovative and delicious creations that will impress your guests.",
+  },
+  {
+    icon: <Users className="h-6 w-6" />,
+    title: "Experienced Team",
+    description:
+      "With over 15 years in the industry, our team has the expertise to handle events of any size and complexity with precision.",
+  },
+  {
+    icon: <Heart className="h-6 w-6" />,
+    title: "Personalized Service",
+    description:
+      "We work closely with you to create a customized menu and experience that perfectly reflects your taste and vision.",
+  },
+  {
+    icon: <Utensils className="h-6 w-6" />,
+    title: "Premium Ingredients",
+    description:
+      "We source only the freshest, highest-quality ingredients to ensure exceptional taste and presentation for your event.",
+  },
+  {
+    icon: <Clock className="h-6 w-6" />,
+    title: "Punctual Delivery",
+    description:
+      "We understand timing is crucial for events. Our team ensures everything is delivered and set up right on schedule.",
+  },
+  {
+    icon: <ThumbsUp className="h-6 w-6" />,
+    title: "Satisfaction Guaranteed",
+    description:
+      "Your satisfaction is our priority. We go above and beyond to exceed expectations and create memorable experiences.",
+  },
+];
+
+export { teams, principles };
