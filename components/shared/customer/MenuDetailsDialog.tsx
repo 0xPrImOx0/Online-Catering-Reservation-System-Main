@@ -16,18 +16,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Flame, Pencil, PencilOff, X } from "lucide-react";
+import { Flame, X } from "lucide-react";
 import type {
   MenuDetailsDialogProps,
-  ServingSize,
 } from "@/types/customer/menu-types";
 import { RenderStarRatings } from "../CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { CategoryBadge } from "./MenuCategoryBadge";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { Card } from "@/components/ui/card";
+import TrayPriceCard from "../TrayPriceCard";
 
 export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
   const { calculateSavings } = useMenuCalculations();
@@ -91,7 +90,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               </TooltipProvider>
             </div>
             <DialogDescription className="text-muted-foreground mt-2">
-              data={item.shortDescription}
+              {item.shortDescription}
             </DialogDescription>
           </div>
         </div>
@@ -113,7 +112,11 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
             <div className="flex gap-2 flex-wrap">
               {item.ingredients.length > 0 ? (
                 item.ingredients.map((ingredient) => (
-                  <Badge key={ingredient} variant="outline" className="font-medium">
+                  <Badge
+                    key={ingredient}
+                    variant="outline"
+                    className="font-medium"
+                  >
                     {ingredient}
                   </Badge>
                 ))
@@ -185,31 +188,12 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                 </div>
               </Card>
 
-              {item.prices.map(({ minimumPax, maximumPax, price }) => (
-                <Card
-                  key={price}
-                  className="flex justify-between items-center p-2"
-                >
-                  <div>
-                    <p className="font-medium">
-                      {`${minimumPax} - ${maximumPax}`} pax
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      &#8369;{price.toFixed(2)} per person
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold">&#8369;{price.toFixed(2)}</p>
-                    <p className="text-sm text-emerald-600 dark:text-emerald-400">
-                      Save &#8369;
-                      {calculateSavings({
-                        regularPricePerPax: item.regularPricePerPax,
-                        price: price,
-                        servingSize: maximumPax,
-                      }).toFixed(2)}
-                    </p>
-                  </div>
-                </Card>
+              {item.prices.map((price) => (
+                <TrayPriceCard
+                  key={price.minimumPax}
+                  data={price}
+                  regularPrice={item.regularPricePerPax}
+                />
               ))}
             </div>
           </div>

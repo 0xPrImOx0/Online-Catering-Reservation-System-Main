@@ -21,5 +21,16 @@ export function useMenuCalculations() {
     []
   );
 
-  return { calculateSavings, calculateSavingsPercentage, calculatePricePerPax };
+  const calculatePrice = useCallback(
+    (regularPricePerPax: number, servingSize: number): number =>
+      regularPricePerPax * servingSize,
+    []
+  );
+
+  return {
+    calculateSavings,
+    calculateSavingsPercentage,
+    calculatePricePerPax,
+    calculatePrice,
+  };
 }

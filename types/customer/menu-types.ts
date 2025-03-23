@@ -16,6 +16,7 @@ export type CategoryProps =
   | "Beverage";
 
 export type AllergenProps =
+  | ""
   | "Milk"
   | "Eggs"
   | "Fish"
