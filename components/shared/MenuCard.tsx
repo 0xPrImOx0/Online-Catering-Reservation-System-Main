@@ -18,7 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Flame, Pencil, Trash2 } from "lucide-react";
+import { Eye, Flame, Pencil, Trash2 } from "lucide-react";
 import type { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
 import { RenderStarRatings } from "./CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
@@ -28,6 +28,7 @@ import { CategoryBadge } from "./customer/MenuCategoryBadge";
 import { usePathname } from "next/navigation";
 import { EditMenuDialog } from "./caterer/EditMenuDialog";
 import DeleteMenuDialog from "./caterer/DeleteMenuDialog";
+import clsx from "clsx";
 
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
@@ -37,6 +38,7 @@ export function MenuCard({ item }: MenuCardProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const pathname = usePathname();
+  const isCaterer = pathname.includes("/caterer");
 
   const { calculateSavings, calculateSavingsPercentage } =
     useMenuCalculations();
@@ -127,7 +129,7 @@ export function MenuCard({ item }: MenuCardProps) {
               {item.shortDescription}
             </CardDescription>
           </div>
-          {!pathname.includes("/caterer") && (
+          {!isCaterer && (
             <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
               {calculateSavingsPercentage({
                 regularPricePerPax: item.regularPricePerPax,
@@ -141,7 +143,7 @@ export function MenuCard({ item }: MenuCardProps) {
       </CardHeader>
 
       <CardContent className="flex-grow">
-        {pathname.includes("/caterer") ? (
+        {isCaterer ? (
           <div></div>
         ) : (
           <div className="space-y-4">
@@ -219,25 +221,32 @@ export function MenuCard({ item }: MenuCardProps) {
         )}
       </CardContent>
 
-      <CardFooter className="flex flex-col gap-2">
+      <CardFooter className="flex justify-between">
         <MenuDetailsDialog item={item}>
-          <Button className="w-full" variant="default">
-            View Details
+          <Button
+            className={clsx({ "w-full": !isCaterer })}
+            variant={isCaterer ? "link" : "default"}
+            size={isCaterer ? "custom" : "default"}
+          >
+            {isCaterer && <Eye />} View Details
           </Button>
         </MenuDetailsDialog>
-        {pathname.includes("/caterer") && (
-          <div className="flex w-full gap-3">
+        {isCaterer && (
+          <div className="flex gap-2">
             <Button
-              className="w-full"
+              className="text-yellow-600 gap-1"
+              size={"custom"}
               onClick={() => setIsEditMenuOpen((prev) => !prev)}
-              variant={"outline"}
+              variant={"link"}
             >
-              <Pencil /> Edit
+              <Pencil />
+              Edit
             </Button>
             <Button
-              className="w-full"
+              className="w-full text-destructive gap-1"
+              size={"custom"}
               onClick={() => setIsDeleteDialogOpen((prev) => !prev)}
-              variant={"destructive"}
+              variant={"link"}
             >
               <Trash2 /> Delete
             </Button>

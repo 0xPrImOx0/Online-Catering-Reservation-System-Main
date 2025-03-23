@@ -111,11 +111,11 @@ export default function CustomPackageForm() {
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="mb-8">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center">
           {formSteps.map((step, index) => (
             <div
               key={step.id}
-              className={`flex flex-col items-center ${
+              className={`flex flex-1 flex-col items-center ${
                 index < formStep
                   ? "text-primary"
                   : index === formStep
@@ -142,7 +142,7 @@ export default function CustomPackageForm() {
           <div className="absolute top-0 left-0 right-0 h-1 bg-muted">
             <div
               className="absolute top-0 left-0 h-1 bg-primary transition-all"
-              style={{ width: `${(formStep / (formSteps.length - 1)) * 100}%` }}
+              style={{ width: `${(formStep / (formSteps.length)) * 100}%` }}
             />
           </div>
         </div>

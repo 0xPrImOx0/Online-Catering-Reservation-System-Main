@@ -8,32 +8,6 @@ export default function Page() {
   return (
     <main className="mx-2">
       <div className=" py-12">
-        <h1 className="text-5xl font-bold text-center mb-12">Our Packages</h1>
-
-        {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <CustomSelect
-            defaultValue=""
-            placeholder="Menu Type"
-            size="md"
-            items={menuTypes}
-          />
-
-          <CustomSelect
-            defaultValue=""
-            placeholder="Dietary Options"
-            size="md"
-            items={dietaryOptions}
-          />
-
-          <CustomSelect
-            defaultValue=""
-            placeholder="Price Range"
-            size="md"
-            items={priceOptions}
-          />
-        </div>
-
         <div className="flex flex-wrap items-center justify-center gap-10">
           {/* Package Showcase */}
           <CateringPackages />

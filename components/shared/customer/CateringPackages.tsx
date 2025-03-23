@@ -29,18 +29,36 @@ export default function CateringPackages() {
   const [serviceType, setServiceType] = useState<ServiceType>("Buffet");
   const { imageDialog, openImageDialog, closeImageDialog } = useImageDialog();
 
+  const TabsTriggerStyle = ({
+    value,
+    title,
+  }: {
+    value: string;
+    title: string;
+  }) => {
+    return (
+      <TabsTrigger
+        value={value}
+        className="flex-1 hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+      >
+        {title}
+      </TabsTrigger>
+    );
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 pb-8">
       <ImageDialog
         imageDialog={imageDialog}
         closeImageDialog={closeImageDialog}
       />
-
-      <h1 className="text-3xl font-bold text-center mb-2">
-        Filipino Catering Packages
+      <h1 className="text-5xl font-bold text-center mb-4">
+        <span className="capitalize">{activeTab}</span> Packages
       </h1>
+
       <p className="text-center text-muted-foreground mb-8">
-        Authentic Filipino cuisine for your special events and celebrations
+        Authentic filipino {activeTab} cuisine for your special events and
+        celebrations
       </p>
 
       <Tabs
@@ -48,19 +66,11 @@ export default function CateringPackages() {
         className="w-full"
         onValueChange={setActiveTab}
       >
-        <TabsList className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-4 gap-2 sm:gap-4 h-auto">
-          <TabsTrigger value="buffet" className="py-2 px-4">
-            Buffet Packages
-          </TabsTrigger>
-          <TabsTrigger value="plated" className="py-2 px-4">
-            Plated Course Packages
-          </TabsTrigger>
-          <TabsTrigger value="event" className="py-2 px-4">
-            Event Packages
-          </TabsTrigger>
-          <TabsTrigger value="custom" className="py-2 px-4">
-            Custom Package
-          </TabsTrigger>
+        <TabsList className="text-foreground w-full justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1">
+          <TabsTriggerStyle value="buffet" title="Buffet Packages" />
+          <TabsTriggerStyle value="plated course" title="Plated Course" />
+          <TabsTriggerStyle value="event" title="Event Packages" />
+          <TabsTriggerStyle value="custom" title="Custom Packages" />
         </TabsList>
 
         <TabsContent value="buffet" className="mt-6">
@@ -75,7 +85,7 @@ export default function CateringPackages() {
           </div>
         </TabsContent>
 
-        <TabsContent value="plated" className="mt-6 space-y-8">
+        <TabsContent value="plated course" className="mt-6 space-y-8">
           <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
             <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative" />
             <div className="space-y-2">
