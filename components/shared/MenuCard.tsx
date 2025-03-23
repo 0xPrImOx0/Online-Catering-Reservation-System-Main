@@ -18,7 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Flame } from "lucide-react";
+import { Flame, Pencil, Trash2 } from "lucide-react";
 import type { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
 import { RenderStarRatings } from "./CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
@@ -26,11 +26,16 @@ import { MenuDetailsDialog } from "./customer/MenuDetailsDialog";
 import { MenuImageDialog } from "./customer/MenuImageDialog";
 import { CategoryBadge } from "./customer/MenuCategoryBadge";
 import { usePathname } from "next/navigation";
+import { EditMenuDialog } from "./caterer/EditMenuDialog";
+import DeleteMenuDialog from "./caterer/DeleteMenuDialog";
 
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const [showImageDialog, setShowImageDialog] = useState(false);
   const [menuPricePax, setMenuPricePax] = useState(item.prices[0].price);
+  const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
   const pathname = usePathname();
 
   const { calculateSavings, calculateSavingsPercentage } =
@@ -220,9 +225,37 @@ export function MenuCard({ item }: MenuCardProps) {
             View Details
           </Button>
         </MenuDetailsDialog>
+        {pathname.includes("/caterer") && (
+          <div className="flex w-full gap-3">
+            <Button
+              className="w-full"
+              onClick={() => setIsEditMenuOpen((prev) => !prev)}
+              variant={"outline"}
+            >
+              <Pencil /> Edit
+            </Button>
+            <Button
+              className="w-full"
+              onClick={() => setIsDeleteDialogOpen((prev) => !prev)}
+              variant={"destructive"}
+            >
+              <Trash2 /> Delete
+            </Button>
+          </div>
+        )}
       </CardFooter>
 
       {/* Image Dialog */}
+      <EditMenuDialog
+        isEditMenuOpen={isEditMenuOpen}
+        setIsEditMenuOpen={setIsEditMenuOpen}
+        item={item}
+      />
+      <DeleteMenuDialog
+        currentMenu={item}
+        isDeleteDialogOpen={isDeleteDialogOpen}
+        setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+      />
       <MenuImageDialog
         item={item}
         open={showImageDialog}

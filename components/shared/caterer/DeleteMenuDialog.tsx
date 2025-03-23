@@ -9,9 +9,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
-
-export default function DeleteMenuDialog({ currentMenu, isDeleteDialogOpen, setIsDeleteDialogOpen }: DeleteMenuDialogProps) {
+export default function DeleteMenuDialog({
+  currentMenu,
+  isDeleteDialogOpen,
+  setIsDeleteDialogOpen,
+}: DeleteMenuDialogProps) {
   return (
     <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
       <AlertDialogContent>
@@ -24,7 +28,7 @@ export default function DeleteMenuDialog({ currentMenu, isDeleteDialogOpen, setI
               You are about to delete{" "}
               <span className="font-medium">{currentMenu.name}</span>. This
               action cannot be undone.
-              {currentMenu.inPackages > 0 && (
+              {/* {currentMenu.inPackages > 0 && (
                 <div className="mt-2 text-destructive">
                   Warning: This dish is used in {currentMenu.inPackages} package
                   {currentMenu.inPackages !== 1 ? "s" : ""}.
@@ -36,18 +40,17 @@ export default function DeleteMenuDialog({ currentMenu, isDeleteDialogOpen, setI
                   time
                   {currentMenu.timesOrdered !== 1 ? "s" : ""}.
                 </div>
-              )}
+              )} */}
             </div>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => setIsDeleteDialogOpen(false)}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-          >
-            Delete
-          </AlertDialogAction>
+          <Button asChild variant={"destructive"} className="border-none">
+            <AlertDialogAction onClick={() => setIsDeleteDialogOpen(false)}>
+              Delete
+            </AlertDialogAction>
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

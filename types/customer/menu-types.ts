@@ -104,3 +104,9 @@ export interface AddMenuDialogProps {
   isAddMenuOpen: boolean;
   setIsAddMenuOpen: SetStateBoolean;
 }
+
+export interface EditMenuDialogProps {
+  isEditMenuOpen: boolean;
+  setIsEditMenuOpen: SetStateBoolean;
+  item: MenuItem;
+}

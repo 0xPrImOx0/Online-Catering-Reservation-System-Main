@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { selectorItems } from "./metadata";
-import MenuListCard from "@/components/shared/caterer/MenuListCard";
 import DeleteMenuDialog from "@/components/shared/caterer/DeleteMenuDialog";
 import SearchInput from "@/components/shared/SearchInput";
 import CustomSelect from "@/components/shared/CustomSelect";
@@ -11,12 +10,11 @@ import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton
 import { menuItems } from "@/lib/menu-metadata";
 import { MenuCard } from "@/components/shared/MenuCard";
 import { AddMenuDialog } from "@/components/shared/caterer/AddMenuDialog";
+import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
 
 export default function MenuManagement() {
   // State responsible for opening/closing the dialogs for dialog visibility
   const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);
-  const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [currentMenu, setCurrentMenu] = useState(menuItems[0]);
@@ -48,11 +46,7 @@ export default function MenuManagement() {
 
       {/* Menu Items Grid */}
       {viewMode === "grid" ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {menuItems.map((item) => (
-            <MenuCard key={item.id} item={item} />
-          ))}
-        </div>
+        <PaginatedMenus />
       ) : (
         <div className="space-y-4">
           {/* {menuItems.map((menuItem) => (
@@ -74,11 +68,7 @@ export default function MenuManagement() {
       />
 
       {/* Delete Confirmation Dialog */}
-      <DeleteMenuDialog
-        currentMenu={currentMenu}
-        isDeleteDialogOpen={isDeleteDialogOpen}
-        setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-      />
+     
     </main>
   );
 }

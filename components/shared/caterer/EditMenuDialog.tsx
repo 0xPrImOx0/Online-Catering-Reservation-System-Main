@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Upload, X } from "lucide-react";
 import type {
-  AddMenuDialogProps,
+  EditMenuDialogProps,
   MenuItem,
   NutritionInfo,
 } from "@/types/customer/menu-types";
@@ -23,72 +23,26 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Tag } from "@/types/component-types";
 
-export function AddMenuDialog({
-  isAddMenuOpen,
-  setIsAddMenuOpen,
-}: AddMenuDialogProps) {
+export function EditMenuDialog({
+  isEditMenuOpen,
+  setIsEditMenuOpen,
+  item,
+}: EditMenuDialogProps) {
   const [ingredients, setIngredients] = useState([]);
-  const [formState, setFormState] = useState<MenuItem>({
-    id: 0,
-    name: "",
-    category: "Soup",
-    available: true,
-    shortDescription: "",
-    fullDescription: "",
-    ingredients: [""],
-    allergens: [""],
-    preparationMethod: "",
-    prices: [
-      {
-        minimumPax: 4,
-        maximumPax: 6,
-        price: 0,
-      },
-      {
-        minimumPax: 8,
-        maximumPax: 10,
-        price: 0,
-      },
-      {
-        minimumPax: 13,
-        maximumPax: 15,
-        price: 0,
-      },
-      {
-        minimumPax: 18,
-        maximumPax: 20,
-        price: 0,
-      },
-    ],
-    regularPricePerPax: 0,
-    imageUrl: "",
-    rating: 0,
-    ratingCount: 0,
-    spicy: false,
-    perServing: "",
-    nutritionInfo: {
-      calories: "",
-      protein: "",
-      fat: "",
-      carbs: "",
-      sodium: "",
-      fiber: "",
-      sugar: "",
-      cholesterol: "",
-    },
-  });
+  const [formState, setFormState] = useState<MenuItem>(item);
 
-  const [nutritionInfoForm, setNutritionInfoForm] = useState<NutritionInfo>({
-    calories: "",
-    protein: "",
-    fat: "",
-    carbs: "",
-    sodium: "",
-    fiber: "",
-    sugar: "",
-    cholesterol: "",
-  });
+  const [nutritionInfoForm, setNutritionInfoForm] = useState<NutritionInfo>(
+    item["nutritionInfo"]
+  );
+
+  function arrayToTags(input: string[]): Tag[] {
+    return input.map((text, index) => ({
+      id: String(index),
+      text: text,
+    }));
+  }
 
   const discount = 0;
 
@@ -130,14 +84,14 @@ export function AddMenuDialog({
   const price = 0;
 
   return (
-    <Dialog open={isAddMenuOpen} onOpenChange={setIsAddMenuOpen}>
+    <Dialog open={isEditMenuOpen} onOpenChange={setIsEditMenuOpen}>
       <DialogContent className="max-w-[500px] md:max-w-[600px] bg-background max-h-[90dvh] overflow-y-auto p-0 pb-6">
         <div className="sticky z-10 top-0 bg-background p-6 pb-2 border-b border-border">
           <DialogTitle className="text-2xl text-foreground ">
-            Add a New Menu
+            Edit Menu
           </DialogTitle>
           <DialogDescription className="text-muted-foreground mt-2">
-            Please provide the details to add a new menu to your restaurant!
+            Please edit the details to below as necessary!
           </DialogDescription>
           <DialogClose className="absolute z-10 top-2 right-2 h-8 w-8 rounded-full bg-black/70 dark:bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black dark:hover:bg-white/30 transition-colors">
             <X className="h-4 w-4" />
@@ -201,9 +155,12 @@ export function AddMenuDialog({
             value={formState["perServing"]}
             onChange={(value) => handleChange("perServing", value)}
           />
-          <ArrayInput tags={ingredients} title="Ingredients" />
           <ArrayInput
-            tags={ingredients}
+            tags={arrayToTags(item.ingredients)}
+            title="Ingredients"
+          />
+          <ArrayInput
+            tags={arrayToTags(item.allergens)}
             title="Allergens"
             autocomplete
             suggestions={allergens}
@@ -318,7 +275,7 @@ export function AddMenuDialog({
             ))}
           </div>
         </div>
-        <DialogFooter className="pb-6 px-6 gap-2">
+        <DialogFooter className="pb-6 px-6 max-sm:gap-2">
           <Button className="" variant={"destructive"} asChild>
             <DialogClose>Cancel</DialogClose>
           </Button>
