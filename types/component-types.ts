@@ -34,3 +34,34 @@ export type CustomPaginationProps = {
   onPageChange: (e: number) => void;
   title?: string;
 };
+
+//ArrayInputProps
+
+export type Tag = {
+  id: string;
+  text: string;
+};
+export interface TagInputProps {
+  id?: string;
+  tags: Tag[];
+  setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+  placeholder?: string;
+  styleClasses?: {
+    tagList?: { container?: string };
+    input?: string;
+    tag?: { body?: string; closeButton?: string };
+  };
+  activeTagIndex?: number | null;
+  setActiveTagIndex?: React.Dispatch<React.SetStateAction<number | null>>;
+  inlineTags?: boolean;
+  inputFieldPosition?: "top" | "bottom";
+  enableAutocomplete?: boolean;
+  restrictTagsToAutocompleteOptions?: boolean;
+}
+
+export type ArrayInputProps = {
+  tags: Tag[];
+  title: string;
+  autocomplete?: boolean;
+  suggestions?: Tag[];
+};

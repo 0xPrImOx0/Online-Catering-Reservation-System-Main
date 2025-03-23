@@ -21,9 +21,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { categories } from "@/lib/menu-select";
+import { allergens, categories } from "@/lib/menu-select";
 import ArrayInput from "../ArrayInput";
 import { useState } from "react";
+import Sample from "../Sample";
 
 type LabelGroupProps = {
   title: string;
@@ -38,8 +39,7 @@ export function AddMenuDialog({
   isAddMenuOpen,
   setIsAddMenuOpen,
 }: AddMenuDialogProps) {
-
-  const [ingredients, setIngredients] = useState([])
+  const [ingredients, setIngredients] = useState([]);
   const renderFieldType = ({
     type,
     title,
@@ -171,6 +171,13 @@ export function AddMenuDialog({
             placeholder="How much serving size per person?"
           />
           <ArrayInput tags={ingredients} title="Ingredients" />
+          <ArrayInput
+            tags={ingredients}
+            title="Allergens"
+            autocomplete
+            suggestions={allergens}
+          />
+
 
           <div>
             <h4 className="font-medium mb-2 text-lg text-foreground">
