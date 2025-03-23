@@ -21,7 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatCurrency } from "@/utils/format-currency";
-import { EditPackageDialogProps } from "@/app/caterer/caterer-types";
+import { EditPackageDialogProps } from "@/types/caterer/caterer-types";
 //
 
 export default function EditPackageDialog({

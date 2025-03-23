@@ -1,4 +1,4 @@
-import { DeletePackageDialogProps } from "@/app/caterer/caterer-types";
+import { DeletePackageDialogProps } from "@/types/caterer/caterer-types";
 import {
   AlertDialog,
   AlertDialogAction,

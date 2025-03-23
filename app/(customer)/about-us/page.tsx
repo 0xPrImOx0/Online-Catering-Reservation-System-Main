@@ -6,7 +6,7 @@ import Logo from "@/components/icons/logo";
 import FAQ from "@/components/shared/customer/FAQ";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
-import { features, principles, teams } from "./metadata";
+import { features, principles, teams } from "../../../lib/customer/metadata";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 

@@ -1,4 +1,4 @@
-import { MenuItemsProps } from "@/app/caterer/caterer-types";
+import { MenuItemsProps } from "@/types/caterer/caterer-types";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import StarRating from "../StarRating";

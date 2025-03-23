@@ -1,7 +1,7 @@
 import ReservationTable from "@/components/shared/caterer/ReservationTable";
 import MetricCards from "@/components/shared/MetricCards";
 import { Button } from "@/components/ui/button";
-import { reservations } from "@/lib/reservation-dummy";
+import { reservations } from "@/lib/caterer/reservation-dummy";
 import {
   Calendar,
   Filter,
@@ -10,7 +10,7 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
-import { concerns, metricCards, registeredCustomers } from "./metadata";
+import { concerns, metricCards, registeredCustomers } from "../../../lib/caterer/dashboard-metadata";
 import RecentConcerns from "@/components/shared/caterer/RecentConcerns";
 import RecentCustomers from "@/components/shared/caterer/RecentCustomers";
 

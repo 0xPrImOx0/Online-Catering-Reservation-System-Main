@@ -1,4 +1,4 @@
-import { PackageDetailsProps } from "@/app/caterer/caterer-types";
+import { PackageDetailsProps } from "@/types/caterer/caterer-types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { formatCurrency } from "@/utils/format-currency";
 import Image from "next/image";
-
 
 export default function PackageDetails({
   currentPackage,

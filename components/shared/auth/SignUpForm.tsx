@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "../../ui/card";
 import { Google } from "../Google";
-import { SignUpFormProps } from "@/app/(auth)/auth-types";
+import { SignUpFormProps } from "@/types/auth/auth-types";
 import {
   Form,
   FormControl,

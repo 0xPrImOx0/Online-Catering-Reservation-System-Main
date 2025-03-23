@@ -2,7 +2,7 @@ import Logo from "@/components/icons/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { links } from "@/lib/customer-links";
+import { links } from "@/lib/customer/customer-links";
 import { MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 

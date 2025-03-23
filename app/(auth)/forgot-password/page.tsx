@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { ForgotPasswordFormValues } from "../auth-types";
+import { ForgotPasswordFormValues } from "../../../types/auth/auth-types";
 
 const ForgotPassword = () => {
   const form = useForm<ForgotPasswordFormValues>({

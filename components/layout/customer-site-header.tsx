@@ -7,7 +7,7 @@ import { Calendar, Menu, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import CustomerNavUser from "../shared/customer/CustomerNavUser";
-import { links } from "@/lib/customer-links";
+import { links } from "@/lib/customer/customer-links";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function CustomerSiteHeader() {

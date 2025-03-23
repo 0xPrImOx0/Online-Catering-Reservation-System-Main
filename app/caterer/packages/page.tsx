@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { availableMenus, cateringPackages, selectorItems } from "./metadata";
+import {
+  availableMenus,
+  cateringPackages,
+  selectorItems,
+} from "../../../lib/caterer/packages-metadata";
 import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton";
 import SearchInput from "@/components/shared/SearchInput";
 import CustomSelect from "@/components/shared/CustomSelect";

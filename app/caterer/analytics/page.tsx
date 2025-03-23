@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { chartData, favoriteMenus, mostSellingMenus, trendingPackages } from "./metadata";
+import { chartData, favoriteMenus, mostSellingMenus, trendingPackages } from "../../../lib/caterer/analytics-metadata";
 
 export default function AnalyticsDashboard() {
   const [timeFrame, setTimeFrame] = useState("monthly");

@@ -32,8 +32,8 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Check } from "lucide-react";
-import { formSteps } from "@/app/(customer)/packages/packages-metadata";
-import { menuItems } from "@/lib/menu-metadata";
+import { formSteps } from "@/lib/customer/packages-metadata";
+import { menuItems } from "@/lib/menu-lists";
 import { PackageCategory, FormData } from "@/types/customer/package-types";
 
 export default function CustomPackageForm() {

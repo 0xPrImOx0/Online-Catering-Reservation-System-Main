@@ -26,7 +26,7 @@ import { useTheme } from "next-themes";
 import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { links, registeredLinks } from "@/lib/customer-links";
+import { links, registeredLinks } from "@/lib/customer/customer-links";
 
 type CustomerNavUserProps = {
   user: {

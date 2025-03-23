@@ -5,7 +5,7 @@ import {
   dietaryOptions,
   menuTypes,
   priceOptions,
-} from "../../../lib/menu-metadata";
+} from "../../../lib/menu-lists";
 import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
 
 export default function Page() {

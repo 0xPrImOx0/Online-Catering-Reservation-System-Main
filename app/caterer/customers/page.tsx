@@ -66,8 +66,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
-import { concerns, customers } from "./metadata";
-import { ConcernType, CustomerType } from "../caterer-types";
+import { concerns, customers } from "../../../lib/caterer/customers-metadata";
+import {
+  ConcernType,
+  CustomerType,
+} from "../../../types/caterer/caterer-types";
 // import { ConcernType, CustomerType } from "./customer-type";
 
 export default function CustomersPage() {

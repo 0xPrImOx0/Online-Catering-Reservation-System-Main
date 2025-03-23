@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "../../ui/card";
 import { Google } from "../Google";
-import { SignInFormProps } from "@/app/(auth)/auth-types";
+import { SignInFormProps } from "@/types/auth/auth-types";
 import {
   Form,
   FormControl,

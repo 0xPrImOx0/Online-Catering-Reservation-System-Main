@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import PackageBookForm from "./PackageBookForm";
-import { menuItems } from "@/lib/menu-metadata";
+import { menuItems } from "@/lib/menu-lists";
 import type {
   PackageDetailsDialogProps,
   PlatedPackage,

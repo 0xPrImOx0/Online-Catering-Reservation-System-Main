@@ -1,4 +1,4 @@
-import { DeleteMenuDialogProps } from "@/app/caterer/caterer-types";
+import { DeleteMenuDialogProps } from "@/types/caterer/caterer-types";
 import {
   AlertDialog,
   AlertDialogAction,

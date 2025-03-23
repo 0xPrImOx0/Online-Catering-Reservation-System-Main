@@ -14,7 +14,7 @@ import {
   platedPackages,
   eventPackages,
   eventTypes,
-} from "@/app/(customer)/packages/packages-metadata";
+} from "@/lib/customer/packages-metadata";
 import { Button } from "@/components/ui/button";
 import PackageCard from "./PackageCard";
 import EventTypeCard from "./EventTypeCard";

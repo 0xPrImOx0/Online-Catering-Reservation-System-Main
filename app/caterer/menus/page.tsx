@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { selectorItems } from "./metadata";
 import DeleteMenuDialog from "@/components/shared/caterer/DeleteMenuDialog";
 import SearchInput from "@/components/shared/SearchInput";
 import CustomSelect from "@/components/shared/CustomSelect";
 import ViewModeButtons from "@/components/shared/ViewModeButtons";
 import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton";
-import { menuItems } from "@/lib/menu-metadata";
+import { menuItems } from "@/lib/menu-lists";
 import { MenuCard } from "@/components/shared/MenuCard";
 import { AddMenuDialog } from "@/components/shared/caterer/AddMenuDialog";
 import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
+import { selectorItems } from "../../../lib/caterer/packages-metadata";
 
 export default function MenuManagement() {
   // State responsible for opening/closing the dialogs for dialog visibility
@@ -68,7 +68,6 @@ export default function MenuManagement() {
       />
 
       {/* Delete Confirmation Dialog */}
-     
     </main>
   );
 }

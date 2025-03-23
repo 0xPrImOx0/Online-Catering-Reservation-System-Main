@@ -1,4 +1,4 @@
-import { PackageGridModeProps } from "@/app/caterer/caterer-types";
+import { PackageGridModeProps } from "@/types/caterer/caterer-types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/utils/format-currency";

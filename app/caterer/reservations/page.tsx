@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus } from "lucide-react";
 import MetricCards from "@/components/shared/MetricCards";
-import { reservations } from "@/lib/reservation-dummy";
+import { reservations } from "@/lib/caterer/reservation-dummy";
 import ReservationTable from "@/components/shared/caterer/ReservationTable";
 import DateSelector from "@/components/shared/DateSelector";
 import SearchInput from "@/components/shared/SearchInput";
 import CustomSelect from "@/components/shared/CustomSelect";
 import CustomPagination from "@/components/shared/CustomPagination";
-import { metricCards, items } from "./metadata";
+import { metricCards, items } from "../../../lib/caterer/reservations-metadata";
 
 // Current date for reference
 
@@ -42,7 +42,11 @@ export default function ReservationsPage() {
       {/* Search Bar and Filters */}
       <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center">
         <div className="flex flex-1 items-center gap-2">
-          <SearchInput query={query} setQuery={setQuery} placeholderTitle="reservations" />
+          <SearchInput
+            query={query}
+            setQuery={setQuery}
+            placeholderTitle="reservations"
+          />
           <DateSelector date={date} setDate={setDate} />
         </div>
         <div className="flex items-center gap-2">
@@ -82,7 +86,7 @@ export default function ReservationsPage() {
       </Tabs>
 
       {/* Pagination */}
-      <CustomPagination title={"reservations"} length={reservations.length} />
+      {/* <CustomPagination title={"reservations"} length={reservations.length} /> */}
     </main>
   );
 }
