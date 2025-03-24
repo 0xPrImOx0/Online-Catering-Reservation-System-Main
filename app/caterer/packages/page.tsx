@@ -91,7 +91,11 @@ export default function PackageManagement() {
               setQuery={setQuery}
               placeholderTitle="packages"
             />
-            <Button variant="outline" className="">
+            <Button
+              variant="outline"
+              className=""
+              onClick={() => setIsAddPackageOpen((prev) => !prev)}
+            >
               <PlusIcon
                 strokeWidth={2.5}
                 className="min-w-5 min-h-5 text-muted-foreground"

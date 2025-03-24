@@ -18,7 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Eye, Flame, Pencil, Trash2 } from "lucide-react";
+import { Eye, Flame, Pencil, ThumbsUp, Trash2 } from "lucide-react";
 import type { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
 import { RenderStarRatings } from "./CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
@@ -144,7 +144,9 @@ export function MenuCard({ item }: MenuCardProps) {
 
       <CardContent className="flex-grow">
         {isCaterer ? (
-          <div></div>
+          <div>
+            <ThumbsUp />
+          </div>
         ) : (
           <div className="space-y-4">
             <div className="bg-muted p-3 rounded-md border">

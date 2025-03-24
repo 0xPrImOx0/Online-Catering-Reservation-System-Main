@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,7 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SidebarIcon } from "lucide-react";
+import { Menu, SidebarIcon } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
 import React from "react";
 import { NavUser } from "./nav-user";
@@ -76,9 +75,9 @@ export function SiteHeader() {
   }, [pathname]);
 
   const user = {
-      name: "Rey Daug",
-      email: "m@example.com",
-      avatar: "/daug-avatar.jpg",
+    name: "Rey Daug",
+    email: "m@example.com",
+    avatar: "/daug-avatar.jpg",
   };
 
   return (
@@ -90,9 +89,8 @@ export function SiteHeader() {
           size="icon"
           onClick={toggleSidebar}
         >
-          <SidebarIcon />
+          <Menu className="min-w-6 min-h-6" />
         </Button>
-        <Separator orientation="vertical" className="mr-2 h-4" />
         <Breadcrumb className="hidden sm:block">
           <BreadcrumbList>
             {breadcrumbs.map((item, index) => (
@@ -114,7 +112,6 @@ export function SiteHeader() {
       </div>
       <div className="flex items-center gap-3">
         <NavUser user={user} />
-        
       </div>
     </header>
   );
