@@ -26,8 +26,8 @@ export interface CateringPackageProps {
   description: string;
   pricePerPax: number;
   minimumPax: number;
-  recommendedPax?: number;
-  maximumPax?: number;
+  recommendedPax: number;
+  maximumPax: number;
   options: PackageOption[];
   inclusions: string[];
   imageUrl: string;

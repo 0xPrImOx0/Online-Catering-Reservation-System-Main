@@ -437,6 +437,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Birthday",
       pricePerPax: 450,
       minimumPax: 30,
+      recommendedPax: 40,
+      maximumPax: 60,
       serviceHours: 4,
       options: [
         { category: "Soup", count: 1 },
@@ -468,6 +470,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Birthday",
       pricePerPax: 550,
       minimumPax: 50,
+      recommendedPax: 100,
+      maximumPax: 150,
       serviceHours: 5,
       options: [
         { category: "Soup", count: 1 },
@@ -501,6 +505,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Birthday",
       pricePerPax: 650,
       minimumPax: 80,
+      recommendedPax: 120,
+      maximumPax: 160,
       serviceHours: 6,
       options: [
         { category: "Soup", count: 1 },
@@ -536,6 +542,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Birthday",
       pricePerPax: 850,
       minimumPax: 100,
+      recommendedPax: 150,
+      maximumPax: 300,
       serviceHours: 8,
       options: [
         { category: "Soup", count: 2 },
@@ -577,6 +585,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Wedding",
       pricePerPax: 550,
       minimumPax: 50,
+      recommendedPax: 150,
+      maximumPax: 300,
       serviceHours: 4,
       options: [
         { category: "Soup", count: 1 },
@@ -610,6 +620,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Wedding",
       pricePerPax: 750,
       minimumPax: 80,
+      recommendedPax: 120,
+      maximumPax: 160,
       serviceHours: 5,
       options: [
         { category: "Soup", count: 1 },
@@ -645,6 +657,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Wedding",
       pricePerPax: 950,
       minimumPax: 100,
+      recommendedPax: 150,
+      maximumPax: 200,
       serviceHours: 6,
       options: [
         { category: "Soup", count: 1 },
@@ -683,6 +697,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Wedding",
       pricePerPax: 1250,
       minimumPax: 150,
+      recommendedPax: 220,
+      maximumPax: 300,
       serviceHours: 8,
       options: [
         { category: "Soup", count: 2 },
@@ -727,6 +743,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Corporate",
       pricePerPax: 450,
       minimumPax: 30,
+      recommendedPax: 45,
+      maximumPax: 60,
       serviceHours: 4,
       options: [
         { category: "Soup", count: 1 },
@@ -758,6 +776,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Corporate",
       pricePerPax: 550,
       minimumPax: 50,
+      recommendedPax: 75,
+      maximumPax: 100,
       serviceHours: 5,
       options: [
         { category: "Soup", count: 1 },
@@ -791,6 +811,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Corporate",
       pricePerPax: 650,
       minimumPax: 80,
+      recommendedPax: 120,
+      maximumPax: 160,
       serviceHours: 6,
       options: [
         { category: "Soup", count: 1 },
@@ -826,6 +848,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Corporate",
       pricePerPax: 850,
       minimumPax: 100,
+      recommendedPax: 150,
+      maximumPax: 200,
       serviceHours: 8,
       options: [
         { category: "Soup", count: 2 },
@@ -866,6 +890,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Graduation",
       pricePerPax: 400,
       minimumPax: 30,
+      recommendedPax: 45,
+      maximumPax: 60,
       serviceHours: 4,
       options: [
         { category: "Soup", count: 1 },
@@ -897,6 +923,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Graduation",
       pricePerPax: 500,
       minimumPax: 50,
+      recommendedPax: 75,
+      maximumPax: 100,
       serviceHours: 5,
       options: [
         { category: "Soup", count: 1 },
@@ -930,6 +958,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Graduation",
       pricePerPax: 600,
       minimumPax: 80,
+      recommendedPax: 120,
+      maximumPax: 160,
       serviceHours: 6,
       options: [
         { category: "Soup", count: 1 },
@@ -965,6 +995,8 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       eventType: "Graduation",
       pricePerPax: 750,
       minimumPax: 100,
+      recommendedPax: 150,
+      maximumPax: 200,
       serviceHours: 8,
       options: [
         { category: "Soup", count: 2 },
