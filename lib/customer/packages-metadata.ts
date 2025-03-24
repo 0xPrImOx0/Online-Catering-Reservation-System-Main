@@ -1,13 +1,11 @@
 import type {
-  CateringPackage,
-  PlatedPackage,
-  EventPackage,
+  CateringPackageProps,
   EventType,
   FormStepType,
 } from "@/types/customer/package-types";
 
 // Define buffet packages
-export const buffetPackages: CateringPackage[] = [
+export const buffetPackages: CateringPackageProps[] = [
   {
     id: "buffet-a",
     name: "Set A - Basic Feast",
@@ -196,7 +194,7 @@ export const buffetPackages: CateringPackage[] = [
 ];
 
 // Define plated packages as separate data
-export const platedPackages: PlatedPackage[] = [
+export const platedPackages: CateringPackageProps[] = [
   {
     id: "plated-a",
     name: "Plated Set A - Basic Feast",
@@ -429,7 +427,7 @@ export const eventTypes: EventType[] = [
 ];
 
 // Define event packages
-export const eventPackages: Record<EventType, EventPackage[]> = {
+export const eventPackages: Record<EventType, CateringPackageProps[]> = {
   Birthday: [
     {
       id: "birthday-a",

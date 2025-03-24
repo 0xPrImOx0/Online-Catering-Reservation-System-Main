@@ -20,39 +20,22 @@ export interface PackageOption {
   count: number;
 }
 
-export interface CateringPackage {
+export interface CateringPackageProps {
   id: string;
   name: string;
   description: string;
   pricePerPax: number;
   minimumPax: number;
-  recommendedPax: number;
-  maximumPax: number;
+  recommendedPax?: number;
+  maximumPax?: number;
   options: PackageOption[];
   inclusions: string[];
   imageUrl: string;
   rating: number;
   ratingCount: number;
-}
-
-export interface PlatedPackage extends CateringPackage {
-  serviceHours: number;
-  serviceCharge: number;
-}
-
-export interface EventPackage {
-  id: string;
-  name: string;
-  description: string;
-  eventType: EventType;
-  pricePerPax: number;
-  minimumPax: number;
-  serviceHours: number;
-  options: PackageOption[];
-  inclusions: string[];
-  imageUrl: string;
-  rating: number;
-  ratingCount: number;
+  serviceHours?: number;
+  serviceCharge?: number;
+  eventType?: EventType;
 }
 
 export interface FormStepType {
@@ -92,18 +75,18 @@ export interface PackageImageDialogProps {
 }
 
 export interface PackageCardProps {
-  pkg: CateringPackage | PlatedPackage;
+  pkg: CateringPackageProps;
   openImageDialog: (url: string, title: string) => void;
 }
 
 export interface PackageDetailsDialogProps {
-  pkg: CateringPackage | PlatedPackage;
+  pkg: CateringPackageProps;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 export interface PackageBookFormProps {
-  package: CateringPackage | PlatedPackage;
+  package: CateringPackageProps;
 }
 
 export interface EventTypeCardProps {
