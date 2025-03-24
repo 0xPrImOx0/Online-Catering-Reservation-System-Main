@@ -112,6 +112,12 @@ export default function CustomPackageForm() {
     <div className="w-full max-w-4xl mx-auto">
       <div className="mb-8">
         <div className="flex items-center">
+          {/* <div className="flex flex-col">
+            <span className="text-xs text-muted-foreground">Step 3 of 4</span>
+            <div className="flex">
+              <Check /> Customer Information
+            </div>
+          </div> */}
           {formSteps.map((step, index) => (
             <div
               key={step.id}
@@ -142,7 +148,7 @@ export default function CustomPackageForm() {
           <div className="absolute top-0 left-0 right-0 h-1 bg-muted">
             <div
               className="absolute top-0 left-0 h-1 bg-primary transition-all"
-              style={{ width: `${(formStep / (formSteps.length)) * 100}%` }}
+              style={{ width: `${(formStep / formSteps.length) * 100}%` }}
             />
           </div>
         </div>
