@@ -114,7 +114,7 @@ export function CatererPackageCard({ item }: PackageCardProps) {
             icon={Trash2}
             title="Delete"
             className="text-destructive"
-            onClick={() => setIsEditPackageOpen(true)}
+            onClick={() => setIsDeleteDialogOpen(true)}
           />
         </div>
       </CardFooter>
