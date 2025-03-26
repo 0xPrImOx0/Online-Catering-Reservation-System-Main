@@ -1,4 +1,5 @@
 import { SetStateBoolean } from "../global-types";
+import { CateringPackageProps } from "./package-types";
 
 export type ServingSize = 6 | 10 | 15 | 20;
 
@@ -76,6 +77,10 @@ export interface MenuCardProps {
   item: MenuItem;
 }
 
+export interface PaginatedMenuProps {
+  items: MenuItem[];
+}
+
 export type CalculationParams = {
   regularPricePerPax: number;
   price: number;
@@ -90,7 +95,7 @@ export interface MenuDetailsDialogProps {
 }
 
 export interface MenuImageDialogProps {
-  item: MenuItem;
+  item: MenuItem | CateringPackageProps;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -109,4 +114,14 @@ export interface EditMenuDialogProps {
   isEditMenuOpen: boolean;
   setIsEditMenuOpen: SetStateBoolean;
   item: MenuItem;
+}
+
+export interface AddPackageDialogProps {
+  isAddPackageOpen: boolean;
+  setIsAddPackageOpen: SetStateBoolean;
+}
+
+export interface EditPackageDialogProps {
+  isEditPackageOpen: boolean;
+  setIsEditPackageOpen: SetStateBoolean;
 }

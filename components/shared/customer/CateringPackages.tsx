@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Info, ChevronRight } from "lucide-react";
 import {
-  CateringPackage,
+  CateringPackageProps,
   EventType,
-  PlatedPackage,
+  // PlatedPackage,
   ServiceType,
 } from "@/types/customer/package-types";
 import {
@@ -76,11 +76,7 @@ export default function CateringPackages() {
         <TabsContent value="buffet" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {buffetPackages.map((pkg) => (
-              <PackageCard
-                key={pkg.id}
-                pkg={pkg}
-                openImageDialog={openImageDialog}
-              />
+              <PackageCard key={pkg.id} item={pkg} />
             ))}
           </div>
         </TabsContent>
@@ -100,11 +96,7 @@ export default function CateringPackages() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {platedPackages.map((pkg) => (
-              <PackageCard
-                key={pkg.id}
-                pkg={pkg}
-                openImageDialog={openImageDialog}
-              />
+              <PackageCard key={pkg.id} item={pkg} />
             ))}
           </div>
         </TabsContent>
@@ -163,12 +155,12 @@ export default function CateringPackages() {
                 {eventPackages[selectedEventType].map((pkg) => {
                   // Create a modified package with service fee if plated service is selected
                   const displayPkg =
-                    serviceType === "Plated"
+                    serviceType === "Plated" && pkg.serviceHours
                       ? {
                           ...pkg,
                           pricePerPax:
                             pkg.pricePerPax +
-                            (100 * pkg.serviceHours) / pkg.minimumPax,
+                            (100 * pkg?.serviceHours) / pkg.minimumPax,
                           name: pkg.name + " (Plated Service)",
                           inclusions: [
                             ...pkg.inclusions,
@@ -178,7 +170,7 @@ export default function CateringPackages() {
                             "Course-by-course serving",
                           ],
                           // Add the missing properties required by PlatedPackage type
-                          serviceCharge: 100 * pkg.serviceHours,
+                          serviceCharge: 100 * pkg?.serviceHours,
                           recommendedPax: pkg.minimumPax,
                           maximumPax: pkg.minimumPax * 2, // Setting a reasonable maximum as 2x the minimum
                         }
@@ -187,8 +179,8 @@ export default function CateringPackages() {
                   return (
                     <PackageCard
                       key={pkg.id}
-                      pkg={displayPkg as CateringPackage | PlatedPackage}
-                      openImageDialog={openImageDialog}
+                      item={pkg}
+                      // openImageDialog={openImageDialog}
                     />
                   );
                 })}

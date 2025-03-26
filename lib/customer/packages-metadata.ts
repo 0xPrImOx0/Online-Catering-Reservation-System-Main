@@ -27,7 +27,8 @@ export const buffetPackages: CateringPackageProps[] = [
       "Service staff (2 personnel)",
       "Food warmers and serving utensils",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://foodtray2go.com/wp-content/uploads/2022/09/image6-1024x764.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -54,7 +55,8 @@ export const buffetPackages: CateringPackageProps[] = [
       "Food warmers and serving utensils",
       "Basic dessert station",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://thesmartlocal.ph/wp-content/uploads/2020/04/kaintayo.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -83,7 +85,8 @@ export const buffetPackages: CateringPackageProps[] = [
       "Dessert station with 2 options",
       "Welcome drinks",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://philippinetourismusa.com/wp-content/uploads/2019/09/pinoy-heritage-kamayan-IMG_6193.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -115,7 +118,8 @@ export const buffetPackages: CateringPackageProps[] = [
       "Welcome drinks and iced tea",
       "Basic coffee station",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://juancarlo.ph/wp-content/uploads/2023/03/Private-Catering-Packages.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -150,7 +154,8 @@ export const buffetPackages: CateringPackageProps[] = [
       "Coffee and tea station",
       "Fruit station",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://riverineplace.com/wp-content/uploads/2024/09/A-hotels-buffet-style-type-of-catering-service.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -187,7 +192,7 @@ export const buffetPackages: CateringPackageProps[] = [
       "Live cooking station",
       "Ice cream station",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl: "https://maviscatering.com/img/bg-img/3.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -212,6 +217,7 @@ export const platedPackages: CateringPackageProps[] = [
       { category: "Pork", count: 1 },
       { category: "Noodle", count: 1 },
     ],
+
     inclusions: [
       "Basic table setup",
       "Disposable utensils and plates",
@@ -222,7 +228,8 @@ export const platedPackages: CateringPackageProps[] = [
       "Table-side service",
       "Course-by-course serving",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://foodtray2go.com/wp-content/uploads/2022/09/image6-1024x764.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -255,7 +262,8 @@ export const platedPackages: CateringPackageProps[] = [
       "Table-side service",
       "Course-by-course serving",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://thesmartlocal.ph/wp-content/uploads/2020/04/kaintayo.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -290,7 +298,8 @@ export const platedPackages: CateringPackageProps[] = [
       "Table-side service",
       "Course-by-course serving",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://philippinetourismusa.com/wp-content/uploads/2019/09/pinoy-heritage-kamayan-IMG_6193.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -328,7 +337,8 @@ export const platedPackages: CateringPackageProps[] = [
       "Table-side service",
       "Course-by-course serving",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://juancarlo.ph/wp-content/uploads/2023/03/Private-Catering-Packages.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -369,7 +379,8 @@ export const platedPackages: CateringPackageProps[] = [
       "Table-side service",
       "Course-by-course serving",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://riverineplace.com/wp-content/uploads/2024/09/A-hotels-buffet-style-type-of-catering-service.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
@@ -412,18 +423,10 @@ export const platedPackages: CateringPackageProps[] = [
       "Table-side service",
       "Course-by-course serving",
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl: "https://maviscatering.com/img/bg-img/3.jpg",
     rating: 4.5,
     ratingCount: 200,
   },
-];
-
-// Define event types
-export const eventTypes: EventType[] = [
-  "Birthday",
-  "Wedding",
-  "Corporate",
-  "Graduation",
 ];
 
 // Define event packages
@@ -434,6 +437,7 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       name: "Birthday Celebration - Basic",
       description:
         "A fun and festive package perfect for birthday celebrations.",
+      //this one
       eventType: "Birthday",
       pricePerPax: 450,
       minimumPax: 30,
@@ -1029,6 +1033,14 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
     },
   ],
 };
+
+// Define event types
+export const eventTypes: EventType[] = [
+  "Birthday",
+  "Wedding",
+  "Corporate",
+  "Graduation",
+];
 
 // Custom Package Form Steps
 export const formSteps: FormStepType[] = [

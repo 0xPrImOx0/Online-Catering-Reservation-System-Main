@@ -14,9 +14,9 @@ import { Check, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import {
   PackageCardProps,
-  PlatedPackage,
+  // PlatedPackage,
 } from "@/types/customer/package-types";
-import PackageDialog from "./PackageDetailsDialog";
+import PackageDetailsDialog from "./PackageDetailsDialog";
 import { RenderStarRatings } from "../CustomStarRating";
 import {
   Tooltip,
@@ -26,11 +26,10 @@ import {
 } from "@/components/ui/tooltip";
 
 export default function PackageCard({
-  pkg,
-  openImageDialog,
+  item,
 }: PackageCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const isPlated = "serviceHours" in pkg;
+  const isPlated = "serviceHours" in item;
   const isAvailable = true; // Assuming all packages are available by default
 
   return (
@@ -38,20 +37,22 @@ export default function PackageCard({
       <CardHeader className="p-0 relative overflow-hidden rounded-t-lg z-0">
         <div
           className="relative h-52 w-full cursor-pointer"
-          onClick={() => openImageDialog(pkg.imageUrl, pkg.name)}
+          // onClick={() =>
+          //   openImageDialog && openImageDialog(item.imageUrl, item.name)
+          // }
         >
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Image
-                  src={pkg.imageUrl || "/placeholder.svg"}
-                  alt={pkg.name}
+                  src={item.imageUrl || "/placeholder.svg"}
+                  alt={item.name}
                   fill
                   className="w-full object-cover overflow-hidden transition-transform duration-500 hover:scale-105"
                 />
               </TooltipTrigger>
               <TooltipContent>
-                <p>{pkg.name}</p>
+                <p>{item.name}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -74,12 +75,12 @@ export default function PackageCard({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="bg-black/70 backdrop-blur-sm rounded px-2.5 py-1.5">
-                    {RenderStarRatings(pkg.rating, "medium")}
+                    {RenderStarRatings(item.rating, "medium")}
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    {pkg.rating} out of 5 ({pkg.ratingCount} reviews)
+                    {item.rating} out of 5 ({item.ratingCount} reviews)
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -87,7 +88,7 @@ export default function PackageCard({
           </div>
           <div className="absolute bottom-3 right-3">
             <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2 py-1 font-bold">
-              &#8369; {pkg.pricePerPax.toFixed(2)} / pax
+              &#8369; {item.pricePerPax.toFixed(2)} / pax
             </div>
           </div>
         </div>
@@ -95,17 +96,17 @@ export default function PackageCard({
       <CardContent className="p-6 flex-grow">
         <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-bold">{pkg.name}</h3>
+            <h3 className="text-xl font-bold">{item.name}</h3>
             <p className="text-muted-foreground text-sm text-justify">
-              {pkg.description}
+              {item.description}
             </p>
           </div>
 
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-muted-foreground" />
             <span className="text-sm">
-              Min: {pkg.minimumPax} | Recommended: {pkg.recommendedPax} | Max:{" "}
-              {pkg.maximumPax}
+              Min: {item.minimumPax} | Recommended: {item.recommendedPax} | Max:{" "}
+              {item.maximumPax}
             </span>
           </div>
 
@@ -113,7 +114,7 @@ export default function PackageCard({
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm">
-                {(pkg as PlatedPackage).serviceHours} hours of service included
+                {item?.serviceHours} hours of service included
               </span>
             </div>
           )}
@@ -123,7 +124,7 @@ export default function PackageCard({
           <div>
             <h4 className="font-medium mb-2">Menu Options:</h4>
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-2">
-              {pkg.options.map((option, index) => (
+              {item.options.map((option, index) => (
                 <div key={index} className="flex items-center gap-1">
                   <Badge
                     variant="outline"
@@ -142,27 +143,27 @@ export default function PackageCard({
             <h4 className="font-medium mb-2">Inclusions:</h4>
             <ul className="text-sm space-y-1 text-justify">
               {/* Show rice trays for buffet and plated packages */}
-              {!pkg.id.includes("event") && (
+              {!item.id.includes("event") && (
                 <li className="flex items-center gap-2">
                   <Check className="h-3 w-3 text-primary" />
-                  {Math.ceil(pkg.minimumPax / 2)} trays of steamed rice (good
-                  for {pkg.minimumPax / 2} pax)
+                  {Math.ceil(item.minimumPax / 2)} trays of steamed rice (good
+                  for {item.minimumPax / 2} pax)
                 </li>
               )}
-              {pkg.inclusions.slice(0, 4).map((inclusion, index) => (
+              {item.inclusions.slice(0, 4).map((inclusion, index) => (
                 <li key={index} className="flex items-center gap-2">
                   <Check className="h-3 w-3 text-primary" />
                   {inclusion}
                 </li>
               ))}
-              {pkg.inclusions.length > 4 && (
+              {item.inclusions.length > 4 && (
                 <Button
                   variant="link"
                   size="sm"
                   className="p-0 h-auto"
                   onClick={() => setDialogOpen(true)}
                 >
-                  +{pkg.inclusions.length - 4} more inclusions
+                  +{item.inclusions.length - 4} more inclusions
                 </Button>
               )}
             </ul>
@@ -176,8 +177,8 @@ export default function PackageCard({
       </CardFooter>
 
       <section className="mt-auto">
-        <PackageDialog
-          pkg={pkg}
+        <PackageDetailsDialog
+          pkg={item}
           open={dialogOpen}
           onOpenChange={setDialogOpen}
         />

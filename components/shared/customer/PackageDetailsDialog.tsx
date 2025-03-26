@@ -10,10 +10,10 @@ import PackageBookForm from "./PackageBookForm";
 import { menuItems } from "@/lib/menu-lists";
 import type {
   PackageDetailsDialogProps,
-  PlatedPackage,
+  // PlatedPackage,
 } from "@/types/customer/package-types";
 
-export default function PackageDialog({
+export default function PackageDetailsDialog({
   pkg,
   open,
   onOpenChange,
@@ -68,7 +68,7 @@ export default function PackageDialog({
                 </span>
                 {isPlated && (
                   <span className="text-xs block text-primary-foreground/80">
-                    Includes {(pkg as PlatedPackage).serviceHours} hours service
+                    Includes {pkg?.serviceHours} hours service
                   </span>
                 )}
               </div>
@@ -105,7 +105,7 @@ export default function PackageDialog({
                       <span className="text-muted-foreground">
                         Service Hours:
                       </span>
-                      <span>{(pkg as PlatedPackage).serviceHours} hours</span>
+                      <span>{pkg?.serviceHours} hours</span>
                     </div>
                   )}
                 </div>

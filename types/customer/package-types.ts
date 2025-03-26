@@ -75,8 +75,7 @@ export interface PackageImageDialogProps {
 }
 
 export interface PackageCardProps {
-  pkg: CateringPackageProps;
-  openImageDialog: (url: string, title: string) => void;
+  item: CateringPackageProps;
 }
 
 export interface PackageDetailsDialogProps {

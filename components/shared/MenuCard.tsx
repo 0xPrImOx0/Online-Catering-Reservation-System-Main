@@ -144,9 +144,7 @@ export function MenuCard({ item }: MenuCardProps) {
 
       <CardContent className="flex-grow">
         {isCaterer ? (
-          <div>
-            <ThumbsUp />
-          </div>
+          <div></div>
         ) : (
           <div className="space-y-4">
             <div className="bg-muted p-3 rounded-md border">

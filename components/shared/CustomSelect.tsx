@@ -19,9 +19,9 @@ export default function CustomSelect({
     <Select defaultValue={defaultValue}>
       <SelectTrigger
         className={clsx({
-          "w-[200px] max-w-[200px]": size === "sm",
-          "w-[250px] max-w-[250px]": size === "md",
-          "w-full": size === "lg",
+          "flex-1": size === "sm",
+          "w-[200px] max-w-[200px] ": size === "md",
+          "w-[250px] max-w-[250px]": size === "lg",
         })}
       >
         <div className="flex items-center">
