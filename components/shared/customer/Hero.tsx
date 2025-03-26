@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar } from "lucide-react";
+import { ClipboardCheck } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -13,8 +14,10 @@ export default function Hero() {
           Gourmet ingredients made by professional chefs, delivered with care to
           your venue.
         </p>
-        <Button className="mt-4 max-w-fit" size={"landing"}>
-          <Calendar /> Book Now
+        <Button className="mt-4 max-w-fit" size={"landing"} asChild>
+          <Link href={"/book-now"}>
+            <ClipboardCheck /> Book Now
+          </Link>
         </Button>
       </div>
       <Skeleton className="min-h-[300px] md:min-h-[500px w-full" />

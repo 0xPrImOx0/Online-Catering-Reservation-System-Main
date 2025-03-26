@@ -12,9 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Check, Clock, Users } from "lucide-react";
 import Image from "next/image";
-import {
-  PackageCardProps,
-} from "@/types/package-types";
+import { PackageCardProps } from "@/types/package-types";
 import PackageDetailsDialog from "./PackageDetailsDialog";
 import { RenderStarRatings } from "../CustomStarRating";
 import {
@@ -24,8 +22,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import ImageDialog from "../ImageDialog";
+import clsx from "clsx";
 
-export default function PackageCard({ item }: PackageCardProps) {
+export default function CustomerPackageCard({ item }: PackageCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const isAvailable = true; // Assuming all packages are available by default
@@ -52,7 +51,7 @@ export default function PackageCard({ item }: PackageCardProps) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <div className="absolute top-2 right-2">
+          <div className="absolute top-2 right-2 space-x-2">
             <Badge
               variant={isAvailable ? "default" : "destructive"}
               className={
@@ -62,6 +61,16 @@ export default function PackageCard({ item }: PackageCardProps) {
               }
             >
               {isAvailable ? "Available" : "Unavailable"}
+            </Badge>
+            <Badge
+              className={clsx(
+                "bg-background text-foreground border-foreground",
+                {
+                  hidden: !item.serviceCharge,
+                }
+              )}
+            >
+              Plated
             </Badge>
           </div>
 
@@ -119,16 +128,15 @@ export default function PackageCard({ item }: PackageCardProps) {
 
           <div>
             <h4 className="font-medium mb-2">Menu Options:</h4>
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-2">
+            <div className="flex flex-wrap gap-4">
               {item.options.map((option, index) => (
-                <div key={index} className="flex items-center gap-1">
-                  <Badge
-                    variant="outline"
-                    className="text-xs whitespace-nowrap"
-                  >
-                    {option.count} {option.category}
-                  </Badge>
-                </div>
+                <Badge
+                  key={index}
+                  variant="outline"
+                  className="text-xs border-green-500 whitespace-nowrap"
+                >
+                  {option.count} {option.category}
+                </Badge>
               ))}
             </div>
           </div>

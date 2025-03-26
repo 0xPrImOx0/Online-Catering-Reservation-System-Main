@@ -12,6 +12,7 @@ import type {
   PackageDetailsDialogProps,
   // PlatedPackage,
 } from "@/types/package-types";
+import Link from "next/link";
 
 export default function PackageDetailsDialog({
   pkg,
@@ -72,7 +73,10 @@ export default function PackageDetailsDialog({
                   </span>
                 )}
               </div>
-              <PackageBookForm package={pkg} />
+              <Button asChild variant={"secondary"}>
+                <Link href={"/book-now"}>Book Now</Link>
+              </Button>
+              {/* <PackageBookForm package={pkg} /> */}
             </div>
           </div>
         </div>

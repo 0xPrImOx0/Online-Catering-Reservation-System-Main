@@ -3,14 +3,12 @@
 import { useState } from "react";
 import { cateringPackages } from "../../../lib/caterer/packages-metadata";
 import SearchInput from "@/components/shared/SearchInput";
-import PackageDetails from "@/components/shared/caterer/PackageDetails";
 import AddPackageDialog from "@/components/shared/caterer/AddPackageDialog";
 import {
   buffetPackages,
   eventPackages,
   platedPackages,
 } from "@/lib/customer/packages-metadata";
-import { useImageDialog } from "@/components/shared/customer/PackageImageDialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Info, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,8 +24,6 @@ export default function PackageManagement() {
   const [selectedMenus, setSelectedMenus] = useState<number[]>([]);
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState("buffet");
-
-  const { imageDialog, openImageDialog, closeImageDialog } = useImageDialog();
 
   const TabsTriggerStyle = ({
     value,
@@ -142,14 +138,6 @@ export default function PackageManagement() {
             </div>
           </div>
         </TabsContent>
-
-        {/* Package Details Dialog */}
-        <PackageDetails
-          currentPackage={currentPackage}
-          isDetailsOpen={isDetailsOpen}
-          setIsDetailsOpen={setIsDetailsOpen}
-          setIsEditPackageOpen={setIsEditPackageOpen}
-        />
 
         {/* Add Package Dialog */}
         <AddPackageDialog

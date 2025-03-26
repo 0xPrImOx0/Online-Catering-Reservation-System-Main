@@ -16,10 +16,9 @@ import {
   eventTypes,
 } from "@/lib/customer/packages-metadata";
 import { Button } from "@/components/ui/button";
-import PackageCard from "./PackageCard";
+import CustomerPackageCard from "./CustomerPackageCard";
 import EventTypeCard from "./EventTypeCard";
 import CustomPackageForm from "./CustomPacakgeForm";
-import ImageDialog from "../ImageDialog";
 
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState("buffet");
@@ -27,7 +26,6 @@ export default function CateringPackages() {
     null
   );
   const [serviceType, setServiceType] = useState<ServiceType>("Buffet");
-  // const { imageDialog, openImageDialog, closeImageDialog } = useImageDialog();
 
   const TabsTriggerStyle = ({
     value,
@@ -64,20 +62,20 @@ export default function CateringPackages() {
       >
         <TabsList className="text-foreground overflow-x-auto scrollbar-thin w-full justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1">
           <TabsTriggerStyle value="buffet" title="Buffet Packages" />
-          <TabsTriggerStyle value="plated course" title="Plated Course" />
+          <TabsTriggerStyle value="plated" title="Plated Course" />
           <TabsTriggerStyle value="event" title="Event Packages" />
-          <TabsTriggerStyle value="custom" title="Custom Packages" />
+          <TabsTriggerStyle value="custom" title="Create Your Own Package" />
         </TabsList>
 
         <TabsContent value="buffet" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {buffetPackages.map((pkg) => (
-              <PackageCard key={pkg.id} item={pkg} />
+              <CustomerPackageCard key={pkg.id} item={pkg} />
             ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="plated course" className="mt-6 space-y-8">
+        <TabsContent value="plated" className="mt-6 space-y-8">
           <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
             <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative" />
             <div className="space-y-2">
@@ -92,7 +90,7 @@ export default function CateringPackages() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {platedPackages.map((pkg) => (
-              <PackageCard key={pkg.id} item={pkg} />
+              <CustomerPackageCard key={pkg.id} item={pkg} />
             ))}
           </div>
         </TabsContent>
@@ -173,7 +171,7 @@ export default function CateringPackages() {
                       : pkg;
 
                   return (
-                    <PackageCard
+                    <CustomerPackageCard
                       key={pkg.id}
                       item={pkg}
                       // openImageDialog={openImageDialog}
@@ -194,8 +192,7 @@ export default function CateringPackages() {
             </div>
           )}
         </TabsContent>
-
-        <TabsContent value="custom" className="mt-6">
+        <TabsContent value="custom" className="mt-12 sm:mx-0 lg:mx-8 xl:mx-20">
           <CustomPackageForm />
         </TabsContent>
       </Tabs>

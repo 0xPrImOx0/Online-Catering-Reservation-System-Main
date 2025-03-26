@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import PackageCard from "./PackageCard";
+import PackageCard from "./CustomerPackageCard";
 import { buffetPackages } from "@/lib/customer/packages-metadata";
 
 export default function Featured() {
