@@ -12,7 +12,6 @@ export default function HeaderWithAddButton({
       <div className="flex items-center gap-2">
         <Button
           variant="outline"
-          size={"landing"}
           className=""
           onClick={() => setIsAddInstanceOpen((prev) => !prev)}
         >

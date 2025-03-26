@@ -1,7 +1,5 @@
 import { ClipboardCheck, Star } from "lucide-react";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
-import CustomSelect from "@/components/shared/CustomSelect";
-import { dietaryOptions, menuTypes, priceOptions } from "@/lib/menu-lists";
 import CateringPackages from "@/components/shared/customer/CateringPackages";
 
 export default function Page() {

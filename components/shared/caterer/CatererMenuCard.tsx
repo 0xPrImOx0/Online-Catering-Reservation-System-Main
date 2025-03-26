@@ -41,7 +41,7 @@ export default function CatererMenuCard({ item }: MenuCardProps) {
             alt={item.name}
             width={500}
             height={300}
-            className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+            className="h-56 w-full object-cover transition-transform duration-300 hover:scale-105"
           />
 
           <TooltipProvider>
@@ -143,7 +143,7 @@ export default function CatererMenuCard({ item }: MenuCardProps) {
             icon={Trash2}
             title="Delete"
             className="text-destructive"
-            onClick={() => setIsEditMenuOpen(true)}
+            onClick={() => setIsDeleteDialogOpen(true)}
           />
         </div>
       </CardFooter>
