@@ -13,7 +13,7 @@ import type {
   EditMenuDialogProps,
   MenuItem,
   NutritionInfo,
-} from "@/types/customer/menu-types";
+} from "@/types/menu-types";
 import { allergens, categories } from "@/lib/menu-select";
 import ArrayInput from "../ArrayInput";
 import { useState } from "react";

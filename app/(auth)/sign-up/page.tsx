@@ -4,7 +4,7 @@ import { SignUpForm } from "@/components/shared/auth/SignUpForm";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
-import { SignUpFormValues } from "../../../types/auth/auth-types";
+import { SignUpFormValues } from "../../../types/auth-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/utils/form-validation";
 import { toast } from "sonner";

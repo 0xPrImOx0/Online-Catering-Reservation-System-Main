@@ -1,4 +1,4 @@
-import { StarSize } from "@/types/customer/menu-types";
+import { StarSize } from "@/types/menu-types";
 import { Star } from "lucide-react";
 
 export function RenderStarRatings(rating: number, size: StarSize = "small") {

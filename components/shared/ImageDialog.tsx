@@ -14,19 +14,19 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image from "next/image";
-import { MenuImageDialogProps } from "@/types/menu-types";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 import { X } from "lucide-react";
+import { ImageDialogProps } from "@/types/component-types";
 
-export function MenuImageDialog({
+export default function ImageDialog({
   item,
-  open,
-  onOpenChange,
-}: MenuImageDialogProps) {
+  isImageDialogOpen,
+  setIsImageDialogOpen,
+}: ImageDialogProps) {
   const imageRef = useRef<HTMLImageElement | null>(null);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={isImageDialogOpen} onOpenChange={setIsImageDialogOpen}>
       <DialogContent className="p-0 overflow-hidden bg-transparent border-0 shadow-none">
         <VisuallyHidden>
           <DialogTitle>{item.name}</DialogTitle>

@@ -13,7 +13,7 @@ import type {
   EditPackageDialogProps,
   MenuItem,
   NutritionInfo,
-} from "@/types/customer/menu-types";
+} from "@/types/menu-types";
 import ArrayInput from "../ArrayInput";
 import { useState } from "react";
 import LabelGroup from "../LabelGroup";

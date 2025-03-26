@@ -17,9 +17,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Flame, X } from "lucide-react";
-import type {
-  MenuDetailsDialogProps,
-} from "@/types/customer/menu-types";
+import type { MenuDetailsDialogProps } from "@/types/menu-types";
 import { RenderStarRatings } from "../CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { CategoryBadge } from "./MenuCategoryBadge";

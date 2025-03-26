@@ -6,12 +6,10 @@ import CateringPackages from "@/components/shared/customer/CateringPackages";
 
 export default function Page() {
   return (
-    <main className="mx-2">
+    <main className="">
       <div className=" py-12">
-        <div className="flex flex-wrap items-center justify-center gap-10">
-          {/* Package Showcase */}
-          <CateringPackages />
-        </div>
+        {/* Package Showcase */}
+        <CateringPackages />
 
         {/* Testimonials */}
         <section className="my-16 py-8 rounded-lg">

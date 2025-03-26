@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import { MenuCard } from "../MenuCard";
 import CustomPagination from "../CustomPagination";
-import { MenuItem, PaginatedMenuProps } from "@/types/customer/menu-types";
+import { MenuItem, PaginatedMenuProps } from "@/types/menu-types";
 
 export default function PaginatedMenus({ items }: PaginatedMenuProps) {
   const [currentPage, setCurrentPage] = useState(1);

@@ -2,7 +2,7 @@ import type {
   CateringPackageProps,
   EventType,
   FormStepType,
-} from "@/types/customer/package-types";
+} from "@/types/package-types";
 
 // Define buffet packages
 export const buffetPackages: CateringPackageProps[] = [

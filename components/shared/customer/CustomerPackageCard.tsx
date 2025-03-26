@@ -12,10 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Check, Clock, Users } from "lucide-react";
 import Image from "next/image";
-import {
-  PackageCardProps,
-  // PlatedPackage,
-} from "@/types/customer/package-types";
+import { PackageCardProps } from "@/types/package-types";
 import PackageDetailsDialog from "./PackageDetailsDialog";
 import { RenderStarRatings } from "../CustomStarRating";
 import {
@@ -24,12 +21,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import ImageDialog from "../ImageDialog";
+import clsx from "clsx";
 
-export default function PackageCard({
-  item,
-}: PackageCardProps) {
+export default function CustomerPackageCard({ item }: PackageCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const isPlated = "serviceHours" in item;
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const isAvailable = true; // Assuming all packages are available by default
 
   return (
@@ -37,9 +34,7 @@ export default function PackageCard({
       <CardHeader className="p-0 relative overflow-hidden rounded-t-lg z-0">
         <div
           className="relative h-52 w-full cursor-pointer"
-          // onClick={() =>
-          //   openImageDialog && openImageDialog(item.imageUrl, item.name)
-          // }
+          onClick={() => setIsImageDialogOpen((prev) => !prev)}
         >
           <TooltipProvider>
             <Tooltip>
@@ -56,7 +51,7 @@ export default function PackageCard({
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <div className="absolute top-2 right-2">
+          <div className="absolute top-2 right-2 space-x-2">
             <Badge
               variant={isAvailable ? "default" : "destructive"}
               className={
@@ -66,6 +61,16 @@ export default function PackageCard({
               }
             >
               {isAvailable ? "Available" : "Unavailable"}
+            </Badge>
+            <Badge
+              className={clsx(
+                "bg-background text-foreground border-foreground",
+                {
+                  hidden: !item.serviceCharge,
+                }
+              )}
+            >
+              Plated
             </Badge>
           </div>
 
@@ -110,7 +115,7 @@ export default function PackageCard({
             </span>
           </div>
 
-          {isPlated && (
+          {item.serviceHours && (
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm">
@@ -123,16 +128,15 @@ export default function PackageCard({
 
           <div>
             <h4 className="font-medium mb-2">Menu Options:</h4>
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-2">
+            <div className="flex flex-wrap gap-4">
               {item.options.map((option, index) => (
-                <div key={index} className="flex items-center gap-1">
-                  <Badge
-                    variant="outline"
-                    className="text-xs whitespace-nowrap"
-                  >
-                    {option.count} {option.category}
-                  </Badge>
-                </div>
+                <Badge
+                  key={index}
+                  variant="outline"
+                  className="text-xs border-green-500 whitespace-nowrap"
+                >
+                  {option.count} {option.category}
+                </Badge>
               ))}
             </div>
           </div>
@@ -183,6 +187,12 @@ export default function PackageCard({
           onOpenChange={setDialogOpen}
         />
       </section>
+
+      <ImageDialog
+        item={item}
+        isImageDialogOpen={isImageDialogOpen}
+        setIsImageDialogOpen={setIsImageDialogOpen}
+      />
     </Card>
   );
 }

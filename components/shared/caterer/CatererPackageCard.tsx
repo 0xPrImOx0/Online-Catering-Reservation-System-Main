@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import { RenderStarRatings } from "../CustomStarRating";
-import { PackageCardProps } from "@/types/customer/package-types";
+import { PackageCardProps } from "@/types/package-types";
 import EditPackageDialog from "./EditPackageDialog";
 import DeletePackageDialog from "./DeletePackageDialog";
 import PackageDetailsDialog from "../customer/PackageDetailsDialog";
@@ -159,7 +159,7 @@ export function CatererPackageCard({ item }: PackageCardProps) {
         open={showPackageDetails}
         onOpenChange={setShowPackageDetails}
       />
-      
+
       <MenuImageDialog
         item={item}
         open={showImageDialog}
