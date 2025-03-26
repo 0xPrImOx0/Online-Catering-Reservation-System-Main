@@ -1,4 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
+import { MenuItem } from "./menu-types";
+import { SetStateBoolean } from "./global-types";
+import { CateringPackageProps } from "./package-types";
 
 //Search Bar Types
 export type SearchInputProps = {
@@ -65,3 +68,9 @@ export type ArrayInputProps = {
   autocomplete?: boolean;
   suggestions?: Tag[];
 };
+
+export interface ImageDialogProps {
+  item: MenuItem | CateringPackageProps;
+  isImageDialogOpen: boolean;
+  setIsImageDialogOpen: SetStateBoolean;
+}

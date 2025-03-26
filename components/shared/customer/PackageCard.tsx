@@ -14,8 +14,7 @@ import { Check, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import {
   PackageCardProps,
-  // PlatedPackage,
-} from "@/types/customer/package-types";
+} from "@/types/package-types";
 import PackageDetailsDialog from "./PackageDetailsDialog";
 import { RenderStarRatings } from "../CustomStarRating";
 import {
@@ -24,12 +23,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import ImageDialog from "../ImageDialog";
 
-export default function PackageCard({
-  item,
-}: PackageCardProps) {
+export default function PackageCard({ item }: PackageCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const isPlated = "serviceHours" in item;
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const isAvailable = true; // Assuming all packages are available by default
 
   return (
@@ -37,9 +35,7 @@ export default function PackageCard({
       <CardHeader className="p-0 relative overflow-hidden rounded-t-lg z-0">
         <div
           className="relative h-52 w-full cursor-pointer"
-          // onClick={() =>
-          //   openImageDialog && openImageDialog(item.imageUrl, item.name)
-          // }
+          onClick={() => setIsImageDialogOpen((prev) => !prev)}
         >
           <TooltipProvider>
             <Tooltip>
@@ -110,7 +106,7 @@ export default function PackageCard({
             </span>
           </div>
 
-          {isPlated && (
+          {item.serviceHours && (
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm">
@@ -183,6 +179,12 @@ export default function PackageCard({
           onOpenChange={setDialogOpen}
         />
       </section>
+
+      <ImageDialog
+        item={item}
+        isImageDialogOpen={isImageDialogOpen}
+        setIsImageDialogOpen={setIsImageDialogOpen}
+      />
     </Card>
   );
 }

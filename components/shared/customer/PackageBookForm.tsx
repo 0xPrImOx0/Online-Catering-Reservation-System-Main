@@ -29,8 +29,8 @@ import { bookingSteps } from "@/lib/customer/packages-metadata";
 import {
   BookingFormData,
   PackageBookFormProps,
-  PlatedPackage,
-} from "@/types/customer/package-types";
+  // PlatedPackage,
+} from "@/types/package-types";
 
 export default function PackageBookForm({
   package: pkg,
@@ -305,12 +305,11 @@ export default function PackageBookForm({
                               {pkg.recommendedPax} | Max: {pkg.maximumPax}
                             </span>
                           </div>
-                          {isPlated && (
+                          {pkg.serviceHours && (
                             <div className="flex items-center gap-2 mt-2">
                               <Clock className="h-4 w-4 text-muted-foreground" />
                               <span className="text-sm">
-                                {(pkg as PlatedPackage).serviceHours} hours of
-                                service included
+                                {pkg.serviceHours} hours of service included
                               </span>
                             </div>
                           )}
@@ -323,7 +322,7 @@ export default function PackageBookForm({
                             <h4 className="font-medium mb-1">Menu Options:</h4>
                             <div className="grid grid-cols-2 gap-1">
                               {pkg.options
-                                .filter((option) => option.required)
+                                // .filter((option) => option.required)
                                 .map((option, index) => (
                                   <div
                                     key={index}

@@ -11,7 +11,7 @@ import { menuItems } from "@/lib/menu-lists";
 import type {
   PackageDetailsDialogProps,
   // PlatedPackage,
-} from "@/types/customer/package-types";
+} from "@/types/package-types";
 
 export default function PackageDetailsDialog({
   pkg,

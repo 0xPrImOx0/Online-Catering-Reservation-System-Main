@@ -1,4 +1,4 @@
-import { SetStateBoolean } from "../global-types";
+import { SetStateBoolean } from "./global-types";
 import { CateringPackageProps } from "./package-types";
 
 export type ServingSize = 6 | 10 | 15 | 20;

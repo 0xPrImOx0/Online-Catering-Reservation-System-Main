@@ -1,4 +1,4 @@
-import { MenuItem } from "@/types/customer/menu-types";
+import { MenuItem } from "@/types/menu-types";
 
 // Update the first dish as an example of the new structure
 export const menuItems: MenuItem[] = [

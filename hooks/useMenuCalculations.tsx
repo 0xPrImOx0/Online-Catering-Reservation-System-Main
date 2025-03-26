@@ -1,4 +1,4 @@
-import { CalculationParams } from "@/types/customer/menu-types";
+import { CalculationParams } from "@/types/menu-types";
 import { useCallback } from "react";
 
 export function useMenuCalculations() {

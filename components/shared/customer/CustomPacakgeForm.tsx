@@ -34,7 +34,7 @@ import { Separator } from "@/components/ui/separator";
 import { Check } from "lucide-react";
 import { formSteps } from "@/lib/customer/packages-metadata";
 import { menuItems } from "@/lib/menu-lists";
-import { PackageCategory, FormData } from "@/types/customer/package-types";
+import { PackageCategory, FormData } from "@/types/package-types";
 
 export default function CustomPackageForm() {
   const [formStep, setFormStep] = useState(0);

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { getCategoryIcon } from "@/lib/menu-category-badges";
-import { CategoryBadgeProps } from "@/types/customer/menu-types";
+import { CategoryBadgeProps } from "@/types/menu-types";
 
 export function CategoryBadge({
   category,

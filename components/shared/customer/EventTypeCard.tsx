@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import type { EventTypeCardProps } from "@/types/customer/package-types";
+import type { EventTypeCardProps } from "@/types/package-types";
 
 export default function EventTypeCard({
   eventType,

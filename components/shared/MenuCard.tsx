@@ -19,20 +19,20 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Eye, Flame, Pencil, ThumbsUp, Trash2 } from "lucide-react";
-import type { MenuCardProps, ServingSize } from "@/types/customer/menu-types";
+import type { MenuCardProps, ServingSize } from "@/types/menu-types";
 import { RenderStarRatings } from "./CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { MenuDetailsDialog } from "./customer/MenuDetailsDialog";
-import { MenuImageDialog } from "./customer/MenuImageDialog";
 import { CategoryBadge } from "./customer/MenuCategoryBadge";
 import { usePathname } from "next/navigation";
 import { EditMenuDialog } from "./caterer/EditMenuDialog";
 import DeleteMenuDialog from "./caterer/DeleteMenuDialog";
 import clsx from "clsx";
+import ImageDialog from "./ImageDialog";
 
 export function MenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
-  const [showImageDialog, setShowImageDialog] = useState(false);
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const [menuPricePax, setMenuPricePax] = useState(item.prices[0].price);
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -53,7 +53,7 @@ export function MenuCard({ item }: MenuCardProps) {
                 size="custom"
                 variant="ghost"
                 className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                onClick={() => setShowImageDialog(true)}
+                onClick={() => setIsImageDialogOpen(true)}
               >
                 <Image
                   src={item.imageUrl || "/placeholder.svg"}
@@ -265,10 +265,10 @@ export function MenuCard({ item }: MenuCardProps) {
         isDeleteDialogOpen={isDeleteDialogOpen}
         setIsDeleteDialogOpen={setIsDeleteDialogOpen}
       />
-      <MenuImageDialog
+      <ImageDialog
         item={item}
-        open={showImageDialog}
-        onOpenChange={setShowImageDialog}
+        isImageDialogOpen={isImageDialogOpen}
+        setIsImageDialogOpen={setIsImageDialogOpen}
       />
     </Card>
   );

@@ -8,7 +8,7 @@ import {
   EventType,
   // PlatedPackage,
   ServiceType,
-} from "@/types/customer/package-types";
+} from "@/types/package-types";
 import {
   buffetPackages,
   platedPackages,
@@ -18,8 +18,8 @@ import {
 import { Button } from "@/components/ui/button";
 import PackageCard from "./PackageCard";
 import EventTypeCard from "./EventTypeCard";
-import ImageDialog, { useImageDialog } from "./PackageImageDialog";
 import CustomPackageForm from "./CustomPacakgeForm";
+import ImageDialog from "../ImageDialog";
 
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState("buffet");
@@ -27,7 +27,7 @@ export default function CateringPackages() {
     null
   );
   const [serviceType, setServiceType] = useState<ServiceType>("Buffet");
-  const { imageDialog, openImageDialog, closeImageDialog } = useImageDialog();
+  // const { imageDialog, openImageDialog, closeImageDialog } = useImageDialog();
 
   const TabsTriggerStyle = ({
     value,
@@ -47,11 +47,7 @@ export default function CateringPackages() {
   };
 
   return (
-    <div className="container mx-auto px-4 pb-8">
-      <ImageDialog
-        imageDialog={imageDialog}
-        closeImageDialog={closeImageDialog}
-      />
+    <div className="container mx-auto pb-8">
       <h1 className="text-5xl font-bold text-center mb-4">
         <span className="capitalize">{activeTab}</span> Packages
       </h1>
@@ -66,7 +62,7 @@ export default function CateringPackages() {
         className="w-full"
         onValueChange={setActiveTab}
       >
-        <TabsList className="text-foreground w-full justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1">
+        <TabsList className="text-foreground overflow-x-auto scrollbar-thin w-full justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1">
           <TabsTriggerStyle value="buffet" title="Buffet Packages" />
           <TabsTriggerStyle value="plated course" title="Plated Course" />
           <TabsTriggerStyle value="event" title="Event Packages" />

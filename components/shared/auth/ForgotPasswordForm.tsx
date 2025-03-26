@@ -1,6 +1,6 @@
 "use client";
 
-import { ForgotPasswordFormProps } from "@/types/auth/auth-types";
+import { ForgotPasswordFormProps } from "@/types/auth-types";
 import { Button } from "@/components/ui/button";
 import {
   Card,

@@ -1,4 +1,4 @@
-import { CategoryProps } from "@/types/customer/menu-types";
+import { CategoryProps } from "@/types/menu-types";
 import {
   Soup,
   Salad,
