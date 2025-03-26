@@ -1,4 +1,4 @@
-import { HeaderWithAddButtonProps } from "@/types/caterer/caterer-types";
+import { HeaderWithAddButtonProps } from "@/types/menu-types";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 

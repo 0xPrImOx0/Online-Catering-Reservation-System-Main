@@ -26,7 +26,7 @@ import { useState } from "react";
 import {
   ReservationTableProps,
   reservationType,
-} from "@/types/caterer/caterer-types";
+} from "@/types/reservation-types";
 
 export default function ReservationTable({
   reservations,
