@@ -27,7 +27,6 @@ import {
 
 export default function PackageCard({
   item,
-  openImageDialog,
 }: PackageCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const isPlated = "serviceHours" in item;
@@ -38,9 +37,9 @@ export default function PackageCard({
       <CardHeader className="p-0 relative overflow-hidden rounded-t-lg z-0">
         <div
           className="relative h-52 w-full cursor-pointer"
-          onClick={() =>
-            openImageDialog && openImageDialog(item.imageUrl, item.name)
-          }
+          // onClick={() =>
+          //   openImageDialog && openImageDialog(item.imageUrl, item.name)
+          // }
         >
           <TooltipProvider>
             <Tooltip>

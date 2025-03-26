@@ -21,7 +21,7 @@ export default function CustomPagination({
         } - ${endIndex > totalItems ? totalItems : endIndex}`}</span>{" "}
         out of <span className="font-bold">{totalItems}</span> {title}
       </p>
-      <div className="space-x-2">
+      <div className="space-x-2 flex">
         <Button
           variant="outline"
           onClick={() => onPageChange(currentPage - 1)}

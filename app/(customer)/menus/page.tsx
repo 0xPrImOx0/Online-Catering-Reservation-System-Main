@@ -1,45 +1,17 @@
 import { ClipboardCheck, Star } from "lucide-react";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
-import CustomSelect from "@/components/shared/CustomSelect";
-import {
-  dietaryOptions,
-  menuTypes,
-  priceOptions,
-} from "../../../lib/menu-lists";
 import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
+import { menuItems } from "@/lib/menu-lists";
+import CategoryPillRow from "@/components/shared/customer/CategoryPillRow";
 
 export default function Page() {
   return (
     <main className="px-[2%]">
       <div className=" py-12">
-        <h1 className="text-5xl font-bold text-center mb-12">Our Menus</h1>
-
+        <h1 className="text-5xl font-bold text-center pb-6">Our Menus</h1>
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <CustomSelect
-            defaultValue=""
-            placeholder="Menu Type"
-            size="md"
-            items={menuTypes}
-          />
-
-          <CustomSelect
-            defaultValue=""
-            placeholder="Dietary Options"
-            size="md"
-            items={dietaryOptions}
-          />
-
-          <CustomSelect
-            defaultValue=""
-            placeholder="Price Range"
-            size="md"
-            items={priceOptions}
-          />
-        </div>
-
-        <PaginatedMenus />
-
+        <CategoryPillRow />
+        <PaginatedMenus items={menuItems} />
         {/* Testimonials */}
         <section className="my-16 py-8 rounded-lg">
           <h2 className="text-2xl font-bold mb-8 text-center">
@@ -80,7 +52,6 @@ export default function Page() {
             </div>
           </div>
         </section>
-
         {/* Reserve CTA */}
         <FooterCTA
           title="Ready to Book Your Catering?"

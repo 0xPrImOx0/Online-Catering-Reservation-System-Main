@@ -77,6 +77,10 @@ export interface MenuCardProps {
   item: MenuItem;
 }
 
+export interface PaginatedMenuProps {
+  items: MenuItem[];
+}
+
 export type CalculationParams = {
   regularPricePerPax: number;
   price: number;

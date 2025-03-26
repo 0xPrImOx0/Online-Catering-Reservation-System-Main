@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
       "farm6.static.flickr.com",
       "assets.unileversolutions.com",
       "kitchenconfidante.com",
+      "foodtray2go.com",
+      "thesmartlocal.ph",
+      "philippinetourismusa.com",
+      "juancarlo.ph",
+      "maviscatering.com",
+      "riverineplace.com",
     ],
   },
 };

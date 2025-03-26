@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
-import PackageCards from "./PackageCardsDraft";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { featuredPackages } from "@/lib/customer/homepage-metadata";
+import PackageCard from "./PackageCard";
+import { buffetPackages } from "@/lib/customer/packages-metadata";
 
 export default function Featured() {
   return (
-    <section className="pt-16 md:px-[2%] flex flex-col items-center gap-14">
+    <section className="pt-16 px-[2%] flex flex-col items-center gap-14">
       <div className="">
         <h2 className="text-3xl font-bold mb-2 text-center">
           Featured Packages
@@ -16,10 +16,10 @@ export default function Featured() {
           events, and private parties.
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Package Showcase */}
-          {featuredPackages.map((feature, index) => (
-            <PackageCards features={feature} key={index} />
+          {buffetPackages.map((pkg) => (
+            <PackageCard item={pkg} key={pkg.id} />
           ))}
         </div>
       </div>
