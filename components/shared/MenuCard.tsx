@@ -18,7 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Eye, Flame, Pencil, ThumbsUp, Trash2 } from "lucide-react";
+import { Eye, Flame, Pencil, Trash2 } from "lucide-react";
 import type { MenuCardProps, ServingSize } from "@/types/menu-types";
 import { RenderStarRatings } from "./CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
@@ -260,11 +260,13 @@ export function MenuCard({ item }: MenuCardProps) {
         setIsEditMenuOpen={setIsEditMenuOpen}
         item={item}
       />
+
       <DeleteMenuDialog
         item={item}
         isDeleteDialogOpen={isDeleteDialogOpen}
         setIsDeleteDialogOpen={setIsDeleteDialogOpen}
       />
+
       <ImageDialog
         item={item}
         isImageDialogOpen={isImageDialogOpen}

@@ -147,29 +147,6 @@ export default function CateringPackages() {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {eventPackages[selectedEventType].map((pkg) => {
-                  // Create a modified package with service fee if plated service is selected
-                  const displayPkg =
-                    serviceType === "Plated" && pkg.serviceHours
-                      ? {
-                          ...pkg,
-                          pricePerPax:
-                            pkg.pricePerPax +
-                            (100 * pkg?.serviceHours) / pkg.minimumPax,
-                          name: pkg.name + " (Plated Service)",
-                          inclusions: [
-                            ...pkg.inclusions,
-                            `${pkg.serviceHours} hours of table service`,
-                            "Professional waitstaff",
-                            "Table-side service",
-                            "Course-by-course serving",
-                          ],
-                          // Add the missing properties required by PlatedPackage type
-                          serviceCharge: 100 * pkg?.serviceHours,
-                          recommendedPax: pkg.minimumPax,
-                          maximumPax: pkg.minimumPax * 2, // Setting a reasonable maximum as 2x the minimum
-                        }
-                      : pkg;
-
                   return (
                     <CustomerPackageCard
                       key={pkg.id}

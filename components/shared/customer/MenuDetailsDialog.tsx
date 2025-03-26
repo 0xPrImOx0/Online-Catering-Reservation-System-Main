@@ -21,14 +21,12 @@ import type { MenuDetailsDialogProps } from "@/types/menu-types";
 import { RenderStarRatings } from "../CustomStarRating";
 import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { CategoryBadge } from "./MenuCategoryBadge";
-import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { Card } from "@/components/ui/card";
 import TrayPriceCard from "../TrayPriceCard";
 
 export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
   const { calculateSavings } = useMenuCalculations();
-  const pathname = usePathname();
 
   return (
     <Dialog>
@@ -64,7 +62,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                   <Flame className="h-3 w-3" /> Spicy
                 </Badge>
               )}
-              <DialogClose className="h-8 w-8 rounded-full bg-black/70 dark:bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black dark:hover:bg-white/30 transition-colors">
+              <DialogClose className="h-8 w-8 rounded-full bg-background backdrop-blur-sm text-white flex items-center justify-center hover:bg-black dark:hover:bg-white/30 transition-colors">
                 <X className="h-4 w-4" />
               </DialogClose>
             </div>

@@ -79,7 +79,7 @@ export default function CustomPackageForm() {
           <span className="text-2xl font-medium">Create Your Own Package!</span>
         </div>
       </div>
-      
+
       <Card className="">
         <CardHeader>
           <CardTitle>Package Information</CardTitle>
@@ -92,10 +92,9 @@ export default function CustomPackageForm() {
             {categories.map((category) => (
               <div key={category} className="space-y-2">
                 <h3 className="font-medium">{category} Options</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  {getDishesByCategory(category as PackageCategory)
-                    .slice(0, 4)
-                    .map((dish) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {getDishesByCategory(category as PackageCategory).map(
+                    (dish) => (
                       <div key={dish.id} className="flex items-start space-x-2">
                         <Checkbox
                           id={`dish-${dish.id}`}
@@ -124,7 +123,8 @@ export default function CustomPackageForm() {
                           </p>
                         </div>
                       </div>
-                    ))}
+                    )
+                  )}
                 </div>
               </div>
             ))}

@@ -26,7 +26,7 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Check, Clock, Info, Users } from "lucide-react";
 import { bookingSteps } from "@/lib/customer/packages-metadata";
-import {
+import type {
   BookingFormData,
   PackageBookFormProps,
   // PlatedPackage,
@@ -68,6 +68,7 @@ export default function PackageBookForm({
 
   const submitBooking = () => {
     setBookingComplete(true);
+    setBookingStep(0); // Reset the step when completing the booking
   };
 
   const resetBooking = () => {
@@ -86,8 +87,6 @@ export default function PackageBookForm({
       specialRequests: "",
     });
   };
-
-  const isPlated = "serviceHours" in pkg;
 
   return (
     <>

@@ -30,7 +30,6 @@ export function EditMenuDialog({
   setIsEditMenuOpen,
   item,
 }: EditMenuDialogProps) {
-  const [ingredients, setIngredients] = useState([]);
   const [formState, setFormState] = useState<MenuItem>(item);
 
   const [nutritionInfoForm, setNutritionInfoForm] = useState<NutritionInfo>(
@@ -43,8 +42,6 @@ export function EditMenuDialog({
       text: text,
     }));
   }
-
-  const discount = 0;
 
   const handleChange = (field: keyof MenuItem, value: string | boolean) => {
     setFormState((prev) => ({
@@ -80,8 +77,6 @@ export function EditMenuDialog({
       maximumPax: 20,
     },
   ];
-
-  const price = 0;
 
   return (
     <Dialog open={isEditMenuOpen} onOpenChange={setIsEditMenuOpen}>

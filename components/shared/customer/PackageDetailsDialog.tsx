@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
-import PackageBookForm from "./PackageBookForm";
 import { menuItems } from "@/lib/menu-lists";
 import type {
   PackageDetailsDialogProps,
@@ -38,11 +37,12 @@ export default function PackageDetailsDialog({
             <div className="absolute top-4 right-16">
               <Badge
                 variant={isAvailable ? "default" : "destructive"}
-                className={
-                  isAvailable
-                    ? "bg-emerald-600 hover:bg-emerald-700"
-                    : "bg-red-500"
-                }
+                className={`
+                  ${
+                    isAvailable
+                      ? "bg-emerald-600 hover:bg-emerald-700"
+                      : "bg-red-500"
+                  } `}
               >
                 {isAvailable ? "Available" : "Unavailable"}
               </Badge>
@@ -50,7 +50,7 @@ export default function PackageDetailsDialog({
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white"
+              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full"
               onClick={() => onOpenChange(false)}
             >
               <X className="h-4 w-4" />

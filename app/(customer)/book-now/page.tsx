@@ -287,6 +287,7 @@ export default function Home() {
                     onValueChange={(value) =>
                       handleFormChange("serviceType", value)
                     }
+                    className="grid grid-cols-2 pt-2"
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="Buffet" id="buffet" />
@@ -338,10 +339,9 @@ export default function Home() {
               ].map((category) => (
                 <div key={category} className="space-y-2">
                   <h3 className="font-medium">{category} Options</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {getDishesByCategory(category as PackageCategory)
-                      .slice(0, 4)
-                      .map((dish) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {getDishesByCategory(category as PackageCategory).map(
+                      (dish) => (
                         <div
                           key={dish.id}
                           className="flex items-start space-x-2"
@@ -373,7 +373,8 @@ export default function Home() {
                             </p>
                           </div>
                         </div>
-                      ))}
+                      )
+                    )}
                   </div>
                 </div>
               ))}
@@ -395,7 +396,7 @@ export default function Home() {
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h3 className="font-medium mb-2">Customer Information</h3>
+                  <h3 className="font-medium mb-2">Custom er Information</h3>
                   <ul className="text-sm space-y-1">
                     <li className="flex justify-between">
                       <span className="text-muted-foreground">Name:</span>
@@ -515,13 +516,22 @@ export default function Home() {
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center justify-center py-4">
-            <div className="rounded-full bg-primary/10 p-3">
-              <Check className="h-8 w-8 text-primary" />
+            <div className="rounded-full p-3 bg-green-500">
+              <Check className="size-10 text-white" />
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={() => setShowConfirmation(false)}>Close</Button>
-            <Button asChild onClick={() => setShowConfirmation(false)}>
+            <Button
+              variant={"secondary"}
+              onClick={() => setShowConfirmation(false)}
+            >
+              Close
+            </Button>
+            <Button
+              variant={"default"}
+              onClick={() => setShowConfirmation(false)}
+              asChild
+            >
               <Link href={"/"}>Go to home</Link>
             </Button>
           </DialogFooter>
