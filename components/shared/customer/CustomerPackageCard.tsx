@@ -79,7 +79,7 @@ export default function CustomerPackageCard({ item }: PackageCardProps) {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="bg-black/70 backdrop-blur-sm rounded px-2.5 py-1.5">
+                  <div className="bg-black/70 backdrop-blur-sm rounded-full px-2.5 py-1.5">
                     {RenderStarRatings(item.rating, "medium")}
                   </div>
                 </TooltipTrigger>

@@ -34,24 +34,6 @@ export function CatererPackageCard({ item }: PackageCardProps) {
   return (
     <Card className="overflow-hidden max-w-md transition-all duration-300 hover:shadow-md flex flex-col h-full">
       <div className="relative">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="custom"
-                variant="ghost"
-                className="absolute inset-0 w-full h-full p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                onClick={() => setShowImageDialog(true)}
-              >
-                <span className="sr-only">View {item.name} image</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{item.name}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-
         <div className="aspect-video w-full overflow-hidden">
           <Image
             src={item.imageUrl || "/placeholder.svg"}
@@ -60,6 +42,24 @@ export function CatererPackageCard({ item }: PackageCardProps) {
             height={300}
             className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
           />
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="absolute inset-0 w-full h-full p-0 cursor-pointer bg-transparent hover:bg-black/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  onClick={() => setShowImageDialog(true)}
+                >
+                  <span className="sr-only">View {item.name} image</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{item.name}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
         <div className="absolute bottom-3 left-3">
