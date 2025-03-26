@@ -1,3 +1,5 @@
+import { SetStateBoolean } from "./global-types";
+
 // Define types for our packages
 export type PackageCategory =
   | "Soup"
@@ -91,4 +93,10 @@ export interface PackageBookFormProps {
 export interface EventTypeCardProps {
   eventType: EventType;
   onSelect: (eventType: EventType) => void;
+}
+
+export interface DeletePackageDialogProps {
+  item: CateringPackageProps;
+  isDeleteDialogOpen: boolean;
+  setIsDeleteDialogOpen: SetStateBoolean;
 }

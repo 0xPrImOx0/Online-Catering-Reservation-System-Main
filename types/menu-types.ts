@@ -125,3 +125,14 @@ export interface EditPackageDialogProps {
   isEditPackageOpen: boolean;
   setIsEditPackageOpen: SetStateBoolean;
 }
+
+export type DeleteMenuDialogProps = {
+  item: MenuItem;
+  isDeleteDialogOpen: boolean;
+  setIsDeleteDialogOpen: SetStateBoolean;
+};
+
+export type HeaderWithAddButtonProps = {
+  title: string;
+  setIsAddInstanceOpen: SetStateBoolean;
+};

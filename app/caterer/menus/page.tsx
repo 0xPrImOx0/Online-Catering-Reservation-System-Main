@@ -15,9 +15,7 @@ import { selectorItems } from "../../../lib/caterer/packages-metadata";
 export default function MenuManagement() {
   // State responsible for opening/closing the dialogs for dialog visibility
   const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [currentMenu, setCurrentMenu] = useState(menuItems[0]);
   const [query, setQuery] = useState("");
 
   return (
@@ -44,30 +42,12 @@ export default function MenuManagement() {
         </div>
       </div>
 
-      {/* Menu Items Grid */}
-      {viewMode === "grid" ? (
-        <PaginatedMenus />
-      ) : (
-        <div className="space-y-4">
-          {/* {menuItems.map((menuItem) => (
-            <MenuListCard
-              key={menuItem.id}
-              menuItem={menuItem}
-              setCurrentMenu={setCurrentMenu}
-              setIsEditMenuOpen={setIsEditMenuOpen}
-              setIsDetailsOpen={setIsDetailsOpen}
-              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-            />
-          ))} */}
-        </div>
-      )}
+      <PaginatedMenus items={menuItems} />
 
       <AddMenuDialog
         isAddMenuOpen={isAddMenuOpen}
         setIsAddMenuOpen={setIsAddMenuOpen}
       />
-
-      {/* Delete Confirmation Dialog */}
     </main>
   );
 }

@@ -1,4 +1,4 @@
-import { DeleteMenuDialogProps } from "@/types/caterer/caterer-types";
+import { DeleteMenuDialogProps } from "@/types/menu-types";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function DeleteMenuDialog({
-  currentMenu,
+  item,
   isDeleteDialogOpen,
   setIsDeleteDialogOpen,
 }: DeleteMenuDialogProps) {
@@ -26,21 +26,8 @@ export default function DeleteMenuDialog({
           <AlertDialogDescription asChild>
             <div>
               You are about to delete{" "}
-              <span className="font-medium">{currentMenu.name}</span>. This
-              action cannot be undone.
-              {/* {currentMenu.inPackages > 0 && (
-                <div className="mt-2 text-destructive">
-                  Warning: This dish is used in {currentMenu.inPackages} package
-                  {currentMenu.inPackages !== 1 ? "s" : ""}.
-                </div>
-              )}
-              {currentMenu.timesOrdered > 0 && (
-                <div className="mt-2 text-amber-500">
-                  Note: This dish has been ordered {currentMenu.timesOrdered}{" "}
-                  time
-                  {currentMenu.timesOrdered !== 1 ? "s" : ""}.
-                </div>
-              )} */}
+              <span className="font-medium">{item.name}</span>. This action
+              cannot be undone.
             </div>
           </AlertDialogDescription>
         </AlertDialogHeader>

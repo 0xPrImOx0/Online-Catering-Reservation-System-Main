@@ -261,7 +261,7 @@ export function MenuCard({ item }: MenuCardProps) {
         item={item}
       />
       <DeleteMenuDialog
-        currentMenu={item}
+        item={item}
         isDeleteDialogOpen={isDeleteDialogOpen}
         setIsDeleteDialogOpen={setIsDeleteDialogOpen}
       />
