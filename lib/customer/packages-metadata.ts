@@ -212,6 +212,7 @@ export const platedPackages: CateringPackageProps[] = [
       { category: "Pork", count: 1 },
       { category: "Noodle", count: 1 },
     ],
+
     inclusions: [
       "Basic table setup",
       "Disposable utensils and plates",
@@ -418,14 +419,6 @@ export const platedPackages: CateringPackageProps[] = [
   },
 ];
 
-// Define event types
-export const eventTypes: EventType[] = [
-  "Birthday",
-  "Wedding",
-  "Corporate",
-  "Graduation",
-];
-
 // Define event packages
 export const eventPackages: Record<EventType, CateringPackageProps[]> = {
   Birthday: [
@@ -434,6 +427,7 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
       name: "Birthday Celebration - Basic",
       description:
         "A fun and festive package perfect for birthday celebrations.",
+      //this one
       eventType: "Birthday",
       pricePerPax: 450,
       minimumPax: 30,
@@ -1029,6 +1023,14 @@ export const eventPackages: Record<EventType, CateringPackageProps[]> = {
     },
   ],
 };
+
+// Define event types
+export const eventTypes: EventType[] = [
+  "Birthday",
+  "Wedding",
+  "Corporate",
+  "Graduation",
+];
 
 // Custom Package Form Steps
 export const formSteps: FormStepType[] = [

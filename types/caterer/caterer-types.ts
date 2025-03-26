@@ -1,6 +1,7 @@
 import { MenuItem } from "@/types/customer/menu-types";
 import { SetStateBoolean } from "@/types/global-types";
 import { Dispatch, SetStateAction } from "react";
+import { CateringPackageProps, PackageCardProps } from "../customer/package-types";
 
 //Customer Related Types
 export type CustomerType = {
@@ -139,7 +140,7 @@ export type EditPackageDialogProps = {
 };
 
 export type DeletePackageDialogProps = {
-  currentPackage: PackageItem;
+  item: CateringPackageProps;
   isDeleteDialogOpen: boolean;
   setIsDeleteDialogOpen: SetStateBoolean;
 };
