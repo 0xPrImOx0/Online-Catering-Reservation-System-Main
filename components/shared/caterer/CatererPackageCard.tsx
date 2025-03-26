@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import { RenderStarRatings } from "../CustomStarRating";
-import { PackageCardProps } from "@/types/package-types";
+import type { PackageCardProps } from "@/types/package-types";
 import EditPackageDialog from "./EditPackageDialog";
 import DeletePackageDialog from "./DeletePackageDialog";
 import PackageDetailsDialog from "../customer/PackageDetailsDialog";
@@ -32,24 +32,18 @@ export function CatererPackageCard({ item }: PackageCardProps) {
   const [showPackageDetails, setShowPackageDetails] = useState(false);
 
   return (
-    <Card className="min-w-[325px] flex-1 overflow-hidden border shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
-      <div className="relative h-48 w-full overflow-hidden">
+    <Card className="overflow-hidden max-w-md transition-all duration-300 hover:shadow-md flex flex-col h-full">
+      <div className="relative">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 size="custom"
                 variant="ghost"
-                className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="absolute inset-0 w-full h-full p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 onClick={() => setShowImageDialog(true)}
               >
-                <Image
-                  src={item.imageUrl || "/placeholder.svg"}
-                  alt={item.name}
-                  height={192}
-                  width={375}
-                  className="w-full object-cover overflow-hidden transition-transform duration-500 hover:scale-105"
-                />
+                <span className="sr-only">View {item.name} image</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -58,35 +52,21 @@ export function CatererPackageCard({ item }: PackageCardProps) {
           </Tooltip>
         </TooltipProvider>
 
-        {/* <div className="absolute top-2 right-2 flex gap-2">
-          <Badge
-            variant={item.available ? "default" : "destructive"}
-            className={
-              item.available
-                ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                : "bg-red-500 text-white"
-            }
-          >
-            {item.available ? "Available" : "Unavailable"}
-          </Badge>
-
-          <CategoryBadge category={item.category} />
-
-          {item.spicy && (
-            <Badge
-              variant="outline"
-              className="bg-red-500 text-white border-red-500 flex items-center gap-1 hover:bg-red-600"
-            >
-              <Flame className="h-3 w-3" /> Spicy
-            </Badge>
-          )}
-        </div> */}
+        <div className="aspect-video w-full overflow-hidden">
+          <Image
+            src={item.imageUrl || "/placeholder.svg"}
+            alt={item.name}
+            width={500}
+            height={300}
+            className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+          />
+        </div>
 
         <div className="absolute bottom-3 left-3">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="bg-black/70 backdrop-blur-sm rounded px-2.5 py-1.5">
+                <div className="bg-black/70 backdrop-blur-sm rounded-full px-2.5 py-1.5">
                   {RenderStarRatings(item.rating, "medium")}
                 </div>
               </TooltipTrigger>
@@ -98,52 +78,53 @@ export function CatererPackageCard({ item }: PackageCardProps) {
             </Tooltip>
           </TooltipProvider>
         </div>
-
-        {/* <div className="absolute bottom-3 right-3">
-          <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2.5 py-1.5 font-bold">
-            ₱{item.prices[0].price.toFixed(2)}
-          </div>
-        </div> */}
       </div>
 
-      <CardHeader className="pb-2 pt-4">
-        <CardTitle className="text-xl font-serif break-words">
+      <CardHeader className="p-5 pb-2">
+        <CardTitle className="text-2xl font-bold tracking-tight text-primary">
           {item.name}
         </CardTitle>
-        <CardDescription className="mt-1">{item.description}</CardDescription>
+        <CardDescription className="mt-2 text-muted-foreground">
+          {item.description}
+        </CardDescription>
       </CardHeader>
 
-      <CardContent className="flex-grow" />
+      <CardContent className="px-5 pb-0 flex-grow" />
 
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between border-t p-4">
         <Button
-          className="text-blue-600 gap-1"
-          size="custom"
-          variant="link"
+          variant="ghost"
+          className="flex items-center gap-1 px-2 text-primary"
           onClick={() => setShowPackageDetails(true)}
         >
-          <Eye /> View Details
+          <Eye className="h-4 w-4" />
+          <span>View Details</span>
         </Button>
+
         <div className="flex gap-2">
           <Button
-            className="text-yellow-600 gap-1"
-            size="custom"
-            onClick={() => setIsEditPackageOpen((prev) => !prev)}
-            variant="link"
+            variant="outline"
+            size="icon"
+            className="h-9 w-9 text-amber-500"
+            onClick={() => setIsEditPackageOpen(true)}
           >
-            <Pencil /> Edit
+            <Pencil className="h-4 w-4" />
+            <span className="sr-only">Edit</span>
           </Button>
+
           <Button
-            className="text-destructive gap-1"
-            size="custom"
-            onClick={() => setIsDeleteDialogOpen((prev) => !prev)}
-            variant="link"
+            variant="outline"
+            size="icon"
+            className="h-9 w-9 text-destructive"
+            onClick={() => setIsDeleteDialogOpen(true)}
           >
-            <Trash2 /> Delete
+            <Trash2 className="h-4 w-4" />
+            <span className="sr-only">Delete</span>
           </Button>
         </div>
       </CardFooter>
 
+      {/* Preserve all dialog components */}
       <EditPackageDialog
         isEditPackageOpen={isEditPackageOpen}
         setIsEditPackageOpen={setIsEditPackageOpen}
@@ -153,13 +134,11 @@ export function CatererPackageCard({ item }: PackageCardProps) {
         isDeleteDialogOpen={isDeleteDialogOpen}
         setIsDeleteDialogOpen={setIsDeleteDialogOpen}
       />
-
       <PackageDetailsDialog
         pkg={item}
         open={showPackageDetails}
         onOpenChange={setShowPackageDetails}
       />
-
       <MenuImageDialog
         item={item}
         open={showImageDialog}

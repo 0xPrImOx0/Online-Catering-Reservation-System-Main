@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { cateringPackages } from "../../../lib/caterer/packages-metadata";
 import SearchInput from "@/components/shared/SearchInput";
 import AddPackageDialog from "@/components/shared/caterer/AddPackageDialog";
 import {
@@ -17,11 +16,6 @@ import { CatererPackageCard } from "@/components/shared/caterer/CatererPackageCa
 export default function PackageManagement() {
   // Simple state for dialog visibility
   const [isAddPackageOpen, setIsAddPackageOpen] = useState(false);
-  const [isEditPackageOpen, setIsEditPackageOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [currentPackage, setCurrentPackage] = useState(cateringPackages[0]);
-  const [selectedMenus, setSelectedMenus] = useState<number[]>([]);
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState("buffet");
 
@@ -42,7 +36,7 @@ export default function PackageManagement() {
     );
   };
   return (
-    <main className="flex-1 overflow-auto px-1">
+    <main className="flex-1 overflow-auto px-1 max-w-[1440px] mx-auto">
       <h1 className="text-2xl font-bold tracking-tight mb-4">Packages</h1>
 
       {/* Search and View Controls */}
