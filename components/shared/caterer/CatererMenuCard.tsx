@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -17,20 +17,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Eye, Flame, Pencil, Trash2 } from "lucide-react";
+import type { MenuCardProps } from "@/types/menu-types";
 import { RenderStarRatings } from "../CustomStarRating";
-import type { PackageCardProps } from "@/types/package-types";
-import EditPackageDialog from "./EditPackageDialog";
-import DeletePackageDialog from "./DeletePackageDialog";
-import PackageDetailsDialog from "../customer/PackageDetailsDialog";
-import { MenuImageDialog } from "../customer/MenuImageDialog";
+import { MenuDetailsDialog } from "../customer/MenuDetailsDialog";
+import { CategoryBadge } from "../customer/MenuCategoryBadge";
+import { EditMenuDialog } from "./EditMenuDialog";
+import DeleteMenuDialog from "./DeleteMenuDialog";
+import ImageDialog from "../ImageDialog";
 import { AnimatedIconButton } from "../AnimatedIconButton";
 
-export function CatererPackageCard({ item }: PackageCardProps) {
-  const [showImageDialog, setShowImageDialog] = useState(false);
-  const [isEditPackageOpen, setIsEditPackageOpen] = useState(false);
+export default function CatererMenuCard({ item }: MenuCardProps) {
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [showPackageDetails, setShowPackageDetails] = useState(false);
 
   return (
     <Card className="overflow-hidden max-w-md transition-all duration-300 hover:shadow-md flex flex-col h-full">
@@ -51,7 +51,7 @@ export function CatererPackageCard({ item }: PackageCardProps) {
                   size="sm"
                   variant="ghost"
                   className="absolute inset-0 w-full h-full p-0 cursor-pointer bg-transparent hover:bg-black/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  onClick={() => setShowImageDialog(true)}
+                  onClick={() => setIsImageDialogOpen(true)}
                 >
                   <span className="sr-only">View {item.name} image</span>
                 </Button>
@@ -63,11 +63,35 @@ export function CatererPackageCard({ item }: PackageCardProps) {
           </TooltipProvider>
         </div>
 
+        <div className="absolute top-2 right-2 flex gap-2 flex-wrap justify-end">
+          <Badge
+            variant={item.available ? "default" : "destructive"}
+            className={
+              item.available
+                ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                : "bg-red-500 text-white"
+            }
+          >
+            {item.available ? "Available" : "Unavailable"}
+          </Badge>
+
+          <CategoryBadge category={item.category} />
+
+          {item.spicy && (
+            <Badge
+              variant="outline"
+              className="bg-red-500 text-white border-red-500 flex items-center gap-1 hover:bg-red-600"
+            >
+              <Flame className="h-3 w-3" /> Spicy
+            </Badge>
+          )}
+        </div>
+
         <div className="absolute bottom-3 left-3">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="bg-black/70 backdrop-blur-sm rounded-full px-2.5 py-1.5">
+                <div className="bg-black/70 backdrop-blur-sm rounded-md px-2.5 py-1.5">
                   {RenderStarRatings(item.rating, "medium")}
                 </div>
               </TooltipTrigger>
@@ -79,6 +103,12 @@ export function CatererPackageCard({ item }: PackageCardProps) {
             </Tooltip>
           </TooltipProvider>
         </div>
+
+        <div className="absolute bottom-3 right-3">
+          <div className="bg-black/70 backdrop-blur-sm text-white rounded-md px-2.5 py-1.5 font-bold">
+            &#8369;{item.prices[0].price.toFixed(2)}
+          </div>
+        </div>
       </div>
 
       <CardHeader className="p-5 pb-5">
@@ -86,58 +116,55 @@ export function CatererPackageCard({ item }: PackageCardProps) {
           {item.name}
         </CardTitle>
         <CardDescription className="mt-2 text-muted-foreground">
-          {item.description}
+          {item.shortDescription}
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="px-5 pb-0 flex-grow" />
-
-      <CardFooter className="flex justify-between border-t p-4">
-        <Button
-          variant="ghost"
-          className="flex items-center gap-1 px-2 text-primary"
-          onClick={() => setShowPackageDetails(true)}
-        >
-          <Eye className="h-4 w-4" />
-          <span>View Details</span>
-        </Button>
+      <CardFooter className="flex justify-between border-t p-4 mt-auto">
+        <MenuDetailsDialog item={item}>
+          <Button
+            variant="ghost"
+            className="flex items-center gap-1 px-2 text-primary"
+          >
+            <Eye className="h-4 w-4" />
+            <span>View Details</span>
+          </Button>
+        </MenuDetailsDialog>
 
         <div className="flex gap-2">
           <AnimatedIconButton
             icon={Pencil}
             title="Edit"
             className="group transition-all duration-300 hover:w-auto text-amber-500"
-            onClick={() => setIsEditPackageOpen(true)}
+            onClick={() => setIsEditMenuOpen(true)}
           />
 
           <AnimatedIconButton
             icon={Trash2}
             title="Delete"
             className="text-destructive"
-            onClick={() => setIsEditPackageOpen(true)}
+            onClick={() => setIsEditMenuOpen(true)}
           />
         </div>
       </CardFooter>
 
-      {/* Preserve all dialog components */}
-      <EditPackageDialog
-        isEditPackageOpen={isEditPackageOpen}
-        setIsEditPackageOpen={setIsEditPackageOpen}
+      {/* Dialogs */}
+      <EditMenuDialog
+        isEditMenuOpen={isEditMenuOpen}
+        setIsEditMenuOpen={setIsEditMenuOpen}
+        item={item}
       />
-      <DeletePackageDialog
+
+      <DeleteMenuDialog
         item={item}
         isDeleteDialogOpen={isDeleteDialogOpen}
         setIsDeleteDialogOpen={setIsDeleteDialogOpen}
       />
-      <PackageDetailsDialog
-        pkg={item}
-        open={showPackageDetails}
-        onOpenChange={setShowPackageDetails}
-      />
-      <MenuImageDialog
+
+      <ImageDialog
         item={item}
-        open={showImageDialog}
-        onOpenChange={setShowImageDialog}
+        isImageDialogOpen={isImageDialogOpen}
+        setIsImageDialogOpen={setIsImageDialogOpen}
       />
     </Card>
   );

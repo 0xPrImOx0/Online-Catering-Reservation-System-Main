@@ -50,7 +50,7 @@ export function MenuCard({ item }: MenuCardProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                size="custom"
+                size="sm"
                 variant="ghost"
                 className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 onClick={() => setIsImageDialogOpen(true)}

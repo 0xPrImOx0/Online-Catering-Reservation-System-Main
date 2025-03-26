@@ -2,7 +2,9 @@
 import { useRef, useState } from "react";
 import { MenuCard } from "../MenuCard";
 import CustomPagination from "../CustomPagination";
-import { MenuItem, PaginatedMenuProps } from "@/types/menu-types";
+import { PaginatedMenuProps } from "@/types/menu-types";
+import { usePathname } from "next/navigation";
+import CatererMenuCard from "../caterer/CatererMenuCard";
 
 export default function PaginatedMenus({ items }: PaginatedMenuProps) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,6 +23,9 @@ export default function PaginatedMenus({ items }: PaginatedMenuProps) {
       menuListRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const pathname = usePathname();
+  const isCaterer = pathname.includes("/caterer");
   return (
     <>
       <div
@@ -28,6 +33,13 @@ export default function PaginatedMenus({ items }: PaginatedMenuProps) {
         ref={menuListRef}
       >
         {/* Package Showcase */}
+
+        {isCaterer
+          ? paginatedMenu.map((item) => (
+              <CatererMenuCard key={item.id} item={item} />
+            ))
+          : paginatedMenu.map((item) => <MenuCard key={item.id} item={item} />)}
+
         {paginatedMenu.map((item) => (
           <MenuCard key={item.id} item={item} />
         ))}
