@@ -136,3 +136,43 @@ export type HeaderWithAddButtonProps = {
   title: string;
   setIsAddInstanceOpen: SetStateBoolean;
 };
+
+export const allergens = [
+  "Milk",
+  "Eggs",
+  "Fish",
+  "Shellfish",
+  "Tree nuts",
+  "Peanuts",
+  "Wheat",
+  "Soybeans",
+  "Sesame",
+  "Gluten",
+  "Mustard",
+  "Celery",
+  "Lupin",
+  "Molluscs",
+  "Sulphites",
+  "Soy",
+  "Nuts",
+];
+
+export const predefinedPaxRanges = [
+  { min: 4, max: 6 },
+  { min: 8, max: 10 },
+  { min: 13, max: 15 },
+  { min: 18, max: 20 },
+];
+
+export const categories: CategoryProps[] = [
+  "Soup",
+  "Salad",
+  "Beef",
+  "Pork",
+  "Noodle",
+  "Chicken",
+  "Seafood",
+  "Vegetable",
+  "Dessert",
+  "Beverage",
+];
