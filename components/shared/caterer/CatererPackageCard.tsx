@@ -67,7 +67,7 @@ export function CatererPackageCard({ item }: PackageCardProps) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="bg-black/70 backdrop-blur-sm rounded-full px-2.5 py-1.5">
+                <div className="bg-black/70 backdrop-blur-sm rounded-md px-2.5 py-1.5">
                   {RenderStarRatings(item.rating, "medium")}
                 </div>
               </TooltipTrigger>
@@ -78,6 +78,12 @@ export function CatererPackageCard({ item }: PackageCardProps) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+        </div>
+
+        <div className="absolute bottom-3 right-3">
+          <div className="bg-black/70 backdrop-blur-sm text-white rounded-md px-2.5 py-1.5 font-bold">
+            &#8369; {item.pricePerPax.toFixed(2)} / pax
+          </div>
         </div>
       </div>
 
