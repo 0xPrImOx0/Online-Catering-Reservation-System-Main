@@ -8,8 +8,7 @@ import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton
 import { menuItems } from "@/lib/menu-lists";
 import { AddMenuDialog } from "@/components/shared/caterer/AddMenuDialog";
 import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
-import { selectorItems } from "../../../lib/caterer/packages-metadata";
-
+import { selectorItems } from "@/lib/menu-select";
 export default function MenuManagement() {
   // State responsible for opening/closing the dialogs for dialog visibility
   const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);

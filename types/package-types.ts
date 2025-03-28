@@ -22,10 +22,16 @@ export interface PackageOption {
   count: number;
 }
 
+export type InclusionsProps = {
+  typeOfCustomer: "Both" | "Plated";
+  includes: string;
+};
+
 export interface CateringPackageProps {
   id: string;
   name: string;
   description: string;
+  available?: boolean;
   pricePerPax: number;
   minimumPax: number;
   recommendedPax: number;
@@ -38,6 +44,28 @@ export interface CateringPackageProps {
   serviceHours?: number;
   serviceCharge?: number;
   eventType?: EventType;
+}
+
+//For Temporary. Still Thinking the Proper Schema for Proper Querying for the Backend
+export interface CateringPackagesProps {
+  id: string;
+  name: string;
+  description: string;
+  available: boolean;
+  pricePerPax: number;
+  minimumPax: number;
+  recommendedPax: number;
+  maximumPax: number;
+  options: PackageOption[];
+  inclusions: InclusionsProps[];
+  imageUrl?: string;
+  imageFile?: Blob;
+  rating: number;
+  ratingCount: number;
+  serviceHours?: number;
+  serviceCharge?: number;
+  eventType?: EventType;
+  packageType: "Buffet & Plated" | "Events";
 }
 
 export interface FormStepType {

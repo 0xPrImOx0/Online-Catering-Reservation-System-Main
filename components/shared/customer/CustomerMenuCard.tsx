@@ -26,7 +26,7 @@ import { MenuDetailsDialog } from "./MenuDetailsDialog";
 import { CategoryBadge } from "./MenuCategoryBadge";
 import ImageDialog from "../ImageDialog";
 
-export function MenuCard({ item }: MenuCardProps) {
+export function CustomerMenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const [menuPricePax, setMenuPricePax] = useState(item.prices[0].price);

@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
-import { MenuCard } from "./CustomerMenuCard";
+import { CustomerMenuCard } from "./CustomerMenuCard";
 import CustomPagination from "../CustomPagination";
 import { PaginatedMenuProps } from "@/types/menu-types";
 import { usePathname } from "next/navigation";
@@ -32,13 +32,15 @@ export default function PaginatedMenus({ items }: PaginatedMenuProps) {
         className="grid md:grid-cols-2 xl:grid-cols-3 gap-10"
         ref={menuListRef}
       >
-        {/* Package Showcase */}
+        {/* MenuLists */}
 
         {isCaterer
           ? paginatedMenu.map((item) => (
               <CatererMenuCard key={item.id} item={item} />
             ))
-          : paginatedMenu.map((item) => <MenuCard key={item.id} item={item} />)}
+          : paginatedMenu.map((item) => (
+              <CustomerMenuCard key={item.id} item={item} />
+            ))}
       </div>
       <CustomPagination
         startIndex={startIndex}
