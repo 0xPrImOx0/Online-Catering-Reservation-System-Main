@@ -6,7 +6,7 @@ import { buffetPackages } from "@/lib/customer/packages-metadata";
 
 export default function Featured() {
   return (
-    <section className="pt-16 px-[2%] flex flex-col items-center gap-14">
+    <section className="px-[5%] mt-24 flex flex-col items-center gap-14">
       <div className="">
         <h2 className="text-3xl font-bold mb-2 text-center">
           Featured Packages

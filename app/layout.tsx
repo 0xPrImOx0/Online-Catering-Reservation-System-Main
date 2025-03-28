@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
@@ -10,7 +10,8 @@ export const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Food Sentinel",
+  title: { template: "%s | Food Sentinel", default: "Food Sentinel" },
+
   description: "An Online Catering Reservation System made by Cipher Sentinels",
 };
 

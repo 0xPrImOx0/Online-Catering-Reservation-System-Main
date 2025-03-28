@@ -9,6 +9,11 @@ import Link from "next/link";
 import { features, principles, teams } from "../../../lib/customer/metadata";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: "About Us",
+// };
 
 export default function AboutPage() {
   const { leadership, culinary, event, service } = teams;

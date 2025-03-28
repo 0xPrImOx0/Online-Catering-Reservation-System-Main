@@ -1,11 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookOpen, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 export default function Testimonial() {
   return (
-    <section className="flex  flex-wrap justify-center gap-10 my-10 px-[2%]">
-      <Skeleton className="min-w-[400px] max-w-[500px] flex-1 h-[550px]" />
+    <section className="flex  flex-wrap justify-center gap-10 my-10 px-[5%]">
+      <Image
+        src={"/images/person-1.png"}
+        width={500}
+        height={500}
+        alt="Person in Testimonial"
+        className="object-cover rounded-lg"
+      />
       <div className="flex flex-col justify-center flex-1">
         <h2 className="text-3xl font-bold mb-6">Testimonial</h2>
         <div className="mb-6">
@@ -15,7 +22,7 @@ export default function Testimonial() {
             professional and attentive throughout our wedding reception. Highly
             recommend! "
           </blockquote>
-          <p className="mt-4 font-semibold">— Sarah & Michael</p>
+          <p className="mt-4 font-semibold">— John Doe</p>
         </div>
         <div className="flex">
           <Button size={"landing"}>

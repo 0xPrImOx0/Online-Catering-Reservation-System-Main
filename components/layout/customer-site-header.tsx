@@ -3,17 +3,17 @@ import Link from "next/link";
 import Logo from "../icons/logo";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { Calendar, Menu, User } from "lucide-react";
+import { Calendar, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import CustomerNavUser from "../shared/customer/CustomerNavUser";
 import { links } from "@/lib/customer/customer-links";
-import { useIsMobile } from "@/hooks/use-mobile";
+// import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function CustomerSiteHeader() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
-  const isMobile = useIsMobile();
+  // const isMobile = useIsMobile();
   const user = {
     name: "Rey Daug",
     email: "m@example.com",
@@ -40,10 +40,15 @@ export default function CustomerSiteHeader() {
 
   return (
     <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex mx-[2%] items-center justify-between">
+      <div className="flex mx-[5%] items-center justify-between">
         <div className="flex flex-1 items-center gap-4">
           <Logo imageSize={40} />
-          <nav className="max-nav-md:hidden flex gap-10 flex-1 justify-center">
+          <nav
+            className={clsx(
+              "flex gap-10 flex-1 justify-center",
+              isLoggedIn ? "max-nav-md:hidden" : "max-lg:hidden"
+            )}
+          >
             {links.map((link) => (
               <PageLink key={link.title} title={link.title} href={link.href} />
             ))}

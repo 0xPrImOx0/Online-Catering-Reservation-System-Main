@@ -3,6 +3,11 @@ import ContactInfo from "@/components/shared/customer/ContactInfo";
 import FAQ from "@/components/shared/customer/FAQ";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import { ClipboardCheck } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact Us",
+};
 
 export default function ContactPage() {
   return (

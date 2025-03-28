@@ -7,6 +7,11 @@ import Footer from "@/components/shared/customer/Footer";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import { Phone } from "lucide-react";
 import { UsersGuide } from "@/components/shared/customer/UsersGuide";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home | Food Sentinel"
+};
 
 export default function Home() {
   return (

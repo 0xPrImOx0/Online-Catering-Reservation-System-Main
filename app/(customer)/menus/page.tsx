@@ -3,6 +3,12 @@ import FooterCTA from "@/components/shared/customer/FooterCTA";
 import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
 import { menuItems } from "@/lib/menu-lists";
 import CategoryPillRow from "@/components/shared/customer/CategoryPillRow";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: "Menus"
+};
 
 export default function Page() {
   return (
