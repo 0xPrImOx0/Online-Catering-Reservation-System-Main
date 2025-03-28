@@ -1,5 +1,6 @@
 "use client";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   FormControl,
   FormDescription,
@@ -9,9 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import type { usePackageForm } from "@/hooks/use-package-form";
+import { usePackageForm } from "@/hooks/use-package-form";
+import { Info } from "lucide-react";
 
 interface PricingCapacityStepProps {
   formHook: ReturnType<typeof usePackageForm>;
@@ -71,8 +71,8 @@ export function PricingCapacityStep({ formHook }: PricingCapacityStepProps) {
           </p>
         </div>
 
-        <Alert variant="outline" className="bg-muted/50 border-muted">
-          <InfoCircledIcon className="h-4 w-4 mr-2" />
+        <Alert variant="default" className="bg-muted/50 border-muted">
+          <Info className="h-4 w-4 mr-2" />
           <AlertDescription>
             Please enter each capacity value individually. Ensure that minimum ≤
             recommended ≤ maximum.

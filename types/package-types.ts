@@ -23,7 +23,7 @@ export interface PackageOption {
 }
 
 export type InclusionsProps = {
-  typeOfCustomer: "Both" | "Plated";
+  typeOfCustomer: "Both" | "Plated" | "Buffet";
   includes: string;
 };
 
@@ -65,7 +65,7 @@ export interface CateringPackagesProps {
   serviceHours?: number;
   serviceCharge?: number;
   eventType?: EventType;
-  packageType: "Buffet & Plated" | "Events";
+  packageType?: "Buffet & Plated" | "Events";
 }
 
 export interface FormStepType {
@@ -152,6 +152,8 @@ export const eventTypes: EventType[] = [
 export const serviceTypes: ServiceType[] = ["Buffet", "Plated"];
 
 export const inclusionTypes = ["Both", "Buffet", "Plated"] as const;
+
+export type PackageType = "BuffetPlated" | "Event";
 
 export const packageFormSteps = [
   {

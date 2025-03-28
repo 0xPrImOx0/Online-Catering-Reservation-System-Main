@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { usePackageForm } from "@/hooks/use-package-form";
+import { PackageCategory } from "@/types/package-types";
 
 interface PackageOptionsStepProps {
   formHook: ReturnType<typeof usePackageForm>;
@@ -49,7 +50,10 @@ export function PackageOptionsStep({ formHook }: PackageOptionsStepProps) {
                   <Select
                     value={newOption.category}
                     onValueChange={(value) =>
-                      setNewOption({ ...newOption, category: value as any })
+                      setNewOption({
+                        ...newOption,
+                        category: value as PackageCategory,
+                      })
                     }
                   >
                     <SelectTrigger>

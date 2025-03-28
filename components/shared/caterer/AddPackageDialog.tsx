@@ -8,15 +8,15 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Form } from "@/components/ui/form";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePackageForm } from "@/hooks/use-package-form";
-import { packageFormSteps } from "@/constants/package";
-import { MultiStepForm, type FormStepType } from "@/components/multi-step-form";
-import { PackageTypeStep } from "@/components/package-form-steps/package-type-step";
-import { BasicInfoStep } from "@/components/package-form-steps/basic-info-step";
-import { PackageOptionsStep } from "@/components/package-form-steps/package-options-step";
-import { PricingCapacityStep } from "@/components/package-form-steps/pricing-capacity-step";
-import { InclusionsServicesStep } from "@/components/package-form-steps/inclusions-services-step";
-import { ImageStep } from "@/components/package-form-steps/image-step";
-import { ReviewStep } from "@/components/package-form-steps/review-step";
+import { packageFormSteps } from "@/types/package-types";
+import { PackageTypeStep } from "./package-form-steps/PackageTypeStep";
+import { BasicInfoStep } from "./package-form-steps/BasicInfoStep";
+import { PackageOptionsStep } from "./package-form-steps/PackageOptionsStep";
+import { PricingCapacityStep } from "./package-form-steps/PricingCapacityStep";
+import { InclusionsServicesStep } from "./package-form-steps/InclusionsServicesStep";
+import { ImageStep } from "./package-form-steps/ImageStep";
+import { ReviewStep } from "./package-form-steps/ReviewStep";
+import { FormStepType, MultiStepForm } from "../MultiStepForm";
 
 export function AddPackageDialog() {
   const [open, setOpen] = useState(false);
@@ -24,8 +24,7 @@ export function AddPackageDialog() {
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const packageFormHook = usePackageForm();
-  const { form, onSubmit, validateStep, resetForm, packageTypeSelected } =
-    packageFormHook;
+  const { form, onSubmit, validateStep, resetForm } = packageFormHook;
 
   // Convert our form steps to the format expected by MultiStepForm
   const multiFormSteps: FormStepType[] = packageFormSteps.map((step) => ({

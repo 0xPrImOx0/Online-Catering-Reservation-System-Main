@@ -7,19 +7,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
-  packageCategories,
-  eventTypes,
-  serviceTypes,
-} from "@/constants/package";
-import type {
-  PackageCategory,
-  EventType,
-  ServiceType,
-  PackageOption,
   CateringPackagesProps,
-  PackageType,
+  EventType,
+  eventTypes,
   InclusionsProps,
-} from "@/types/package";
+  packageCategories,
+  PackageCategory,
+  PackageOption,
+  PackageType,
+  ServiceType,
+  serviceTypes,
+} from "@/types/package-types";
 
 // Form schema using Zod
 const formSchema = z.object({
@@ -244,22 +242,29 @@ export function usePackageForm() {
   ): Array<keyof PackageFormValues> => {
     switch (step) {
       case 0:
-        return ["packageType"];
+        return ["packageType"] as Array<keyof PackageFormValues>;
       case 1:
         return [
           "name",
           "description",
           "available",
-          ...(form.getValues("packageType") === "Event" ? ["eventType"] : []),
+          ...(form.getValues("packageType") === "Event"
+            ? (["eventType"] as Array<keyof PackageFormValues>)
+            : []),
         ];
       case 2:
-        return ["options"];
+        return ["options"] as Array<keyof PackageFormValues>;
       case 3:
-        return ["pricePerPax", "minimumPax", "recommendedPax", "maximumPax"];
+        return [
+          "pricePerPax",
+          "minimumPax",
+          "recommendedPax",
+          "maximumPax",
+        ] as Array<keyof PackageFormValues>;
       case 4:
-        return ["inclusions"];
+        return ["inclusions"] as Array<keyof PackageFormValues>;
       case 5:
-        return []; // Make image optional by not validating any fields
+        return []; // Image is optional
       default:
         return [];
     }

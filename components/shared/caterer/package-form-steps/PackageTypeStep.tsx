@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Utensils, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { usePackageForm } from "@/hooks/use-package-form";
-import type { PackageType } from "@/types/package";
+import type { PackageType } from "@/types/package-types";
 
 interface PackageTypeStepProps {
   formHook: ReturnType<typeof usePackageForm>;

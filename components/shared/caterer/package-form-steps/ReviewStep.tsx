@@ -3,8 +3,8 @@
 import { Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { usePackageForm } from "@/hooks/use-package-form";
 import Image from "next/image";
+import { usePackageForm } from "@/hooks/use-package-form";
 
 interface ReviewStepProps {
   formHook: ReturnType<typeof usePackageForm>;

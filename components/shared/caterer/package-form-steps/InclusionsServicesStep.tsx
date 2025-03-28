@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { inclusionTypes } from "@/constants/package";
+import { InclusionsProps, inclusionTypes } from "@/types/package-types";
 import type { usePackageForm } from "@/hooks/use-package-form";
 
 interface InclusionsServicesStepProps {
@@ -37,7 +37,7 @@ export function InclusionsServicesStep({
     validationAttempted,
   } = formHook;
 
-  const serviceType = form.watch("serviceType");
+  //   const serviceType = form.watch("serviceType");
   const minimumPax = form.watch("minimumPax");
   const hasCapacityValues = minimumPax > 0;
 
@@ -56,11 +56,8 @@ export function InclusionsServicesStep({
           <div className="md:col-span-1">
             <Select
               value={newInclusion.typeOfCustomer}
-              onValueChange={(value) =>
-                setNewInclusion({
-                  ...newInclusion,
-                  typeOfCustomer: value as any,
-                })
+              onValueChange={(value: InclusionsProps["typeOfCustomer"]) =>
+                setNewInclusion({ ...newInclusion, typeOfCustomer: value })
               }
             >
               <SelectTrigger>

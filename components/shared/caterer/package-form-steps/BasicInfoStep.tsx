@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { eventTypes } from "@/constants/package";
+import { eventTypes } from "@/types/package-types";
 import type { usePackageForm } from "@/hooks/use-package-form";
 
 interface BasicInfoStepProps {
