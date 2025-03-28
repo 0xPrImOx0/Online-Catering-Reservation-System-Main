@@ -18,7 +18,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
   return (
     <div className="space-y-6">
       {isSubmitSuccess ? (
-        <div className="text-center py-32">
+        <div className="text-center py-20 md:py-32">
           <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-4">
             <Check className="h-8 w-8 text-green-600" />
           </div>

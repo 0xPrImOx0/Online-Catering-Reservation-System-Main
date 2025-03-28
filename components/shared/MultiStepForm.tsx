@@ -24,10 +24,14 @@ type MultiStepFormProps = {
   onSubmit: () => void;
   onNextStep?: (currentStep: number) => Promise<boolean>;
   onComplete?: () => void;
+  onCancel?: () => void;
+  initialStep?: number;
+  isSubmitComplete?: boolean;
   submitButtonText?: string;
   nextButtonText?: string;
   previousButtonText?: string;
   doneButtonText?: string;
+  cancelButtonText?: string;
 };
 
 export function MultiStepForm({
@@ -36,15 +40,18 @@ export function MultiStepForm({
   onSubmit,
   onNextStep,
   onComplete,
+  onCancel,
+  initialStep,
+  isSubmitComplete = false,
   submitButtonText = "Submit",
   nextButtonText = "Next",
   previousButtonText = "Previous",
   doneButtonText = "Done",
+  cancelButtonText = "Cancel",
 }: MultiStepFormProps) {
-  const [formStep, setFormStep] = useState(0);
-  const [maxLoader, setMaxLoader] = useState(false);
-  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(false);
-  const [isSubmitComplete, setIsSubmitComplete] = useState(false);
+  const [formStep, setFormStep] = useState<number>(initialStep || 0);
+  const [isNextButtonDisabled, setIsNextButtonDisabled] =
+    useState<boolean>(false);
 
   // Function to go to next form step
   const nextStep = async () => {
@@ -75,9 +82,7 @@ export function MultiStepForm({
 
   // Function to submit the form
   const submitForm = () => {
-    setMaxLoader(true);
     onSubmit();
-    setIsSubmitComplete(true);
   };
 
   // Function to complete the form process
@@ -89,7 +94,7 @@ export function MultiStepForm({
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col h-full">
-      <div className="sticky top-0 z-10 bg-background pt-4 pb-2 px-6">
+      <div className="sticky top-0 z-10 bg-background md:pt-4 pb-2 px-6">
         <div className="text-center mb-4">
           <h2 className="text-2xl font-bold">Add Menu Item</h2>
           <p className="text-muted-foreground text-sm">
@@ -98,12 +103,12 @@ export function MultiStepForm({
         </div>
 
         {/* Mobile step indicator */}
-        <div className="flex flex-col mb-2 sm:hidden">
-          <span className="text-muted-foreground text-xs">
+        <div className="flex flex-col mb-2 sm:hidden space-y-2">
+          <span className="text-muted-foreground text-sm">
             Step {formStep + 1} of {formSteps.length}
           </span>
           <div className="flex items-center gap-2 mt-1">
-            <div className="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center text-xs">
+            <div className="size-8 rounded-full border-2 border-primary flex items-center justify-center">
               {formStep + 1}
             </div>
             <span className="font-medium">{formSteps[formStep].title}</span>
@@ -125,14 +130,16 @@ export function MultiStepForm({
             >
               <div
                 className={`w-7 h-7 rounded-full flex items-center justify-center mb-1 ${
-                  index < formStep || maxLoader
+                  index < formStep || isSubmitComplete
                     ? "bg-primary text-primary-foreground"
                     : index === formStep
                     ? "border-2 border-primary"
                     : "border-2 border-muted"
                 }`}
               >
-                {index < formStep || maxLoader ? (
+                {index < formStep ? (
+                  <Check className="h-4 w-4" />
+                ) : isSubmitComplete ? (
                   <Check className="h-4 w-4" />
                 ) : (
                   <span className="text-xs">{index + 1}</span>
@@ -146,10 +153,15 @@ export function MultiStepForm({
         </div>
 
         {/* Progress bar */}
-        <Progress
-          value={maxLoader ? 100 : (formStep / formSteps.length) * 100}
-          className="transition-all mt-2"
-        />
+        <div className="relative mt-2">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-muted">
+            <Progress
+              value={
+                isSubmitComplete ? 100 : (formStep / formSteps.length) * 100
+              }
+            />
+          </div>
+        </div>
       </div>
 
       <div className="flex-1 overflow-hidden flex flex-col">
@@ -160,7 +172,7 @@ export function MultiStepForm({
                 {!isSubmitComplete && formSteps[formStep].title}
               </CardTitle>
               <CardDescription>
-                {formSteps[formStep]?.description}
+                {formSteps[formStep].description}
               </CardDescription>
             </CardHeader>
             <CardContent className="px-0 pb-16">
@@ -177,20 +189,30 @@ export function MultiStepForm({
               </Button>
             ) : (
               <>
-                {formStep > 0 ? (
-                  <Button variant="outline" onClick={prevStep}>
-                    {previousButtonText}
-                  </Button>
-                ) : (
-                  <div></div>
-                )}
-                {formStep < formSteps.length - 1 ? (
-                  <Button onClick={nextStep} disabled={isNextButtonDisabled}>
-                    {nextButtonText}
-                  </Button>
-                ) : (
-                  <Button onClick={submitForm}>{submitButtonText}</Button>
-                )}
+                <Button
+                  variant="outline"
+                  effect={"hoverUnderline"}
+                  onClick={onCancel}
+                  className="hover:bg-destructive"
+                >
+                  {cancelButtonText}
+                </Button>
+                <div className="flex gap-2">
+                  {formStep > 0 && (
+                    <Button variant="secondary" onClick={prevStep}>
+                      {previousButtonText}
+                    </Button>
+                  )}
+                  {formStep < formSteps.length - 1 ? (
+                    <Button onClick={nextStep} disabled={isNextButtonDisabled}>
+                      {nextButtonText}
+                    </Button>
+                  ) : (
+                    <Button effect={"hoverUnderline"} onClick={submitForm}>
+                      {submitButtonText}
+                    </Button>
+                  )}
+                </div>
               </>
             )}
           </div>

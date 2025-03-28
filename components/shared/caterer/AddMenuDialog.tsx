@@ -15,6 +15,7 @@ import { ImageStep } from "./menu-form-steps/ImageStep";
 import { ReviewStep } from "./menu-form-steps/ReviewStep";
 import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
+import { useState } from "react";
 
 export function AddMenuDialog({
   isAddMenuOpen,
@@ -23,6 +24,8 @@ export function AddMenuDialog({
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const menuFormHook = useMenuForm();
   const { form, onSubmit, validateStep, resetForm } = menuFormHook;
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitComplete, setIsSubmitComplete] = useState(false);
 
   // Convert our form steps to the format expected by MultiStepForm
   const multiFormSteps: FormStepType[] = addMenuFormSteps.map((step) => ({
@@ -34,18 +37,34 @@ export function AddMenuDialog({
   // Handle next step validation
   const handleNextStep = async (currentStep: number) => {
     const isValid = await validateStep(currentStep);
+    if (isValid) {
+      setCurrentStep(currentStep + 1);
+    }
     return isValid;
+  };
+
+  // Add a handleCancel function:
+  const handleCancel = () => {
+    setIsAddMenuOpen(false);
+    resetForm();
+    setCurrentStep(0);
+    setIsSubmitComplete(false);
   };
 
   // Handle form submission
   const handleSubmit = () => {
-    form.handleSubmit(onSubmit)();
+    form.handleSubmit((data) => {
+      onSubmit(data);
+      setIsSubmitComplete(true);
+    })();
   };
 
   // Handle form completion (close dialog and reset)
   const handleComplete = () => {
     setIsAddMenuOpen(false);
     resetForm();
+    setCurrentStep(0);
+    setIsSubmitComplete(false);
   };
 
   // Create the form steps components
@@ -67,6 +86,9 @@ export function AddMenuDialog({
         onSubmit={handleSubmit}
         onNextStep={handleNextStep}
         onComplete={handleComplete}
+        onCancel={handleCancel}
+        initialStep={currentStep}
+        isSubmitComplete={isSubmitComplete}
         doneButtonText="Close"
       >
         {formStepComponents}

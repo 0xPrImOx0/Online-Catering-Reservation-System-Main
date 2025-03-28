@@ -89,7 +89,7 @@ export function IngredientsStep({ formHook }: BasicInfoStepProps) {
                 Select all allergens present in this menu item
               </FormDescription>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-2">
               {allergens.map((allergen) => (
                 <FormField
                   key={allergen}

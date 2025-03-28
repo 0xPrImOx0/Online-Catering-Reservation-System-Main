@@ -17,7 +17,6 @@ export type CategoryProps =
   | "Beverage";
 
 export type AllergenProps =
-  | ""
   | "Milk"
   | "Eggs"
   | "Fish"
@@ -138,7 +137,6 @@ export type HeaderWithAddButtonProps = {
 };
 
 export const allergens: AllergenProps[] = [
-  "",
   "Milk",
   "Eggs",
   "Fish",

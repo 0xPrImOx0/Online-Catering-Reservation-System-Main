@@ -253,6 +253,9 @@ export function useMenuForm() {
 
     // Show success message
     setIsSubmitSuccess(true);
+
+    // Return the new menu item
+    return newMenuItem;
   };
 
   // Helper function to get fields to validate for each step
