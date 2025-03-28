@@ -128,3 +128,65 @@ export interface DeletePackageDialogProps {
   isDeleteDialogOpen: boolean;
   setIsDeleteDialogOpen: SetStateBoolean;
 }
+
+export const packageCategories: PackageCategory[] = [
+  "Soup",
+  "Salad",
+  "Beef",
+  "Pork",
+  "Noodle",
+  "Chicken",
+  "Seafood",
+  "Vegetable",
+  "Dessert",
+  "Beverage",
+];
+
+export const eventTypes: EventType[] = [
+  "Birthday",
+  "Wedding",
+  "Corporate",
+  "Graduation",
+];
+
+export const serviceTypes: ServiceType[] = ["Buffet", "Plated"];
+
+export const inclusionTypes = ["Both", "Buffet", "Plated"] as const;
+
+export const packageFormSteps = [
+  {
+    id: "package-type",
+    title: "Package Type",
+    description: "Select the type of package you want to create",
+  },
+  {
+    id: "basic-info",
+    title: "Basic Info",
+    description: "Enter the basic details about your catering package",
+  },
+  {
+    id: "package-options",
+    title: "Package Options",
+    description: "Define the menu items included in this package",
+  },
+  {
+    id: "pricing-capacity",
+    title: "Pricing & Capacity",
+    description: "Set pricing and guest capacity for this package",
+  },
+  {
+    id: "inclusions-services",
+    title: "Inclusions & Services",
+    description: "Add inclusions and service details",
+  },
+  {
+    id: "image",
+    title: "Image",
+    description: "Upload or provide a URL for the package image",
+  },
+  {
+    id: "review",
+    title: "Review",
+    description: "Review all information before submitting",
+  },
+];
