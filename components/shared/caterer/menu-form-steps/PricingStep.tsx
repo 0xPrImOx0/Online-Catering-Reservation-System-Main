@@ -197,9 +197,6 @@ export function PricingStep({ formHook }: PricingStepProps) {
 
                       if (value === "0" || value === "") {
                         priceValue = 0;
-                        // If price is 0, set discount to 100%
-                        const regularPrice =
-                          form.getValues("regularPricePerPax");
 
                         setNewPrice({
                           ...newPrice,
@@ -298,6 +295,16 @@ export function PricingStep({ formHook }: PricingStepProps) {
                         form.getValues("regularPricePerPax") - price.price
                       ).toFixed(2)}{" "}
                       per pax
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Total save:</span>
+                    <span className="font-medium text-green-600">
+                      ${" "}
+                      {(
+                        (form.getValues("regularPricePerPax") - price.price) *
+                        price.maximumPax
+                      ).toFixed(2)}
                     </span>
                   </div>
                 </CardContent>

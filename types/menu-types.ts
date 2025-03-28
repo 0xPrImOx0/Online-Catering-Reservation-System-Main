@@ -137,7 +137,8 @@ export type HeaderWithAddButtonProps = {
   setIsAddInstanceOpen: SetStateBoolean;
 };
 
-export const allergens = [
+export const allergens: AllergenProps[] = [
+  "",
   "Milk",
   "Eggs",
   "Fish",
@@ -175,4 +176,52 @@ export const categories: CategoryProps[] = [
   "Vegetable",
   "Dessert",
   "Beverage",
+];
+
+export const nutritionUnits = {
+  calories: "kcal",
+  protein: "g",
+  fat: "g",
+  carbs: "g",
+  sodium: "mg",
+  fiber: "g",
+  sugar: "g",
+  cholesterol: "mg",
+};
+
+export const addMenuFormSteps = [
+  {
+    id: "basic-info",
+    title: "Basic Info",
+    description: "Enter the basic details about your menu item",
+  },
+  {
+    id: "ingredients-allergens",
+    title: "Ingredients & Allergens",
+    description: "Add ingredients and select allergens present in this item",
+  },
+  {
+    id: "preparation",
+    title: "Preparation",
+    description: "Describe how this menu item is prepared",
+  },
+  {
+    id: "pricing",
+    title: "Pricing",
+    description: "Set the pricing tiers for this menu item",
+  },
+  {
+    id: "nutrition",
+    title: "Nutrition",
+    description: "Add nutrition information for this menu item",
+  },
+  {
+    id: "image",
+    title: "Image",
+    description: "Upload or provide a URL for the menu item image",
+  },
+  {
+    id: "review",
+    title: "Review",
+  },
 ];

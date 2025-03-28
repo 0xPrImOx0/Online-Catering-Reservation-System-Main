@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { categories } from "@/constants/menu";
+import { categories } from "@/types/menu-types";
 import type { useMenuForm } from "@/hooks/use-menu-form";
 
 interface BasicInfoStepProps {
@@ -113,7 +113,7 @@ export function BasicInfoStep({ formHook }: BasicInfoStepProps) {
         )}
       />
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 gap-4">
         <FormField
           control={form.control}
           name="available"

@@ -8,9 +8,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { nutritionUnits } from "@/constants/menu";
+import { NutritionInfo, nutritionUnits } from "@/types/menu-types";
 import type { useMenuForm } from "@/hooks/use-menu-form";
-import type { NutritionInfo } from "@/types/menu";
 
 interface NutritionStepProps {
   formHook: ReturnType<typeof useMenuForm>;

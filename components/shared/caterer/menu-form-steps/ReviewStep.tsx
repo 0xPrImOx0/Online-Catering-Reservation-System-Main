@@ -3,9 +3,10 @@
 import { Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { nutritionUnits } from "@/constants/menu";
+import { nutritionUnits } from "@/types/menu-types";
 import type { useMenuForm } from "@/hooks/use-menu-form";
 import Image from "next/image";
+import { NutritionInfo } from "@/types/menu-types";
 
 interface ReviewStepProps {
   formHook: ReturnType<typeof useMenuForm>;
@@ -17,11 +18,11 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
   return (
     <div className="space-y-6">
       {isSubmitSuccess ? (
-        <div className="text-center py-8">
+        <div className="text-center py-32">
           <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-4">
             <Check className="h-8 w-8 text-green-600" />
           </div>
-          <h3 className="text-xl font-medium mb-2">
+          <h3 className="text-xl font-medium mb-2 mt-4">
             Menu Item Added Successfully!
           </h3>
           <p className="text-muted-foreground">
@@ -31,7 +32,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
       ) : (
         <>
           <div className="text-center mb-6">
-            <Check className="h-12 w-12 text-primary mx-auto mb-2" />
+            <Check className="h-12 w-12 mx-auto mb-2 text-green-600" />
             <h3 className="text-xl font-medium">Review Your Menu Item</h3>
             <p className="text-muted-foreground">
               Please review all information before submitting
@@ -41,7 +42,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
           <div className="space-y-6">
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-lg">Basic Information</CardTitle>
+                <CardTitle className="text-xl">Basic Information</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div className="grid grid-cols-2 gap-4">
@@ -102,7 +103,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-lg">
+                <CardTitle className="text-xl">
                   Ingredients & Allergens
                 </CardTitle>
               </CardHeader>
@@ -143,7 +144,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-lg">Preparation</CardTitle>
+                <CardTitle className="text-xl">Preparation</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -164,7 +165,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-lg">Pricing</CardTitle>
+                <CardTitle className="text-xl">Pricing</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -216,17 +217,20 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-lg">Nutrition Information</CardTitle>
+                <CardTitle className="text-xl">Nutrition Information</CardTitle>
               </CardHeader>
               <CardContent className="pt-4">
-                <div className="grid grid-cols-2 gap-2 text-base">
+                <div className="grid grid-cols-2 gap-4 text-base">
                   {Object.entries(nutritionUnits).map(([key, unit]) => (
                     <div key={key} className="flex justify-between">
                       <span className="capitalize text-sm font-medium text-muted-foreground">
                         {key}
                       </span>
                       <span>
-                        {form.watch(`nutritionInfo.${key}` as any)} {unit}
+                        {form.watch(
+                          `nutritionInfo.${key}` as `nutritionInfo.${keyof NutritionInfo}`
+                        )}{" "}
+                        {unit}
                       </span>
                     </div>
                   ))}
@@ -237,7 +241,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
             {(form.watch("imageUrl") || previewImage) && (
               <Card>
                 <CardHeader className="bg-primary/5 pb-2">
-                  <CardTitle className="text-lg">Image</CardTitle>
+                  <CardTitle className="text-xl">Image</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4">
                   <div className="overflow-hidden h-40 flex items-center justify-center bg-muted rounded-md">

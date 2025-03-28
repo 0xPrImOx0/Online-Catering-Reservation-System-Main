@@ -68,6 +68,35 @@ const formSchema = z.object({
 
 export type FormValues = z.infer<typeof formSchema>;
 
+// Default form values
+const defaultValues: FormValues = {
+  name: "",
+  category: "Soup",
+  available: true,
+  shortDescription: "",
+  fullDescription: "",
+  ingredients: [],
+  allergens: [],
+  preparationMethod: "",
+  prices: [],
+  regularPricePerPax: 0,
+  imageUrl: "",
+  imageUploadType: "url",
+  spicy: false,
+  perServing: "",
+  servingUnit: "g",
+  nutritionInfo: {
+    calories: "0",
+    protein: "0",
+    fat: "0",
+    carbs: "0",
+    sodium: "0",
+    fiber: "0",
+    sugar: "0",
+    cholesterol: "0",
+  },
+};
+
 export function useMenuForm() {
   const [newIngredient, setNewIngredient] = useState("");
   const [newPrice, setNewPrice] = useState<PriceInfo & { discount: number }>({
@@ -86,36 +115,21 @@ export function useMenuForm() {
   // Initialize form
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      category: "Soup",
-      available: true,
-      shortDescription: "",
-      fullDescription: "",
-      ingredients: [],
-      allergens: [],
-      preparationMethod: "",
-      prices: [],
-      regularPricePerPax: 0,
-      imageUrl: "",
-      imageUploadType: "url",
-      spicy: false,
-      perServing: "",
-      servingUnit: "g",
-      nutritionInfo: {
-        calories: "0",
-        protein: "0",
-        fat: "0",
-        carbs: "0",
-        sodium: "0",
-        fiber: "0",
-        sugar: "0",
-        cholesterol: "0",
-      },
-    },
+    defaultValues,
     mode: "onChange",
     reValidateMode: "onSubmit",
   });
+
+  // Reset form function
+  const resetForm = () => {
+    form.reset(defaultValues);
+    setNewIngredient("");
+    setNewPrice({ minimumPax: 4, maximumPax: 6, price: 0, discount: 0 });
+    setPreviewImage(null);
+    setAvailablePaxRanges([...predefinedPaxRanges]);
+    setIsSubmitSuccess(false);
+    setValidationAttempted(false);
+  };
 
   // Add ingredient function
   const addIngredient = () => {
@@ -154,7 +168,6 @@ export function useMenuForm() {
     return Math.round(discountPercentage * 100) / 100; // Round to 2 decimal places
   };
 
-  // Add price tier function
   const addPriceTier = () => {
     if (
       newPrice.minimumPax > 0 &&
@@ -174,21 +187,13 @@ export function useMenuForm() {
       );
       setAvailablePaxRanges(updatedRanges);
 
-      // Set to the next available range or reset if none left
+      // Preserve the existing price values instead of resetting to zero
       if (updatedRanges.length > 0) {
-        setNewPrice({
+        setNewPrice((prev) => ({
+          ...prev,
           minimumPax: updatedRanges[0].min,
           maximumPax: updatedRanges[0].max,
-          price: 0,
-          discount: 0,
-        });
-      } else {
-        setNewPrice({
-          minimumPax: 0,
-          maximumPax: 0,
-          price: 0,
-          discount: 0,
-        });
+        }));
       }
     }
   };
@@ -248,14 +253,6 @@ export function useMenuForm() {
 
     // Show success message
     setIsSubmitSuccess(true);
-
-    // Reset form after a delay
-    setTimeout(() => {
-      form.reset();
-      setPreviewImage(null);
-      setAvailablePaxRanges([...predefinedPaxRanges]);
-      setIsSubmitSuccess(false);
-    }, 2000);
   };
 
   // Helper function to get fields to validate for each step
@@ -373,6 +370,7 @@ export function useMenuForm() {
     handleFileChange,
     onSubmit,
     validateStep,
+    resetForm,
     calculatePriceFromDiscount,
     calculateDiscountFromPrice,
   };

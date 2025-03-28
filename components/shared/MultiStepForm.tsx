@@ -7,10 +7,10 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Progress } from "../ui/progress";
 
 export type FormStepType = {
   id: string;
@@ -23,9 +23,11 @@ type MultiStepFormProps = {
   children: ReactNode[];
   onSubmit: () => void;
   onNextStep?: (currentStep: number) => Promise<boolean>;
+  onComplete?: () => void;
   submitButtonText?: string;
   nextButtonText?: string;
   previousButtonText?: string;
+  doneButtonText?: string;
 };
 
 export function MultiStepForm({
@@ -33,13 +35,16 @@ export function MultiStepForm({
   children,
   onSubmit,
   onNextStep,
+  onComplete,
   submitButtonText = "Submit",
   nextButtonText = "Next",
   previousButtonText = "Previous",
+  doneButtonText = "Done",
 }: MultiStepFormProps) {
   const [formStep, setFormStep] = useState(0);
   const [maxLoader, setMaxLoader] = useState(false);
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(false);
+  const [isSubmitComplete, setIsSubmitComplete] = useState(false);
 
   // Function to go to next form step
   const nextStep = async () => {
@@ -72,35 +77,45 @@ export function MultiStepForm({
   const submitForm = () => {
     setMaxLoader(true);
     onSubmit();
+    setIsSubmitComplete(true);
+  };
+
+  // Function to complete the form process
+  const completeForm = () => {
+    if (onComplete) {
+      onComplete();
+    }
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-12">
-      <div className="mb-8">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold mb-2">Add Menu Item</h1>
-          <p className="text-muted-foreground">
+    <div className="w-full max-w-4xl mx-auto flex flex-col h-full">
+      <div className="sticky top-0 z-10 bg-background pt-4 pb-2 px-6">
+        <div className="text-center mb-4">
+          <h2 className="text-2xl font-bold">Add Menu Item</h2>
+          <p className="text-muted-foreground text-sm">
             Complete the form to add a new menu item
           </p>
         </div>
-        <div className="flex items-center">
-          <div className="flex flex-col mb-4 gap-3 sm:hidden">
-            <span className="text-muted-foreground text-sm">
-              Step {formStep + 1} of {formSteps.length}
-            </span>
-            <div className="flex items-center justify-center gap-4">
-              <div className="w-10 h-10 rounded-full border-2 border-primary flex items-center justify-center">
-                {formStep + 1}
-              </div>
-              <span className="text-xl font-medium">
-                {formSteps[formStep].title}
-              </span>
+
+        {/* Mobile step indicator */}
+        <div className="flex flex-col mb-2 sm:hidden">
+          <span className="text-muted-foreground text-xs">
+            Step {formStep + 1} of {formSteps.length}
+          </span>
+          <div className="flex items-center gap-2 mt-1">
+            <div className="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center text-xs">
+              {formStep + 1}
             </div>
+            <span className="font-medium">{formSteps[formStep].title}</span>
           </div>
+        </div>
+
+        {/* Desktop step indicators */}
+        <div className="items-center justify-between hidden sm:flex">
           {formSteps.map((step, index) => (
             <div
               key={step.id}
-              className={`flex-1 flex-col items-center hidden sm:flex ${
+              className={`flex-1 flex flex-col items-center ${
                 index < formStep
                   ? "text-primary"
                   : index === formStep
@@ -109,7 +124,7 @@ export function MultiStepForm({
               }`}
             >
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${
+                className={`w-7 h-7 rounded-full flex items-center justify-center mb-1 ${
                   index < formStep || maxLoader
                     ? "bg-primary text-primary-foreground"
                     : index === formStep
@@ -118,52 +133,69 @@ export function MultiStepForm({
                 }`}
               >
                 {index < formStep || maxLoader ? (
-                  <Check className="h-5 w-5" />
+                  <Check className="h-4 w-4" />
                 ) : (
-                  index + 1
+                  <span className="text-xs">{index + 1}</span>
                 )}
               </div>
-              <span className="text-sm font-medium">{step.title}</span>
+              <span className="text-xs font-medium text-center px-1 line-clamp-2 h-8">
+                {step.title}
+              </span>
             </div>
           ))}
         </div>
-        <div className="relative mt-2">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-muted">
-            <div
-              className="absolute top-0 left-0 h-1 bg-primary transition-all"
-              style={{
-                width: `${
-                  maxLoader ? "100" : (formStep / (formSteps.length - 1)) * 100
-                }%`,
-              }}
-            />
+
+        {/* Progress bar */}
+        <Progress
+          value={maxLoader ? 100 : (formStep / formSteps.length) * 100}
+          className="transition-all mt-2"
+        />
+      </div>
+
+      <div className="flex-1 overflow-hidden flex flex-col">
+        <div className="flex-1 overflow-y-auto px-6 py-4">
+          <Card className="border-0 shadow-none">
+            <CardHeader className="px-0 pt-4">
+              <CardTitle className="text-lg">
+                {!isSubmitComplete && formSteps[formStep].title}
+              </CardTitle>
+              <CardDescription>
+                {formSteps[formStep]?.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-0 pb-16">
+              {children[formStep]}
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="sticky bottom-0 bg-background pt-2 pb-6 md:py-2 px-6 border-t">
+          <div className="flex justify-between">
+            {isSubmitComplete ? (
+              <Button className="ml-auto" onClick={completeForm}>
+                {doneButtonText}
+              </Button>
+            ) : (
+              <>
+                {formStep > 0 ? (
+                  <Button variant="outline" onClick={prevStep}>
+                    {previousButtonText}
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
+                {formStep < formSteps.length - 1 ? (
+                  <Button onClick={nextStep} disabled={isNextButtonDisabled}>
+                    {nextButtonText}
+                  </Button>
+                ) : (
+                  <Button onClick={submitForm}>{submitButtonText}</Button>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>{formSteps[formStep].title}</CardTitle>
-          <CardDescription>{formSteps[formStep].description}</CardDescription>
-        </CardHeader>
-        <CardContent>{children[formStep]}</CardContent>
-        <CardFooter className="flex justify-between">
-          {formStep > 0 ? (
-            <Button variant="outline" onClick={prevStep}>
-              {previousButtonText}
-            </Button>
-          ) : (
-            <div></div>
-          )}
-          {formStep < formSteps.length - 1 ? (
-            <Button onClick={nextStep} disabled={isNextButtonDisabled}>
-              {nextButtonText}
-            </Button>
-          ) : (
-            <Button onClick={submitForm}>{submitButtonText}</Button>
-          )}
-        </CardFooter>
-      </Card>
     </div>
   );
 }

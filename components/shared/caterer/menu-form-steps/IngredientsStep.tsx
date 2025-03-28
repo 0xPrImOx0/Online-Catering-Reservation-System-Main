@@ -13,14 +13,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { allergens } from "@/constants/menu";
-import type { useMenuForm } from "@/hooks/use-menu-form";
+import { allergens } from "@/types/menu-types";
+import { useMenuForm } from "@/hooks/use-menu-form";
 
-interface IngredientsStepProps {
+interface BasicInfoStepProps {
   formHook: ReturnType<typeof useMenuForm>;
 }
 
-export function IngredientsStep({ formHook }: IngredientsStepProps) {
+export function IngredientsStep({ formHook }: BasicInfoStepProps) {
   const {
     form,
     newIngredient,
