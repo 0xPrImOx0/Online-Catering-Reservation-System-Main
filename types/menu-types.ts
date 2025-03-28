@@ -1,3 +1,4 @@
+import { useMenuForm } from "@/hooks/use-menu-form";
 import { SetStateBoolean } from "./global-types";
 import { CateringPackageProps } from "./package-types";
 
@@ -223,3 +224,7 @@ export const addMenuFormSteps = [
     title: "Review",
   },
 ];
+
+export interface AddMenuFormProps {
+  formHook: ReturnType<typeof useMenuForm>;
+}

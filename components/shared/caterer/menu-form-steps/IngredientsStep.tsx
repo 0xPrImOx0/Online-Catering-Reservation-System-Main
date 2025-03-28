@@ -13,14 +13,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { allergens } from "@/types/menu-types";
-import { useMenuForm } from "@/hooks/use-menu-form";
+import { AddMenuFormProps, allergens } from "@/types/menu-types";
 
-interface BasicInfoStepProps {
-  formHook: ReturnType<typeof useMenuForm>;
-}
-
-export function IngredientsStep({ formHook }: BasicInfoStepProps) {
+export function IngredientsStep({ formHook }: AddMenuFormProps) {
   const {
     form,
     newIngredient,

@@ -20,13 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { useMenuForm } from "@/hooks/use-menu-form";
+import { AddMenuFormProps } from "@/types/menu-types";
 
-interface PricingStepProps {
-  formHook: ReturnType<typeof useMenuForm>;
-}
-
-export function PricingStep({ formHook }: PricingStepProps) {
+export function PricingStep({ formHook }: AddMenuFormProps) {
   const {
     form,
     newPrice,

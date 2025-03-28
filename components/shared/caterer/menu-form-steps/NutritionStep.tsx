@@ -8,14 +8,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { NutritionInfo, nutritionUnits } from "@/types/menu-types";
-import type { useMenuForm } from "@/hooks/use-menu-form";
+import {
+  AddMenuFormProps,
+  NutritionInfo,
+  nutritionUnits,
+} from "@/types/menu-types";
 
-interface NutritionStepProps {
-  formHook: ReturnType<typeof useMenuForm>;
-}
-
-export function NutritionStep({ formHook }: NutritionStepProps) {
+export function NutritionStep({ formHook }: AddMenuFormProps) {
   const { form, validationAttempted } = formHook;
 
   return (

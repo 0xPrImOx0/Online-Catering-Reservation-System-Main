@@ -14,20 +14,17 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ImageIcon, Upload, Link } from "lucide-react";
-import type { useMenuForm } from "@/hooks/use-menu-form";
 import Image from "next/image";
+import { AddMenuFormProps } from "@/types/menu-types";
 
-interface ImageStepProps {
-  formHook: ReturnType<typeof useMenuForm>;
-}
-
-export function ImageStep({ formHook }: ImageStepProps) {
+export function ImageStep({ formHook }: AddMenuFormProps) {
   const { form, previewImage, handleFileChange, validationAttempted } =
     formHook;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="space-y-6">
+      {/* Image Upload Type */}
       <FormField
         control={form.control}
         name="imageUploadType"
@@ -63,6 +60,7 @@ export function ImageStep({ formHook }: ImageStepProps) {
         )}
       />
 
+      {/* Image URL Field */}
       {form.watch("imageUploadType") === "url" ? (
         <FormField
           control={form.control}
@@ -118,6 +116,7 @@ export function ImageStep({ formHook }: ImageStepProps) {
                 <Image
                   src={form.watch("imageUrl") || "/placeholder.svg"}
                   alt="Menu item preview"
+                  fill
                   className="max-h-full max-w-full object-contain"
                   onError={() => {
                     console.log("Error loading image");

@@ -10,13 +10,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { useMenuForm } from "@/hooks/use-menu-form";
+import { AddMenuFormProps } from "@/types/menu-types";
 
-interface PreparationStepProps {
-  formHook: ReturnType<typeof useMenuForm>;
-}
-
-export function PreparationStep({ formHook }: PreparationStepProps) {
+export function PreparationStep({ formHook }: AddMenuFormProps) {
   const { form, validationAttempted } = formHook;
 
   return (

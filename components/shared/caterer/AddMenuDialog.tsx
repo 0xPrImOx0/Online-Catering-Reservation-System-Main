@@ -46,9 +46,6 @@ export function AddMenuDialog({
   // Add a handleCancel function:
   const handleCancel = () => {
     setIsAddMenuOpen(false);
-    resetForm();
-    setCurrentStep(0);
-    setIsSubmitComplete(false);
   };
 
   // Handle form submission

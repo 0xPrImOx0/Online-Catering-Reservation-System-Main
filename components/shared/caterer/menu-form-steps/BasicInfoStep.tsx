@@ -18,18 +18,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { categories } from "@/types/menu-types";
-import type { useMenuForm } from "@/hooks/use-menu-form";
+import { AddMenuFormProps, categories } from "@/types/menu-types";
 
-interface BasicInfoStepProps {
-  formHook: ReturnType<typeof useMenuForm>;
-}
-
-export function BasicInfoStep({ formHook }: BasicInfoStepProps) {
+export function BasicInfoStep({ formHook }: AddMenuFormProps) {
   const { form, validationAttempted } = formHook;
 
   return (
     <div className="space-y-4">
+      {/* Menu Name */}
       <FormField
         control={form.control}
         name="name"
@@ -46,6 +42,7 @@ export function BasicInfoStep({ formHook }: BasicInfoStepProps) {
         )}
       />
 
+      {/* Menu Category */}
       <FormField
         control={form.control}
         name="category"
@@ -71,6 +68,7 @@ export function BasicInfoStep({ formHook }: BasicInfoStepProps) {
         )}
       />
 
+      {/* Menu  Short Description */}
       <FormField
         control={form.control}
         name="shortDescription"
@@ -93,6 +91,7 @@ export function BasicInfoStep({ formHook }: BasicInfoStepProps) {
         )}
       />
 
+      {/* Menu Full Description */}
       <FormField
         control={form.control}
         name="fullDescription"
@@ -114,6 +113,7 @@ export function BasicInfoStep({ formHook }: BasicInfoStepProps) {
       />
 
       <div className="grid md:grid-cols-2 gap-4">
+        {/* Menu Availability */}
         <FormField
           control={form.control}
           name="available"
@@ -137,6 +137,7 @@ export function BasicInfoStep({ formHook }: BasicInfoStepProps) {
           )}
         />
 
+        {/* is Menu Spicy? */}
         <FormField
           control={form.control}
           name="spicy"

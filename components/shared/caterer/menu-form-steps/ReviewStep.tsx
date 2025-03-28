@@ -3,16 +3,11 @@
 import { Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { nutritionUnits } from "@/types/menu-types";
-import type { useMenuForm } from "@/hooks/use-menu-form";
+import { AddMenuFormProps, nutritionUnits } from "@/types/menu-types";
 import Image from "next/image";
 import { NutritionInfo } from "@/types/menu-types";
 
-interface ReviewStepProps {
-  formHook: ReturnType<typeof useMenuForm>;
-}
-
-export function ReviewStep({ formHook }: ReviewStepProps) {
+export function ReviewStep({ formHook }: AddMenuFormProps) {
   const { form, previewImage, isSubmitSuccess } = formHook;
 
   return (
