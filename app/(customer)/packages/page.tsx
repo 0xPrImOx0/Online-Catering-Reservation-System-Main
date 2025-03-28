@@ -1,6 +1,11 @@
 import { ClipboardCheck, Star } from "lucide-react";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import CateringPackages from "@/components/shared/customer/CateringPackages";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Packages",
+};
 
 export default function Page() {
   return (

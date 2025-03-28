@@ -36,6 +36,11 @@ import { formSteps } from "@/lib/customer/packages-metadata";
 import { menuItems } from "@/lib/menu-lists";
 import { PackageCategory, FormData } from "@/types/package-types";
 import Link from "next/link";
+import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: "Book Now",
+// };
 
 export default function Home() {
   const [formStep, setFormStep] = useState(0);

@@ -3,17 +3,17 @@ import Link from "next/link";
 import Logo from "../icons/logo";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { Calendar, Menu, User } from "lucide-react";
+import { Calendar, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import CustomerNavUser from "../shared/customer/CustomerNavUser";
 import { links } from "@/lib/customer/customer-links";
-import { useIsMobile } from "@/hooks/use-mobile";
+// import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function CustomerSiteHeader() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
-  const isMobile = useIsMobile();
+  // const isMobile = useIsMobile();
   const user = {
     name: "Rey Daug",
     email: "m@example.com",
@@ -55,7 +55,7 @@ export default function CustomerSiteHeader() {
           ) : (
             <>
               <Link href={"/sign-in"}>
-                <Button variant={"ghost"}>
+                <Button variant={'ghost'}>
                   <User /> Sign In
                 </Button>
               </Link>
