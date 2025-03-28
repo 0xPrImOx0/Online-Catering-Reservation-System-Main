@@ -110,7 +110,7 @@ export function useMenuForm() {
     ...predefinedPaxRanges,
   ]);
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
-  const [validationAttempted, setValidationAttempted] = useState(false);
+  const [isValidationAttempted, setIsValidationAttempted] = useState(false);
 
   // Initialize form
   const form = useForm<FormValues>({
@@ -128,7 +128,7 @@ export function useMenuForm() {
     setPreviewImage(null);
     setAvailablePaxRanges([...predefinedPaxRanges]);
     setIsSubmitSuccess(false);
-    setValidationAttempted(false);
+    setIsValidationAttempted(false);
   };
 
   // Add ingredient function
@@ -287,12 +287,12 @@ export function useMenuForm() {
 
   // Validate a specific step
   const validateStep = async (step: number): Promise<boolean> => {
-    setValidationAttempted(true);
+    setIsValidationAttempted(true);
     const fieldsToValidate = getFieldsToValidate(step);
     const isValid = await form.trigger(fieldsToValidate);
 
     if (isValid) {
-      setValidationAttempted(false);
+      setIsValidationAttempted(false);
     }
 
     return isValid;
@@ -365,7 +365,7 @@ export function useMenuForm() {
     setPreviewImage,
     availablePaxRanges,
     isSubmitSuccess,
-    validationAttempted,
+    isValidationAttempted,
     addIngredient,
     removeIngredient,
     addPriceTier,

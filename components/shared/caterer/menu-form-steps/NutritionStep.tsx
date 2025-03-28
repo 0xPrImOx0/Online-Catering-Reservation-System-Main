@@ -15,7 +15,7 @@ import {
 } from "@/types/menu-types";
 
 export function NutritionStep({ formHook }: AddMenuFormProps) {
-  const { form, validationAttempted } = formHook;
+  const { form, isValidationAttempted } = formHook;
 
   return (
     <div className="space-y-4">
@@ -51,7 +51,7 @@ export function NutritionStep({ formHook }: AddMenuFormProps) {
                     </div>
                   </div>
                 </FormControl>
-                {validationAttempted && <FormMessage />}
+                {isValidationAttempted && <FormMessage />}
               </FormItem>
             )}
           />

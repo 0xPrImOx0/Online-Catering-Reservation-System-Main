@@ -22,7 +22,7 @@ export function IngredientsStep({ formHook }: AddMenuFormProps) {
     setNewIngredient,
     addIngredient,
     removeIngredient,
-    validationAttempted,
+    isValidationAttempted,
   } = formHook;
 
   return (
@@ -66,7 +66,7 @@ export function IngredientsStep({ formHook }: AddMenuFormProps) {
             </Badge>
           ))}
         </div>
-        {validationAttempted && form.formState.errors.ingredients && (
+        {isValidationAttempted && form.formState.errors.ingredients && (
           <p className="text-sm font-medium text-destructive">
             {form.formState.errors.ingredients.message}
           </p>
@@ -119,7 +119,7 @@ export function IngredientsStep({ formHook }: AddMenuFormProps) {
                 />
               ))}
             </div>
-            {validationAttempted && form.formState.errors.allergens && (
+            {isValidationAttempted && form.formState.errors.allergens && (
               <p className="text-sm font-medium text-destructive">
                 {form.formState.errors.allergens.message}
               </p>

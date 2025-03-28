@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { AddMenuFormProps } from "@/types/menu-types";
 
 export function PreparationStep({ formHook }: AddMenuFormProps) {
-  const { form, validationAttempted } = formHook;
+  const { form, isValidationAttempted } = formHook;
 
   return (
     <div className="space-y-4">
@@ -35,7 +35,7 @@ export function PreparationStep({ formHook }: AddMenuFormProps) {
             <FormDescription>
               Include cooking techniques, time, and special instructions
             </FormDescription>
-            {validationAttempted && <FormMessage />}
+            {isValidationAttempted && <FormMessage />}
           </FormItem>
         )}
       />
@@ -75,7 +75,7 @@ export function PreparationStep({ formHook }: AddMenuFormProps) {
               </div>
             </FormControl>
             <FormDescription>Specify the amount per serving</FormDescription>
-            {validationAttempted && <FormMessage />}
+            {isValidationAttempted && <FormMessage />}
           </FormItem>
         )}
       />

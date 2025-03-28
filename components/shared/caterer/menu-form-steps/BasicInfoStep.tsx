@@ -21,7 +21,7 @@ import {
 import { AddMenuFormProps, categories } from "@/types/menu-types";
 
 export function BasicInfoStep({ formHook }: AddMenuFormProps) {
-  const { form, validationAttempted } = formHook;
+  const { form, isValidationAttempted } = formHook;
 
   return (
     <div className="space-y-4">
@@ -37,7 +37,7 @@ export function BasicInfoStep({ formHook }: AddMenuFormProps) {
             <FormControl>
               <Input placeholder="Enter menu item name" {...field} />
             </FormControl>
-            {validationAttempted && <FormMessage />}
+            {isValidationAttempted && <FormMessage />}
           </FormItem>
         )}
       />
@@ -63,7 +63,7 @@ export function BasicInfoStep({ formHook }: AddMenuFormProps) {
                 ))}
               </SelectContent>
             </Select>
-            {validationAttempted && <FormMessage />}
+            {isValidationAttempted && <FormMessage />}
           </FormItem>
         )}
       />
@@ -86,7 +86,7 @@ export function BasicInfoStep({ formHook }: AddMenuFormProps) {
             <FormDescription>
               A short summary that appears in menu listings
             </FormDescription>
-            {validationAttempted && <FormMessage />}
+            {isValidationAttempted && <FormMessage />}
           </FormItem>
         )}
       />
@@ -107,7 +107,7 @@ export function BasicInfoStep({ formHook }: AddMenuFormProps) {
                 {...field}
               />
             </FormControl>
-            {validationAttempted && <FormMessage />}
+            {isValidationAttempted && <FormMessage />}
           </FormItem>
         )}
       />

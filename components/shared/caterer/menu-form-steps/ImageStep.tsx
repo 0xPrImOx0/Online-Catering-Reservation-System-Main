@@ -18,7 +18,7 @@ import Image from "next/image";
 import { AddMenuFormProps } from "@/types/menu-types";
 
 export function ImageStep({ formHook }: AddMenuFormProps) {
-  const { form, previewImage, handleFileChange, validationAttempted } =
+  const { form, previewImage, handleFileChange, isValidationAttempted } =
     formHook;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -55,7 +55,7 @@ export function ImageStep({ formHook }: AddMenuFormProps) {
                 </div>
               </RadioGroup>
             </FormControl>
-            {validationAttempted && <FormMessage />}
+            {isValidationAttempted && <FormMessage />}
           </FormItem>
         )}
       />
@@ -74,7 +74,7 @@ export function ImageStep({ formHook }: AddMenuFormProps) {
               <FormDescription>
                 Enter a URL for the menu item image
               </FormDescription>
-              {validationAttempted && <FormMessage />}
+              {isValidationAttempted && <FormMessage />}
             </FormItem>
           )}
         />

@@ -108,8 +108,12 @@ export function MultiStepForm({
             Step {formStep + 1} of {formSteps.length}
           </span>
           <div className="flex items-center gap-2 mt-1">
-            <div className="size-8 rounded-full border-2 border-primary flex items-center justify-center">
-              {formStep + 1}
+            <div
+              className={`size-8 rounded-full border-2 border-primary flex items-center justify-center ${
+                isSubmitComplete && "bg-primary text-primary-foreground"
+              }`}
+            >
+              {isSubmitComplete ? <Check className="h-4 w-4" /> : formStep + 1}
             </div>
             <span className="font-medium">{formSteps[formStep].title}</span>
           </div>

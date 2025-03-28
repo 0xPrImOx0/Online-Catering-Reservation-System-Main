@@ -30,7 +30,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
     availablePaxRanges,
     addPriceTier,
     removePriceTier,
-    validationAttempted,
+    isValidationAttempted,
     calculatePriceFromDiscount,
     calculateDiscountFromPrice,
   } = formHook;
@@ -72,7 +72,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
               </div>
             </FormControl>
             <FormDescription>Base price per pax</FormDescription>
-            {validationAttempted && <FormMessage />}
+            {isValidationAttempted && <FormMessage />}
           </FormItem>
         )}
       />
@@ -309,7 +309,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
           </div>
         </div>
       )}
-      {validationAttempted && form.formState.errors.prices && (
+      {isValidationAttempted && form.formState.errors.prices && (
         <p className="text-sm font-medium text-destructive">
           {form.formState.errors.prices.message}
         </p>
