@@ -40,10 +40,15 @@ export default function CustomerSiteHeader() {
 
   return (
     <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex mx-[2%] items-center justify-between">
+      <div className="flex mx-[5%] items-center justify-between">
         <div className="flex flex-1 items-center gap-4">
           <Logo imageSize={40} />
-          <nav className="max-nav-md:hidden flex gap-10 flex-1 justify-center">
+          <nav
+            className={clsx(
+              "flex gap-10 flex-1 justify-center",
+              isLoggedIn ? "max-nav-md:hidden" : "max-lg:hidden"
+            )}
+          >
             {links.map((link) => (
               <PageLink key={link.title} title={link.title} href={link.href} />
             ))}
@@ -55,7 +60,7 @@ export default function CustomerSiteHeader() {
           ) : (
             <>
               <Link href={"/sign-in"}>
-                <Button variant={'ghost'}>
+                <Button variant={"ghost"}>
                   <User /> Sign In
                 </Button>
               </Link>
