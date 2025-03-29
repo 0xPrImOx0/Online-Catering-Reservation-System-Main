@@ -153,6 +153,31 @@ export function useMenuForm({
     reValidateMode: "onSubmit",
   });
 
+  // Initialize available pax ranges based on existing prices
+  useEffect(() => {
+    if (isEditMode && initialData) {
+      const usedRanges = initialData.prices.map((price) => ({
+        min: price.minimumPax,
+        max: price.maximumPax,
+      }));
+
+      // Filter out used ranges
+      const availableRanges = predefinedPaxRanges.filter(
+        (range) =>
+          !usedRanges.some(
+            (used) => used.min === range.min && used.max === range.max
+          )
+      );
+
+      setAvailablePaxRanges(availableRanges);
+
+      // Set preview image if available
+      if (initialData.imageUrl) {
+        setPreviewImage(initialData.imageUrl);
+      }
+    }
+  }, [isEditMode, initialData]);
+
   // Reset form function
   const resetForm = () => {
     form.reset(defaultValues);
@@ -226,6 +251,7 @@ export function useMenuForm({
     []
   );
 
+  // Add price tier function
   const addPriceTier = () => {
     if (
       newPrice.minimumPax > 0 &&
@@ -245,13 +271,21 @@ export function useMenuForm({
       );
       setAvailablePaxRanges(updatedRanges);
 
-      // Preserve the existing price values instead of resetting to zero
+      // Set to the next available range or reset if none left
       if (updatedRanges.length > 0) {
-        setNewPrice((prev) => ({
-          ...prev,
+        setNewPrice({
           minimumPax: updatedRanges[0].min,
           maximumPax: updatedRanges[0].max,
-        }));
+          price: 0,
+          discount: 0,
+        });
+      } else {
+        setNewPrice({
+          minimumPax: 0,
+          maximumPax: 0,
+          price: 0,
+          discount: 0,
+        });
       }
     }
   };
@@ -297,15 +331,21 @@ export function useMenuForm({
 
   // Submit form function
   const onSubmit = (data: FormValues) => {
-    // Add ID and default values for rating
-    const newMenuItem: MenuItem = {
+    // Create menu item object
+    const menuItem: MenuItem = {
+      id:
+        isEditMode && initialData
+          ? initialData.id
+          : Math.floor(Math.random() * 10000),
       ...data,
-      id: Math.floor(Math.random() * 10000), // Generate a random ID
-      rating: 0,
-      ratingCount: 0,
+      rating: isEditMode && initialData ? initialData.rating : 0,
+      ratingCount: isEditMode && initialData ? initialData.ratingCount : 0,
     };
 
-    console.log("Submitting menu item:", newMenuItem);
+    console.log(
+      `${isEditMode ? "Updating" : "Submitting"} menu item:`,
+      menuItem
+    );
     // Here you would typically send this to your API
     // If there's an image file, you would upload it first and then update the imageUrl
 
@@ -313,7 +353,7 @@ export function useMenuForm({
     setIsSubmitSuccess(true);
 
     // Return the new menu item
-    return newMenuItem;
+    return menuItem;
   };
 
   // Helper function to get fields to validate for each step
