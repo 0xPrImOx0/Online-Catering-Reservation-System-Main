@@ -20,7 +20,7 @@ import {
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import { RenderStarRatings } from "../CustomStarRating";
 import type { PackageCardProps } from "@/types/package-types";
-import EditPackageDialog from "./EditPackageDialog";
+import EditPackageDialog from "./EditPackageDialogDraft";
 import DeletePackageDialog from "./DeletePackageDialog";
 import PackageDetailsDialog from "../customer/PackageDetailsDialog";
 import { AnimatedIconButton } from "../AnimatedIconButton";

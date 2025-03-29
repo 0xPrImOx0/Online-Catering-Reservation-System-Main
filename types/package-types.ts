@@ -196,3 +196,9 @@ export interface AddPackageDialogProps {
   isAddPackageOpen: boolean;
   setIsAddPackageOpen: SetStateBoolean;
 }
+
+export interface EditPackageDialogProps {
+  isEditPackageOpen: boolean;
+  setIsEditPackageOpen: SetStateBoolean;
+  item: CateringPackagesProps;
+}

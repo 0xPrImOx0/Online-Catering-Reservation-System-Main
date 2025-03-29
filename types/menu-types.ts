@@ -117,16 +117,6 @@ export interface EditMenuDialogProps {
   item: MenuItem;
 }
 
-export interface AddPackageDialogProps {
-  isAddPackageOpen: boolean;
-  setIsAddPackageOpen: SetStateBoolean;
-}
-
-export interface EditPackageDialogProps {
-  isEditPackageOpen: boolean;
-  setIsEditPackageOpen: SetStateBoolean;
-}
-
 export type DeleteMenuDialogProps = {
   item: MenuItem;
   isDeleteDialogOpen: boolean;
