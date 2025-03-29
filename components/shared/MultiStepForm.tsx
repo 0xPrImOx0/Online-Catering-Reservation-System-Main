@@ -20,6 +20,8 @@ export type FormStepType = {
 
 type MultiStepFormProps = {
   formSteps: FormStepType[];
+  title: string;
+  description: string;
   children: ReactNode[];
   onSubmit: () => void;
   onNextStep?: (currentStep: number) => Promise<boolean>;
@@ -36,6 +38,8 @@ type MultiStepFormProps = {
 
 export function MultiStepForm({
   formSteps,
+  title,
+  description,
   children,
   onSubmit,
   onNextStep,
@@ -96,10 +100,8 @@ export function MultiStepForm({
     <div className="w-full max-w-4xl mx-auto flex flex-col h-full">
       <div className="sticky top-0 z-10 bg-background md:pt-4 pb-2 px-6">
         <div className="text-center mb-4">
-          <h2 className="text-2xl font-bold">Add Menu Item</h2>
-          <p className="text-muted-foreground text-sm">
-            Complete the form to add a new menu item
-          </p>
+          <h2 className="text-2xl font-bold">{title}</h2>
+          <p className="text-muted-foreground text-sm">{description}</p>
         </div>
 
         {/* Mobile step indicator */}
@@ -157,7 +159,7 @@ export function MultiStepForm({
         </div>
 
         {/* Progress bar */}
-        <div className="relative mt-2">
+        <div className="relative mt-2 mb-4">
           <div className="absolute top-0 left-0 right-0 h-1 bg-muted">
             <Progress
               value={

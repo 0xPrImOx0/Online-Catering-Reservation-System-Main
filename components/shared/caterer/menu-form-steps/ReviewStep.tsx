@@ -28,7 +28,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
         <>
           <div className="text-center mb-6">
             <Check className="h-12 w-12 mx-auto mb-2 text-green-600" />
-            <h3 className="text-xl font-medium">Review Your Menu Item</h3>
+            <h3 className="text-lg font-medium">Review Your Menu Item</h3>
             <p className="text-muted-foreground">
               Please review all information before submitting
             </p>
@@ -37,7 +37,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
           <div className="space-y-6">
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-xl">Basic Information</CardTitle>
+                <CardTitle className="text-lg">Basic Information</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div className="grid grid-cols-2 gap-4">
@@ -98,7 +98,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
 
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-xl">
+                <CardTitle className="text-lg">
                   Ingredients & Allergens
                 </CardTitle>
               </CardHeader>
@@ -139,7 +139,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
 
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-xl">Preparation</CardTitle>
+                <CardTitle className="text-lg">Preparation</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -160,7 +160,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
 
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-xl">Pricing</CardTitle>
+                <CardTitle className="text-lg">Pricing</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -212,7 +212,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
 
             <Card>
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-xl">Nutrition Information</CardTitle>
+                <CardTitle className="text-lg">Nutrition Information</CardTitle>
               </CardHeader>
               <CardContent className="pt-4">
                 <div className="grid grid-cols-2 gap-4 text-base">
@@ -236,7 +236,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
             {(form.watch("imageUrl") || previewImage) && (
               <Card>
                 <CardHeader className="bg-primary/5 pb-2">
-                  <CardTitle className="text-xl">Image</CardTitle>
+                  <CardTitle className="text-lg">Image</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4">
                   <div className="overflow-hidden h-40 flex items-center justify-center bg-muted rounded-md">

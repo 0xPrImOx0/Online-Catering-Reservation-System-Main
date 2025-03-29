@@ -17,6 +17,8 @@ export type ServiceType = "Buffet" | "Plated";
 
 export type EventType = "Birthday" | "Wedding" | "Corporate" | "Graduation";
 
+export type PackageType = "BuffetPlated" | "Event";
+
 export interface PackageOption {
   category: PackageCategory;
   count: number;
@@ -46,7 +48,7 @@ export interface CateringPackageProps {
   eventType?: EventType;
 }
 
-//For Temporary. Still Thinking the Proper Schema for Proper Querying for the Backend
+//For Temporary. Still Thinking the Proper Schema for Proper Querying for the Backend. THIS ONE WILL BE THE BASIS
 export interface CateringPackagesProps {
   id: string;
   name: string;
@@ -65,7 +67,7 @@ export interface CateringPackagesProps {
   serviceHours?: number;
   serviceCharge?: number;
   eventType?: EventType;
-  packageType?: "Buffet & Plated" | "Events";
+  packageType?: PackageType;
 }
 
 export interface FormStepType {
@@ -153,8 +155,6 @@ export const serviceTypes: ServiceType[] = ["Buffet", "Plated"];
 
 export const inclusionTypes = ["Both", "Buffet", "Plated"] as const;
 
-export type PackageType = "BuffetPlated" | "Event";
-
 export const packageFormSteps = [
   {
     id: "package-type",
@@ -189,6 +189,10 @@ export const packageFormSteps = [
   {
     id: "review",
     title: "Review",
-    description: "Review all information before submitting",
   },
 ];
+
+export interface AddPackageDialogProps {
+  isAddPackageOpen: boolean;
+  setIsAddPackageOpen: SetStateBoolean;
+}

@@ -15,9 +15,9 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
   const packageType = form.watch("packageType");
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {isSubmitSuccess ? (
-        <div className="text-center py-8">
+        <div className="text-center py-20 md:py-32">
           <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-4">
             <Check className="h-8 w-8 text-green-600" />
           </div>
@@ -32,7 +32,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
         <>
           <div className="text-center mb-4">
             <Check className="h-10 w-10 text-primary mx-auto mb-2" />
-            <h3 className="text-lg font-medium">Review Your Package</h3>
+            <h3 className="text-xl font-medium">Review Your Package</h3>
             <p className="text-sm text-muted-foreground">
               Please review all information before submitting
             </p>
@@ -41,7 +41,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
           <div className="space-y-4">
             <Card className="overflow-hidden">
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-base">Basic Information</CardTitle>
+                <CardTitle className="text-lg">Basic Information</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -109,7 +109,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card className="overflow-hidden">
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-base">Package Options</CardTitle>
+                <CardTitle className="text-lg">Package Options</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -137,7 +137,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card className="overflow-hidden">
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-base">Pricing & Capacity</CardTitle>
+                <CardTitle className="text-lg">Pricing & Capacity</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -181,9 +181,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card className="overflow-hidden">
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-base">
-                  Inclusions & Services
-                </CardTitle>
+                <CardTitle className="text-lg">Inclusions & Services</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -250,7 +248,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
             {(form.watch("imageUrl") || previewImage) && (
               <Card className="overflow-hidden">
                 <CardHeader className="bg-primary/5 pb-2">
-                  <CardTitle className="text-base">Image</CardTitle>
+                  <CardTitle className="text-lg">Image</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4">
                   <div className="overflow-hidden h-40 flex items-center justify-center bg-muted rounded-md">

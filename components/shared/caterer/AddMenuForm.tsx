@@ -79,6 +79,8 @@ export function AddMenuDialog({
   const formContent = (
     <Form {...form}>
       <MultiStepForm
+        title={"Add Menu Item"}
+        description={"Complete the form to add a new menu item"}
         formSteps={multiFormSteps}
         onSubmit={handleSubmit}
         onNextStep={handleNextStep}

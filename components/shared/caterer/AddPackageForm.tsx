@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { Form } from "@/components/ui/form";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePackageForm } from "@/hooks/use-package-form";
-import { packageFormSteps } from "@/types/package-types";
+import { AddPackageDialogProps, packageFormSteps } from "@/types/package-types";
 import { PackageTypeStep } from "./package-form-steps/PackageTypeStep";
 import { BasicInfoStep } from "./package-form-steps/BasicInfoStep";
 import { PackageOptionsStep } from "./package-form-steps/PackageOptionsStep";
@@ -17,9 +15,12 @@ import { InclusionsServicesStep } from "./package-form-steps/InclusionsServicesS
 import { ImageStep } from "./package-form-steps/ImageStep";
 import { ReviewStep } from "./package-form-steps/ReviewStep";
 import { FormStepType, MultiStepForm } from "../MultiStepForm";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 
-export function AddPackageDialog() {
-  const [open, setOpen] = useState(false);
+export default function AddPackageDialog({
+  isAddPackageOpen,
+  setIsAddPackageOpen,
+}: AddPackageDialogProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -30,7 +31,7 @@ export function AddPackageDialog() {
   const multiFormSteps: FormStepType[] = packageFormSteps.map((step) => ({
     id: step.id,
     title: step.title,
-    description: step.description,
+    description: step.description ?? "",
   }));
 
   // Handle next step validation
@@ -44,10 +45,7 @@ export function AddPackageDialog() {
 
   // Add a handleCancel function:
   const handleCancel = () => {
-    setOpen(false);
-    resetForm();
-    setCurrentStep(0);
-    setIsSubmitComplete(false);
+    setIsAddPackageOpen(false);
   };
 
   // Handle form submission
@@ -60,7 +58,7 @@ export function AddPackageDialog() {
 
   // Handle form completion (close dialog and reset)
   const handleComplete = () => {
-    setOpen(false);
+    setIsAddPackageOpen(false);
     resetForm();
     setCurrentStep(0);
     setIsSubmitComplete(false);
@@ -84,6 +82,8 @@ export function AddPackageDialog() {
   const formContent = (
     <Form {...form}>
       <MultiStepForm
+        title={"Add Package List"}
+        description={"Complete the form to add a new package"}
         formSteps={multiFormSteps}
         onSubmit={handleSubmit}
         onNextStep={handleNextStep}
@@ -100,23 +100,11 @@ export function AddPackageDialog() {
 
   if (isDesktop) {
     return (
-      <Dialog
-        open={open}
-        onOpenChange={(newOpen) => {
-          setOpen(newOpen);
-          if (!newOpen) {
-            resetForm();
-            setCurrentStep(0);
-            setIsSubmitComplete(false);
-          }
-        }}
-      >
-        <DialogTrigger asChild>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" /> Add Package
-          </Button>
-        </DialogTrigger>
+      <Dialog open={isAddPackageOpen} onOpenChange={setIsAddPackageOpen}>
         <DialogContent className="sm:max-w-[600px] md:max-w-[800px] h-[90vh] p-0 flex flex-col overflow-hidden">
+          <VisuallyHidden>
+            <DialogTitle>Menu Form</DialogTitle>
+          </VisuallyHidden>
           {formContent}
         </DialogContent>
       </Dialog>
@@ -124,23 +112,11 @@ export function AddPackageDialog() {
   }
 
   return (
-    <Drawer
-      open={open}
-      onOpenChange={(newOpen) => {
-        setOpen(newOpen);
-        if (!newOpen) {
-          resetForm();
-          setCurrentStep(0);
-          setIsSubmitComplete(false);
-        }
-      }}
-    >
-      <DrawerTrigger asChild>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" /> Add Package
-        </Button>
-      </DrawerTrigger>
+    <Drawer open={isAddPackageOpen} onOpenChange={setIsAddPackageOpen}>
       <DrawerContent className="h-[90vh] p-0 flex flex-col overflow-hidden">
+        <VisuallyHidden>
+          <DrawerTitle>Menu Form</DrawerTitle>
+        </VisuallyHidden>
         {formContent}
       </DrawerContent>
     </Drawer>

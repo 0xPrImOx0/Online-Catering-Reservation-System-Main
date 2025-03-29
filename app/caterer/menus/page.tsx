@@ -6,7 +6,7 @@ import CustomSelect from "@/components/shared/CustomSelect";
 import ViewModeButtons from "@/components/shared/ViewModeButtons";
 import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton";
 import { menuItems } from "@/lib/menu-lists";
-import { AddMenuDialog } from "@/components/shared/caterer/AddMenuDialog";
+import { AddMenuDialog } from "@/components/shared/caterer/AddMenuForm";
 import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
 import { selectorItems } from "@/lib/menu-select";
 export default function MenuManagement() {

@@ -79,13 +79,13 @@ export function PricingCapacityStep({ formHook }: PricingCapacityStepProps) {
           </AlertDescription>
         </Alert>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           <FormField
             control={form.control}
             name="minimumPax"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Minimum</FormLabel>
+                <FormLabel>Minimum Pax</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -105,7 +105,7 @@ export function PricingCapacityStep({ formHook }: PricingCapacityStepProps) {
             name="recommendedPax"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Recommended</FormLabel>
+                <FormLabel>Recommended Pax</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -125,7 +125,7 @@ export function PricingCapacityStep({ formHook }: PricingCapacityStepProps) {
             name="maximumPax"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Maximum</FormLabel>
+                <FormLabel>Maximum Pax</FormLabel>
                 <FormControl>
                   <Input
                     type="number"

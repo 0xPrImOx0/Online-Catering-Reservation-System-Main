@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import SearchInput from "@/components/shared/SearchInput";
-import AddPackageDialog from "@/components/shared/caterer/AddPackageDialog";
+import AddPackageDialog from "@/components/shared/caterer/AddPackageForm";
 import {
   buffetPackages,
   eventPackages,
@@ -17,7 +17,6 @@ export default function PackageManagement() {
   // Simple state for dialog visibility
   const [isAddPackageOpen, setIsAddPackageOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("buffet");
 
   const TabsTriggerStyle = ({
     value,
@@ -36,15 +35,11 @@ export default function PackageManagement() {
     );
   };
   return (
-    <main className="flex-1 overflow-auto px-1 max-w-[1440px] mx-auto">
+    <main className="flex-1 overflow-auto max-w-[1440px] mx-auto">
       <h1 className="text-2xl font-bold tracking-tight mb-4">Packages</h1>
 
       {/* Search and View Controls */}
-      <Tabs
-        defaultValue="buffet"
-        className="w-full"
-        onValueChange={setActiveTab}
-      >
+      <Tabs defaultValue="buffet" className="w-full">
         <div className="flex justify-between mb-6">
           <TabsList className="text-foreground justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1 max-sm:hidden">
             <TabsTriggerStyle value="buffet" title="Buffet Packages" />
