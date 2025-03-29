@@ -1,23 +1,24 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { Check, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { usePackageForm } from "@/hooks/use-package-form";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import Image from "next/image";
-import { usePackageForm } from "@/hooks/use-package-form";
 
 interface ReviewStepProps {
   formHook: ReturnType<typeof usePackageForm>;
 }
 
-export function ReviewStep({ formHook }: ReviewStepProps) {
+export default function ReviewStep({ formHook }: ReviewStepProps) {
   const { form, previewImage, isSubmitSuccess } = formHook;
   const packageType = form.watch("packageType");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {isSubmitSuccess ? (
-        <div className="text-center py-20 md:py-32">
+        <div className="text-center py-8">
           <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-4">
             <Check className="h-8 w-8 text-green-600" />
           </div>
@@ -32,7 +33,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
         <>
           <div className="text-center mb-4">
             <Check className="h-10 w-10 text-primary mx-auto mb-2" />
-            <h3 className="text-xl font-medium">Review Your Package</h3>
+            <h3 className="text-lg font-medium">Review Your Package</h3>
             <p className="text-sm text-muted-foreground">
               Please review all information before submitting
             </p>
@@ -41,7 +42,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
           <div className="space-y-4">
             <Card className="overflow-hidden">
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-lg">Basic Information</CardTitle>
+                <CardTitle className="text-base">Basic Information</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -109,7 +110,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card className="overflow-hidden">
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-lg">Package Options</CardTitle>
+                <CardTitle className="text-base">Package Options</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -137,7 +138,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card className="overflow-hidden">
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-lg">Pricing & Capacity</CardTitle>
+                <CardTitle className="text-base">Pricing & Capacity</CardTitle>
               </CardHeader>
               <CardContent className="pt-4 grid gap-3">
                 <div>
@@ -181,65 +182,167 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
 
             <Card className="overflow-hidden">
               <CardHeader className="bg-primary/5 pb-2">
-                <CardTitle className="text-lg">Inclusions & Services</CardTitle>
+                <CardTitle className="text-base">
+                  Inclusions & Services
+                </CardTitle>
               </CardHeader>
-              <CardContent className="pt-4 grid gap-3">
+              <CardContent className="pt-4 grid gap-4">
+                {/* Inclusions Card */}
                 <div>
-                  <h5 className="text-sm font-medium text-muted-foreground">
+                  <h5 className="text-sm font-medium text-muted-foreground mb-2">
                     Inclusions
                   </h5>
-                  <div className="space-y-2 mt-1">
-                    {form.watch("inclusions")?.map((inclusion, index) => (
-                      <div
-                        key={index}
-                        className="flex justify-between items-center p-2 border rounded-md"
-                      >
-                        <div>
-                          <span className="text-sm font-medium">
-                            {inclusion.includes}
-                          </span>
-                          <div className="text-xs text-muted-foreground">
-                            For: {inclusion.typeOfCustomer}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+                    {/* Both Column */}
+                    <div>
+                      <h6 className="text-xs font-medium text-muted-foreground mb-1">
+                        For Both
+                      </h6>
+                      <div className="space-y-2">
+                        {form
+                          .watch("inclusions")
+                          ?.filter((inc) => inc.typeOfCustomer === "Both")
+                          .map((inclusion, index) => (
+                            <div
+                              key={`both-${index}`}
+                              className="p-2 border rounded-md"
+                            >
+                              <span className="text-sm">
+                                {inclusion.includes}
+                              </span>
+                            </div>
+                          ))}
+                        {form
+                          .watch("inclusions")
+                          ?.filter((inc) => inc.typeOfCustomer === "Both")
+                          .length === 0 && (
+                          <div className="p-2 border rounded-md bg-muted/20">
+                            <span className="text-sm text-muted-foreground">
+                              No inclusions for both
+                            </span>
                           </div>
-                        </div>
+                        )}
                       </div>
-                    ))}
+                    </div>
+
+                    {/* Buffet Column */}
+                    <div>
+                      <h6 className="text-xs font-medium text-muted-foreground mb-1">
+                        For Buffet
+                      </h6>
+                      <div className="space-y-2">
+                        {form
+                          .watch("inclusions")
+                          ?.filter((inc) => inc.typeOfCustomer === "Buffet")
+                          .map((inclusion, index) => (
+                            <div
+                              key={`buffet-${index}`}
+                              className="p-2 border rounded-md"
+                            >
+                              <span className="text-sm">
+                                {inclusion.includes}
+                              </span>
+                            </div>
+                          ))}
+                        {form
+                          .watch("inclusions")
+                          ?.filter((inc) => inc.typeOfCustomer === "Buffet")
+                          .length === 0 && (
+                          <div className="p-2 border rounded-md bg-muted/20">
+                            <span className="text-sm text-muted-foreground">
+                              No inclusions for buffet
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Plated Column */}
+                    <div>
+                      <h6 className="text-xs font-medium text-muted-foreground mb-1">
+                        For Plated
+                      </h6>
+                      <div className="space-y-2">
+                        {form
+                          .watch("inclusions")
+                          ?.filter((inc) => inc.typeOfCustomer === "Plated")
+                          .map((inclusion, index) => (
+                            <div
+                              key={`plated-${index}`}
+                              className="p-2 border rounded-md"
+                            >
+                              <span className="text-sm">
+                                {inclusion.includes}
+                              </span>
+                            </div>
+                          ))}
+                        {form
+                          .watch("inclusions")
+                          ?.filter((inc) => inc.typeOfCustomer === "Plated")
+                          .length === 0 && (
+                          <div className="p-2 border rounded-md bg-muted/20">
+                            <span className="text-sm text-muted-foreground">
+                              No inclusions for plated
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <h5 className="text-sm font-medium text-muted-foreground">
-                      Service Hours
-                    </h5>
-                    <p className="text-sm">
-                      {form.watch("serviceHours")} hours
-                    </p>
-                  </div>
-                  <div>
-                    <h5 className="text-sm font-medium text-muted-foreground">
-                      Service Charge per Hour
-                    </h5>
-                    <p className="text-sm">
-                      ₱{form.watch("serviceChargePerHour")}
-                    </p>
-                  </div>
-                </div>
+                {/* Services Card */}
+                <div className="mt-2">
+                  <h5 className="text-sm font-medium text-muted-foreground mb-2">
+                    Services
+                  </h5>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <h5 className="text-sm font-medium text-muted-foreground">
-                      Total Service Fee
-                    </h5>
-                    <p className="text-sm">₱{form.watch("totalServiceFee")}</p>
+                  <Alert variant="default" className="mb-3">
+                    <Info className="h-4 w-4 mr-2" />
+                    <AlertDescription className="text-xs">
+                      The Total Service Fee (Service Charge per Hour × Service
+                      Hours) is divided by the Minimum Pax and added to the
+                      Price per Person to calculate the Total Price with
+                      Service.
+                    </AlertDescription>
+                  </Alert>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h5 className="text-sm font-medium text-muted-foreground">
+                        Service Hours
+                      </h5>
+                      <p className="text-sm">
+                        {form.watch("serviceHours")} hours
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className="text-sm font-medium text-muted-foreground">
+                        Service Charge per Hour
+                      </h5>
+                      <p className="text-sm">
+                        ₱{form.watch("serviceChargePerHour")}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h5 className="text-sm font-medium text-muted-foreground">
-                      Total Price with Service
-                    </h5>
-                    <p className="text-sm font-medium">
-                      ₱{form.watch("totalPriceWithService")}
-                    </p>
+
+                  <div className="grid grid-cols-2 gap-4 mt-2">
+                    <div>
+                      <h5 className="text-sm font-medium text-muted-foreground">
+                        Total Service Fee
+                      </h5>
+                      <p className="text-sm">
+                        ₱{form.watch("totalServiceFee")}
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className="text-sm font-medium text-muted-foreground">
+                        Total Price with Service
+                      </h5>
+                      <p className="text-sm font-medium">
+                        ₱{form.watch("totalPriceWithService")}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -248,7 +351,7 @@ export function ReviewStep({ formHook }: ReviewStepProps) {
             {(form.watch("imageUrl") || previewImage) && (
               <Card className="overflow-hidden">
                 <CardHeader className="bg-primary/5 pb-2">
-                  <CardTitle className="text-lg">Image</CardTitle>
+                  <CardTitle className="text-base">Image</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4">
                   <div className="overflow-hidden h-40 flex items-center justify-center bg-muted rounded-md">

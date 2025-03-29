@@ -13,7 +13,7 @@ import { PackageOptionsStep } from "./package-form-steps/PackageOptionsStep";
 import { PricingCapacityStep } from "./package-form-steps/PricingCapacityStep";
 import { InclusionsServicesStep } from "./package-form-steps/InclusionsServicesStep";
 import { ImageStep } from "./package-form-steps/ImageStep";
-import { ReviewStep } from "./package-form-steps/ReviewStep";
+import ReviewStep from "./package-form-steps/ReviewStep";
 import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 

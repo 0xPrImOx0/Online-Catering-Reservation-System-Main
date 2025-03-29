@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useState, useEffect, useCallback } from "react";
 import {
   FormControl,
   FormDescription,
@@ -10,7 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { usePackageForm } from "@/hooks/use-package-form";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import type { usePackageForm } from "@/hooks/use-package-form";
 import { Info } from "lucide-react";
 
 interface PricingCapacityStepProps {
@@ -19,6 +20,51 @@ interface PricingCapacityStepProps {
 
 export function PricingCapacityStep({ formHook }: PricingCapacityStepProps) {
   const { form, validationAttempted } = formHook;
+  const [errors, setErrors] = useState({
+    minimum: "",
+    recommended: "",
+    maximum: "",
+  });
+
+  // Validate capacity values without changing them
+  const validateCapacityValues = useCallback(() => {
+    const minimum = form.getValues("minimumPax");
+    const recommended = form.getValues("recommendedPax");
+    const maximum = form.getValues("maximumPax");
+
+    const newErrors = {
+      minimum: minimum < 10 ? "Minimum must be at least 10" : "",
+      recommended:
+        recommended < minimum
+          ? "Recommended must not be less than minimum"
+          : maximum > 0 && recommended > maximum
+          ? "Recommended must not be higher than maximum"
+          : "",
+      maximum:
+        maximum < minimum
+          ? "Maximum must not be less than minimum"
+          : maximum < recommended
+          ? "Maximum must not be less than recommended"
+          : "",
+    };
+
+    setErrors(newErrors);
+  }, [form]);
+
+  // Validate on any value change
+  useEffect(() => {
+    const subscription = form.watch((_value, { name }) => {
+      if (
+        name === "minimumPax" ||
+        name === "recommendedPax" ||
+        name === "maximumPax"
+      ) {
+        validateCapacityValues();
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, validateCapacityValues]);
 
   return (
     <div className="space-y-6">
@@ -79,22 +125,34 @@ export function PricingCapacityStep({ formHook }: PricingCapacityStepProps) {
           </AlertDescription>
         </Alert>
 
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <FormField
             control={form.control}
             name="minimumPax"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Minimum Pax</FormLabel>
+                <FormLabel>Minimum</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
-                    min="1"
+                    min="10"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      field.onChange(value);
+                    }}
                     value={field.value || ""}
+                    className={errors.minimum ? "border-destructive" : ""}
                   />
                 </FormControl>
+                <FormDescription className="text-xs">
+                  Minimum 10 guests
+                </FormDescription>
+                {errors.minimum && (
+                  <p className="text-xs text-destructive mt-1">
+                    {errors.minimum}
+                  </p>
+                )}
                 {validationAttempted && <FormMessage />}
               </FormItem>
             )}
@@ -105,16 +163,28 @@ export function PricingCapacityStep({ formHook }: PricingCapacityStepProps) {
             name="recommendedPax"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Recommended Pax</FormLabel>
+                <FormLabel>Recommended</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
-                    min="1"
+                    min="10"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      field.onChange(value);
+                    }}
                     value={field.value || ""}
+                    className={errors.recommended ? "border-destructive" : ""}
                   />
                 </FormControl>
+                <FormDescription className="text-xs">
+                  Must be ≥ minimum
+                </FormDescription>
+                {errors.recommended && (
+                  <p className="text-xs text-destructive mt-1">
+                    {errors.recommended}
+                  </p>
+                )}
                 {validationAttempted && <FormMessage />}
               </FormItem>
             )}
@@ -125,16 +195,28 @@ export function PricingCapacityStep({ formHook }: PricingCapacityStepProps) {
             name="maximumPax"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Maximum Pax</FormLabel>
+                <FormLabel>Maximum</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
-                    min="1"
+                    min="10"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      field.onChange(value);
+                    }}
                     value={field.value || ""}
+                    className={errors.maximum ? "border-destructive" : ""}
                   />
                 </FormControl>
+                <FormDescription className="text-xs">
+                  Must be ≥ recommended
+                </FormDescription>
+                {errors.maximum && (
+                  <p className="text-xs text-destructive mt-1">
+                    {errors.maximum}
+                  </p>
+                )}
                 {validationAttempted && <FormMessage />}
               </FormItem>
             )}

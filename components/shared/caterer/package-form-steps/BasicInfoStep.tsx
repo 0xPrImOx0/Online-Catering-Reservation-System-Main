@@ -90,6 +90,7 @@ export function BasicInfoStep({ formHook }: BasicInfoStepProps) {
         <FormField
           control={form.control}
           name="eventType"
+          rules={{ required: "Please select an event type." }}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base font-medium">

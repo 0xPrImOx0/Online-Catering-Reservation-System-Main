@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -20,6 +19,12 @@ import {
 } from "@/components/ui/select";
 import { InclusionsProps, inclusionTypes } from "@/types/package-types";
 import type { usePackageForm } from "@/hooks/use-package-form";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface InclusionsServicesStepProps {
   formHook: ReturnType<typeof usePackageForm>;
@@ -37,9 +42,21 @@ export function InclusionsServicesStep({
     validationAttempted,
   } = formHook;
 
-  //   const serviceType = form.watch("serviceType");
+  // const serviceType = form.watch("serviceType");
   const minimumPax = form.watch("minimumPax");
   const hasCapacityValues = minimumPax > 0;
+  const inclusions = form.watch("inclusions") || [];
+
+  // Group inclusions by type
+  const bothInclusions = inclusions.filter(
+    (inc) => inc.typeOfCustomer === "Both"
+  );
+  const buffetInclusions = inclusions.filter(
+    (inc) => inc.typeOfCustomer === "Buffet"
+  );
+  const platedInclusions = inclusions.filter(
+    (inc) => inc.typeOfCustomer === "Plated"
+  );
 
   return (
     <div className="space-y-6">
@@ -93,31 +110,106 @@ export function InclusionsServicesStep({
           </div>
         </div>
 
-        {form.watch("inclusions")?.length > 0 && (
-          <div className="space-y-2 mt-4">
-            {form.watch("inclusions").map((inclusion, index) => (
-              <Card key={index} className="overflow-hidden">
-                <CardHeader className="bg-muted py-2 px-4">
-                  <CardTitle className="text-sm font-medium flex justify-between">
-                    <span>For: {inclusion.typeOfCustomer}</span>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="h-5 w-5 p-0"
-                      onClick={() => removeInclusion(index)}
-                    >
-                      ×
-                    </Button>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4">
-                  <div className="text-sm">
-                    <span className="font-medium">{inclusion.includes}</span>
+        {inclusions.length > 0 && (
+          <div className="space-y-4 mt-4">
+            {/* Display inclusions in the same layout as the review step */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+              {/* Both Column */}
+              {bothInclusions.length > 0 && (
+                <div>
+                  <h6 className="text-xs font-medium text-muted-foreground mb-1">
+                    For Both
+                  </h6>
+                  <div className="space-y-2">
+                    {bothInclusions.map((inclusion, index) => (
+                      <div
+                        key={`both-${index}`}
+                        className="p-2 border rounded-md flex justify-between items-center"
+                      >
+                        <span className="text-sm">{inclusion.includes}</span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-5 w-5 p-0 ml-2"
+                          onClick={() =>
+                            removeInclusion(
+                              inclusions.findIndex((inc) => inc === inclusion)
+                            )
+                          }
+                        >
+                          ×
+                        </Button>
+                      </div>
+                    ))}
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                </div>
+              )}
+
+              {/* Buffet Column */}
+              {buffetInclusions.length > 0 && (
+                <div>
+                  <h6 className="text-xs font-medium text-muted-foreground mb-1">
+                    For Buffet
+                  </h6>
+                  <div className="space-y-2">
+                    {buffetInclusions.map((inclusion, index) => (
+                      <div
+                        key={`buffet-${index}`}
+                        className="p-2 border rounded-md flex justify-between items-center"
+                      >
+                        <span className="text-sm">{inclusion.includes}</span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-5 w-5 p-0 ml-2"
+                          onClick={() =>
+                            removeInclusion(
+                              inclusions.findIndex((inc) => inc === inclusion)
+                            )
+                          }
+                        >
+                          ×
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Plated Column */}
+              {platedInclusions.length > 0 && (
+                <div>
+                  <h6 className="text-xs font-medium text-muted-foreground mb-1">
+                    For Plated
+                  </h6>
+                  <div className="space-y-2">
+                    {platedInclusions.map((inclusion, index) => (
+                      <div
+                        key={`plated-${index}`}
+                        className="p-2 border rounded-md flex justify-between items-center"
+                      >
+                        <span className="text-sm">{inclusion.includes}</span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-5 w-5 p-0 ml-2"
+                          onClick={() =>
+                            removeInclusion(
+                              inclusions.findIndex((inc) => inc === inclusion)
+                            )
+                          }
+                        >
+                          ×
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -200,18 +292,30 @@ export function InclusionsServicesStep({
               <FormItem>
                 <FormLabel>Total Service Fee</FormLabel>
                 <FormControl>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                      ₱
-                    </span>
-                    <Input
-                      type="number"
-                      className="pl-7"
-                      {...field}
-                      value={field.value || ""}
-                      disabled={true}
-                    />
-                  </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="relative">
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2">
+                            ₱
+                          </span>
+                          <Input
+                            type="number"
+                            className="pl-7"
+                            {...field}
+                            value={field.value || ""}
+                            disabled={true}
+                          />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>
+                          This field is automatically calculated as Service
+                          Charge per Hour × Service Hours
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </FormControl>
                 <FormDescription>
                   Service Charge per Hour × Service Hours
@@ -227,18 +331,30 @@ export function InclusionsServicesStep({
               <FormItem>
                 <FormLabel>Total Price with Service</FormLabel>
                 <FormControl>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                      ₱
-                    </span>
-                    <Input
-                      type="number"
-                      className="pl-7"
-                      {...field}
-                      value={field.value || ""}
-                      disabled={true}
-                    />
-                  </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="relative">
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2">
+                            ₱
+                          </span>
+                          <Input
+                            type="number"
+                            className="pl-7"
+                            {...field}
+                            value={field.value || ""}
+                            disabled={true}
+                          />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>
+                          This field is automatically calculated as Price per
+                          Pax + (Total Service Fee ÷ Minimum Pax)
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </FormControl>
                 <FormDescription>
                   Price per Pax + (Total Service Fee ÷ Minimum Pax)
