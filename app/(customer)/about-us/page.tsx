@@ -1,19 +1,23 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
 import Logo from "@/components/icons/logo";
 import FAQ from "@/components/shared/customer/FAQ";
-import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
-import { features, principles, teams } from "../../../lib/customer/metadata";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { principles, teams } from "../../../lib/customer/metadata";
+import Image from "next/image";
+import WhyChooseUs from "@/components/shared/WhyChooseUs";
 import { Metadata } from "next";
 
-// export const metadata: Metadata = {
-//   title: "About Us",
-// };
+export const metadata: Metadata = {
+  title: "About Us",
+};
+
+const Highlights = ({ metric, title }: { metric: string; title: string }) => {
+  return (
+    <div className="flex-1 p-4 rounded-sm text-center">
+      <span className="text-4xl font-medium">{metric} </span>{" "}
+      <p className="text-muted-foreground text-sm min-w-max">{title}</p>
+    </div>
+  );
+};
 
 export default function AboutPage() {
   const { leadership, culinary, event, service } = teams;
@@ -21,20 +25,23 @@ export default function AboutPage() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section className="py-24 text-center relative overflow-hidden">
-        <div className=" relative z-10">
-          <Logo imageSize={200} withTitle={false} />
-          <h1 className="text-4xl font-bold mb-4">Food Sentinel</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+      <section className="flex text-center justify-center items-center  h-[93.5dvh] bg-[url('/images/about.jpg')] bg-cover bg-center">
+        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="relative z-10">
+          <Logo imageSize={300} withTitle={false} />
+          <h1 className="text-4xl font-bold mb-4 text-background">
+            Food Sentinel
+          </h1>
+          <p className="text-muted max-w-2xl mx-auto mb-8">
             Crafting extraordinary culinary experiences with passion, precision,
             and the finest ingredients since 2002.
           </p>
-          <div className="flex justify-center gap-4">
+          {/* <div className="flex justify-center gap-4">
             <Button size={"landing"}>Our Services</Button>
             <Button variant="outline" size={"landing"} asChild>
               <Link href={"/contact-us"}>Contact Us</Link>
             </Button>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -51,9 +58,14 @@ export default function AboutPage() {
           </p>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="grid grid-cols-2 gap-4">
-              <Skeleton className="aspect-square w-[300px]" />
-              <Skeleton className="aspect-square w-[300px]" />
+            <div className="">
+              <Image
+                src={"/images/chefs.png"}
+                width={2560}
+                height={1707}
+                alt="Chefs"
+                className="w-full h-full rounded-lg object-cover"
+              />
             </div>
             <div className="space-y-8">
               {principles.map(({ title, content }) => (
@@ -83,23 +95,13 @@ export default function AboutPage() {
           </p>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-            <div className="text-center">
-              <p className="text-3xl font-bold mb-2">12k+</p>
-              <p className="text-sm text-muted-foreground">Events Catered</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold mb-2">40%</p>
-              <p className="text-sm text-muted-foreground">Annual Growth</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold mb-2">5k+</p>
-              <p className="text-sm text-muted-foreground">Happy Clients</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold mb-2">80%</p>
-              <p className="text-sm text-muted-foreground">Repeat Customers</p>
-            </div>
+          <div className="flex flex-wrap gap-8 mb-16">
+            <Highlights metric="5,000+" title="Events Successfully Catered" />
+            <Highlights
+              metric="&lt; 1 m"
+              title="Instant Booking Confirmation"
+            />
+            <Highlights metric="95%" title="Customer Satisfaction Rate" />
           </div>
 
           {/* Leadership Team */}
@@ -108,9 +110,16 @@ export default function AboutPage() {
               Leadership Team
             </h3>
             <div className="grid md:grid-cols-3 gap-8">
-              {leadership.map(({ name, title, description }) => (
+              {leadership.map(({ name, title, description, image }) => (
                 <div className="text-center" key={name}>
-                  <Skeleton className="w-48 h-48 rounded-full mx-auto mb-4" />
+                  <Image
+                    src={image}
+                    width={192}
+                    height={192}
+                    alt={`${name} Profile`}
+                    className="w-48 h-48 object-cover rounded-full mb-4 mx-auto"
+                  />
+                  {/* <Skeleton className="w-48 h-48 rounded-full mx-auto mb-4" /> */}
                   <h4 className="font-semibold">{name}</h4>
                   <p className="text-sm text-muted-foreground mb-2">{title}</p>
                   <p className="text-sm text-muted-foreground mb-4">
@@ -127,9 +136,15 @@ export default function AboutPage() {
               Culinary Team
             </h3>
             <div className="grid md:grid-cols-4 gap-6">
-              {culinary.map(({ name, title }) => (
+              {culinary.map(({ name, title, image }) => (
                 <div key={name} className="text-center">
-                  <Skeleton className="w-32 h-32 mx-auto rounded-full mb-4" />
+                  <Image
+                    src={image}
+                    width={128}
+                    height={128}
+                    alt={`${name} Profile`}
+                    className="w-32 h-32 object-cover rounded-full object-top mb-4 mx-auto"
+                  />
                   <h4 className="font-semibold">{name}</h4>
                   <p className="text-sm text-muted-foreground">{title}</p>
                 </div>
@@ -143,9 +158,15 @@ export default function AboutPage() {
               Event Coordination Team
             </h3>
             <div className="grid md:grid-cols-4 gap-6">
-              {event.map(({ name, title }) => (
+              {event.map(({ name, title, image }) => (
                 <div key={name} className="text-center">
-                  <Skeleton className="relative w-32 h-32 mx-auto rounded-full mb-4" />
+                  <Image
+                    src={image}
+                    width={128}
+                    height={128}
+                    alt={`${name} Profile`}
+                    className="w-32 h-32 object-cover rounded-full object-top mb-4 mx-auto"
+                  />
                   <h4 className="font-semibold">{name}</h4>
                   <p className="text-sm text-muted-foreground">{title}</p>
                 </div>
@@ -159,9 +180,15 @@ export default function AboutPage() {
               Service Team
             </h3>
             <div className="grid md:grid-cols-5 gap-4">
-              {service.map(({ name, title }) => (
+              {service.map(({ name, title, image }) => (
                 <div key={name} className="text-center">
-                  <Skeleton className="relative w-24 h-24 mx-auto mb-3 rounded-full" />
+                  <Image
+                    src={image}
+                    width={96}
+                    height={96}
+                    alt={`${name} Profile`}
+                    className="w-24 h-24 object-cover rounded-full object-top mb-4 mx-auto"
+                  />{" "}
                   <h4 className="font-semibold text-sm">{name}</h4>
                   <p className="text-xs text-muted-foreground">{title}</p>
                 </div>
@@ -175,69 +202,7 @@ export default function AboutPage() {
       <FAQ />
 
       {/* Why Choose Us Section */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        <div className="container px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
-              Why Choose Food Sentinel
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Experience catering excellence that sets us apart from the rest
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                className={cn(
-                  "group relative flex flex-col p-6 rounded-xl transition-all duration-300",
-                  "bg-background border border-border hover:border-primary/20",
-                  "hover:shadow-[0_0_25px_-5px_rgba(0,0,0,0.1)]"
-                )}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div
-                  className={cn(
-                    "flex h-14 w-14 items-center justify-center rounded-full mb-5 transition-all duration-300",
-                    "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground"
-                  )}
-                >
-                  <feature.icon className={"size-6"} />
-                </div>
-
-                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                  {feature.title}
-                </h3>
-
-                <p className="text-muted-foreground">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <motion.div
-              className="inline-block"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Link
-                href="/book-now"
-                className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-primary-foreground bg-primary rounded-md shadow-sm hover:bg-primary/90 transition-colors"
-              >
-                Book Your Event Now
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <WhyChooseUs />
     </main>
   );
 }
