@@ -44,11 +44,15 @@ const formSchema = z.object({
   pricePerPax: z
     .number()
     .min(1, { message: "Price per pax must be at least 1" }),
-  minimumPax: z.number().min(1, { message: "Minimum pax must be at least 1" }),
+  minimumPax: z
+    .number()
+    .min(10, { message: "Minimum pax must be at least 10" }),
   recommendedPax: z
     .number()
-    .min(1, { message: "Recommended pax must be at least 1" }),
-  maximumPax: z.number().min(1, { message: "Maximum pax must be at least 1" }),
+    .min(10, { message: "Recommended pax must be at least 10" }),
+  maximumPax: z
+    .number()
+    .min(10, { message: "Maximum pax must be at least 10" }),
   inclusions: z
     .array(
       z.object({
@@ -93,7 +97,15 @@ const defaultValues: PackageFormValues = {
   imageUploadType: "url",
 };
 
-export function usePackageForm() {
+interface UsePackageFormProps {
+  initialData?: CateringPackagesProps;
+  isEditMode?: boolean;
+}
+
+export function usePackageForm({
+  initialData,
+  isEditMode = false,
+}: UsePackageFormProps = {}) {
   const [newOption, setNewOption] = useState<PackageOption>({
     category: "Soup",
     count: 1,
@@ -108,15 +120,68 @@ export function usePackageForm() {
   const [availableCategories, setAvailableCategories] = useState<
     PackageCategory[]
   >([...packageCategories]);
-  const [packageTypeSelected, setPackageTypeSelected] = useState(false);
+  const [packageTypeSelected, setPackageTypeSelected] = useState(isEditMode);
+  const [previousPackageType, setPreviousPackageType] =
+    useState<PackageType | null>(null);
+
+  // Convert initialData to form values if in edit mode
+  const getInitialValues = (): PackageFormValues => {
+    if (!isEditMode || !initialData) return defaultValues;
+
+    // Map packageType from UI display name to internal value
+    const mappedPackageType: PackageType =
+      initialData.packageType === "BuffetPlated" ? "BuffetPlated" : "Event";
+
+    return {
+      packageType: mappedPackageType,
+      name: initialData.name,
+      description: initialData.description,
+      available: initialData.available ?? true,
+      eventType: initialData.eventType,
+      serviceType: "Buffet", // Default value, will be overridden if needed
+      options: initialData.options,
+      pricePerPax: initialData.pricePerPax,
+      minimumPax: initialData.minimumPax,
+      recommendedPax: initialData.recommendedPax,
+      maximumPax: initialData.maximumPax,
+      inclusions: initialData.inclusions,
+      serviceChargePerHour: initialData.serviceCharge ?? 0,
+      serviceHours: initialData.serviceHours ?? 0,
+      totalServiceFee:
+        (initialData.serviceCharge ?? 0) * (initialData.serviceHours ?? 0),
+      totalPriceWithService:
+        initialData.pricePerPax +
+        ((initialData.serviceCharge ?? 0) * (initialData.serviceHours ?? 0)) /
+          initialData.minimumPax,
+      imageUrl: initialData.imageUrl ?? "",
+      imageUploadType: initialData.imageUrl ? "url" : "upload",
+    };
+  };
 
   // Initialize form
   const form = useForm<PackageFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues,
+    defaultValues: getInitialValues(),
     mode: "onChange",
     reValidateMode: "onSubmit",
   });
+
+  // Initialize available categories based on existing options
+  useEffect(() => {
+    if (isEditMode && initialData) {
+      const usedCategories = initialData.options.map(
+        (option) => option.category
+      );
+      setAvailableCategories(
+        packageCategories.filter((cat) => !usedCategories.includes(cat))
+      );
+
+      // Set preview image if available
+      if (initialData.imageUrl) {
+        setPreviewImage(initialData.imageUrl);
+      }
+    }
+  }, [isEditMode, initialData]);
 
   // Reset form function
   const resetForm = () => {
@@ -128,6 +193,7 @@ export function usePackageForm() {
     setValidationAttempted(false);
     setAvailableCategories([...packageCategories]);
     setPackageTypeSelected(false);
+    setPreviousPackageType(null);
   };
 
   // Add package option function
@@ -205,9 +271,16 @@ export function usePackageForm() {
 
   // Submit form function
   const onSubmit = (data: PackageFormValues) => {
-    // Add ID and default values for rating
-    const newPackage: CateringPackagesProps = {
-      id: Math.random().toString(36).substring(2, 9), // Generate a random ID
+    // Map packageType from internal value to UI display name
+    const displayPackageType =
+      data.packageType === "BuffetPlated" ? "BuffetPlated" : "Event";
+
+    // Create package object
+    const packageData: CateringPackagesProps = {
+      id:
+        isEditMode && initialData
+          ? initialData.id
+          : Math.random().toString(36).substring(2, 9),
       name: data.name,
       description: data.description,
       available: data.available,
@@ -221,19 +294,23 @@ export function usePackageForm() {
       serviceHours: data.serviceHours,
       serviceCharge: data.serviceChargePerHour,
       eventType: data.packageType === "Event" ? data.eventType : undefined,
-      rating: 0,
-      ratingCount: 0,
+      rating: isEditMode && initialData ? initialData.rating : 0,
+      ratingCount: isEditMode && initialData ? initialData.ratingCount : 0,
+      packageType: displayPackageType,
     };
 
-    console.log("Submitting package:", newPackage);
+    console.log(
+      `${isEditMode ? "Updating" : "Submitting"} package:`,
+      packageData
+    );
     // Here you would typically send this to your API
     // If there's an image file, you would upload it first and then update the imageUrl
 
     // Show success message
     setIsSubmitSuccess(true);
 
-    // Return the new package
-    return newPackage;
+    // Return the package data
+    return packageData;
   };
 
   // Helper function to get fields to validate for each step
@@ -242,7 +319,7 @@ export function usePackageForm() {
   ): Array<keyof PackageFormValues> => {
     switch (step) {
       case 0:
-        return ["packageType"] as Array<keyof PackageFormValues>;
+        return ["packageType"];
       case 1:
         return [
           "name",
@@ -253,18 +330,13 @@ export function usePackageForm() {
             : []),
         ];
       case 2:
-        return ["options"] as Array<keyof PackageFormValues>;
+        return ["options"];
       case 3:
-        return [
-          "pricePerPax",
-          "minimumPax",
-          "recommendedPax",
-          "maximumPax",
-        ] as Array<keyof PackageFormValues>;
+        return ["pricePerPax", "minimumPax", "recommendedPax", "maximumPax"];
       case 4:
-        return ["inclusions"] as Array<keyof PackageFormValues>;
+        return ["inclusions"];
       case 5:
-        return []; // Image is optional
+        return []; // Make image optional by not validating any fields
       default:
         return [];
     }
@@ -285,6 +357,22 @@ export function usePackageForm() {
 
   // Set package type selected
   const selectPackageType = (type: PackageType) => {
+    const currentType = form.getValues("packageType");
+
+    // Store the previous type before changing
+    setPreviousPackageType(currentType);
+
+    // If changing from one type to another, clear fields not relevant to the new type
+    if (currentType !== type) {
+      if (type === "BuffetPlated") {
+        // Clear Event-specific fields
+        form.setValue("eventType", undefined);
+      } else if (type === "Event") {
+        // Clear BuffetPlated-specific fields
+        // (none to clear in this case, but would go here)
+      }
+    }
+
     form.setValue("packageType", type);
     setPackageTypeSelected(true);
   };
@@ -292,9 +380,6 @@ export function usePackageForm() {
   // Calculate service fees and total price
   useEffect(() => {
     const subscription = form.watch((value, { name }) => {
-      // Remove the auto-adjustment logic for capacity fields
-      // Only keep the service fee calculation logic
-
       // Calculate service fees and total price
       if (
         name === "serviceChargePerHour" ||
@@ -317,10 +402,29 @@ export function usePackageForm() {
           form.setValue("totalPriceWithService", totalPriceWithService);
         }
       }
+
+      // Watch for package type changes
+      if (name === "packageType" && previousPackageType !== null) {
+        const newType = value.packageType as PackageType;
+
+        // If changing from one type to another, clear fields not relevant to the new type
+        if (previousPackageType !== newType) {
+          if (newType === "BuffetPlated") {
+            // Clear Event-specific fields
+            form.setValue("eventType", undefined);
+          } else if (newType === "Event") {
+            // Clear BuffetPlated-specific fields
+            // (none to clear in this case, but would go here)
+          }
+
+          // Update previous type
+          setPreviousPackageType(newType);
+        }
+      }
     });
 
     return () => subscription.unsubscribe();
-  }, [form]);
+  }, [form, previousPackageType]);
 
   return {
     form,
@@ -343,5 +447,6 @@ export function usePackageForm() {
     validateStep,
     resetForm,
     selectPackageType,
+    isEditMode,
   };
 }
