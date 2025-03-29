@@ -21,18 +21,17 @@ import {
 import { Flame } from "lucide-react";
 import type { MenuCardProps, ServingSize } from "@/types/menu-types";
 import { RenderStarRatings } from "../CustomStarRating";
-import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { MenuDetailsDialog } from "./MenuDetailsDialog";
 import { CategoryBadge } from "./MenuCategoryBadge";
 import ImageDialog from "../ImageDialog";
+import { useMenuForm } from "@/hooks/use-menu-form";
 
 export function CustomerMenuCard({ item }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const [menuPricePax, setMenuPricePax] = useState(item.prices[0].price);
 
-  const { calculateSavings, calculateSavingsPercentage } =
-    useMenuCalculations();
+  const { calculateSavings, calculateSavingsPercentage } = useMenuForm();
 
   return (
     <Card className="min-w-[325px] flex-1 overflow-hidden border shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">

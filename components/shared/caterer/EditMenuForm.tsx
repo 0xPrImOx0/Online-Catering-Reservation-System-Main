@@ -17,7 +17,7 @@ import { ImageStep } from "./menu-form-steps/ImageStep";
 import { ReviewStep } from "./menu-form-steps/ReviewStep";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 
-export function EditMenuDialog({
+export default function EditMenuForm({
   isEditMenuOpen,
   setIsEditMenuOpen,
   item,

@@ -22,10 +22,10 @@ import type { MenuCardProps } from "@/types/menu-types";
 import { RenderStarRatings } from "../CustomStarRating";
 import { MenuDetailsDialog } from "../customer/MenuDetailsDialog";
 import { CategoryBadge } from "../customer/MenuCategoryBadge";
-import { EditMenuDialog } from "./EditMenuDialog";
 import DeleteMenuDialog from "./DeleteMenuDialog";
 import ImageDialog from "../ImageDialog";
 import { AnimatedIconButton } from "../AnimatedIconButton";
+import EditMenuForm from "./EditMenuForm";
 
 export default function CatererMenuCard({ item }: MenuCardProps) {
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
@@ -149,7 +149,7 @@ export default function CatererMenuCard({ item }: MenuCardProps) {
       </CardFooter>
 
       {/* Dialogs */}
-      <EditMenuDialog
+      <EditMenuForm
         isEditMenuOpen={isEditMenuOpen}
         setIsEditMenuOpen={setIsEditMenuOpen}
         item={item}

@@ -19,20 +19,18 @@ import {
 import { Flame, X } from "lucide-react";
 import type { MenuDetailsDialogProps } from "@/types/menu-types";
 import { RenderStarRatings } from "../CustomStarRating";
-import { useMenuCalculations } from "@/hooks/useMenuCalculations";
 import { CategoryBadge } from "./MenuCategoryBadge";
 import clsx from "clsx";
 import { Card } from "@/components/ui/card";
 import TrayPriceCard from "../TrayPriceCard";
 
 export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
-  const { calculateSavings } = useMenuCalculations();
-
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-w-[450px] md:max-w-[600px] bg-background max-h-[85vh] overflow-y-auto p-0">
-        <div className="sticky top-0 z-10 bg-background">
+      <DialogContent className="max-w-md md:max-w-xl w-full p-0 max-h-[85vh] flex flex-col overflow-hidden rounded-md">
+        {/* Sticky Header Section */}
+        <div className="sticky top-0 z-10 bg-background shadow-md border-t-slate-400">
           <div className="relative h-60 w-full">
             <Image
               src={item.imageUrl || "/placeholder.svg"}
@@ -62,7 +60,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                   <Flame className="h-3 w-3" /> Spicy
                 </Badge>
               )}
-              <DialogClose className="h-8 w-8 rounded-full bg-background backdrop-blur-sm text-white flex items-center justify-center hover:bg-black dark:hover:bg-white/30 transition-colors">
+              <DialogClose className="h-8 w-8 rounded-full bg-background backdrop-blur-sm flex items-center justify-center hover:text-red-500 hover:bg-black dark:hover:bg-white transition-colors">
                 <X className="h-4 w-4" />
               </DialogClose>
             </div>
@@ -91,7 +89,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
           </div>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="overflow-y-auto p-6 flex-grow">
           <div>
             <h4 className="font-medium mb-2 text-lg text-foreground">
               Description

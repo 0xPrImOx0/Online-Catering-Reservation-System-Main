@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -14,6 +14,7 @@ import {
   AllergenProps,
   PriceInfo,
   MenuItem,
+  CalculationParams,
 } from "@/types/menu-types";
 
 // Form schema using Zod
@@ -199,6 +200,31 @@ export function useMenuForm({
     const discountPercentage = ((regularPrice - price) / regularPrice) * 100;
     return Math.round(discountPercentage * 100) / 100; // Round to 2 decimal places
   };
+
+  const calculatePricePerPax = useCallback(
+    (price: number, maximumPax: number): number => price / maximumPax,
+    []
+  );
+
+  const calculateSavings = useCallback(
+    ({ regularPricePerPax, price, servingSize }: CalculationParams): number =>
+      regularPricePerPax * servingSize - price,
+    []
+  );
+
+  const calculateSavingsPercentage = useCallback(
+    ({ regularPricePerPax, price, servingSize }: CalculationParams): number =>
+      ((regularPricePerPax * servingSize - price) /
+        (regularPricePerPax * servingSize)) *
+      100,
+    []
+  );
+
+  const calculatePrice = useCallback(
+    (regularPricePerPax: number, servingSize: number): number =>
+      regularPricePerPax * servingSize,
+    []
+  );
 
   const addPriceTier = () => {
     if (
@@ -408,5 +434,9 @@ export function useMenuForm({
     resetForm,
     calculatePriceFromDiscount,
     calculateDiscountFromPrice,
+    calculatePricePerPax,
+    calculateSavings,
+    calculateSavingsPercentage,
+    calculatePrice,
   };
 }
