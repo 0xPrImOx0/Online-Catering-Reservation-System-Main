@@ -107,11 +107,11 @@ export interface PackageImageDialogProps {
 }
 
 export interface PackageCardProps {
-  item: CateringPackageProps;
+  item: CateringPackagesProps;
 }
 
 export interface PackageDetailsDialogProps {
-  pkg: CateringPackageProps;
+  pkg: CateringPackagesProps;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -126,7 +126,7 @@ export interface EventTypeCardProps {
 }
 
 export interface DeletePackageDialogProps {
-  item: CateringPackageProps;
+  item: CateringPackagesProps;
   isDeleteDialogOpen: boolean;
   setIsDeleteDialogOpen: SetStateBoolean;
 }

@@ -20,11 +20,11 @@ import {
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import { RenderStarRatings } from "../CustomStarRating";
 import type { PackageCardProps } from "@/types/package-types";
-import EditPackageDialog from "./EditPackageDialogDraft";
 import DeletePackageDialog from "./DeletePackageDialog";
 import PackageDetailsDialog from "../customer/PackageDetailsDialog";
 import { AnimatedIconButton } from "../AnimatedIconButton";
 import ImageDialog from "../ImageDialog";
+import EditPackageForm from "./EditPackageForm";
 
 export function CatererPackageCard({ item }: PackageCardProps) {
   const [showImageDialog, setShowImageDialog] = useState(false);
@@ -126,9 +126,10 @@ export function CatererPackageCard({ item }: PackageCardProps) {
       </CardFooter>
 
       {/* Preserve all dialog components */}
-      <EditPackageDialog
+      <EditPackageForm
         isEditPackageOpen={isEditPackageOpen}
         setIsEditPackageOpen={setIsEditPackageOpen}
+        item={item}
       />
       <DeletePackageDialog
         item={item}
