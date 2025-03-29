@@ -97,9 +97,17 @@ const defaultValues: FormValues = {
   },
 };
 
-export function useMenuForm() {
+interface UseMenuFormProps {
+  initialData?: MenuItem;
+  isEditMode?: boolean;
+}
+
+export function useMenuForm({
+  initialData,
+  isEditMode = false,
+}: UseMenuFormProps = {}) {
   const [newIngredient, setNewIngredient] = useState("");
-  const [newPrice, setNewPrice] = useState<PriceInfo & { discount: number }>({
+  const [newPrice, setNewPrice] = useState<PriceInfo>({
     minimumPax: 4,
     maximumPax: 6,
     price: 0,
@@ -112,10 +120,34 @@ export function useMenuForm() {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [isValidationAttempted, setIsValidationAttempted] = useState(false);
 
+  // Get initial values for edit mode
+  const getInitialValues = (): FormValues => {
+    if (!isEditMode || !initialData) return defaultValues;
+
+    return {
+      name: initialData.name,
+      category: initialData.category,
+      available: initialData.available,
+      shortDescription: initialData.shortDescription,
+      fullDescription: initialData.fullDescription,
+      ingredients: initialData.ingredients,
+      allergens: initialData.allergens,
+      preparationMethod: initialData.preparationMethod,
+      prices: initialData.prices,
+      regularPricePerPax: initialData.regularPricePerPax,
+      imageUrl: initialData.imageUrl,
+      imageUploadType: initialData.imageUrl ? "url" : "upload",
+      spicy: initialData.spicy,
+      perServing: initialData.perServing,
+      servingUnit: "g", // Default, adjust if needed
+      nutritionInfo: initialData.nutritionInfo,
+    };
+  };
+
   // Initialize form
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues,
+    defaultValues: getInitialValues(),
     mode: "onChange",
     reValidateMode: "onSubmit",
   });

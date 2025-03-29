@@ -51,6 +51,7 @@ export interface PriceInfo {
   minimumPax: number;
   maximumPax: number;
   price: number;
+  discount: number;
 }
 
 export interface MenuItem {
