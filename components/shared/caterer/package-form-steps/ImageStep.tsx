@@ -26,6 +26,15 @@ export function ImageStep({ formHook }: ImageStepProps) {
     formHook;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const isValidUrl = (url: string) => {
+    try {
+      new URL(url); // Tries to create a valid URL object
+      return true;
+    } catch {
+      return false; // Invalid URLs will throw an error
+    }
+  };
+
   return (
     <div className="space-y-6">
       <FormField
@@ -112,27 +121,27 @@ export function ImageStep({ formHook }: ImageStepProps) {
       {(form.watch("imageUrl") || previewImage) && (
         <div className="mt-4">
           <Label className="text-base font-medium">Image Preview</Label>
-          <div className="mt-2 border rounded-md overflow-hidden aspect-video flex items-center justify-center bg-muted">
+          <div className="mt-2 border rounded-md overflow-hidden aspect-video relative flex items-center justify-center bg-muted">
             {form.watch("imageUploadType") === "url" ? (
-              form.watch("imageUrl") ? (
+              form.watch("imageUrl") && isValidUrl(form.watch("imageUrl")) ? (
                 <Image
-                  src={form.watch("imageUrl") || "/placeholder.svg"}
-                  alt="Package preview"
+                  src={form.watch("imageUrl")}
+                  alt="Menu item preview"
+                  fill
                   className="max-h-full max-w-full object-contain"
-                  onError={() => {
-                    console.log("Error loading image");
-                  }}
+                  onError={() => console.log("Error loading image")}
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center text-muted-foreground">
                   <ImageIcon className="h-10 w-10 mb-2" />
-                  <span>No image provided</span>
+                  <span>No valid image URL</span>
                 </div>
               )
             ) : previewImage ? (
               <Image
                 src={previewImage || "/placeholder.svg"}
-                alt="Package preview"
+                fill
+                alt="Menu item preview"
                 className="max-h-full max-w-full object-contain"
               />
             ) : (

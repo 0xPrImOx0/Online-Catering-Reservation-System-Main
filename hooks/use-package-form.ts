@@ -20,58 +20,65 @@ import {
 } from "@/types/package-types";
 
 // Form schema using Zod
-const formSchema = z.object({
-  packageType: z.enum(["BuffetPlated", "Event"] as const),
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  description: z
-    .string()
-    .min(20, { message: "Description must be at least 20 characters" }),
-  available: z.boolean().default(true),
-  eventType: z.enum(eventTypes as [EventType, ...EventType[]]).optional(),
-  serviceType: z
-    .enum(serviceTypes as [ServiceType, ...ServiceType[]])
-    .default("Buffet"),
-  options: z
-    .array(
-      z.object({
-        category: z.enum(
-          packageCategories as [PackageCategory, ...PackageCategory[]]
-        ),
-        count: z.number().min(1, { message: "Count must be at least 1" }),
-      })
-    )
-    .min(1, { message: "Add at least one package option" }),
-  pricePerPax: z
-    .number()
-    .min(1, { message: "Price per pax must be at least 1" }),
-  minimumPax: z
-    .number()
-    .min(10, { message: "Minimum pax must be at least 10" }),
-  recommendedPax: z
-    .number()
-    .min(10, { message: "Recommended pax must be at least 10" }),
-  maximumPax: z
-    .number()
-    .min(10, { message: "Maximum pax must be at least 10" }),
-  inclusions: z
-    .array(
-      z.object({
-        typeOfCustomer: z.enum(["Both", "Buffet", "Plated"] as const),
-        includes: z.string().min(1, { message: "Inclusion must not be empty" }),
-      })
-    )
-    .min(1, { message: "Add at least one inclusion" }),
-  serviceChargePerHour: z.number().min(0).optional(),
-  serviceHours: z.number().min(0).optional(),
-  totalServiceFee: z.number().min(0).optional(),
-  totalPriceWithService: z.number().min(0).optional(),
-  imageUrl: z
-    .string()
-    .url({ message: "Please enter a valid URL" })
-    .or(z.literal("")),
-  imageFile: z.instanceof(File).optional(),
-  imageUploadType: z.enum(["url", "upload"]).default("url"),
-});
+const formSchema = z
+  .object({
+    packageType: z.enum(["BuffetPlated", "Event"] as const),
+    name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+    description: z
+      .string()
+      .min(20, { message: "Description must be at least 20 characters" }),
+    available: z.boolean().default(true),
+    eventType: z.enum(eventTypes as [EventType, ...EventType[]]).optional(),
+    serviceType: z
+      .enum(serviceTypes as [ServiceType, ...ServiceType[]])
+      .default("Buffet"),
+    options: z
+      .array(
+        z.object({
+          category: z.enum(
+            packageCategories as [PackageCategory, ...PackageCategory[]]
+          ),
+          count: z.number().min(1, { message: "Count must be at least 1" }),
+        })
+      )
+      .min(1, { message: "Add at least one package option" }),
+    pricePerPax: z
+      .number()
+      .min(1, { message: "Price per pax must be at least 1" }),
+    minimumPax: z
+      .number()
+      .min(10, { message: "Minimum pax must be at least 10" }),
+    recommendedPax: z
+      .number()
+      .min(10, { message: "Recommended pax must be at least 10" }),
+    maximumPax: z
+      .number()
+      .min(10, { message: "Maximum pax must be at least 10" }),
+    inclusions: z
+      .array(
+        z.object({
+          typeOfCustomer: z.enum(["Both", "Buffet", "Plated"] as const),
+          includes: z
+            .string()
+            .min(1, { message: "Inclusion must not be empty" }),
+        })
+      )
+      .min(1, { message: "Add at least one inclusion" }),
+    serviceChargePerHour: z.number().min(0).optional(),
+    serviceHours: z.number().min(0).optional(),
+    totalServiceFee: z.number().min(0).optional(),
+    totalPriceWithService: z.number().min(0).optional(),
+    imageUrl: z
+      .string()
+      .url({ message: "Please enter a valid URL" })
+      .or(z.literal("")),
+    imageFile: z.instanceof(File).optional(),
+    imageUploadType: z.enum(["url", "upload"]).default("url"),
+  })
+  .refine((data) => data.packageType !== "Event" || !!data.eventType, {
+    path: ["eventType"],
+    message: "Please Select an Event Type",
+  });
 
 export type PackageFormValues = z.infer<typeof formSchema>;
 
