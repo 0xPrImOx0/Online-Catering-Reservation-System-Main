@@ -23,8 +23,8 @@ import type { PackageCardProps } from "@/types/package-types";
 import EditPackageDialog from "./EditPackageDialog";
 import DeletePackageDialog from "./DeletePackageDialog";
 import PackageDetailsDialog from "../customer/PackageDetailsDialog";
-import { MenuImageDialog } from "../customer/MenuImageDialog";
 import { AnimatedIconButton } from "../AnimatedIconButton";
+import ImageDialog from "../ImageDialog";
 
 export function CatererPackageCard({ item }: PackageCardProps) {
   const [showImageDialog, setShowImageDialog] = useState(false);
@@ -140,10 +140,10 @@ export function CatererPackageCard({ item }: PackageCardProps) {
         open={showPackageDetails}
         onOpenChange={setShowPackageDetails}
       />
-      <MenuImageDialog
+      <ImageDialog
         item={item}
-        open={showImageDialog}
-        onOpenChange={setShowImageDialog}
+        isImageDialogOpen={showImageDialog}
+        setIsImageDialogOpen={setShowImageDialog}
       />
     </Card>
   );

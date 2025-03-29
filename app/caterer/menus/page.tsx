@@ -16,7 +16,7 @@ export default function MenuManagement() {
   const [query, setQuery] = useState("");
 
   return (
-    <main className="space-y-8 max-w-[1440px] mx-auto">
+    <main className="space-y-8 px-6 max-w-[1440px] mx-auto">
       <HeaderWithAddButton
         title="Menu"
         setIsAddInstanceOpen={setIsAddMenuOpen}

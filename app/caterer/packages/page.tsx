@@ -35,7 +35,7 @@ export default function PackageManagement() {
     );
   };
   return (
-    <main className="flex-1 overflow-auto max-w-[1440px] mx-auto">
+    <main className="space-y-8 max-w-[1440px] mx-auto">
       <h1 className="text-2xl font-bold tracking-tight mb-4">Packages</h1>
 
       {/* Search and View Controls */}
