@@ -284,10 +284,6 @@ export function usePackageForm({
 
     // Create package object
     const packageData: CateringPackagesProps = {
-      id:
-        isEditMode && initialData
-          ? initialData.id
-          : Math.random().toString(36).substring(2, 9),
       name: data.name,
       description: data.description,
       available: data.available,
@@ -301,8 +297,6 @@ export function usePackageForm({
       serviceHours: data.serviceHours,
       serviceCharge: data.serviceChargePerHour,
       eventType: data.packageType === "Event" ? data.eventType : undefined,
-      rating: isEditMode && initialData ? initialData.rating : 0,
-      ratingCount: isEditMode && initialData ? initialData.ratingCount : 0,
       packageType: displayPackageType,
     };
 
@@ -341,7 +335,7 @@ export function usePackageForm({
       case 3:
         return ["pricePerPax", "minimumPax", "recommendedPax", "maximumPax"];
       case 4:
-        return ["inclusions"];
+        return ["inclusions"]; //IN EDIT MODE THIS IS ERROR SINCE THE PACKAGE META DATA DOESNT HAVE FOR TYPE IN INCLUSIONS
       case 5:
         return []; // Make image optional by not validating any fields
       default:

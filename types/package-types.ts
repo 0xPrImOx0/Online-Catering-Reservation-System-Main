@@ -1,4 +1,5 @@
 import { SetStateBoolean } from "./global-types";
+import { ObjectId } from "mongodb";
 
 // Define types for our packages
 export type PackageCategory =
@@ -29,6 +30,12 @@ export type InclusionsProps = {
   includes: string;
 };
 
+export interface ReviewProps {
+  rating: number;
+  comment: string;
+  user: ObjectId; // Assuming this is a MongoDB ObjectId
+}
+
 export interface CateringPackageProps {
   id: string;
   name: string;
@@ -50,7 +57,7 @@ export interface CateringPackageProps {
 
 //For Temporary. Still Thinking the Proper Schema for Proper Querying for the Backend. THIS ONE WILL BE THE BASIS
 export interface CateringPackagesProps {
-  id: string;
+  //THIS MAY BE FINAL
   name: string;
   description: string;
   available: boolean;
@@ -61,13 +68,14 @@ export interface CateringPackagesProps {
   options: PackageOption[];
   inclusions: InclusionsProps[];
   imageUrl?: string;
-  imageFile?: Blob;
-  rating: number;
-  ratingCount: number;
+  imageFile?: Blob; //Temporary just thinking to utilize cloudinary for storing image
+  rating?: number;
+  ratingCount?: number;
   serviceHours?: number;
   serviceCharge?: number;
   eventType?: EventType;
   packageType?: PackageType;
+  reviews?: ReviewProps[];
 }
 
 export interface FormStepType {
