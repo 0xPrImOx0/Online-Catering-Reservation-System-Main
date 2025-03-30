@@ -45,7 +45,7 @@ const formSchema = z.object({
       })
     )
     .min(1, { message: "Add at least one price tier" }),
-  regularPricePerPax: z.number().min(0),
+  regularPricePerPax: z.number().min(1),
   imageUrl: z
     .string()
     .url({ message: "Please enter a valid URL" })

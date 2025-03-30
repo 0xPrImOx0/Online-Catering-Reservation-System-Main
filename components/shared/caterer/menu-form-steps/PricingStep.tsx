@@ -33,6 +33,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
     isValidationAttempted,
     calculatePriceFromDiscount,
     calculateDiscountFromPrice,
+    calculateSavings,
   } = formHook;
 
   return (
@@ -281,7 +282,8 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Discount:</span>
-                    <span className="font-medium">{price.discount}%</span>
+                    <span className="font-medium">{price.discount}%</span>{" "}
+                    {/* THE MENU META DATA MUST BE CHANGE */}
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>You save:</span>
@@ -297,10 +299,12 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                     <span>Total save:</span>
                     <span className="font-medium text-green-600">
                       ${" "}
-                      {(
-                        (form.getValues("regularPricePerPax") - price.price) *
-                        price.maximumPax
-                      ).toFixed(2)}
+                      {calculateSavings({
+                        regularPricePerPax:
+                          form.getValues("regularPricePerPax"),
+                        price: price.price,
+                        servingSize: price.maximumPax,
+                      }).toFixed(2)}
                     </span>
                   </div>
                 </CardContent>
