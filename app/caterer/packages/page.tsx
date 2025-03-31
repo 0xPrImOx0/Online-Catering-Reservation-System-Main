@@ -3,11 +3,6 @@
 import { useState } from "react";
 import SearchInput from "@/components/shared/SearchInput";
 import AddPackageDialog from "@/components/shared/caterer/AddPackageForm";
-import {
-  buffetPackages,
-  eventPackages,
-  platedPackages,
-} from "@/lib/customer/packages-metadata";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Info, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
