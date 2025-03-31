@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Check, Clock, Users } from "lucide-react";
+import { Check, CheckCircle2Icon, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import { PackageCardProps } from "@/types/package-types";
 import PackageDetailsDialog from "./PackageDetailsDialog";
@@ -30,6 +30,11 @@ export default function CustomerPackageCard({
 }: PackageCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const platedInclusions = item.inclusions.filter((plated) =>
+    isPlated === "Plated"
+      ? plated.typeOfCustomer
+      : plated.typeOfCustomer === "Both"
+  );
 
   return (
     <Card className="w-full flex flex-col h-full">
@@ -151,25 +156,25 @@ export default function CustomerPackageCard({
               {/* Show rice trays for buffet and plated packages */}
               {item.packageType !== "Event" && (
                 <li className="flex items-center gap-2">
-                  <Check className="h-3 w-3 text-primary" />
+                  <CheckCircle2Icon className="h-4 w-4 text-green-500" />
                   {Math.ceil(item.minimumPax / 2)} trays of steamed rice (good
                   for {item.minimumPax * 2} pax)
                 </li>
               )}
-              {/* {item.inclusions.slice(0, 4).map((inclusion, index) => (
+              {platedInclusions.slice(0, 4).map((inclusion, index) => (
                 <li key={index} className="flex items-center gap-2">
-                  <Check className="h-3 w-3 text-primary" />
-                  {inclusion}
+                  <CheckCircle2Icon className="h-4 w-4 text-green-500" />
+                  {inclusion.includes}
                 </li>
-              ))} */}
-              {item.inclusions.length > 4 && (
+              ))}
+              {platedInclusions.slice(4).length >= 1 && (
                 <Button
                   variant="link"
                   size="sm"
                   className="p-0 h-auto"
                   onClick={() => setDialogOpen(true)}
                 >
-                  +{item.inclusions.length - 4} more inclusions
+                  +{platedInclusions.slice(4).length} more inclusions
                 </Button>
               )}
             </ul>
@@ -187,6 +192,7 @@ export default function CustomerPackageCard({
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         isPlated={isPlated}
+        platedInclusions={platedInclusions}
       />
 
       <ImageDialog

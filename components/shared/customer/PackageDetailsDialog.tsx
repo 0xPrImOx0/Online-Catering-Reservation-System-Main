@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Check, X } from "lucide-react";
+import { Check, CheckCircle2Icon, X } from "lucide-react";
 import Image from "next/image";
 import { menuItems } from "@/lib/menu-lists";
 import type {
@@ -18,12 +18,9 @@ export default function PackageDetailsDialog({
   open,
   onOpenChange,
   isPlated,
+  platedInclusions
 }: PackageDetailsDialogProps) {
-  const platedInclusions = pkg.inclusions.filter((plated) =>
-    isPlated === "Plated"
-      ? plated.typeOfCustomer
-      : plated.typeOfCustomer === "Both"
-  );
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md md:max-w-xl w-full p-0 max-h-[85vh] flex flex-col overflow-hidden rounded-md">
@@ -138,7 +135,7 @@ export default function PackageDetailsDialog({
                 {/* Show rice trays for buffet and plated packages */}
                 {pkg.packageType === "Event" && (
                   <div className="flex items-center gap-2 col-span-1">
-                    <Check className="h-4 w-4 text-primary" />
+                    <CheckCircle2Icon className="h-4 w-4 text-green-500" />
                     <span className="font-medium">
                       {Math.ceil(pkg.minimumPax / 2)} trays of steamed rice
                       (good for {pkg.minimumPax / 2} pax)
@@ -147,7 +144,7 @@ export default function PackageDetailsDialog({
                 )}
                 {platedInclusions.map((inclusion, index) => (
                   <div key={index} className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-primary" />
+                    <CheckCircle2Icon className="h-4 w-4 text-green-500" />
                     <span className="text-justify">{inclusion.includes}</span>
                   </div>
                 ))}
@@ -168,7 +165,7 @@ export default function PackageDetailsDialog({
                         .slice(0, 3)
                         .map((dish) => (
                           <li key={dish.id} className="flex items-center gap-2">
-                            <Check className="h-3 w-3 text-primary" />
+                            <CheckCircle2Icon className="h-4 w-4 text-green-500" />
                             {dish.name}
                           </li>
                         ))}

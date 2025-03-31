@@ -104,7 +104,8 @@ export interface PackageDetailsDialogProps {
   pkg: CateringPackagesProps;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  isPlated: string
+  isPlated: string,
+  platedInclusions: InclusionsProps[]
 }
 
 export interface PackageBookFormProps {

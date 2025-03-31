@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info, ChevronRight } from "lucide-react";
+import { Info, ChevronRight, XCircleIcon, X } from "lucide-react";
 import { EventType, eventTypes, ServiceType } from "@/types/package-types";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { Button } from "@/components/ui/button";
 import CustomerPackageCard from "./CustomerPackageCard";
 import EventTypeCard from "./EventTypeCard";
 import CustomPackageForm from "./CustomPacakgeForm";
+import clsx from "clsx";
 
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState("Buffet");
@@ -25,6 +26,8 @@ export default function CateringPackages() {
       (pkg) => pkg.packageType === "Event" && pkg.eventType === event
     );
   };
+
+  const [closePlatedWarning, setClosePlatedWarning] = useState(false);
 
   const TabsTriggerStyle = ({
     value,
@@ -55,7 +58,7 @@ export default function CateringPackages() {
       </p>
 
       <Tabs
-        defaultValue="buffet"
+        defaultValue="Buffet"
         className="w-full"
         onValueChange={setActiveTab}
       >
@@ -79,11 +82,26 @@ export default function CateringPackages() {
         </TabsContent>
 
         <TabsContent value="Plated" className="mt-6 space-y-8">
-          <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
-            <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative" />
+          <div
+            className={clsx(
+              "mb-4 p-4 bg-yellow-50 border-2 border-amber-400 rounded-lg flex items-start gap-3 relative",
+              {
+                hidden: closePlatedWarning,
+              }
+            )}
+          >
+            <Button
+              className="absolute right-4 top-4 text-muted-foreground"
+              variant={"ghost"}
+              size={"custom"}
+              onClick={() => setClosePlatedWarning((prev) => !prev)}
+            >
+              <X className="min-w-5 min-h-5" />
+            </Button>
+            <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative text-yellow-500" />
             <div className="space-y-2">
               <h3 className="font-medium">Plated Course Service</h3>
-              <p className="text-sm text-muted-foreground text-justify">
+              <p className="text-sm text-foreground text-justify max-w-[1000px]">
                 Our plated course packages include professional waitstaff who
                 will serve each course directly to your guests&apos; tables. An
                 additional service fee of ₱100 per hour is included in the price
@@ -154,7 +172,13 @@ export default function CateringPackages() {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {eventPackages(selectedEventType).map((pkg, index) => {
-                  return <CustomerPackageCard key={index} item={pkg} isPlated={serviceType} />;
+                  return (
+                    <CustomerPackageCard
+                      key={index}
+                      item={pkg}
+                      isPlated={serviceType}
+                    />
+                  );
                 })}
               </div>
             </>
