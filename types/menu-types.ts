@@ -34,7 +34,8 @@ export type AllergenProps =
   | "Molluscs"
   | "Sulphites"
   | "Soy"
-  | "Nuts";
+  | "Nuts"
+  | "";
 // Update the interfaces to match the new data structure
 export interface NutritionInfo {
   calories: string; // Now includes "kcal" unit

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import PackageCard from "./CustomerPackageCard";
+import CustomerPackageCard from "./CustomerPackageCard";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 
 export default function Featured() {
@@ -22,7 +22,7 @@ export default function Featured() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Package Showcase */}
           {featuredPackages.map((pkg, index) => (
-            <PackageCard item={pkg} key={index} />
+            <CustomerPackageCard item={pkg} key={index} />
           ))}
         </div>
       </div>

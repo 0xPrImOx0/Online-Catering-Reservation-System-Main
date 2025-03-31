@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { MenuItem } from "./menu-types";
+import { AllergenProps, MenuItem } from "./menu-types";
 import { SetStateBoolean } from "./global-types";
 import { CateringPackagesProps } from "./package-types";
 
@@ -11,14 +11,18 @@ export type SearchInputProps = {
 };
 
 //Custom Select Types
+export type CustomSelectItemProps = {
+  value: string;
+  title: string;
+};
+
 export type CustomSelectProps = {
   defaultValue: string;
   placeholder: string;
-  items: {
-    value: string;
-    title: string;
-  }[];
+  items: CustomSelectItemProps[];
   size?: "sm" | "md" | "lg";
+  value: string;
+  onValueChange: (value: string) => void;
 };
 
 //View Mode Props
@@ -74,3 +78,20 @@ export interface ImageDialogProps {
   isImageDialogOpen: boolean;
   setIsImageDialogOpen: SetStateBoolean;
 }
+
+export type FilterSectionProps = {
+  query: string;
+  setQuery: (query: string) => void;
+  filters: {
+    category: string;
+    allergens: AllergenProps;
+    sortBy: string;
+  };
+  setFilters: Dispatch<
+    SetStateAction<{
+      category: string;
+      allergens: AllergenProps;
+      sortBy: string;
+    }>
+  >;
+};

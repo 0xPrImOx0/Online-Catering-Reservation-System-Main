@@ -5,9 +5,6 @@ import { ArrayInputProps } from "@/types/component-types";
 import { Tag, TagInput as TagInputComponent, TagInputProps } from "emblor";
 import { useId, useState } from "react";
 
-// Define the Tag type (already provided by emblor, but redeclared for clarity)
-
-// Cast TagInput to a JSX-compatible type
 const TagInput = TagInputComponent as unknown as React.FC<TagInputProps>;
 
 export default function ArrayInput({

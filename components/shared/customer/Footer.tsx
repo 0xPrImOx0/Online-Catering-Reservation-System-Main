@@ -22,7 +22,7 @@ const FooterLinks = ({ href, title }: { href: string; title: string }) => {
 export default function Page() {
   return (
     <footer className="border-t bg-muted/50 flex justify-center w-full">
-      <div className="container mx-4 sm:mx-6 lg:mx-8 py-6 sm:py-8 md:py-12 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-4 sm:mx-6 lg:mx-8 py-6 sm:py-8 md:py-12 px-4 sm:px-6 lg:px-8 max-w-[1440px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 sm:gap-14 lg:gap-12">
           <div className="space-y-4 flex flex-col items-center md:items-start text-center sm:text-left lg:w-[280px]">
             <Logo withLabel imageSize={100} />

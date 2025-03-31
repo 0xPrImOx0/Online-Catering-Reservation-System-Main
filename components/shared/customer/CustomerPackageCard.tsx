@@ -26,7 +26,7 @@ import clsx from "clsx";
 
 export default function CustomerPackageCard({
   item,
-  isPlated,
+  isPlated = "",
 }: PackageCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
@@ -73,7 +73,7 @@ export default function CustomerPackageCard({
               className={clsx(
                 "bg-background text-foreground border-foreground",
                 {
-                  hidden: !item.serviceCharge,
+                  hidden: isPlated !== "Plated",
                 }
               )}
             >

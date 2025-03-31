@@ -99,7 +99,6 @@ const renderFieldType = ({
       );
     case "select":
       return (
-        // <CustomSelect defaultValue={title} placeholder={placeholder} items={selectData}  />
         <Select
           value={value as string}
           onValueChange={(newValue) => onChange?.(newValue)}

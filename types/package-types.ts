@@ -97,7 +97,7 @@ export interface PackageImageDialogProps {
 
 export interface PackageCardProps {
   item: CateringPackagesProps;
-  isPlated: string
+  isPlated?: string
 }
 
 export interface PackageDetailsDialogProps {

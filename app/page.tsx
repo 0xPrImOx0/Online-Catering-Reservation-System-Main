@@ -17,21 +17,13 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
       <CustomerSiteHeader />
-      <main className="flex-1">
+      <main className="flex-1 max-w-[1440px] mx-auto">
         <Hero />
         <About />
         <Featured />
         <UsersGuide />
         <Testimonial />
         <WhyChooseUs />
-        {/* <FooterCTA
-          title="Need more information?"
-          description="Contact us today to discuss your event needs and check availability."
-          buttonLabel="Contact Us"
-          href="/contact-us"
-          Icon={Phone}
-          px
-        /> */}
       </main>
 
       <Footer />

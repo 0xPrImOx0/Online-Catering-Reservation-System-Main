@@ -1,3 +1,4 @@
+import { CustomSelectItemProps } from "@/types/component-types";
 import { CategoryProps } from "@/types/menu-types";
 
 export const categories: CategoryProps[] = [
@@ -38,7 +39,7 @@ export const allergens: AllergenProps[] = [
   { id: "17", text: "Nuts" },
 ];
 
-export const selectorItems = [
+export const selectorItems: CustomSelectItemProps[] = [
   { value: "default", title: "Default" },
   { value: "name-asc", title: "Name (A-Z)" },
   { value: "name-desc", title: "Name (Z-A)" },
@@ -46,4 +47,37 @@ export const selectorItems = [
   { value: "price-desc", title: "Price (High - Low)" },
   { value: "ordered-desc", title: "Most Ordered" },
   { value: "ordered-asc", title: "Least Ordered" },
+];
+
+export const categorySelect: CustomSelectItemProps[] = [
+  { value: "soup", title: "Soup" },
+  { value: "salad", title: "Salad" },
+  { value: "beef", title: "Beef" },
+  { value: "pork", title: "Pork" },
+  { value: "noodle", title: "Noodle" },
+  { value: "chicken", title: "Chicken" },
+  { value: "seafood", title: "Seafood" },
+  { value: "vegetable", title: "Vegetable" },
+  { value: "dessert", title: "Dessert" },
+  { value: "beverage", title: "Beverage" },
+];
+
+export const allergensSelect: CustomSelectItemProps[] = [
+  { value: "Milk", title: "Milk" },
+  { value: "Eggs", title: "Eggs" },
+  { value: "Fish", title: "Fish" },
+  { value: "Shellfish", title: "Shellfish" },
+  { value: "Tree Nuts", title: "Tree nuts" },
+  { value: "Peanuts", title: "Peanuts" },
+  { value: "Wheat", title: "Wheat" },
+  { value: "Soybeans", title: "Soybeans" },
+  { value: "Sesame", title: "Sesame" },
+  { value: "Gluten", title: "Gluten" },
+  { value: "Mustard", title: "Mustard" },
+  { value: "Celery", title: "Celery" },
+  { value: "Lupin", title: "Lupin" },
+  { value: "Molluscs", title: "Molluscs" },
+  { value: "Sulphites", title: "Sulphites" },
+  { value: "Soy", title: "Soy" },
+  { value: "Nuts", title: "Nuts" },
 ];

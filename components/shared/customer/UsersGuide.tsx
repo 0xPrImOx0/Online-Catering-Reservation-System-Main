@@ -61,7 +61,7 @@ const HowItWorksContent = ({
 export const UsersGuide = () => {
   const [activeTab, setActiveTab] = useState("one");
   return (
-    <section className="my-16 md:my-24 lg:my-32 mx-[5%]">
+    <section className="my-16 md:my-24 lg:my-32 mx-[5%] ">
       <div className="container">
         <div className="flex flex-col items-center text-center mb-12">
           <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight mb-4">

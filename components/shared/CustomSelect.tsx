@@ -14,9 +14,15 @@ export default function CustomSelect({
   placeholder,
   items,
   size = "sm",
+  value,
+  onValueChange,
 }: CustomSelectProps) {
   return (
-    <Select defaultValue={defaultValue}>
+    <Select
+      defaultValue={defaultValue}
+      value={value}
+      onValueChange={onValueChange}
+    >
       <SelectTrigger
         className={clsx({
           "flex-1": size === "sm",

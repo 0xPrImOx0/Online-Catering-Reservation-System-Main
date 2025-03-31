@@ -2,13 +2,12 @@
 import { features } from "@/lib/customer/metadata";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import FooterCTA from "./customer/FooterCTA";
 import { Phone } from "lucide-react";
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-20 md:py-28 relative overflow-hidden">
+    <section className="py-24 md:py-28 relative overflow-hidden">
       <div className="px-[5%]">
         <div className="text-center mx-auto mb-16">
           <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
@@ -59,22 +58,6 @@ export default function WhyChooseUs() {
           href="/contact-us"
           Icon={Phone}
         />
-        {/* <div className="mt-16 text-center">
-          <motion.div
-            className="inline-block"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Link
-              href="/book-now"
-              className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-primary-foreground bg-primary rounded-md shadow-sm hover:bg-primary/90 transition-colors"
-            >
-              Book Your Event Now
-            </Link>
-          </motion.div>
-        </div> */}
       </div>
     </section>
   );
