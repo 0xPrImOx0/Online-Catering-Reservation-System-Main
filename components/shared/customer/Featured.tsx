@@ -18,8 +18,8 @@ export default function Featured() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Package Showcase */}
-          {buffetPackages.map((pkg) => (
-            <PackageCard item={pkg} key={pkg.id} />
+          {buffetPackages.map((pkg, index) => (
+            <PackageCard item={pkg} key={index} />
           ))}
         </div>
       </div>

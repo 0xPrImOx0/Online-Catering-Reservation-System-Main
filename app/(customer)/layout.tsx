@@ -10,7 +10,7 @@ export default function CustomerLayout({
   return (
     <div>
       <CustomerSiteHeader />
-      <main className="max-w-[1440px] mx-auto">{children}</main>
+      <main className="mx-auto">{children}</main>
       <Footer />
     </div>
   );

@@ -4,8 +4,6 @@ import About from "@/components/shared/customer/About";
 import Featured from "@/components/shared/customer/Featured";
 import Testimonial from "@/components/shared/customer/Testimonial";
 import Footer from "@/components/shared/customer/Footer";
-import FooterCTA from "@/components/shared/customer/FooterCTA";
-import { Phone } from "lucide-react";
 import { UsersGuide } from "@/components/shared/customer/UsersGuide";
 import { Metadata } from "next";
 import WhyChooseUs from "@/components/shared/WhyChooseUs";

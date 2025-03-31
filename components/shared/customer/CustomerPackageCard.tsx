@@ -80,7 +80,7 @@ export default function CustomerPackageCard({ item }: PackageCardProps) {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="bg-black/70 backdrop-blur-sm rounded-full px-2.5 py-1.5">
-                    {RenderStarRatings(item.rating, "medium")}
+                    {item.rating && RenderStarRatings(item.rating, "medium")}
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -147,7 +147,7 @@ export default function CustomerPackageCard({ item }: PackageCardProps) {
             <h4 className="font-medium mb-2">Inclusions:</h4>
             <ul className="text-sm space-y-1 text-justify">
               {/* Show rice trays for buffet and plated packages */}
-              {!item.id.includes("event") && (
+              {/* {!item.id.includes("event") && (
                 <li className="flex items-center gap-2">
                   <Check className="h-3 w-3 text-primary" />
                   {Math.ceil(item.minimumPax / 2)} trays of steamed rice (good
@@ -159,7 +159,7 @@ export default function CustomerPackageCard({ item }: PackageCardProps) {
                   <Check className="h-3 w-3 text-primary" />
                   {inclusion}
                 </li>
-              ))}
+              ))} */}
               {item.inclusions.length > 4 && (
                 <Button
                   variant="link"

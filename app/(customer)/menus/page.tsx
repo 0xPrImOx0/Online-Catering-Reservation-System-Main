@@ -4,19 +4,23 @@ import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
 import { menuItems } from "@/lib/menu-lists";
 import CategoryPillRow from "@/components/shared/customer/CategoryPillRow";
 import { Metadata } from "next";
-
+import FilterSection from "@/components/shared/FilterSection";
 
 export const metadata: Metadata = {
-  title: "Menus"
+  title: "Menus",
 };
 
 export default function Page() {
   return (
-    <main className="px-[2%]">
+    <main className="px-[5%]">
       <div className=" py-12">
-        <h1 className="text-5xl font-bold text-center pb-6">Our Menus</h1>
+        <div className="space-y-4 mb-16">
+          <h1 className="text-5xl font-bold">Our Menus</h1>
+          <p className="text-muted-foreground">Check out our dishes available for your needs!</p>
+        </div>
         {/* Filters */}
-        <CategoryPillRow />
+        {/* <CategoryPillRow /> */}
+        <FilterSection />
         <PaginatedMenus items={menuItems} />
         {/* Testimonials */}
         <section className="my-16 py-8 rounded-lg">
