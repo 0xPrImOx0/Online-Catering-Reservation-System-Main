@@ -36,7 +36,6 @@ export interface ReviewProps {
   user: ObjectId; // Assuming this is a MongoDB ObjectId
 }
 
-//For Temporary. Still Thinking the Proper Schema for Proper Querying for the Backend. THIS ONE WILL BE THE BASIS
 export interface CateringPackagesProps {
   name: string;
   description: string;
@@ -56,6 +55,10 @@ export interface CateringPackagesProps {
   packageType: PackageType;
   reviews?: ReviewProps[];
   pricePerPaxWithServiceCharge: number;
+}
+
+export interface PackagesCardProps {
+  item: CateringPackagesProps & { id: string };
 }
 
 export interface FormStepType {
