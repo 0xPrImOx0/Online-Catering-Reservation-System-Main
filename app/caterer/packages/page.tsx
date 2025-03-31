@@ -1,5 +1,7 @@
 "use client";
 
+// First, import the cateringPackages data at the top of the file
+import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { useState } from "react";
 import SearchInput from "@/components/shared/SearchInput";
 import AddPackageDialog from "@/components/shared/caterer/AddPackageForm";
@@ -7,11 +9,42 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Info, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CatererPackageCard } from "@/components/shared/caterer/CatererPackageCard";
+import type { EventType } from "@/types/package-types";
 
 export default function PackageManagement() {
   // Simple state for dialog visibility
   const [isAddPackageOpen, setIsAddPackageOpen] = useState(false);
   const [query, setQuery] = useState("");
+
+  // Filter packages based on type
+  const buffetPackages = cateringPackages
+    .filter((pkg) => pkg.packageType === "BuffetPlated")
+    .map((pkg) => ({
+      ...pkg,
+      id: pkg.name.toLowerCase().replace(/\s+/g, "-"),
+    }));
+
+  const platedPackages = cateringPackages
+    .filter((pkg) => pkg.packageType === "BuffetPlated")
+    .map((pkg) => ({
+      ...pkg,
+      id: pkg.name.toLowerCase().replace(/\s+/g, "-"),
+    }));
+
+  // Group event packages by event type
+  const eventPackages = cateringPackages
+    .filter((pkg) => pkg.packageType === "Event")
+    .reduce((acc, pkg) => {
+      if (pkg.eventType) {
+        if (!acc[pkg.eventType]) {
+          acc[pkg.eventType] = [];
+        }
+        acc[pkg.eventType].push({
+          ...pkg,
+        });
+      }
+      return acc;
+    }, {} as Record<EventType, (typeof cateringPackages)[number][]>);
 
   const TabsTriggerStyle = ({
     value,
@@ -89,38 +122,49 @@ export default function PackageManagement() {
         </TabsContent>
 
         <TabsContent value="event" className="space-y-10">
-          <div className="space-y-4">
-            <h4 className="text-xl font-medium">Birthdays</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {eventPackages.Birthday.map((pkg) => (
-                <CatererPackageCard key={pkg.id} item={pkg} />
-              ))}
+          {eventPackages.Birthday && (
+            <div className="space-y-4">
+              <h4 className="text-xl font-medium">Birthdays</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {eventPackages.Birthday.map((pkg) => (
+                  <CatererPackageCard key={pkg.name} item={pkg} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="space-y-4">
-            <h4 className="text-xl font-medium">Corporate</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {eventPackages.Corporate.map((pkg) => (
-                <CatererPackageCard key={pkg.id} item={pkg} />
-              ))}
+          )}
+
+          {eventPackages.Corporate && (
+            <div className="space-y-4">
+              <h4 className="text-xl font-medium">Corporate</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {eventPackages.Corporate.map((pkg) => (
+                  <CatererPackageCard key={pkg.name} item={pkg} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="space-y-4">
-            <h4 className="text-xl font-medium">Graduation</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {eventPackages.Graduation.map((pkg) => (
-                <CatererPackageCard key={pkg.id} item={pkg} />
-              ))}
+          )}
+
+          {eventPackages.Graduation && (
+            <div className="space-y-4">
+              <h4 className="text-xl font-medium">Graduation</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {eventPackages.Graduation.map((pkg) => (
+                  <CatererPackageCard key={pkg.name} item={pkg} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="space-y-4">
-            <h4 className="text-xl font-medium">Wedding</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {eventPackages.Wedding.map((pkg) => (
-                <CatererPackageCard key={pkg.id} item={pkg} />
-              ))}
+          )}
+
+          {eventPackages.Wedding && (
+            <div className="space-y-4">
+              <h4 className="text-xl font-medium">Wedding</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {eventPackages.Wedding.map((pkg) => (
+                  <CatererPackageCard key={pkg.name} item={pkg} />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </TabsContent>
 
         {/* Add Package Dialog */}
