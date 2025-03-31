@@ -64,7 +64,9 @@ export default function PackageDetailsDialog({
             <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
               <div>
                 <span className="text-lg font-bold">
-                  ₱ {pkg.pricePerPax.toFixed(2)} per pax
+                  {isPlated
+                    ? `₱ ${pkg.pricePerPaxWithServiceCharge.toFixed(2)} per pax`
+                    : `₱ ${pkg.pricePerPax.toFixed(2)} per pax`}
                 </span>
                 {isPlated && (
                   <span className="text-xs block text-primary-foreground/80">

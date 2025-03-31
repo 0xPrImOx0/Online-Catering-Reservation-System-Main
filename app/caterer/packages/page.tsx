@@ -112,7 +112,7 @@ export default function PackageManagement() {
         <TabsContent value="buffet" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {buffetPackages.map((pkg) => (
-              <CatererPackageCard key={pkg.name} item={pkg} />
+              <CatererPackageCard key={pkg.name} item={pkg} isPlated={false} />
             ))}
           </div>
         </TabsContent>
@@ -132,7 +132,7 @@ export default function PackageManagement() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {platedPackages.map((pkg) => (
-              <CatererPackageCard key={pkg.name} item={pkg} />
+              <CatererPackageCard key={pkg.name} item={pkg} isPlated={true} />
             ))}
           </div>
         </TabsContent>
@@ -165,6 +165,7 @@ export default function PackageManagement() {
                               ...pkg,
                               inclusions: getFilteredInclusions(pkg, "Buffet"),
                             }}
+                            isPlated={false}
                           />
                         ))}
                       </div>
@@ -200,6 +201,7 @@ export default function PackageManagement() {
                               ...pkg,
                               inclusions: getFilteredInclusions(pkg, "Plated"),
                             }}
+                            isPlated={true}
                           />
                         ))}
                       </div>

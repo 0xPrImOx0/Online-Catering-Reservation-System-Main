@@ -99,7 +99,7 @@ export interface PackageImageDialogProps {
 
 export interface PackageCardProps {
   item: CateringPackagesProps;
-  isPlated?: string;
+  isPlated: boolean;
 }
 
 export interface PackageDetailsDialogProps {
