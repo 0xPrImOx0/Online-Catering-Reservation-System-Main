@@ -133,7 +133,7 @@ export default function PackageDetailsDialog({
               <h3 className="text-lg font-semibold mb-3">Inclusions</h3>
               <div className="grid grid-cols-1 gap-2">
                 {/* Show rice trays for buffet and plated packages */}
-                {!pkg.id.includes("event") && (
+                {pkg.packageType === "Event" && (
                   <div className="flex items-center gap-2 col-span-1">
                     <Check className="h-4 w-4 text-primary" />
                     <span className="font-medium">
@@ -145,7 +145,7 @@ export default function PackageDetailsDialog({
                 {pkg.inclusions.map((inclusion, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-primary" />
-                    <span className="text-justify">{inclusion}</span>
+                    <span className="text-justify">{inclusion.includes}</span>
                   </div>
                 ))}
               </div>

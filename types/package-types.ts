@@ -26,7 +26,7 @@ export interface PackageOption {
 }
 
 export type InclusionsProps = {
-  typeOfCustomer: "Both" | "Plated" | "Buffet" | "Event";
+  typeOfCustomer: "Both" | "Plated" | "Buffet";
   includes: string;
 };
 

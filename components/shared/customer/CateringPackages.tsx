@@ -9,12 +9,7 @@ import {
   // PlatedPackage,
   ServiceType,
 } from "@/types/package-types";
-import {
-  buffetPackages,
-  platedPackages,
-  eventPackages,
-  eventTypes,
-} from "@/lib/customer/packages-metadata";
+import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { Button } from "@/components/ui/button";
 import CustomerPackageCard from "./CustomerPackageCard";
 import EventTypeCard from "./EventTypeCard";
@@ -26,6 +21,9 @@ export default function CateringPackages() {
     null
   );
   const [serviceType, setServiceType] = useState<ServiceType>("Buffet");
+  const buffetPLatedPackages = cateringPackages.filter(
+    (pkg) => pkg.packageType === "BuffetPlated"
+  );
 
   const TabsTriggerStyle = ({
     value,
@@ -69,8 +67,8 @@ export default function CateringPackages() {
 
         <TabsContent value="buffet" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {buffetPackages.map((pkg) => (
-              <CustomerPackageCard key={pkg.id} item={pkg} />
+            {buffetPLatedPackages.map((pkg, index) => (
+              <CustomerPackageCard key={index} item={pkg} />
             ))}
           </div>
         </TabsContent>
@@ -89,7 +87,7 @@ export default function CateringPackages() {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {platedPackages.map((pkg) => (
+            {buffetPLatedPackages.map((pkg) => (
               <CustomerPackageCard key={pkg.id} item={pkg} />
             ))}
           </div>

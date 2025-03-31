@@ -2,9 +2,12 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import PackageCard from "./CustomerPackageCard";
-import { buffetPackages } from "@/lib/customer/packages-metadata";
+import { cateringPackages } from "@/lib/customer/packages-metadata";
 
 export default function Featured() {
+  const featuredPackages = cateringPackages.filter(
+    (pkg) => pkg.packageType === "BuffetPlated"
+  );
   return (
     <section className="px-[5%] mt-24 flex flex-col items-center gap-14">
       <div className="">
@@ -18,7 +21,7 @@ export default function Featured() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Package Showcase */}
-          {buffetPackages.map((pkg, index) => (
+          {featuredPackages.map((pkg, index) => (
             <PackageCard item={pkg} key={index} />
           ))}
         </div>
