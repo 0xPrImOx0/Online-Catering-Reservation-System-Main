@@ -36,25 +36,6 @@ export interface ReviewProps {
   user: ObjectId; // Assuming this is a MongoDB ObjectId
 }
 
-export interface CateringPackageProps {
-  id: string;
-  name: string;
-  description: string;
-  available: boolean;
-  pricePerPax: number;
-  minimumPax: number;
-  recommendedPax: number;
-  maximumPax: number;
-  options: PackageOption[];
-  inclusions: string[];
-  imageUrl: string;
-  rating: number;
-  ratingCount: number;
-  serviceHours?: number;
-  serviceCharge?: number;
-  eventType?: EventType;
-}
-
 //For Temporary. Still Thinking the Proper Schema for Proper Querying for the Backend. THIS ONE WILL BE THE BASIS
 export interface CateringPackagesProps {
   //THIS MAY BE FINAL
@@ -116,16 +97,18 @@ export interface PackageImageDialogProps {
 
 export interface PackageCardProps {
   item: CateringPackagesProps;
+  isPlated: string
 }
 
 export interface PackageDetailsDialogProps {
   pkg: CateringPackagesProps;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  isPlated: string
 }
 
 export interface PackageBookFormProps {
-  package: CateringPackageProps;
+  package: CateringPackagesProps;
 }
 
 export interface EventTypeCardProps {

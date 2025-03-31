@@ -3,12 +3,7 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Info, ChevronRight } from "lucide-react";
-import {
-  CateringPackageProps,
-  EventType,
-  // PlatedPackage,
-  ServiceType,
-} from "@/types/package-types";
+import { EventType, eventTypes, ServiceType } from "@/types/package-types";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { Button } from "@/components/ui/button";
 import CustomerPackageCard from "./CustomerPackageCard";
@@ -16,14 +11,20 @@ import EventTypeCard from "./EventTypeCard";
 import CustomPackageForm from "./CustomPacakgeForm";
 
 export default function CateringPackages() {
-  const [activeTab, setActiveTab] = useState("buffet");
+  const [activeTab, setActiveTab] = useState("Buffet");
   const [selectedEventType, setSelectedEventType] = useState<EventType | null>(
     null
   );
   const [serviceType, setServiceType] = useState<ServiceType>("Buffet");
-  const buffetPLatedPackages = cateringPackages.filter(
+  const buffetPlatedPackages = cateringPackages.filter(
     (pkg) => pkg.packageType === "BuffetPlated"
   );
+
+  const eventPackages = (event: EventType) => {
+    return cateringPackages.filter(
+      (pkg) => pkg.packageType === "Event" && pkg.eventType === event
+    );
+  };
 
   const TabsTriggerStyle = ({
     value,
@@ -59,21 +60,25 @@ export default function CateringPackages() {
         onValueChange={setActiveTab}
       >
         <TabsList className="text-foreground overflow-x-auto scrollbar-thin w-full justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1">
-          <TabsTriggerStyle value="buffet" title="Buffet Packages" />
-          <TabsTriggerStyle value="plated" title="Plated Course" />
-          <TabsTriggerStyle value="event" title="Event Packages" />
-          <TabsTriggerStyle value="custom" title="Create Your Own Package" />
+          <TabsTriggerStyle value="Buffet" title="Buffet Packages" />
+          <TabsTriggerStyle value="Plated" title="Plated Course" />
+          <TabsTriggerStyle value="Event" title="Event Packages" />
+          <TabsTriggerStyle value="Custom" title="Create Your Own Package" />
         </TabsList>
 
-        <TabsContent value="buffet" className="mt-6">
+        <TabsContent value="Buffet" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {buffetPLatedPackages.map((pkg, index) => (
-              <CustomerPackageCard key={index} item={pkg} />
+            {buffetPlatedPackages.map((pkg, index) => (
+              <CustomerPackageCard
+                key={index}
+                item={pkg}
+                isPlated={activeTab}
+              />
             ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="plated" className="mt-6 space-y-8">
+        <TabsContent value="Plated" className="mt-6 space-y-8">
           <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
             <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative" />
             <div className="space-y-2">
@@ -87,13 +92,17 @@ export default function CateringPackages() {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {buffetPLatedPackages.map((pkg) => (
-              <CustomerPackageCard key={pkg.id} item={pkg} />
+            {buffetPlatedPackages.map((pkg, index) => (
+              <CustomerPackageCard
+                key={index}
+                item={pkg}
+                isPlated={activeTab}
+              />
             ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="event" className="mt-6 sm:mx-0 lg:mx-8 xl:mx-20">
+        <TabsContent value="Event" className="mt-6 sm:mx-0 lg:mx-8 xl:mx-20">
           {selectedEventType ? (
             <>
               <div className="flex items-center mb-2">
@@ -144,14 +153,8 @@ export default function CateringPackages() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                {eventPackages[selectedEventType].map((pkg) => {
-                  return (
-                    <CustomerPackageCard
-                      key={pkg.id}
-                      item={pkg}
-                      // openImageDialog={openImageDialog}
-                    />
-                  );
+                {eventPackages(selectedEventType).map((pkg, index) => {
+                  return <CustomerPackageCard key={index} item={pkg} isPlated={serviceType} />;
                 })}
               </div>
             </>
@@ -167,7 +170,7 @@ export default function CateringPackages() {
             </div>
           )}
         </TabsContent>
-        <TabsContent value="custom" className="mt-12 sm:mx-0 lg:mx-8 xl:mx-20">
+        <TabsContent value="Custom" className="mt-12 sm:mx-0 lg:mx-8 xl:mx-20">
           <CustomPackageForm />
         </TabsContent>
       </Tabs>

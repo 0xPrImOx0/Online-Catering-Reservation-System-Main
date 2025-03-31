@@ -17,10 +17,13 @@ export default function PackageDetailsDialog({
   pkg,
   open,
   onOpenChange,
+  isPlated,
 }: PackageDetailsDialogProps) {
-  const isPlated = "serviceHours" in pkg;
-  const isAvailable = true; // Assuming all packages are available by default
-
+  const platedInclusions = pkg.inclusions.filter((plated) =>
+    isPlated === "Plated"
+      ? plated.typeOfCustomer
+      : plated.typeOfCustomer === "Both"
+  );
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md md:max-w-xl w-full p-0 max-h-[85vh] flex flex-col overflow-hidden rounded-md">
@@ -36,15 +39,15 @@ export default function PackageDetailsDialog({
             />
             <div className="absolute top-4 right-16">
               <Badge
-                variant={isAvailable ? "default" : "destructive"}
+                variant={pkg.available ? "default" : "destructive"}
                 className={`
                   ${
-                    isAvailable
+                    pkg.available
                       ? "bg-emerald-600 hover:bg-emerald-700"
                       : "bg-red-500"
                   } `}
               >
-                {isAvailable ? "Available" : "Unavailable"}
+                {pkg.available ? "Available" : "Unavailable"}
               </Badge>
             </div>
             <Button
@@ -142,7 +145,7 @@ export default function PackageDetailsDialog({
                     </span>
                   </div>
                 )}
-                {pkg.inclusions.map((inclusion, index) => (
+                {platedInclusions.map((inclusion, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-primary" />
                     <span className="text-justify">{inclusion.includes}</span>

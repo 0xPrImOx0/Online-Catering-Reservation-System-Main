@@ -24,10 +24,12 @@ import {
 import ImageDialog from "../ImageDialog";
 import clsx from "clsx";
 
-export default function CustomerPackageCard({ item }: PackageCardProps) {
+export default function CustomerPackageCard({
+  item,
+  isPlated,
+}: PackageCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
-  const isAvailable = true; // Assuming all packages are available by default
 
   return (
     <Card className="w-full flex flex-col h-full">
@@ -53,14 +55,14 @@ export default function CustomerPackageCard({ item }: PackageCardProps) {
           </TooltipProvider>
           <div className="absolute top-2 right-2 space-x-2">
             <Badge
-              variant={isAvailable ? "default" : "destructive"}
+              variant={item.available ? "default" : "destructive"}
               className={
-                isAvailable
+                item.available
                   ? "bg-emerald-600 hover:bg-emerald-700"
                   : "bg-red-500"
               }
             >
-              {isAvailable ? "Available" : "Unavailable"}
+              {item.available ? "Available" : "Unavailable"}
             </Badge>
             <Badge
               className={clsx(
@@ -147,14 +149,14 @@ export default function CustomerPackageCard({ item }: PackageCardProps) {
             <h4 className="font-medium mb-2">Inclusions:</h4>
             <ul className="text-sm space-y-1 text-justify">
               {/* Show rice trays for buffet and plated packages */}
-              {/* {!item.id.includes("event") && (
+              {item.packageType !== "Event" && (
                 <li className="flex items-center gap-2">
                   <Check className="h-3 w-3 text-primary" />
                   {Math.ceil(item.minimumPax / 2)} trays of steamed rice (good
-                  for {item.minimumPax / 2} pax)
+                  for {item.minimumPax * 2} pax)
                 </li>
               )}
-              {item.inclusions.slice(0, 4).map((inclusion, index) => (
+              {/* {item.inclusions.slice(0, 4).map((inclusion, index) => (
                 <li key={index} className="flex items-center gap-2">
                   <Check className="h-3 w-3 text-primary" />
                   {inclusion}
@@ -180,13 +182,12 @@ export default function CustomerPackageCard({ item }: PackageCardProps) {
         </Button>
       </CardFooter>
 
-      <section className="mt-auto">
-        <PackageDetailsDialog
-          pkg={item}
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
-        />
-      </section>
+      <PackageDetailsDialog
+        pkg={item}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        isPlated={isPlated}
+      />
 
       <ImageDialog
         item={item}
