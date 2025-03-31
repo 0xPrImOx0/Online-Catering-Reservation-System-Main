@@ -4,13 +4,10 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Check, CheckCircle2Icon, X } from "lucide-react";
+import { CheckCircle2Icon, X } from "lucide-react";
 import Image from "next/image";
 import { menuItems } from "@/lib/menu-lists";
-import type {
-  PackageDetailsDialogProps,
-  // PlatedPackage,
-} from "@/types/package-types";
+import type { PackageDetailsDialogProps } from "@/types/package-types";
 import Link from "next/link";
 
 export default function PackageDetailsDialog({
@@ -18,8 +15,20 @@ export default function PackageDetailsDialog({
   open,
   onOpenChange,
   isPlated,
-  platedInclusions
 }: PackageDetailsDialogProps) {
+  // Filter inclusions based on customer type
+  const platedInclusions =
+    pkg.inclusions?.filter(
+      (inc) => inc.typeOfCustomer === "Both" || inc.typeOfCustomer === "Plated"
+    ) || [];
+
+  const buffetInclusions =
+    pkg.inclusions?.filter(
+      (inc) => inc.typeOfCustomer === "Both" || inc.typeOfCustomer === "Buffet"
+    ) || [];
+
+  // Use plated inclusions if isPlated is true, otherwise use buffet inclusions
+  const relevantInclusions = isPlated ? platedInclusions : buffetInclusions;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -76,7 +85,6 @@ export default function PackageDetailsDialog({
               <Button asChild variant={"secondary"}>
                 <Link href={"/book-now"}>Book Now</Link>
               </Button>
-              {/* <PackageBookForm package={pkg} /> */}
             </div>
           </div>
         </div>
@@ -142,7 +150,7 @@ export default function PackageDetailsDialog({
                     </span>
                   </div>
                 )}
-                {platedInclusions.map((inclusion, index) => (
+                {relevantInclusions.map((inclusion, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <CheckCircle2Icon className="h-4 w-4 text-green-500" />
                     <span className="text-justify">{inclusion.includes}</span>
