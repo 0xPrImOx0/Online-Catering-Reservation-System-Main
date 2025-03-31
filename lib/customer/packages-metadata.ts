@@ -37,6 +37,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     rating: 4.5,
     ratingCount: 200,
     packageType: "BuffetPlated",
+    eventType: undefined,
     serviceHours: 4,
     serviceCharge: 100,
     reviews: [],
@@ -73,6 +74,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     rating: 4.5,
     ratingCount: 200,
     packageType: "BuffetPlated",
+    eventType: undefined,
     serviceHours: 4.5,
     serviceCharge: 100,
     reviews: [],
@@ -114,6 +116,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     rating: 4.5,
     ratingCount: 200,
     packageType: "BuffetPlated",
+    eventType: undefined,
 
     serviceHours: 5,
     serviceCharge: 100,
@@ -162,6 +165,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     rating: 4.5,
     ratingCount: 200,
     packageType: "BuffetPlated",
+    eventType: undefined,
     serviceHours: 5.5,
     serviceCharge: 100,
   },
@@ -215,6 +219,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     rating: 4.5,
     ratingCount: 200,
     packageType: "BuffetPlated",
+    eventType: undefined,
 
     serviceHours: 6,
     serviceCharge: 100,
@@ -269,6 +274,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     rating: 4.5,
     ratingCount: 200,
     packageType: "BuffetPlated",
+    eventType: undefined,
 
     serviceHours: 6.5,
     serviceCharge: 100,
