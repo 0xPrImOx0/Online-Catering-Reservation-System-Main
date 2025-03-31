@@ -26,7 +26,7 @@ export interface PackageOption {
 }
 
 export type InclusionsProps = {
-  typeOfCustomer: "Both" | "Plated" | "Buffet";
+  typeOfCustomer: "Both" | "Plated" | "Buffet" | "Event";
   includes: string;
 };
 
@@ -40,7 +40,7 @@ export interface CateringPackageProps {
   id: string;
   name: string;
   description: string;
-  available?: boolean;
+  available: boolean;
   pricePerPax: number;
   minimumPax: number;
   recommendedPax: number;
@@ -74,7 +74,7 @@ export interface CateringPackagesProps {
   serviceHours?: number;
   serviceCharge?: number;
   eventType?: EventType;
-  packageType?: PackageType;
+  packageType: PackageType;
   reviews?: ReviewProps[];
 }
 
