@@ -16,7 +16,7 @@ export type PackageCategory =
 
 export type ServiceType = "Buffet" | "Plated";
 
-export type EventType = "Birthday" | "Wedding" | "Corporate" | "Graduation";
+export type EventType = "Birthday" | "Wedding" | "Corporate" | "Graduation" | "";
 
 export type PackageType = "BuffetPlated" | "Event";
 
@@ -97,15 +97,15 @@ export interface PackageImageDialogProps {
 
 export interface PackageCardProps {
   item: CateringPackagesProps;
-  isPlated?: string
+  isPlated?: string;
 }
 
 export interface PackageDetailsDialogProps {
   pkg: CateringPackagesProps;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  isPlated: string,
-  platedInclusions: InclusionsProps[]
+  isPlated: string;
+  platedInclusions: InclusionsProps[];
 }
 
 export interface PackageBookFormProps {
@@ -115,6 +115,7 @@ export interface PackageBookFormProps {
 export interface EventTypeCardProps {
   eventType: EventType;
   onSelect: (eventType: EventType) => void;
+  image?: string;
 }
 
 export interface DeletePackageDialogProps {

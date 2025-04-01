@@ -10,6 +10,7 @@ import CustomerPackageCard from "./CustomerPackageCard";
 import EventTypeCard from "./EventTypeCard";
 import CustomPackageForm from "./CustomPacakgeForm";
 import clsx from "clsx";
+import SelectedEventContainer from "./SelectedEventContainer";
 
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState("Buffet");
@@ -47,15 +48,17 @@ export default function CateringPackages() {
   };
 
   return (
-    <div className="container mx-auto pb-8">
-      <h1 className="text-5xl font-bold text-center mb-4">
-        <span className="capitalize">{activeTab}</span> Packages
-      </h1>
+    <div className="mx-[5%]">
+      <div className="">
+        <h1 className="text-5xl font-bold mb-4">
+          <span className="capitalize">{activeTab}</span> Packages
+        </h1>
 
-      <p className="text-center text-muted-foreground mb-8">
-        Authentic filipino {activeTab} cuisine for your special events and
-        celebrations
-      </p>
+        <p className="text-muted-foreground mb-10">
+          Authentic filipino {activeTab} cuisine for your special events and
+          celebrations
+        </p>
+      </div>
 
       <Tabs
         defaultValue="Buffet"
@@ -120,68 +123,15 @@ export default function CateringPackages() {
           </div>
         </TabsContent>
 
-        <TabsContent value="Event" className="mt-6 sm:mx-0 lg:mx-8 xl:mx-20">
+        <TabsContent value="Event" className="mt-0">
           {selectedEventType ? (
-            <>
-              <div className="flex items-center mb-2">
-                <Button
-                  variant="ghost"
-                  className="flex text-base items-center gap-1 self-start -px-4"
-                  onClick={() => setSelectedEventType(null)}
-                >
-                  <ChevronRight className="h-4 w-4 rotate-180" />
-                  Back to Event Types
-                </Button>
-              </div>
-              <div className="flex items-center justify-center mb-6">
-                <h2 className="text-2xl font-bold ml-4">
-                  {selectedEventType} Packages
-                </h2>
-              </div>
-
-              <div className="mb-10 space-y-10">
-                <div className="flex justify-center space-x-4 mb-4">
-                  <Button
-                    variant={serviceType === "Buffet" ? "default" : "outline"}
-                    onClick={() => setServiceType("Buffet")}
-                  >
-                    Buffet Service
-                  </Button>
-                  <Button
-                    variant={serviceType === "Plated" ? "default" : "outline"}
-                    onClick={() => setServiceType("Plated")}
-                  >
-                    Plated Service
-                  </Button>
-                </div>
-
-                {serviceType === "Plated" && (
-                  <div className="p-4 bg-muted rounded-lg flex items-start gap-3 mb-4">
-                    <Info className="size-5  text-muted-foreground mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">Plated Service Fee</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Plated service includes an additional fee of ₱100 per
-                        hour for professional waitstaff service. This fee is
-                        already included in the displayed price per person.
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                {eventPackages(selectedEventType).map((pkg, index) => {
-                  return (
-                    <CustomerPackageCard
-                      key={index}
-                      item={pkg}
-                      isPlated={serviceType}
-                    />
-                  );
-                })}
-              </div>
-            </>
+            <SelectedEventContainer
+              selectedEventType={selectedEventType}
+              setSelectedEventType={setSelectedEventType}
+              serviceType={serviceType}
+              setServiceType={setServiceType}
+              eventPackages={eventPackages(selectedEventType)}
+            />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
               {eventTypes.map((eventType) => (

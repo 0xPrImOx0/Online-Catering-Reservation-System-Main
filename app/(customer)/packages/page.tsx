@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="">
-      <div className=" py-12">
+    <main className="max-w-[1440px] mx-auto">
+      <div className="py-12">
         {/* Package Showcase */}
         <CateringPackages />
 
         {/* Testimonials */}
-        <section className="my-16 py-8 rounded-lg">
+        <section className="mt-16 rounded-lg px-[5%]">
           <h2 className="text-2xl font-bold mb-8 text-center">
             What Clients Say About Our Food
           </h2>
@@ -62,6 +62,7 @@ export default function Page() {
           buttonLabel="Book Now"
           href="/book-now"
           Icon={ClipboardCheck}
+          px
         />
       </div>
     </main>
