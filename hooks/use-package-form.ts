@@ -7,15 +7,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
-  CateringPackagesProps,
-  EventType,
+  type CateringPackagesProps,
+  type EventType,
   eventTypes,
-  InclusionsProps,
+  type InclusionsProps,
   packageCategories,
-  PackageCategory,
-  PackageOption,
-  PackageType,
-  ServiceType,
+  type PackageCategory,
+  type PackageOption,
+  type PackageType,
+  type ServiceType,
   serviceTypes,
 } from "@/types/package-types";
 
@@ -67,7 +67,7 @@ const formSchema = z
     serviceChargePerHour: z.number().min(0).optional(),
     serviceHours: z.number().min(0).optional(),
     totalServiceFee: z.number().min(0).optional(),
-    totalPriceWithService: z.number().min(0).optional(),
+    pricePerPaxWithServiceCharge: z.number().min(0).optional(), // Changed from totalPriceWithService
     imageUrl: z
       .string()
       .url({ message: "Please enter a valid URL" })
@@ -99,7 +99,7 @@ const defaultValues: PackageFormValues = {
   serviceChargePerHour: 0,
   serviceHours: 0,
   totalServiceFee: 0,
-  totalPriceWithService: 0,
+  pricePerPaxWithServiceCharge: 0, // Changed from totalPriceWithService
   imageUrl: "",
   imageUploadType: "url",
 };
@@ -156,10 +156,11 @@ export function usePackageForm({
       serviceHours: initialData.serviceHours ?? 0,
       totalServiceFee:
         (initialData.serviceCharge ?? 0) * (initialData.serviceHours ?? 0),
-      totalPriceWithService:
+      pricePerPaxWithServiceCharge:
+        initialData.pricePerPaxWithServiceCharge || // Changed from totalPriceWithService
         initialData.pricePerPax +
-        ((initialData.serviceCharge ?? 0) * (initialData.serviceHours ?? 0)) /
-          initialData.minimumPax,
+          ((initialData.serviceCharge ?? 0) * (initialData.serviceHours ?? 0)) /
+            initialData.minimumPax,
       imageUrl: initialData.imageUrl ?? "",
       imageUploadType: initialData.imageUrl ? "url" : "upload",
     };
@@ -282,6 +283,17 @@ export function usePackageForm({
     const displayPackageType =
       data.packageType === "BuffetPlated" ? "BuffetPlated" : "Event";
 
+    // Calculate pricePerPaxWithServiceCharge if not already set
+    const serviceChargePerHour = data.serviceChargePerHour || 0;
+    const serviceHours = data.serviceHours || 0;
+    const minimumPax = data.minimumPax || 1; // Avoid division by zero
+    const pricePerPax = data.pricePerPax || 0;
+
+    const totalServiceFee = serviceChargePerHour * serviceHours;
+    const serviceChargePerPax =
+      minimumPax > 0 ? totalServiceFee / minimumPax : 0;
+    const pricePerPaxWithServiceCharge = pricePerPax + serviceChargePerPax;
+
     // Create package object
     const packageData: CateringPackagesProps = {
       name: data.name,
@@ -294,10 +306,11 @@ export function usePackageForm({
       options: data.options,
       inclusions: data.inclusions,
       imageUrl: data.imageUrl || "",
-      serviceHours: data.serviceHours,
-      serviceCharge: data.serviceChargePerHour,
+      serviceHours: data.serviceHours || 0,
+      serviceCharge: data.serviceChargePerHour || 0,
       eventType: data.packageType === "Event" ? data.eventType : undefined,
       packageType: displayPackageType,
+      pricePerPaxWithServiceCharge: pricePerPaxWithServiceCharge,
     };
 
     console.log(
@@ -399,8 +412,12 @@ export function usePackageForm({
 
         if (minimumPax > 0) {
           const serviceChargePerPax = totalServiceFee / minimumPax;
-          const totalPriceWithService = pricePerPax + serviceChargePerPax;
-          form.setValue("totalPriceWithService", totalPriceWithService);
+          const pricePerPaxWithServiceCharge =
+            pricePerPax + serviceChargePerPax;
+          form.setValue(
+            "pricePerPaxWithServiceCharge",
+            pricePerPaxWithServiceCharge
+          ); // Changed from totalPriceWithService
         }
       }
 

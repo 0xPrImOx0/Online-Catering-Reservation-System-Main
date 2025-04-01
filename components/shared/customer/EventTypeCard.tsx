@@ -69,24 +69,3 @@ export default function EventTypeCard({
     </Card>
   );
 }
-
-{
-  /* <Link
-  href={link}
-  className="flex flex-1 overflow-hidden min-h-[400px] rounded-lg border"
->
-  <div className="flex-1 p-4 flex flex-col justify-between">
-
-
-    <div>
-      <div className="flex pt-4 items-center gap-4">
-        {link === "/menus" ? <UtensilsCrossed /> : <Info />}
-        <span className="text-lg font-medium flex-1">{footer}</span>
-        <div className="p-2 border border-foreground rounded-full">
-          <ArrowUpRightIcon className="w-7 h-7" />
-        </div>
-      </div>
-    </div>
-  </div>
-</Link>; */
-}

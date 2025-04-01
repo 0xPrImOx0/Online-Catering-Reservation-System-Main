@@ -98,8 +98,9 @@ export type FilterSectionProps = {
 
 export type SelectedEventContainerProps = {
   selectedEventType: string;
-  setSelectedEventType: Dispatch<SetStateAction<EventType | null>>;
-  serviceType: string;
-  setServiceType: Dispatch<SetStateAction<ServiceType>>;
-  eventPackages: CateringPackagesProps[];
+  setSelectedEventType: Dispatch<SetStateAction<EventType>>;
+  isPlated: boolean,
+  // serviceType: string;
+  // setServiceType: Dispatch<SetStateAction<ServiceType>>;
+  cateringPackages: CateringPackagesProps[];
 };

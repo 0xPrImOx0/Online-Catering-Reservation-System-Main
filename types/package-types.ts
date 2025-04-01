@@ -26,7 +26,7 @@ export interface PackageOption {
 }
 
 export type InclusionsProps = {
-  typeOfCustomer: "Both" | "Plated" | "Buffet";
+  typeOfCustomer: "Both" | "Buffet" | "Plated";
   includes: string;
 };
 
@@ -36,9 +36,7 @@ export interface ReviewProps {
   user: ObjectId; // Assuming this is a MongoDB ObjectId
 }
 
-//For Temporary. Still Thinking the Proper Schema for Proper Querying for the Backend. THIS ONE WILL BE THE BASIS
 export interface CateringPackagesProps {
-  //THIS MAY BE FINAL
   name: string;
   description: string;
   available: boolean;
@@ -49,14 +47,18 @@ export interface CateringPackagesProps {
   options: PackageOption[];
   inclusions: InclusionsProps[];
   imageUrl?: string;
-  imageFile?: Blob; //Temporary just thinking to utilize cloudinary for storing image
   rating?: number;
   ratingCount?: number;
-  serviceHours?: number;
-  serviceCharge?: number;
+  serviceHours: number;
+  serviceCharge: number;
   eventType?: EventType;
   packageType: PackageType;
   reviews?: ReviewProps[];
+  pricePerPaxWithServiceCharge: number;
+}
+
+export interface PackagesCardProps {
+  item: CateringPackagesProps & { id: string };
 }
 
 export interface FormStepType {
@@ -97,14 +99,14 @@ export interface PackageImageDialogProps {
 
 export interface PackageCardProps {
   item: CateringPackagesProps;
-  isPlated?: string;
+  isPlated?: boolean;
 }
 
 export interface PackageDetailsDialogProps {
   pkg: CateringPackagesProps;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  isPlated: string;
+  isPlated?: boolean;
   platedInclusions: InclusionsProps[];
 }
 

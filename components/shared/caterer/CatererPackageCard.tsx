@@ -26,7 +26,7 @@ import { AnimatedIconButton } from "../AnimatedIconButton";
 import ImageDialog from "../ImageDialog";
 import EditPackageForm from "./EditPackageForm";
 
-export function CatererPackageCard({ item }: PackageCardProps) {
+export function CatererPackageCard({ item, isPlated }: PackageCardProps) {
   const [showImageDialog, setShowImageDialog] = useState(false);
   const [isEditPackageOpen, setIsEditPackageOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -68,7 +68,7 @@ export function CatererPackageCard({ item }: PackageCardProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="bg-black/70 backdrop-blur-sm rounded-md px-2.5 py-1.5">
-                  {RenderStarRatings(item.rating, "medium")}
+                  {RenderStarRatings(item.rating || 0, "medium")}
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -139,7 +139,9 @@ export function CatererPackageCard({ item }: PackageCardProps) {
       <PackageDetailsDialog
         pkg={item}
         open={showPackageDetails}
+        isPlated={isPlated}
         onOpenChange={setShowPackageDetails}
+        platedInclusions={[]}
       />
       <ImageDialog
         item={item}

@@ -26,12 +26,12 @@ import clsx from "clsx";
 
 export default function CustomerPackageCard({
   item,
-  isPlated = "",
+  isPlated,
 }: PackageCardProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const platedInclusions = item.inclusions.filter((plated) =>
-    isPlated === "Plated"
+    isPlated
       ? plated.typeOfCustomer
       : plated.typeOfCustomer === "Both"
   );
@@ -73,7 +73,7 @@ export default function CustomerPackageCard({
               className={clsx(
                 "bg-background text-foreground border-foreground",
                 {
-                  hidden: isPlated !== "Plated",
+                  hidden: !isPlated,
                 }
               )}
             >

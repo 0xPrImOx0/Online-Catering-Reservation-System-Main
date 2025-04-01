@@ -1,22 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import SearchInput from "@/components/shared/SearchInput";
 import AddPackageDialog from "@/components/shared/caterer/AddPackageForm";
-import {
-  buffetPackages,
-  eventPackages,
-  platedPackages,
-} from "@/lib/customer/packages-metadata";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Info, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CatererPackageCard } from "@/components/shared/caterer/CatererPackageCard";
+import { cateringPackages } from "@/lib/customer/packages-metadata";
+import type { CateringPackagesProps } from "@/types/package-types";
 
 export default function PackageManagement() {
   // Simple state for dialog visibility
   const [isAddPackageOpen, setIsAddPackageOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [eventServiceType, setEventServiceType] = useState<"Buffet" | "Plated">(
+    "Buffet"
+  );
+
+  // Filter packages based on packageType and eventType
+  const buffetPackages = useMemo(() => {
+    return cateringPackages
+      .filter((pkg) => pkg.packageType === "BuffetPlated" && pkg.available)
+      .filter((pkg) => pkg.name.toLowerCase().includes(query.toLowerCase()));
+  }, [query]);
+
+  const platedPackages = useMemo(() => {
+    return cateringPackages
+      .filter((pkg) => pkg.packageType === "BuffetPlated" && pkg.available)
+      .filter((pkg) => pkg.name.toLowerCase().includes(query.toLowerCase()));
+  }, [query]);
+
+  // Group event packages by eventType
+  const eventPackages = useMemo(() => {
+    const filteredPackages = cateringPackages
+      .filter((pkg) => pkg.packageType === "Event" && pkg.available)
+      .filter((pkg) => pkg.name.toLowerCase().includes(query.toLowerCase()));
+
+    return {
+      Birthday: filteredPackages.filter((pkg) => pkg.eventType === "Birthday"),
+      Wedding: filteredPackages.filter((pkg) => pkg.eventType === "Wedding"),
+      Corporate: filteredPackages.filter(
+        (pkg) => pkg.eventType === "Corporate"
+      ),
+      Graduation: filteredPackages.filter(
+        (pkg) => pkg.eventType === "Graduation"
+      ),
+    };
+  }, [query]);
 
   const TabsTriggerStyle = ({
     value,
@@ -34,10 +65,22 @@ export default function PackageManagement() {
       </TabsTrigger>
     );
   };
+
+  // Filter inclusions based on service type
+  const getFilteredInclusions = (
+    pkg: CateringPackagesProps,
+    serviceType: "Buffet" | "Plated"
+  ) => {
+    return pkg.inclusions.filter(
+      (inclusion) =>
+        inclusion.typeOfCustomer === "Both" ||
+        inclusion.typeOfCustomer === serviceType
+    );
+  };
+
   return (
     <main className="space-y-8 max-w-[1440px] mx-auto">
       <h1 className="text-2xl font-bold tracking-tight mb-4">Packages</h1>
-
       {/* Search and View Controls */}
       <Tabs defaultValue="buffet" className="w-full">
         <div className="flex justify-between mb-6">
@@ -69,10 +112,11 @@ export default function PackageManagement() {
         <TabsContent value="buffet" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {buffetPackages.map((pkg) => (
-              <CatererPackageCard key={pkg.id} item={pkg} />
+              <CatererPackageCard key={pkg.name} item={pkg} isPlated={false} />
             ))}
           </div>
         </TabsContent>
+
         <TabsContent value="plated course" className="mt-6 space-y-8">
           <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
             <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative" />
@@ -88,44 +132,84 @@ export default function PackageManagement() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {platedPackages.map((pkg) => (
-              <CatererPackageCard key={pkg.id} item={pkg} />
+              <CatererPackageCard key={pkg.name} item={pkg} isPlated={true} />
             ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="event" className="space-y-10">
-          <div className="space-y-4">
-            <h4 className="text-xl font-medium">Birthdays</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {eventPackages.Birthday.map((pkg) => (
-                <CatererPackageCard key={pkg.id} item={pkg} />
-              ))}
-            </div>
-          </div>
-          <div className="space-y-4">
-            <h4 className="text-xl font-medium">Corporate</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {eventPackages.Corporate.map((pkg) => (
-                <CatererPackageCard key={pkg.id} item={pkg} />
-              ))}
-            </div>
-          </div>
-          <div className="space-y-4">
-            <h4 className="text-xl font-medium">Graduation</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {eventPackages.Graduation.map((pkg) => (
-                <CatererPackageCard key={pkg.id} item={pkg} />
-              ))}
-            </div>
-          </div>
-          <div className="space-y-4">
-            <h4 className="text-xl font-medium">Wedding</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {eventPackages.Wedding.map((pkg) => (
-                <CatererPackageCard key={pkg.id} item={pkg} />
-              ))}
-            </div>
-          </div>
+        <TabsContent value="event" className="space-y-6">
+          {/* Sub-tabs for Event Packages */}
+          <Tabs
+            defaultValue="Buffet"
+            className="w-full"
+            onValueChange={(value) =>
+              setEventServiceType(value as "Buffet" | "Plated")
+            }
+          >
+            <TabsList className="mb-6">
+              <TabsTrigger value="Buffet">Buffet Service</TabsTrigger>
+              <TabsTrigger value="Plated">Plated Service</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="Buffet" className="space-y-10">
+              {Object.entries(eventPackages).map(
+                ([eventType, packages]) =>
+                  packages.length > 0 && (
+                    <div key={eventType} className="space-y-4">
+                      <h4 className="text-xl font-medium">{eventType}</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {packages.map((pkg) => (
+                          <CatererPackageCard
+                            key={pkg.name}
+                            item={{
+                              ...pkg,
+                              inclusions: getFilteredInclusions(pkg, "Buffet"),
+                            }}
+                            isPlated={false}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )
+              )}
+            </TabsContent>
+
+            <TabsContent value="Plated" className="space-y-10">
+              <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
+                <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative" />
+                <div className="space-y-2">
+                  <h3 className="font-medium">Plated Service for Events</h3>
+                  <p className="text-sm text-muted-foreground text-justify">
+                    Our plated event packages include professional waitstaff who
+                    will serve each course directly to your guests&apos; tables.
+                    An additional service fee of ₱100 per hour is included in
+                    the price per person.
+                  </p>
+                </div>
+              </div>
+
+              {Object.entries(eventPackages).map(
+                ([eventType, packages]) =>
+                  packages.length > 0 && (
+                    <div key={eventType} className="space-y-4">
+                      <h4 className="text-xl font-medium">{eventType}</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {packages.map((pkg) => (
+                          <CatererPackageCard
+                            key={pkg.name}
+                            item={{
+                              ...pkg,
+                              inclusions: getFilteredInclusions(pkg, "Plated"),
+                            }}
+                            isPlated={true}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )
+              )}
+            </TabsContent>
+          </Tabs>
         </TabsContent>
 
         {/* Add Package Dialog */}

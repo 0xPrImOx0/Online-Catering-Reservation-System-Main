@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info, ChevronRight, XCircleIcon, X } from "lucide-react";
+import { Info, X } from "lucide-react";
 import { EventType, eventTypes, ServiceType } from "@/types/package-types";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { Button } from "@/components/ui/button";
@@ -13,20 +13,18 @@ import clsx from "clsx";
 import SelectedEventContainer from "./SelectedEventContainer";
 
 export default function CateringPackages() {
-  const [activeTab, setActiveTab] = useState("Buffet");
-  const [selectedEventType, setSelectedEventType] = useState<EventType | null>(
-    null
+  const [activeTab, setActiveTab] = useState<string>("Buffet");
+  const [isPlated, setIsPlated] = useState(false);
+  const [selectedEventType, setSelectedEventType] = useState<EventType>(
+    "Birthday"
   );
-  const [serviceType, setServiceType] = useState<ServiceType>("Buffet");
   const buffetPlatedPackages = cateringPackages.filter(
     (pkg) => pkg.packageType === "BuffetPlated"
   );
 
-  const eventPackages = (event: EventType) => {
-    return cateringPackages.filter(
-      (pkg) => pkg.packageType === "Event" && pkg.eventType === event
-    );
-  };
+  useEffect(() => {
+    activeTab === "Plated" ? setIsPlated(true) : setIsPlated(false);
+  }, [activeTab]);
 
   const [closePlatedWarning, setClosePlatedWarning] = useState(false);
 
@@ -75,11 +73,7 @@ export default function CateringPackages() {
         <TabsContent value="Buffet" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {buffetPlatedPackages.map((pkg, index) => (
-              <CustomerPackageCard
-                key={index}
-                item={pkg}
-                isPlated={activeTab}
-              />
+              <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />
             ))}
           </div>
         </TabsContent>
@@ -114,24 +108,20 @@ export default function CateringPackages() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {buffetPlatedPackages.map((pkg, index) => (
-              <CustomerPackageCard
-                key={index}
-                item={pkg}
-                isPlated={activeTab}
-              />
+              <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />
             ))}
           </div>
         </TabsContent>
 
         <TabsContent value="Event" className="mt-0">
-          {selectedEventType ? (
-            <SelectedEventContainer
+           <SelectedEventContainer
               selectedEventType={selectedEventType}
               setSelectedEventType={setSelectedEventType}
-              serviceType={serviceType}
-              setServiceType={setServiceType}
-              eventPackages={eventPackages(selectedEventType)}
+              isPlated={isPlated}
+              cateringPackages={cateringPackages}
             />
+          {/* {selectedEventType ? (
+           
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
               {eventTypes.map((eventType) => (
@@ -141,8 +131,8 @@ export default function CateringPackages() {
                   onSelect={setSelectedEventType}
                 />
               ))}
-            </div>
-          )}
+            </div> */}
+          {/* )} */}
         </TabsContent>
         <TabsContent value="Custom" className="mt-12 sm:mx-0 lg:mx-8 xl:mx-20">
           <CustomPackageForm />

@@ -4,22 +4,22 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Check, CheckCircle2Icon, X } from "lucide-react";
+import { CheckCircle2Icon, X } from "lucide-react";
 import Image from "next/image";
 import { menuItems } from "@/lib/menu-lists";
-import type {
-  PackageDetailsDialogProps,
-  // PlatedPackage,
-} from "@/types/package-types";
+import type { PackageDetailsDialogProps } from "@/types/package-types";
 import Link from "next/link";
 
 export default function PackageDetailsDialog({
   pkg,
   open,
   onOpenChange,
-  isPlated,
-  platedInclusions
+  isPlated = false,
+  platedInclusions = [],
 }: PackageDetailsDialogProps) {
+  // If no platedInclusions are provided, use the package's own inclusions
+  const displayInclusions =
+    platedInclusions.length > 0 ? platedInclusions : pkg.inclusions;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -42,7 +42,8 @@ export default function PackageDetailsDialog({
                     pkg.available
                       ? "bg-emerald-600 hover:bg-emerald-700"
                       : "bg-red-500"
-                  } `}
+                  }
+                `}
               >
                 {pkg.available ? "Available" : "Unavailable"}
               </Badge>
@@ -56,16 +57,16 @@ export default function PackageDetailsDialog({
               <X className="h-4 w-4" />
             </Button>
           </div>
-
           {/* Title and Description Section */}
           <div className="p-6 bg-background border-b border-border">
             <DialogTitle className="text-2xl font-bold">{pkg.name}</DialogTitle>
             <p className="text-muted-foreground mt-2">{pkg.description}</p>
-
             <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
               <div>
                 <span className="text-lg font-bold">
-                  ₱ {pkg.pricePerPax.toFixed(2)} per pax
+                  {isPlated
+                    ? `₱ ${pkg.pricePerPaxWithServiceCharge.toFixed(2)} per pax`
+                    : `₱ ${pkg.pricePerPax.toFixed(2)} per pax`}
                 </span>
                 {isPlated && (
                   <span className="text-xs block text-primary-foreground/80">
@@ -76,11 +77,9 @@ export default function PackageDetailsDialog({
               <Button asChild variant={"secondary"}>
                 <Link href={"/book-now"}>Book Now</Link>
               </Button>
-              {/* <PackageBookForm package={pkg} /> */}
             </div>
           </div>
         </div>
-
         {/* Scrollable Content Section */}
         <div className="overflow-y-auto p-6 flex-grow">
           <div className="grid gap-6">
@@ -128,7 +127,6 @@ export default function PackageDetailsDialog({
                 ))}
               </Card>
             </div>
-
             <Card className="p-4">
               <h3 className="text-lg font-semibold mb-3">Inclusions</h3>
               <div className="grid grid-cols-1 gap-2">
@@ -142,7 +140,7 @@ export default function PackageDetailsDialog({
                     </span>
                   </div>
                 )}
-                {platedInclusions.map((inclusion, index) => (
+                {displayInclusions.map((inclusion, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <CheckCircle2Icon className="h-4 w-4 text-green-500" />
                     <span className="text-justify">{inclusion.includes}</span>
@@ -150,7 +148,6 @@ export default function PackageDetailsDialog({
                 ))}
               </div>
             </Card>
-
             <Card className="p-4">
               <h3 className="text-lg font-semibold mb-3">
                 Sample Menu Selection
