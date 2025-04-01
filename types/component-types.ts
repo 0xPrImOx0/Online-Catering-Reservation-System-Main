@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { AllergenProps, MenuItem } from "./menu-types";
 import { SetStateBoolean } from "./global-types";
-import { CateringPackagesProps } from "./package-types";
+import { CateringPackagesProps, EventType, ServiceType } from "./package-types";
 
 //Search Bar Types
 export type SearchInputProps = {
@@ -94,4 +94,13 @@ export type FilterSectionProps = {
       sortBy: string;
     }>
   >;
+};
+
+export type SelectedEventContainerProps = {
+  selectedEventType: string;
+  setSelectedEventType: Dispatch<SetStateAction<EventType>>;
+  isPlated: boolean,
+  // serviceType: string;
+  // setServiceType: Dispatch<SetStateAction<ServiceType>>;
+  cateringPackages: CateringPackagesProps[];
 };
