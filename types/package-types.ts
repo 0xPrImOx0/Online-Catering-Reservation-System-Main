@@ -16,7 +16,12 @@ export type PackageCategory =
 
 export type ServiceType = "Buffet" | "Plated";
 
-export type EventType = "Birthday" | "Wedding" | "Corporate" | "Graduation" | "";
+export type EventType =
+  | "Birthday"
+  | "Wedding"
+  | "Corporate"
+  | "Graduation"
+  | "";
 
 export type PackageType = "BuffetPlated" | "Event";
 
@@ -41,20 +46,20 @@ export interface CateringPackagesProps {
   description: string;
   available: boolean;
   pricePerPax: number;
+  pricePerPaxWithServiceCharge: number;
   minimumPax: number;
   recommendedPax: number;
   maximumPax: number;
   options: PackageOption[];
   inclusions: InclusionsProps[];
-  imageUrl?: string;
-  rating?: number;
-  ratingCount?: number;
   serviceHours: number;
   serviceCharge: number;
   eventType?: EventType;
   packageType: PackageType;
+  imageUrl?: string;
+  rating?: number;
+  ratingCount?: number;
   reviews?: ReviewProps[];
-  pricePerPaxWithServiceCharge: number;
 }
 
 export interface PackagesCardProps {
@@ -154,7 +159,6 @@ export const packageFormSteps = [
   {
     id: "package-type",
     title: "Package Type",
-    description: "Select the type of package you want to create",
   },
   {
     id: "basic-info",

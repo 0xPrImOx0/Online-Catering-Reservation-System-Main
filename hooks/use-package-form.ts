@@ -15,24 +15,30 @@ import {
   type PackageCategory,
   type PackageOption,
   type PackageType,
-  type ServiceType,
-  serviceTypes,
 } from "@/types/package-types";
 import { toast } from "sonner";
 
 // Form schema using Zod
 const formSchema = z
   .object({
-    packageType: z.enum(["BuffetPlated", "Event"] as const),
     name: z.string().min(2, { message: "Name must be at least 2 characters" }),
     description: z
       .string()
       .min(20, { message: "Description must be at least 20 characters" }),
     available: z.boolean().default(true),
-    eventType: z.enum(eventTypes as [EventType, ...EventType[]]).optional(),
-    serviceType: z
-      .enum(serviceTypes as [ServiceType, ...ServiceType[]])
-      .default("Buffet"),
+    pricePerPax: z
+      .number()
+      .min(1, { message: "Price per pax must be at least 1" }),
+    pricePerPaxWithServiceCharge: z.number().min(0).optional(), // Changed from totalPriceWithService
+    minimumPax: z
+      .number()
+      .min(10, { message: "Minimum pax must be at least 10" }),
+    recommendedPax: z
+      .number()
+      .min(10, { message: "Recommended pax must be at least 10" }),
+    maximumPax: z
+      .number()
+      .min(10, { message: "Maximum pax must be at least 10" }),
     options: z
       .array(
         z.object({
@@ -43,18 +49,6 @@ const formSchema = z
         })
       )
       .min(1, { message: "Add at least one package option" }),
-    pricePerPax: z
-      .number()
-      .min(1, { message: "Price per pax must be at least 1" }),
-    minimumPax: z
-      .number()
-      .min(10, { message: "Minimum pax must be at least 10" }),
-    recommendedPax: z
-      .number()
-      .min(10, { message: "Recommended pax must be at least 10" }),
-    maximumPax: z
-      .number()
-      .min(10, { message: "Maximum pax must be at least 10" }),
     inclusions: z
       .array(
         z.object({
@@ -65,15 +59,16 @@ const formSchema = z
         })
       )
       .min(1, { message: "Add at least one inclusion" }),
-    serviceChargePerHour: z.number().min(0).optional(),
     serviceHours: z.number().min(0).optional(),
-    totalServiceFee: z.number().min(0).optional(),
-    pricePerPaxWithServiceCharge: z.number().min(0).optional(), // Changed from totalPriceWithService
+    serviceChargePerHour: z.number().min(0).optional(),
+    eventType: z.enum(eventTypes as [EventType, ...EventType[]]).optional(),
+    packageType: z.enum(["BuffetPlated", "Event"] as const),
     imageUrl: z
       .string()
       .url({ message: "Please enter a valid URL" })
       .or(z.literal("")),
     imageFile: z.instanceof(File).optional(),
+    totalServiceFee: z.number().min(0).optional(),
     imageUploadType: z.enum(["url", "upload"]).default("url"),
   })
   .refine((data) => data.packageType !== "Event" || !!data.eventType, {
@@ -85,23 +80,22 @@ export type PackageFormValues = z.infer<typeof formSchema>;
 
 // Default form values
 const defaultValues: PackageFormValues = {
-  packageType: "BuffetPlated",
   name: "",
   description: "",
   available: true,
-  eventType: undefined,
-  serviceType: "Buffet",
-  options: [],
   pricePerPax: 0,
+  pricePerPaxWithServiceCharge: 0, // Changed from totalPriceWithService
   minimumPax: 0,
   recommendedPax: 0,
   maximumPax: 0,
+  options: [],
   inclusions: [],
-  serviceChargePerHour: 0,
   serviceHours: 0,
-  totalServiceFee: 0,
-  pricePerPaxWithServiceCharge: 0, // Changed from totalPriceWithService
+  serviceChargePerHour: 0,
+  eventType: undefined,
+  packageType: "BuffetPlated",
   imageUrl: "",
+  totalServiceFee: 0,
   imageUploadType: "url",
 };
 
@@ -146,7 +140,6 @@ export function usePackageForm({
       description: initialData.description,
       available: initialData.available ?? true,
       eventType: initialData.eventType,
-      serviceType: "Buffet", // Default value, will be overridden if needed
       options: initialData.options,
       pricePerPax: initialData.pricePerPax,
       minimumPax: initialData.minimumPax,
