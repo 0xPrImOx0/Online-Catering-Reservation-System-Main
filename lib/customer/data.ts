@@ -1,0 +1,28 @@
+export const data = {
+  packageType: "BuffetPlated",
+  name: "sadsads",
+  description: "dasdasdsadasdasdsadasd",
+  available: true,
+  serviceType: "Buffet",
+  options: [
+    { category: "Soup", count: 1 },
+    { category: "Salad", count: 1 },
+    { category: "Beef", count: 1 },
+    { category: "Pork", count: 1 },
+  ],
+  pricePerPax: 123,
+  minimumPax: 10,
+  recommendedPax: 50,
+  maximumPax: 100,
+  inclusions: [
+    { typeOfCustomer: "Both", includes: "yjyiyui" },
+    { typeOfCustomer: "Buffet", includes: "uiuyiyu" },
+    { typeOfCustomer: "Plated", includes: "uyiuyiyuiuyi" },
+  ],
+  serviceChargePerHour: 100,
+  serviceHours: 10,
+  totalServiceFee: 1000,
+  pricePerPaxWithServiceCharge: 223,
+  imageUrl: "",
+  imageUploadType: "url",
+};

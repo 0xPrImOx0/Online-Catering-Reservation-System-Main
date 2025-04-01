@@ -18,6 +18,7 @@ import {
   type ServiceType,
   serviceTypes,
 } from "@/types/package-types";
+import { toast } from "sonner";
 
 // Form schema using Zod
 const formSchema = z
@@ -320,6 +321,7 @@ export function usePackageForm({
     // Here you would typically send this to your API
     // If there's an image file, you would upload it first and then update the imageUrl
 
+    toast.success(JSON.stringify(data, null, 2));
     // Show success message
     setIsSubmitSuccess(true);
 

@@ -48,7 +48,7 @@ export function PackageOptionsStep({ formHook }: PackageOptionsStepProps) {
                 <div>
                   <Label htmlFor="category">Category</Label>
                   <Select
-                    value={newOption.category}
+                    value={newOption.category || availableCategories[1]} // Ensure default selection
                     onValueChange={(value) =>
                       setNewOption({
                         ...newOption,

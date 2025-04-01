@@ -82,7 +82,11 @@ export function CatererPackageCard({ item, isPlated }: PackageCardProps) {
 
         <div className="absolute bottom-3 right-3">
           <div className="bg-black/70 backdrop-blur-sm text-white rounded-md px-2.5 py-1.5 font-bold">
-            &#8369; {item.pricePerPax.toFixed(2)} / pax
+            &#8369;{" "}
+            {isPlated
+              ? item.pricePerPaxWithServiceCharge.toFixed(2)
+              : item.pricePerPax.toFixed(2)}{" "}
+            / pax
           </div>
         </div>
       </div>

@@ -326,7 +326,7 @@ export function InclusionsServicesStep({
 
           <FormField
             control={form.control}
-            name="totalPriceWithService"
+            name="pricePerPaxWithServiceCharge"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Total Price with Service</FormLabel>

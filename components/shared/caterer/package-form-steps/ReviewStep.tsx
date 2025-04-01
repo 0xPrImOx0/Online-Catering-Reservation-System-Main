@@ -340,7 +340,7 @@ export default function ReviewStep({ formHook }: ReviewStepProps) {
                         Total Price with Service
                       </h5>
                       <p className="text-sm font-medium">
-                        ₱{form.watch("totalPriceWithService")}
+                        ₱{form.watch("pricePerPaxWithServiceCharge")}
                       </p>
                     </div>
                   </div>
@@ -362,6 +362,7 @@ export default function ReviewStep({ formHook }: ReviewStepProps) {
                           : previewImage || ""
                       }
                       alt="Package preview"
+                      fill
                       className="max-h-full max-w-full object-contain"
                     />
                   </div>
