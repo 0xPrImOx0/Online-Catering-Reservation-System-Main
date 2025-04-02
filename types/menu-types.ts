@@ -1,6 +1,14 @@
 import { useMenuForm } from "@/hooks/use-menu-form";
 import { SetStateBoolean } from "./global-types";
+<<<<<<< HEAD
 import { CateringPackagesProps, ReviewsProps } from "./package-types";
+=======
+<<<<<<< HEAD
+import { CateringPackagesProps, ReviewsProps } from "./package-types";
+=======
+import { CateringPackagesProps } from "./package-types";
+>>>>>>> 0ff5a0ccd6c7aedf9974e22bf89e79f11f7cbb97
+>>>>>>> 18bc29a5e1a3389b1b3f80b854bf92baf8204838
 
 export type ServingSize = 6 | 10 | 15 | 20;
 
