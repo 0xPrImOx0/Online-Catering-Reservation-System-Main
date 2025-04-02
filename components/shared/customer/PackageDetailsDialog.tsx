@@ -161,7 +161,7 @@ export default function PackageDetailsDialog({
                         .filter((dish) => dish.category === option.category)
                         .slice(0, 3)
                         .map((dish) => (
-                          <li key={dish.id} className="flex items-center gap-2">
+                          <li key={dish._id} className="flex items-center gap-2">
                             <CheckCircle2Icon className="h-4 w-4 text-green-500" />
                             {dish.name}
                           </li>

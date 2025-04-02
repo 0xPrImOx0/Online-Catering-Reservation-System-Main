@@ -26,7 +26,7 @@ import TrayPriceCard from "../TrayPriceCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
+export function MenuDetailsDialog({ menu, children }: MenuDetailsDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -34,8 +34,8 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
         <div className="sticky top-0 z-10 shadow-md border-t-slate-400">
           <div className="relative w-full">
             <Image
-              src={item.imageUrl || "/placeholder.svg"}
-              alt={item.name}
+              src={menu.imageUrl || "/placeholder.svg"}
+              alt={menu.name}
               priority
               width={600}
               height={240}
@@ -44,51 +44,51 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
 
             <div className="absolute top-2 right-2 flex gap-2">
               <Badge
-                variant={item.available ? "default" : "destructive"}
+                variant={menu.available ? "default" : "destructive"}
                 className={clsx({
-                  "bg-emerald-600 dark:bg-emerald-500": item.available,
+                  "bg-emerald-600 dark:bg-emerald-500": menu.available,
                 })}
               >
-                {item.available ? "Available" : "Unavailable"}
+                {menu.available ? "Available" : "Unavailable"}
               </Badge>
-              <CategoryBadge category={item.category} />
+              <CategoryBadge category={menu.category} />
 
-              {item.spicy && (
+              {menu.spicy && (
                 <Badge
                   variant="outline"
-                  className="bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 flex items-center gap-1"
+                  className="bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 flex menus-center gap-1"
                 >
                   <Flame className="h-3 w-3" /> Spicy
                 </Badge>
               )}
-              <DialogClose className="h-8 w-8 rounded-full bg-background backdrop-blur-sm flex items-center justify-center hover:text-red-500 hover:bg-black dark:hover:bg-white transition-colors">
+              <DialogClose className="h-8 w-8 rounded-full bg-background backdrop-blur-sm flex menus-center justify-center hover:text-red-500 hover:bg-black dark:hover:bg-white transition-colors">
                 <X className="h-4 w-4" />
               </DialogClose>
             </div>
           </div>
 
           <div className="p-6 pb-2 border-b border-border">
-            <div className="flex items-center justify-between">
+            <div className="flex menus-center justify-between">
               <DialogTitle className="text-2xl text-foreground font-serif">
-                {item.name}
+                {menu.name}
               </DialogTitle>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div>{RenderStarRatings(item.rating, "large")}</div>
+                    <div>{RenderStarRatings(menu.rating, "large")}</div>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
-                      {item.rating} out of 5 ({item.ratingCount} reviews)
+                      {menu.rating} out of 5 ({menu.ratingCount} reviews)
                     </p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
             <DialogDescription className="text-muted-foreground mt-2">
-              {item.shortDescription}
+              {menu.shortDescription}
             </DialogDescription>
-            <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
+            <div className="flex justify-between menus-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
               <div>
                 <span className="text-lg font-bold">per pax</span>
               </div>
@@ -105,7 +105,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               Description
             </DialogTitle>
             <p className="text-muted-foreground text-justify">
-              {item.fullDescription}
+              {menu.fullDescription}
             </p>
           </div>
 
@@ -114,8 +114,8 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               Ingredients
             </h4>
             <div className="flex gap-2 flex-wrap">
-              {item.ingredients.length > 0 ? (
-                item.ingredients.map((ingredient) => (
+              {menu.ingredients.length > 0 ? (
+                menu.ingredients.map((ingredient) => (
                   <Badge
                     key={ingredient}
                     variant="outline"
@@ -135,8 +135,8 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               Allergens
             </h4>
             <div className="flex flex-wrap gap-1.5">
-              {item.allergens.length > 0 ? (
-                item.allergens.map((allergen) => (
+              {menu.allergens.length > 0 ? (
+                menu.allergens.map((allergen) => (
                   <Badge key={allergen} variant="outline">
                     {allergen}
                   </Badge>
@@ -152,12 +152,15 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               Nutritional Information
             </h4>
             <div className="grid grid-cols-2 gap-2">
-              {Object.entries(item.nutritionInfo).map(([key, value]) => (
-                <Card key={key} className="flex justify-between p-2">
-                  <span className="capitalize">{key}</span>
-                  <span className="font-bold">{value}</span>
-                </Card>
-              ))}
+              {Object.entries(menu.nutritionInfo).map(
+                ([key, value]) =>
+                  key !== "_id" && (
+                    <Card key={key} className="flex justify-between p-2">
+                      <span className="capitalize">{key}</span>
+                      <span className="font-bold">{value}</span>
+                    </Card>
+                  )
+              )}
             </div>
             <p className="text-xs text-muted-foreground mt-2">
               *Values are per serving
@@ -169,7 +172,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               Preparation Method
             </h4>
             <p className="text-muted-foreground text-justify">
-              {item.preparationMethod}
+              {menu.preparationMethod}
             </p>
           </div>
 
@@ -178,22 +181,22 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               Pricing
             </h4>
             <div className="space-y-2">
-              <Card className="flex justify-between items-center p-2 rounded py-3">
+              <Card className="flex justify-between menus-center p-2 rounded py-3">
                 <div>
                   <p className="font-medium">Regular price per pax</p>
                 </div>
                 <div className="text-right">
                   <p className="font-bold">
-                    &#8369;{item.regularPricePerPax.toFixed(2)}
+                    &#8369;{menu.regularPricePerPax.toFixed(2)}
                   </p>
                 </div>
               </Card>
 
-              {item.prices.map((price) => (
+              {menu.prices.map((price) => (
                 <TrayPriceCard
                   key={price.minimumPax}
                   data={price}
-                  regularPrice={item.regularPricePerPax}
+                  regularPrice={menu.regularPricePerPax}
                 />
               ))}
             </div>

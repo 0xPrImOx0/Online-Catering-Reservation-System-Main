@@ -1,40 +1,63 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CustomerMenuCard } from "./CustomerMenuCard";
 import CustomPagination from "../CustomPagination";
-import { AllergenProps, PaginatedMenuProps } from "@/types/menu-types";
+import { AllergenProps, MenuItem } from "@/types/menu-types";
 import { usePathname } from "next/navigation";
 import CatererMenuCard from "../caterer/CatererMenuCard";
 import FilterSection from "../FilterSection";
+import axios from "axios";
 
-export default function PaginatedMenus({ items }: PaginatedMenuProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+async function fetchMenus(page: number, limit: number) {
+  const response = await axios.get("http://localhost:5500/api/menus", {
+    params: { page, limit },
+  });
+  return response.data.data;
+}
+
+export default function PaginatedMenus() {
   const [query, setQuery] = useState("");
+  const menuListRef = useRef<HTMLDivElement>(null);
   const [filters, setFilters] = useState({
     category: "",
     allergens: "" as AllergenProps,
     sortBy: "",
   });
+  const [menus, setMenus] = useState<MenuItem[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const menusPerPage = 9;
 
-  const filterSelectMenus = items.filter((item) => {
-    const matchesQuery = item.name.toLowerCase().includes(query.toLowerCase());
+  useEffect(() => {
+    const getMenus = async () => {
+      try {
+        const menus = await fetchMenus(currentPage, menusPerPage);
+        setMenus(menus || []);
+      } catch (error) {
+        console.error("Failed to fetch menus:", error); // Log any errors
+        setMenus([]); // Set empty array if fetch fails
+      }
+    };
+    getMenus();
+  }, [currentPage]);
+
+  const filterSelectMenus = menus.filter((menu) => {
+    const matchesQuery = menu.name.toLowerCase().includes(query.toLowerCase());
     const matchesCategory =
-      !filters.category || item.category.toLowerCase() === filters.category;
+      !filters.category || menu.category.toLowerCase() === filters.category;
     const matchesAllergens =
-      !filters.allergens || item.allergens.includes(filters.allergens);
+      !filters.allergens || menu.allergens.includes(filters.allergens);
     return matchesQuery && matchesCategory && matchesAllergens;
   });
-  const itemsPerPage = 9;
-  const totalItems = filterSelectMenus.length;
-  const menuListRef = useRef<HTMLDivElement>(null);
 
-  // Calculate the items to display on the current page
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const totalMenus = filterSelectMenus.length;
+
+  // Calculate the menus to display on the current page
+  const startIndex = (currentPage - 1) * menusPerPage;
+  const endIndex = startIndex + menusPerPage;
   const paginatedMenu = filterSelectMenus.slice(startIndex, endIndex);
 
   const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= Math.ceil(totalItems / itemsPerPage)) {
+    if (newPage >= 1 && newPage <= Math.ceil(totalMenus / menusPerPage)) {
       setCurrentPage(newPage);
       menuListRef.current?.scrollIntoView({ behavior: "smooth" });
     }
@@ -42,6 +65,7 @@ export default function PaginatedMenus({ items }: PaginatedMenuProps) {
 
   const pathname = usePathname();
   const isCaterer = pathname.includes("/caterer");
+  
   return (
     <div>
       <div className="absolute top-0" ref={menuListRef} />
@@ -56,16 +80,16 @@ export default function PaginatedMenus({ items }: PaginatedMenuProps) {
 
         {paginatedMenu.length > 0 ? (
           isCaterer ? (
-            paginatedMenu.map((item) => (
-              <CatererMenuCard key={item.id} item={item} />
+            paginatedMenu.map((menu) => (
+              <CatererMenuCard key={menu._id} menu={menu} />
             ))
           ) : (
-            paginatedMenu.map((item) => (
-              <CustomerMenuCard key={item.id} item={item} />
+            paginatedMenu.map((menu) => (
+              <CustomerMenuCard key={menu._id} menu={menu} />
             ))
           )
         ) : (
-          <div className="col-span-3 min-h-[50vh] flex justify-center items-center">
+          <div className="col-span-3 min-h-[50vh] flex justify-center menus-center">
             <span className="font-bold text-4xl">No Menu Found</span>{" "}
           </div>
         )}
@@ -74,8 +98,8 @@ export default function PaginatedMenus({ items }: PaginatedMenuProps) {
         startIndex={startIndex}
         endIndex={endIndex}
         currentPage={currentPage}
-        totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
+        totalMenus={totalMenus}
+        menusPerPage={menusPerPage}
         onPageChange={handlePageChange}
       />
     </div>

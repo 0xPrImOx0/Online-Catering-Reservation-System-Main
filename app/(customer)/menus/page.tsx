@@ -1,15 +1,13 @@
 import { ClipboardCheck, Star } from "lucide-react";
 import FooterCTA from "@/components/shared/customer/FooterCTA";
 import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
-import { menuItems } from "@/lib/menu-lists";
 import { Metadata } from "next";
-import FilterSection from "@/components/shared/FilterSection";
 
 export const metadata: Metadata = {
   title: "Menus",
 };
 
-export default function Page() {
+export default async function Page() {
   return (
     <main className="px-[5%]">
       <div className=" py-12">
@@ -19,13 +17,7 @@ export default function Page() {
             Check out our dishes available for your needs!
           </p>
         </div>{" "}
-        {menuItems.length > 0 ? (
-          <PaginatedMenus items={menuItems} />
-        ) : (
-          <div className="min-h-[50vh] flex justify-center items-center">
-            <span className="font-bold text-4xl">No Menu Found</span>{" "}
-          </div>
-        )}
+        <PaginatedMenus />
         {/* Testimonials */}
         <section className="my-16 py-8 rounded-lg">
           <h2 className="text-2xl font-bold mb-8 text-center">

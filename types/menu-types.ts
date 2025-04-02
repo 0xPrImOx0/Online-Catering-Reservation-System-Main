@@ -1,14 +1,6 @@
 import { useMenuForm } from "@/hooks/use-menu-form";
 import { SetStateBoolean } from "./global-types";
-<<<<<<< HEAD
 import { CateringPackagesProps, ReviewsProps } from "./package-types";
-=======
-<<<<<<< HEAD
-import { CateringPackagesProps, ReviewsProps } from "./package-types";
-=======
-import { CateringPackagesProps } from "./package-types";
->>>>>>> 0ff5a0ccd6c7aedf9974e22bf89e79f11f7cbb97
->>>>>>> 18bc29a5e1a3389b1b3f80b854bf92baf8204838
 
 export type ServingSize = 6 | 10 | 15 | 20;
 
@@ -64,7 +56,7 @@ export interface PriceInfo {
 }
 
 export interface MenuItem {
-  id: number;
+  _id: number;
   name: string;
   category: CategoryProps;
   available: boolean;
@@ -85,7 +77,7 @@ export interface MenuItem {
 }
 
 export interface MenuCardProps {
-  item: MenuItem;
+  menu: MenuItem;
 }
 
 export interface PaginatedMenuProps {
@@ -101,7 +93,7 @@ export type CalculationParams = {
 export type StarSize = "small" | "medium" | "large";
 
 export interface MenuDetailsDialogProps {
-  item: MenuItem;
+  menu: MenuItem;
   children: React.ReactNode;
 }
 
@@ -124,11 +116,11 @@ export interface AddMenuDialogProps {
 export interface EditMenuDialogProps {
   isEditMenuOpen: boolean;
   setIsEditMenuOpen: SetStateBoolean;
-  item: MenuItem;
+  menu: MenuItem;
 }
 
 export type DeleteMenuDialogProps = {
-  item: MenuItem;
+  menu: MenuItem;
   isDeleteDialogOpen: boolean;
   setIsDeleteDialogOpen: SetStateBoolean;
 };
