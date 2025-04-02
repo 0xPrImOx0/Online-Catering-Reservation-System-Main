@@ -6,7 +6,7 @@ import { CateringPackagesProps } from "@/types/package-types";
 // import { cateringPackages } from "@/lib/customer/packages-metadata";
 
 export default async function Featured() {
-  const data = await fetch("http://localhost:5500/api/packages");
+  const data = await fetch("http://localhost:5500/api/packages/featured");
   const cateringPackages = await data.json();
   // const featuredPackages = cateringPackages.filter(
   //   (pkg: CateringPackagesProps) => pkg.packageType === "BuffetPlated"
