@@ -65,7 +65,7 @@ export default function PaginatedMenus() {
 
   const pathname = usePathname();
   const isCaterer = pathname.includes("/caterer");
-  
+
   return (
     <div>
       <div className="absolute top-0" ref={menuListRef} />
@@ -89,7 +89,7 @@ export default function PaginatedMenus() {
             ))
           )
         ) : (
-          <div className="col-span-3 min-h-[50vh] flex justify-center menus-center">
+          <div className="col-span-3 min-h-[50vh] flex justify-center items-center">
             <span className="font-bold text-4xl">No Menu Found</span>{" "}
           </div>
         )}

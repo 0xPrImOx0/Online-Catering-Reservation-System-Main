@@ -20,6 +20,7 @@ type LabelGroupProps = {
   rows?: number;
   selectData?: string[];
   number?: boolean;
+  date?: boolean;
   value?: string | boolean | number;
   onChange?: (value: string | boolean) => void;
 };
@@ -32,6 +33,7 @@ export default function LabelGroup({
   rows = 5,
   selectData = [],
   number = false,
+  date = false,
   value,
   onChange,
 }: LabelGroupProps) {
@@ -52,6 +54,7 @@ export default function LabelGroup({
         rows,
         selectData,
         number,
+        date,
         value,
         onChange,
       })}
@@ -67,6 +70,7 @@ const renderFieldType = ({
   rows,
   selectData,
   number,
+  date,
   value,
   onChange,
 }: LabelGroupProps) => {
@@ -77,7 +81,7 @@ const renderFieldType = ({
           id={title}
           placeholder={placeholder}
           required={required}
-          type={number ? "number" : "text"}
+          type={number ? "number" : date ? "date" : "text"}
           value={value as string}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onChange?.(e.target.value)

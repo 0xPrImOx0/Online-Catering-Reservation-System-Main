@@ -94,6 +94,7 @@ export type FilterSectionProps = {
       sortBy: string;
     }>
   >;
+  
 };
 
 export type SelectedEventContainerProps = {

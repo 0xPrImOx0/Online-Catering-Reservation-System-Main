@@ -80,7 +80,7 @@ export default function CatererMenuCard({ menu }: MenuCardProps) {
           {menu.spicy && (
             <Badge
               variant="outline"
-              className="bg-red-500 text-white border-red-500 flex menus-center gap-1 hover:bg-red-600"
+              className="bg-red-500 text-white border-red-500 flex items-center gap-1 hover:bg-red-600"
             >
               <Flame className="h-3 w-3" /> Spicy
             </Badge>
@@ -124,7 +124,7 @@ export default function CatererMenuCard({ menu }: MenuCardProps) {
         <MenuDetailsDialog menu={menu}>
           <Button
             variant="ghost"
-            className="flex menus-center gap-1 px-2 text-primary"
+            className="flex items-center gap-1 px-2 text-primary"
           >
             <Eye className="h-4 w-4" />
             <span>View Details</span>

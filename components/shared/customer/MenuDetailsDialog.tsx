@@ -30,8 +30,8 @@ export function MenuDetailsDialog({ menu, children }: MenuDetailsDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-w-md md:max-w-xl w-full p-0 max-h-[85vh] flex flex-col overflow-hidden rounded-md">
-        <div className="sticky top-0 z-10 shadow-md border-t-slate-400">
+      <DialogContent className="max-w-md md:max-w-xl w-full p-0 gap-0 max-h-[85vh] flex flex-col overflow-hidden rounded-md">
+        <div className="">
           <div className="relative w-full">
             <Image
               src={menu.imageUrl || "/placeholder.svg"}
@@ -39,7 +39,7 @@ export function MenuDetailsDialog({ menu, children }: MenuDetailsDialogProps) {
               priority
               width={600}
               height={240}
-              className="object-cover max-h-[240px] overflow-hidden"
+              className="object-cover max-h-[240px] rounded-t-lg"
             />
 
             <div className="absolute top-2 right-2 flex gap-2">
@@ -56,26 +56,28 @@ export function MenuDetailsDialog({ menu, children }: MenuDetailsDialogProps) {
               {menu.spicy && (
                 <Badge
                   variant="outline"
-                  className="bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 flex menus-center gap-1"
+                  className="bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 flex items-center gap-1"
                 >
                   <Flame className="h-3 w-3" /> Spicy
                 </Badge>
               )}
-              <DialogClose className="h-8 w-8 rounded-full bg-background backdrop-blur-sm flex menus-center justify-center hover:text-red-500 hover:bg-black dark:hover:bg-white transition-colors">
-                <X className="h-4 w-4" />
-              </DialogClose>
+              <Button asChild variant={"secondary"}>
+                <DialogClose className="h-8 w-8 z-10 rounded-full bg-background backdrop-blur-sm flex items-center justify-center transition-colors">
+                  <X className="h-4 w-4" />
+                </DialogClose>
+              </Button>
             </div>
           </div>
 
           <div className="p-6 pb-2 border-b border-border">
-            <div className="flex menus-center justify-between">
+            <div className="flex items-center justify-between">
               <DialogTitle className="text-2xl text-foreground font-serif">
                 {menu.name}
               </DialogTitle>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div>{RenderStarRatings(menu.rating, "large")}</div>
+                    <div>{RenderStarRatings(menu.rating || 0, "large")}</div>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
@@ -85,15 +87,16 @@ export function MenuDetailsDialog({ menu, children }: MenuDetailsDialogProps) {
                 </Tooltip>
               </TooltipProvider>
             </div>
+
             <DialogDescription className="text-muted-foreground mt-2">
               {menu.shortDescription}
             </DialogDescription>
-            <div className="flex justify-between menus-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
-              <div>
-                <span className="text-lg font-bold">per pax</span>
-              </div>
+            <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
+              <span className="text-lg font-bold">
+                &#8369;{menu.regularPricePerPax.toFixed(2)} per pax
+              </span>
               <Button asChild variant={"secondary"}>
-                <Link href={"/book-now"}>Book Now</Link>
+                <Link href={`/book-now/${menu._id}`}>Book Now</Link>
               </Button>
             </div>
           </div>
@@ -181,7 +184,7 @@ export function MenuDetailsDialog({ menu, children }: MenuDetailsDialogProps) {
               Pricing
             </h4>
             <div className="space-y-2">
-              <Card className="flex justify-between menus-center p-2 rounded py-3">
+              <Card className="flex justify-between items-center p-2 rounded py-3">
                 <div>
                   <p className="font-medium">Regular price per pax</p>
                 </div>
