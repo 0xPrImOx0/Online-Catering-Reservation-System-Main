@@ -1,6 +1,6 @@
 import { useMenuForm } from "@/hooks/use-menu-form";
 import { SetStateBoolean } from "./global-types";
-import { CateringPackageProps } from "./package-types";
+import { CateringPackagesProps } from "./package-types";
 
 export type ServingSize = 6 | 10 | 15 | 20;
 
@@ -97,7 +97,7 @@ export interface MenuDetailsDialogProps {
 }
 
 export interface MenuImageDialogProps {
-  item: MenuItem | CateringPackageProps;
+  item: MenuItem | CateringPackagesProps;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }

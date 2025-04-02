@@ -15,9 +15,8 @@ import SelectedEventContainer from "./SelectedEventContainer";
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState<string>("Buffet");
   const [isPlated, setIsPlated] = useState(false);
-  const [selectedEventType, setSelectedEventType] = useState<EventType>(
-    "Birthday"
-  );
+  const [selectedEventType, setSelectedEventType] =
+    useState<EventType>("Birthday");
   const buffetPlatedPackages = cateringPackages.filter(
     (pkg) => pkg.packageType === "BuffetPlated"
   );
@@ -48,7 +47,7 @@ export default function CateringPackages() {
   return (
     <div className="mx-[5%]">
       <div className="">
-        <h1 className="text-5xl font-bold mb-4">
+        <h1 className="text-5xl font-bold mb-4 ">
           <span className="capitalize">{activeTab}</span> Packages
         </h1>
 
@@ -114,12 +113,12 @@ export default function CateringPackages() {
         </TabsContent>
 
         <TabsContent value="Event" className="mt-0">
-           <SelectedEventContainer
-              selectedEventType={selectedEventType}
-              setSelectedEventType={setSelectedEventType}
-              isPlated={isPlated}
-              cateringPackages={cateringPackages}
-            />
+          <SelectedEventContainer
+            selectedEventType={selectedEventType}
+            setSelectedEventType={setSelectedEventType}
+            isPlated={isPlated}
+            cateringPackages={cateringPackages}
+          />
           {/* {selectedEventType ? (
            
           ) : (
