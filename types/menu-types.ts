@@ -56,7 +56,7 @@ export interface PriceInfo {
 }
 
 export interface MenuItem {
-  _id: number;
+  _id: string;
   name: string;
   category: CategoryProps;
   available: boolean;
@@ -72,7 +72,7 @@ export interface MenuItem {
   rating?: number;
   ratingCount?: number;
   perServing: string; // New property for serving size
-  nutritionInfo?: NutritionInfo;
+  nutritionInfo: NutritionInfo;
   reviews?: ReviewsProps[];
 }
 

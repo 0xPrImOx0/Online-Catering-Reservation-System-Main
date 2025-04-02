@@ -30,7 +30,7 @@ export default function CustomPackageForm() {
     venue: "",
     serviceType: "Buffet",
     serviceHours: "4",
-    selectedDishes: {} as Record<PackageCategory, string[]>,
+    selectedMenus: {} as Record<PackageCategory, string[]>,
     specialRequests: "",
   });
 
@@ -46,7 +46,7 @@ export default function CustomPackageForm() {
     selected: boolean
   ) => {
     setFormData((prev) => {
-      const currentSelection = prev.selectedDishes[category] || [];
+      const currentSelection = prev.selectedMenus[category] || [];
       let newSelection;
 
       if (selected) {
@@ -57,8 +57,8 @@ export default function CustomPackageForm() {
 
       return {
         ...prev,
-        selectedDishes: {
-          ...prev.selectedDishes,
+        selectedMenus: {
+          ...prev.selectedMenus,
           [category]: newSelection,
         },
       };
@@ -106,7 +106,7 @@ export default function CustomPackageForm() {
                             )
                           }
                           checked={(
-                            formData.selectedDishes[
+                            formData.selectedMenus[
                               category as PackageCategory
                             ] || []
                           ).includes(dish.id.toString())}

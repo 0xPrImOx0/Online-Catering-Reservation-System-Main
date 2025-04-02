@@ -78,7 +78,7 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
           {menu.spicy && (
             <Badge
               variant="outline"
-              className="bg-red-500 text-white border-red-500 flex menus-center gap-1 hover:bg-red-600"
+              className="bg-red-500 text-white border-red-500 flex items-center gap-1 hover:bg-red-600"
             >
               <Flame className="h-3 w-3" /> Spicy
             </Badge>
@@ -90,7 +90,7 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="bg-black/70 backdrop-blur-sm rounded px-2.5 py-1.5">
-                  {RenderStarRatings(menu.rating, "medium")}
+                  {RenderStarRatings(menu.rating || 0, "medium")}
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -129,7 +129,7 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
       <CardContent className="flex-grow">
         <div className="space-y-4">
           <div className="bg-muted p-3 rounded-md border">
-            <div className="flex justify-between menus-center mb-2">
+            <div className="flex justify-between items-center mb-2">
               <p className="text-sm font-medium text-foreground">
                 Price per person:
               </p>
@@ -139,7 +139,7 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
                 /pax
               </p>
             </div>
-            <div className="flex justify-between menus-center">
+            <div className="flex justify-between items-center">
               <p className="text-sm font-medium text-foreground">You save:</p>
               <p className="font-bold text-emerald-600 dark:text-emerald-500">
                 &#8369;

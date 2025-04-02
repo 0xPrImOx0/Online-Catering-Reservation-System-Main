@@ -13,7 +13,7 @@ export default function CustomPagination({
 }: CustomPaginationProps) {
   const totalPages = Math.ceil(totalMenus / menusPerPage);
   return (
-    <div className="flex justify-between menus-center mt-4">
+    <div className="flex justify-between items-center mt-4">
       <p className="">
         Showing{" "}
         <span className="font-bold">{`${

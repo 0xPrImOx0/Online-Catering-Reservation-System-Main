@@ -1,5 +1,6 @@
 import { SetStateBoolean } from "./global-types";
 import { ObjectId } from "mongodb";
+import { CategoryProps } from "./menu-types";
 
 // Define types for our packages
 export type PackageCategory =
@@ -21,6 +22,7 @@ export type EventType =
   | "Wedding"
   | "Corporate"
   | "Graduation"
+  | "Other"
   | "";
 
 export type PackageType = "BuffetPlated" | "Event";
@@ -86,7 +88,7 @@ export interface BookingFormData {
 
 export interface FormData extends BookingFormData {
   serviceType: string;
-  selectedDishes: Record<PackageCategory, string[]>;
+  selectedMenus: Record<CategoryProps, string[]>;
 }
 
 export interface ImageDialogState {
@@ -149,6 +151,7 @@ export const eventTypes: EventType[] = [
   "Wedding",
   "Corporate",
   "Graduation",
+  "Other",
 ];
 
 export const serviceTypes: ServiceType[] = ["Buffet", "Plated"];
