@@ -23,15 +23,16 @@ import { CategoryBadge } from "./MenuCategoryBadge";
 import clsx from "clsx";
 import { Card } from "@/components/ui/card";
 import TrayPriceCard from "../TrayPriceCard";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-md md:max-w-xl w-full p-0 max-h-[85vh] flex flex-col overflow-hidden rounded-md">
-        {/* Sticky Header Section */}
-        <div className="sticky top-0 z-10 bg-background shadow-md border-t-slate-400">
-          <div className="relative h-60 w-full">
+        <div className="sticky top-0 z-10 shadow-md border-t-slate-400">
+          <div className="relative w-full">
             <Image
               src={item.imageUrl || "/placeholder.svg"}
               alt={item.name}
@@ -65,6 +66,7 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
               </DialogClose>
             </div>
           </div>
+
           <div className="p-6 pb-2 border-b border-border">
             <div className="flex items-center justify-between">
               <DialogTitle className="text-2xl text-foreground font-serif">
@@ -86,14 +88,22 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
             <DialogDescription className="text-muted-foreground mt-2">
               {item.shortDescription}
             </DialogDescription>
+            <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
+              <div>
+                <span className="text-lg font-bold">per pax</span>
+              </div>
+              <Button asChild variant={"secondary"}>
+                <Link href={"/book-now"}>Book Now</Link>
+              </Button>
+            </div>
           </div>
         </div>
 
-        <div className="overflow-y-auto p-6 flex-grow">
+        <div className="overflow-y-auto p-6">
           <div>
-            <h4 className="font-medium mb-2 text-lg text-foreground">
+            <DialogTitle className="font-medium mb-2 text-lg text-foreground">
               Description
-            </h4>
+            </DialogTitle>
             <p className="text-muted-foreground text-justify">
               {item.fullDescription}
             </p>
@@ -118,9 +128,6 @@ export function MenuDetailsDialog({ item, children }: MenuDetailsDialogProps) {
                 <span className="text-muted-foreground">None</span>
               )}
             </div>
-            {/* <p className="text-muted-foreground text-justify">
-              {item.ingredients.join(", ")}
-            </p> */}
           </div>
 
           <div>
