@@ -1,6 +1,10 @@
 import { useMenuForm } from "@/hooks/use-menu-form";
 import { SetStateBoolean } from "./global-types";
+<<<<<<< HEAD
+import { CateringPackagesProps, ReviewsProps } from "./package-types";
+=======
 import { CateringPackagesProps } from "./package-types";
+>>>>>>> 0ff5a0ccd6c7aedf9974e22bf89e79f11f7cbb97
 
 export type ServingSize = 6 | 10 | 15 | 20;
 
@@ -60,19 +64,20 @@ export interface MenuItem {
   name: string;
   category: CategoryProps;
   available: boolean;
+  spicy: boolean;
   shortDescription: string;
   fullDescription: string;
   ingredients: string[];
   allergens: AllergenProps[];
   preparationMethod: string;
-  prices: PriceInfo[]; // Now an array of price tiers
   regularPricePerPax: number;
-  imageUrl: string;
-  rating: number;
-  ratingCount: number;
-  spicy: boolean;
+  prices: PriceInfo[]; // Now an array of price tiers
+  imageUrl?: string;
+  rating?: number;
+  ratingCount?: number;
   perServing: string; // New property for serving size
-  nutritionInfo: NutritionInfo;
+  nutritionInfo?: NutritionInfo;
+  reviews?: ReviewsProps[];
 }
 
 export interface MenuCardProps {

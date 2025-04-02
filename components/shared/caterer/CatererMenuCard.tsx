@@ -92,7 +92,7 @@ export default function CatererMenuCard({ menu }: MenuCardProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="bg-black/70 backdrop-blur-sm rounded-md px-2.5 py-1.5">
-                  {RenderStarRatings(menu.rating, "medium")}
+                  {RenderStarRatings(menu.rating || 0, "medium")}
                 </div>
               </TooltipTrigger>
               <TooltipContent>

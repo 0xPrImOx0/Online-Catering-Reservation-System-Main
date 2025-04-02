@@ -60,7 +60,7 @@ const formSchema = z
       )
       .min(1, { message: "Add at least one inclusion" }),
     serviceHours: z.number().min(0).optional(),
-    serviceChargePerHour: z.number().min(0).optional(),
+    serviceCharge: z.number().min(0).optional(),
     eventType: z.enum(eventTypes as [EventType, ...EventType[]]).optional(),
     packageType: z.enum(["BuffetPlated", "Event"] as const),
     imageUrl: z
@@ -91,7 +91,7 @@ const defaultValues: PackageFormValues = {
   options: [],
   inclusions: [],
   serviceHours: 0,
-  serviceChargePerHour: 0,
+  serviceCharge: 0,
   eventType: undefined,
   packageType: "BuffetPlated",
   imageUrl: "",
@@ -146,7 +146,7 @@ export function usePackageForm({
       recommendedPax: initialData.recommendedPax,
       maximumPax: initialData.maximumPax,
       inclusions: initialData.inclusions,
-      serviceChargePerHour: initialData.serviceCharge ?? 0,
+      serviceCharge: initialData.serviceCharge ?? 0,
       serviceHours: initialData.serviceHours ?? 0,
       totalServiceFee:
         (initialData.serviceCharge ?? 0) * (initialData.serviceHours ?? 0),
@@ -278,12 +278,12 @@ export function usePackageForm({
       data.packageType === "BuffetPlated" ? "BuffetPlated" : "Event";
 
     // Calculate pricePerPaxWithServiceCharge if not already set
-    const serviceChargePerHour = data.serviceChargePerHour || 0;
+    const serviceCharge = data.serviceCharge || 0;
     const serviceHours = data.serviceHours || 0;
     const minimumPax = data.minimumPax || 1; // Avoid division by zero
     const pricePerPax = data.pricePerPax || 0;
 
-    const totalServiceFee = serviceChargePerHour * serviceHours;
+    const totalServiceFee = serviceCharge * serviceHours;
     const serviceChargePerPax =
       minimumPax > 0 ? totalServiceFee / minimumPax : 0;
     const pricePerPaxWithServiceCharge = pricePerPax + serviceChargePerPax;
@@ -301,7 +301,7 @@ export function usePackageForm({
       inclusions: data.inclusions,
       imageUrl: data.imageUrl || "",
       serviceHours: data.serviceHours || 0,
-      serviceCharge: data.serviceChargePerHour || 0,
+      serviceCharge: data.serviceCharge || 0,
       eventType: data.packageType === "Event" ? data.eventType : undefined,
       packageType: displayPackageType,
       pricePerPaxWithServiceCharge: pricePerPaxWithServiceCharge,
@@ -391,18 +391,17 @@ export function usePackageForm({
     const subscription = form.watch((value, { name }) => {
       // Calculate service fees and total price
       if (
-        name === "serviceChargePerHour" ||
+        name === "serviceCharge" ||
         name === "serviceHours" ||
         name === "pricePerPax" ||
         name === "minimumPax"
       ) {
-        const serviceChargePerHour =
-          (value.serviceChargePerHour as number) || 0;
+        const serviceCharge = (value.serviceCharge as number) || 0;
         const serviceHours = (value.serviceHours as number) || 0;
         const pricePerPax = (value.pricePerPax as number) || 0;
         const minimumPax = (value.minimumPax as number) || 0;
 
-        const totalServiceFee = serviceChargePerHour * serviceHours;
+        const totalServiceFee = serviceCharge * serviceHours;
         form.setValue("totalServiceFee", totalServiceFee);
 
         if (minimumPax > 0) {

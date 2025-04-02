@@ -22,8 +22,9 @@ const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
   category: z.enum(categories as [CategoryProps, ...CategoryProps[]]),
   available: z.boolean().default(true),
+  spicy: z.boolean().default(false),
   shortDescription: z
-    .string()
+  .string()
     .min(10, { message: "Short description must be at least 10 characters" }),
   fullDescription: z
     .string()
@@ -33,8 +34,9 @@ const formSchema = z.object({
     .min(1, { message: "Add at least one ingredient" }),
   allergens: z.array(z.enum(allergens as [AllergenProps, ...AllergenProps[]])),
   preparationMethod: z
-    .string()
-    .min(10, { message: "Preparation method must be at least 10 characters" }),
+  .string()
+  .min(10, { message: "Preparation method must be at least 10 characters" }),
+  regularPricePerPax: z.number().min(1),
   prices: z
     .array(
       z.object({
@@ -45,14 +47,11 @@ const formSchema = z.object({
       })
     )
     .min(1, { message: "Add at least one price tier" }),
-  regularPricePerPax: z.number().min(1),
   imageUrl: z
     .string()
     .url({ message: "Please enter a valid URL" })
     .or(z.literal("")),
-  imageFile: z.instanceof(File).optional(),
   imageUploadType: z.enum(["url", "upload"]).default("url"),
-  spicy: z.boolean().default(false),
   perServing: z.string(),
   servingUnit: z.enum(["g", "kg"]).default("g"),
   nutritionInfo: z.object({
