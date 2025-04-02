@@ -25,8 +25,8 @@ export default function SelectedEventContainer({
   );
 
   return (
-    <div className="flex gap-10 ">
-      <div className="border border-t-0 rounded-lg rounded-t-none p-4 min-w-[200px]">
+    <div className="flex gap-10 relative min-h-screen overflow-y-auto">
+      <div className="border border-t-0 rounded-lg rounded-t-none p-4 min-w-[200px] bg-white z-10 relative">
         <Label className="text-muted-foreground">Event Types</Label>
         <div className="flex flex-col items-s space-y-4 mt-4">
           {eventTypes.map((event) => (
