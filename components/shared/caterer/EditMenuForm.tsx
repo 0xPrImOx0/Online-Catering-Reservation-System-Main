@@ -20,13 +20,13 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import Visu
 export default function EditMenuForm({
   isEditMenuOpen,
   setIsEditMenuOpen,
-  item,
+  menu,
 }: EditMenuDialogProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const menuFormHook = useMenuForm({
-    initialData: item,
+    initialData: menu,
     isEditMode: true,
   });
   const { form, onSubmit, validateStep, resetForm } = menuFormHook;
@@ -83,8 +83,8 @@ export default function EditMenuForm({
   const formContent = (
     <Form {...form}>
       <MultiStepForm
-        title={"Edit Menu Item"}
-        description={"Update the form to modify the existing menu item"}
+        title={"Edit Menu menu"}
+        description={"Update the form to modify the existing menu menu"}
         formSteps={multiFormSteps}
         onSubmit={handleSubmit}
         onNextStep={handleNextStep}

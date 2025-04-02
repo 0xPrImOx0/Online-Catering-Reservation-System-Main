@@ -56,7 +56,7 @@ export interface PriceInfo {
 }
 
 export interface MenuItem {
-  id: number;
+  _id: number;
   name: string;
   category: CategoryProps;
   available: boolean;
@@ -76,7 +76,7 @@ export interface MenuItem {
 }
 
 export interface MenuCardProps {
-  item: MenuItem;
+  menu: MenuItem;
 }
 
 export interface PaginatedMenuProps {
@@ -92,7 +92,7 @@ export type CalculationParams = {
 export type StarSize = "small" | "medium" | "large";
 
 export interface MenuDetailsDialogProps {
-  item: MenuItem;
+  menu: MenuItem;
   children: React.ReactNode;
 }
 
@@ -115,11 +115,11 @@ export interface AddMenuDialogProps {
 export interface EditMenuDialogProps {
   isEditMenuOpen: boolean;
   setIsEditMenuOpen: SetStateBoolean;
-  item: MenuItem;
+  menu: MenuItem;
 }
 
 export type DeleteMenuDialogProps = {
-  item: MenuItem;
+  menu: MenuItem;
   isDeleteDialogOpen: boolean;
   setIsDeleteDialogOpen: SetStateBoolean;
 };

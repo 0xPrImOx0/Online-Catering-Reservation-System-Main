@@ -6,20 +6,20 @@ export default function CustomPagination({
   startIndex,
   endIndex,
   currentPage,
-  totalItems,
-  itemsPerPage,
+  totalMenus,
+  menusPerPage,
   onPageChange,
   title = "menus",
 }: CustomPaginationProps) {
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const totalPages = Math.ceil(totalMenus / menusPerPage);
   return (
-    <div className="flex justify-between items-center mt-4">
+    <div className="flex justify-between menus-center mt-4">
       <p className="">
         Showing{" "}
         <span className="font-bold">{`${
           startIndex === 0 ? "1" : startIndex
-        } - ${endIndex > totalItems ? totalItems : endIndex}`}</span>{" "}
-        out of <span className="font-bold">{totalItems}</span> {title}
+        } - ${endIndex > totalMenus ? totalMenus : endIndex}`}</span>{" "}
+        out of <span className="font-bold">{totalMenus}</span> {title}
       </p>
       <div className="space-x-2 flex">
         <Button

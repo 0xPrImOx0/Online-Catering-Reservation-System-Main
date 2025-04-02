@@ -8,6 +8,8 @@ import clsx from "clsx";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
+import PlatedWarning from "../PlatedWarning";
+import { Info } from "lucide-react";
 
 export default function SelectedEventContainer({
   selectedEventType,
@@ -16,6 +18,7 @@ export default function SelectedEventContainer({
 }: SelectedEventContainerProps) {
   const [serviceType, setServiceType] = useState("Buffet");
   const [isPlated, setIsPlated] = useState(false);
+
   useEffect(() => {
     serviceType === "Plated" ? setIsPlated(true) : setIsPlated(false);
   }, [serviceType]);
@@ -23,6 +26,29 @@ export default function SelectedEventContainer({
   const eventPackages = cateringPackages.filter(
     (pkg) => pkg.packageType === "Event" && pkg.eventType === selectedEventType
   );
+
+  const pkgDescriptions = [
+    {
+      event: "Birthday",
+      description:
+        "Celebrate your special day with our delicious Filipino cuisine.",
+    },
+    {
+      event: "Wedding",
+      description:
+        "Make your wedding reception memorable with our exquisite catering services.",
+    },
+    {
+      event: "Corporate",
+      description:
+        "Impress your colleagues and clients with our professional catering.",
+    },
+    {
+      event: "Graduation",
+      description:
+        "Celebrate academic achievements with our special graduation packages.",
+    },
+  ];
 
   return (
     <div className="flex gap-10 relative min-h-screen overflow-y-auto">
@@ -59,12 +85,30 @@ export default function SelectedEventContainer({
           ))}
         </div>
       </div>
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-10 mt-6">
-        {eventPackages.map((pkg, index) => {
-          return (
-            <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />
-          );
-        })}
+      <div className="space-y-8">
+        <div className="mt-6 space-y-5">
+          <div className="relative">
+            {eventTypes.map((event, index) => (
+              <h3 className="text-4xl font-semibold" key={index}>
+                {event === selectedEventType && `${event} Packages`}
+              </h3>
+            ))}
+            {pkgDescriptions.map(({ event, description }, index) => (
+              <p className="text-sm text-muted-foreground mt-2" key={index}>
+                {selectedEventType === event && description}
+              </p>
+            ))}
+            {/* <Info className="absolute top-0 right-0" /> */}
+          </div>
+          <PlatedWarning isPlated={serviceType === "Plated"} />
+        </div>
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
+          {eventPackages.map((pkg, index) => {
+            return (
+              <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

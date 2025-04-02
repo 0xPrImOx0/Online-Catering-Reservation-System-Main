@@ -27,7 +27,7 @@ import ImageDialog from "../ImageDialog";
 import { AnimatedIconButton } from "../AnimatedIconButton";
 import EditMenuForm from "./EditMenuForm";
 
-export default function CatererMenuCard({ item }: MenuCardProps) {
+export default function CatererMenuCard({ menu }: MenuCardProps) {
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -37,8 +37,8 @@ export default function CatererMenuCard({ item }: MenuCardProps) {
       <div className="relative">
         <div className="aspect-video w-full overflow-hidden">
           <Image
-            src={item.imageUrl || "/placeholder.svg"}
-            alt={item.name}
+            src={menu.imageUrl || "/placeholder.svg"}
+            alt={menu.name}
             width={500}
             height={300}
             className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
@@ -53,11 +53,11 @@ export default function CatererMenuCard({ item }: MenuCardProps) {
                   className="absolute inset-0 w-full h-full p-0 cursor-pointer bg-transparent hover:bg-black/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   onClick={() => setIsImageDialogOpen(true)}
                 >
-                  <span className="sr-only">View {item.name} image</span>
+                  <span className="sr-only">View {menu.name} image</span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{item.name}</p>
+                <p>{menu.name}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -65,22 +65,22 @@ export default function CatererMenuCard({ item }: MenuCardProps) {
 
         <div className="absolute top-2 right-2 flex gap-2 flex-wrap justify-end">
           <Badge
-            variant={item.available ? "default" : "destructive"}
+            variant={menu.available ? "default" : "destructive"}
             className={
-              item.available
+              menu.available
                 ? "bg-emerald-600 hover:bg-emerald-700 text-white"
                 : "bg-red-500 text-white"
             }
           >
-            {item.available ? "Available" : "Unavailable"}
+            {menu.available ? "Available" : "Unavailable"}
           </Badge>
 
-          <CategoryBadge category={item.category} />
+          <CategoryBadge category={menu.category} />
 
-          {item.spicy && (
+          {menu.spicy && (
             <Badge
               variant="outline"
-              className="bg-red-500 text-white border-red-500 flex items-center gap-1 hover:bg-red-600"
+              className="bg-red-500 text-white border-red-500 flex menus-center gap-1 hover:bg-red-600"
             >
               <Flame className="h-3 w-3" /> Spicy
             </Badge>
@@ -92,12 +92,12 @@ export default function CatererMenuCard({ item }: MenuCardProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="bg-black/70 backdrop-blur-sm rounded-md px-2.5 py-1.5">
-                  {RenderStarRatings(item.rating, "medium")}
+                  {RenderStarRatings(menu.rating, "medium")}
                 </div>
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  {item.rating} out of 5 ({item.ratingCount} reviews)
+                  {menu.rating} out of 5 ({menu.ratingCount} reviews)
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -106,25 +106,25 @@ export default function CatererMenuCard({ item }: MenuCardProps) {
 
         <div className="absolute bottom-3 right-3">
           <div className="bg-black/70 backdrop-blur-sm text-white rounded-md px-2.5 py-1.5 font-bold">
-            &#8369;{item.prices[0].price.toFixed(2)}
+            &#8369;{menu.prices[0].price.toFixed(2)}
           </div>
         </div>
       </div>
 
       <CardHeader className="p-5 pb-5">
         <CardTitle className="text-xl font-bold tracking-tight text-primary">
-          {item.name}
+          {menu.name}
         </CardTitle>
         <CardDescription className="mt-2 text-muted-foreground">
-          {item.shortDescription}
+          {menu.shortDescription}
         </CardDescription>
       </CardHeader>
 
       <CardFooter className="flex justify-between border-t p-4 mt-auto">
-        <MenuDetailsDialog item={item}>
+        <MenuDetailsDialog menu={menu}>
           <Button
             variant="ghost"
-            className="flex items-center gap-1 px-2 text-primary"
+            className="flex menus-center gap-1 px-2 text-primary"
           >
             <Eye className="h-4 w-4" />
             <span>View Details</span>
@@ -152,17 +152,17 @@ export default function CatererMenuCard({ item }: MenuCardProps) {
       <EditMenuForm
         isEditMenuOpen={isEditMenuOpen}
         setIsEditMenuOpen={setIsEditMenuOpen}
-        item={item}
+        menu={menu}
       />
 
       <DeleteMenuDialog
-        item={item}
+        menu={menu}
         isDeleteDialogOpen={isDeleteDialogOpen}
         setIsDeleteDialogOpen={setIsDeleteDialogOpen}
       />
 
       <ImageDialog
-        item={item}
+        item={menu}
         isImageDialogOpen={isImageDialogOpen}
         setIsImageDialogOpen={setIsImageDialogOpen}
       />

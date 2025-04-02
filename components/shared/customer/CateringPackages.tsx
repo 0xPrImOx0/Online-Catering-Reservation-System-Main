@@ -2,21 +2,40 @@
 
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info, X } from "lucide-react";
-import { EventType, eventTypes, ServiceType } from "@/types/package-types";
-import { cateringPackages } from "@/lib/customer/packages-metadata";
-import { Button } from "@/components/ui/button";
+import { CateringPackagesProps, EventType } from "@/types/package-types";
 import CustomerPackageCard from "./CustomerPackageCard";
-import EventTypeCard from "./EventTypeCard";
 import CustomPackageForm from "./CustomPacakgeForm";
-import clsx from "clsx";
 import SelectedEventContainer from "./SelectedEventContainer";
+import axios from "axios";
+import PlatedWarning from "../PlatedWarning";
+
+async function fetchPackages() {
+  const packages = await axios.get("http://localhost:5500/api/packages");
+  return packages.data.data;
+}
 
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState<string>("Buffet");
   const [isPlated, setIsPlated] = useState(false);
   const [selectedEventType, setSelectedEventType] =
     useState<EventType>("Birthday");
+  const [cateringPackages, setCateringPackages] = useState<
+    CateringPackagesProps[]
+  >([]);
+
+  useEffect(() => {
+    const getPackages = async () => {
+      try {
+        const pkg = await fetchPackages();
+        if (pkg) setCateringPackages(pkg);
+      } catch (error) {
+        console.error("Failed to fetch menus:", error); // Log any errors
+        setCateringPackages([]); // Set empty array if fetch fails
+      }
+    };
+    getPackages();
+  }, []);
+
   const buffetPlatedPackages = cateringPackages.filter(
     (pkg) => pkg.packageType === "BuffetPlated"
   );
@@ -24,8 +43,6 @@ export default function CateringPackages() {
   useEffect(() => {
     activeTab === "Plated" ? setIsPlated(true) : setIsPlated(false);
   }, [activeTab]);
-
-  const [closePlatedWarning, setClosePlatedWarning] = useState(false);
 
   const TabsTriggerStyle = ({
     value,
@@ -78,33 +95,7 @@ export default function CateringPackages() {
         </TabsContent>
 
         <TabsContent value="Plated" className="mt-6 space-y-8">
-          <div
-            className={clsx(
-              "mb-4 p-4 bg-yellow-50 border-2 border-amber-400 rounded-lg flex items-start gap-3 relative",
-              {
-                hidden: closePlatedWarning,
-              }
-            )}
-          >
-            <Button
-              className="absolute right-4 top-4 text-muted-foreground"
-              variant={"ghost"}
-              size={"custom"}
-              onClick={() => setClosePlatedWarning((prev) => !prev)}
-            >
-              <X className="min-w-5 min-h-5" />
-            </Button>
-            <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative text-yellow-500" />
-            <div className="space-y-2">
-              <h3 className="font-medium">Plated Course Service</h3>
-              <p className="text-sm text-foreground text-justify max-w-[1000px]">
-                Our plated course packages include professional waitstaff who
-                will serve each course directly to your guests&apos; tables. An
-                additional service fee of ₱100 per hour is included in the price
-                per person.
-              </p>
-            </div>
-          </div>
+          <PlatedWarning isPlated />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {buffetPlatedPackages.map((pkg, index) => (
               <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />
@@ -119,19 +110,6 @@ export default function CateringPackages() {
             isPlated={isPlated}
             cateringPackages={cateringPackages}
           />
-          {/* {selectedEventType ? (
-           
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-              {eventTypes.map((eventType) => (
-                <EventTypeCard
-                  key={eventType}
-                  eventType={eventType}
-                  onSelect={setSelectedEventType}
-                />
-              ))}
-            </div> */}
-          {/* )} */}
         </TabsContent>
         <TabsContent value="Custom" className="mt-12 sm:mx-0 lg:mx-8 xl:mx-20">
           <CustomPackageForm />

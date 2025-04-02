@@ -36,8 +36,8 @@ export type CustomPaginationProps = {
   startIndex: number;
   endIndex: number;
   currentPage: number;
-  totalItems: number;
-  itemsPerPage: number;
+  totalMenus: number;
+  menusPerPage: number;
   onPageChange: (e: number) => void;
   title?: string;
 };

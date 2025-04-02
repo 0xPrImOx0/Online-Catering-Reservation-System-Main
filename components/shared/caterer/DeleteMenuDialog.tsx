@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function DeleteMenuDialog({
-  item,
+  menu,
   isDeleteDialogOpen,
   setIsDeleteDialogOpen,
 }: DeleteMenuDialogProps) {
@@ -26,7 +26,7 @@ export default function DeleteMenuDialog({
           <AlertDialogDescription asChild>
             <div>
               You are about to delete{" "}
-              <span className="font-medium">{item.name}</span>. This action
+              <span className="font-medium">{menu.name}</span>. This action
               cannot be undone.
             </div>
           </AlertDialogDescription>

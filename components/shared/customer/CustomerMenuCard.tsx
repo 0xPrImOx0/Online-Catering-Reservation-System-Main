@@ -26,10 +26,11 @@ import { CategoryBadge } from "./MenuCategoryBadge";
 import ImageDialog from "../ImageDialog";
 import { useMenuForm } from "@/hooks/use-menu-form";
 
-export function CustomerMenuCard({ item }: MenuCardProps) {
+export function CustomerMenuCard({ menu }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
-  const [menuPricePax, setMenuPricePax] = useState(item.prices[0].price);
+  const [menuPricePax, setMenuPricePax] = useState(menu.prices[0].price);
+  const [discount, setDiscount] = useState(menu.prices[0].discount);
 
   const { calculateSavings, calculateSavingsPercentage } = useMenuForm();
 
@@ -46,8 +47,8 @@ export function CustomerMenuCard({ item }: MenuCardProps) {
                 onClick={() => setIsImageDialogOpen(true)}
               >
                 <Image
-                  src={item.imageUrl || "/placeholder.svg"}
-                  alt={item.name}
+                  src={menu.imageUrl || "/placeholder.svg"}
+                  alt={menu.name}
                   height={192}
                   width={375}
                   className="w-full object-cover overflow-hidden transition-transform duration-500 hover:scale-105"
@@ -55,29 +56,29 @@ export function CustomerMenuCard({ item }: MenuCardProps) {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{item.name}</p>
+              <p>{menu.name}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
 
         <div className="absolute top-2 right-2 flex gap-2">
           <Badge
-            variant={item.available ? "default" : "destructive"}
+            variant={menu.available ? "default" : "destructive"}
             className={
-              item.available
+              menu.available
                 ? "bg-emerald-600 hover:bg-emerald-700 text-white"
                 : "bg-red-500 text-white"
             }
           >
-            {item.available ? "Available" : "Unavailable"}
+            {menu.available ? "Available" : "Unavailable"}
           </Badge>
 
-          <CategoryBadge category={item.category} />
+          <CategoryBadge category={menu.category} />
 
-          {item.spicy && (
+          {menu.spicy && (
             <Badge
               variant="outline"
-              className="bg-red-500 text-white border-red-500 flex items-center gap-1 hover:bg-red-600"
+              className="bg-red-500 text-white border-red-500 flex menus-center gap-1 hover:bg-red-600"
             >
               <Flame className="h-3 w-3" /> Spicy
             </Badge>
@@ -89,12 +90,12 @@ export function CustomerMenuCard({ item }: MenuCardProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="bg-black/70 backdrop-blur-sm rounded px-2.5 py-1.5">
-                  {RenderStarRatings(item.rating, "medium")}
+                  {RenderStarRatings(menu.rating, "medium")}
                 </div>
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  {item.rating} out of 5 ({item.ratingCount} reviews)
+                  {menu.rating} out of 5 ({menu.ratingCount} reviews)
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -113,19 +114,14 @@ export function CustomerMenuCard({ item }: MenuCardProps) {
         <div className="flex items-start mb-3">
           <div className="flex-1 min-w-0 pr-2">
             <CardTitle className="text-xl font-serif break-words">
-              {item.name}
+              {menu.name}
             </CardTitle>
             <CardDescription className="mt-1">
-              {item.shortDescription}
+              {menu.shortDescription}
             </CardDescription>
           </div>
           <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
-            {calculateSavingsPercentage({
-              regularPricePerPax: item.regularPricePerPax,
-              price: menuPricePax,
-              servingSize: selectedServing,
-            }).toFixed(0)}
-            % OFF
+            {Math.floor(discount * 100)}% OFF
           </Badge>
         </div>
       </CardHeader>
@@ -133,31 +129,27 @@ export function CustomerMenuCard({ item }: MenuCardProps) {
       <CardContent className="flex-grow">
         <div className="space-y-4">
           <div className="bg-muted p-3 rounded-md border">
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex justify-between menus-center mb-2">
               <p className="text-sm font-medium text-foreground">
                 Price per person:
               </p>
               <p className="font-bold">
                 &#8369;
-                {item.regularPricePerPax}
+                {menu.regularPricePerPax.toFixed(2)}
                 /pax
               </p>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between menus-center">
               <p className="text-sm font-medium text-foreground">You save:</p>
               <p className="font-bold text-emerald-600 dark:text-emerald-500">
                 &#8369;
                 {calculateSavings({
-                  regularPricePerPax: item.regularPricePerPax,
+                  regularPricePerPax: menu.regularPricePerPax,
                   price: menuPricePax,
                   servingSize: selectedServing,
                 }).toFixed(2)}
               </p>
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Regular price: &#8369;{item.regularPricePerPax.toFixed(2)}
-              /person
-            </p>
           </div>
 
           <div>
@@ -165,8 +157,8 @@ export function CustomerMenuCard({ item }: MenuCardProps) {
               Allergens:
             </p>
             <div className="flex flex-wrap gap-1.5">
-              {item.allergens.length > 0 ? (
-                item.allergens.map((allergen) => (
+              {menu.allergens.length > 0 ? (
+                menu.allergens.map((allergen) => (
                   <Badge key={allergen} variant="outline" className="text-xs">
                     {allergen}
                   </Badge>
@@ -182,31 +174,34 @@ export function CustomerMenuCard({ item }: MenuCardProps) {
               Select serving size:
             </p>
             <div className="flex gap-2 flex-wrap">
-              {item.prices.map(({ minimumPax, maximumPax, price }) => {
-                return (
-                  <Button
-                    key={minimumPax}
-                    variant={
-                      selectedServing === maximumPax ? "default" : "outline"
-                    }
-                    size="sm"
-                    onClick={() => {
-                      setSelectedServing(maximumPax as ServingSize);
-                      setMenuPricePax(price);
-                    }}
-                    className="text-xs w-[90px] py-1 h-auto"
-                  >
-                    {minimumPax} - {maximumPax} pax
-                  </Button>
-                );
-              })}
+              {menu.prices.map(
+                ({ minimumPax, maximumPax, price, discount }) => {
+                  return (
+                    <Button
+                      key={minimumPax}
+                      variant={
+                        selectedServing === maximumPax ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => {
+                        setSelectedServing(maximumPax as ServingSize);
+                        setMenuPricePax(price);
+                        setDiscount(discount);
+                      }}
+                      className="text-xs w-[90px] py-1 h-auto"
+                    >
+                      {minimumPax} - {maximumPax} pax
+                    </Button>
+                  );
+                }
+              )}
             </div>
           </div>
         </div>
       </CardContent>
 
       <CardFooter className="flex justify-between">
-        <MenuDetailsDialog item={item}>
+        <MenuDetailsDialog menu={menu}>
           <Button className={"w-full"} variant={"default"} size={"default"}>
             View Details
           </Button>
@@ -215,7 +210,7 @@ export function CustomerMenuCard({ item }: MenuCardProps) {
 
       {/* Image Dialog */}
       <ImageDialog
-        item={item}
+        item={menu}
         isImageDialogOpen={isImageDialogOpen}
         setIsImageDialogOpen={setIsImageDialogOpen}
       />
