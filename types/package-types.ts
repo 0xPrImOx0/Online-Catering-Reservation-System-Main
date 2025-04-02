@@ -35,10 +35,10 @@ export type InclusionsProps = {
   includes: string;
 };
 
-export interface ReviewProps {
+export interface ReviewsProps {
   rating: number;
   comment: string;
-  user: ObjectId; // Assuming this is a MongoDB ObjectId
+  customerId: ObjectId; // Assuming this is a MongoDB ObjectId
 }
 
 export interface CateringPackagesProps {
@@ -59,7 +59,7 @@ export interface CateringPackagesProps {
   imageUrl?: string;
   rating?: number;
   ratingCount?: number;
-  reviews?: ReviewProps[];
+  reviews?: ReviewsProps[];
 }
 
 export interface PackagesCardProps {
