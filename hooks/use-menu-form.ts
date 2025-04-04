@@ -24,7 +24,7 @@ const formSchema = z.object({
   available: z.boolean().default(true),
   spicy: z.boolean().default(false),
   shortDescription: z
-  .string()
+    .string()
     .min(10, { message: "Short description must be at least 10 characters" }),
   fullDescription: z
     .string()
@@ -34,8 +34,8 @@ const formSchema = z.object({
     .min(1, { message: "Add at least one ingredient" }),
   allergens: z.array(z.enum(allergens as [AllergenProps, ...AllergenProps[]])),
   preparationMethod: z
-  .string()
-  .min(10, { message: "Preparation method must be at least 10 characters" }),
+    .string()
+    .min(10, { message: "Preparation method must be at least 10 characters" }),
   regularPricePerPax: z.number().min(1),
   prices: z
     .array(
@@ -47,10 +47,8 @@ const formSchema = z.object({
       })
     )
     .min(1, { message: "Add at least one price tier" }),
-  imageUrl: z
-    .string()
-    .url({ message: "Please enter a valid URL" })
-    .or(z.literal("")),
+  imageUrl: z.string().url({ message: "Please enter a valid URL" }),
+  imageFile: z.instanceof(File).optional(),
   imageUploadType: z.enum(["url", "upload"]).default("url"),
   perServing: z.string(),
   servingUnit: z.enum(["g", "kg"]).default("g"),
@@ -81,6 +79,7 @@ const defaultValues: FormValues = {
   prices: [],
   regularPricePerPax: 0,
   imageUrl: "",
+  imageFile: undefined,
   imageUploadType: "url",
   spicy: false,
   perServing: "",
@@ -135,7 +134,7 @@ export function useMenuForm({
       preparationMethod: initialData.preparationMethod,
       prices: initialData.prices,
       regularPricePerPax: initialData.regularPricePerPax,
-      imageUrl: initialData.imageUrl,
+      imageUrl: initialData.imageUrl ?? "",
       imageUploadType: initialData.imageUrl ? "url" : "upload",
       spicy: initialData.spicy,
       perServing: initialData.perServing,
@@ -332,10 +331,6 @@ export function useMenuForm({
   const onSubmit = (data: FormValues) => {
     // Create menu item object
     const menuItem: MenuItem = {
-      id:
-        isEditMode && initialData
-          ? initialData.id
-          : Math.floor(Math.random() * 10000),
       ...data,
       rating: isEditMode && initialData ? initialData.rating : 0,
       ratingCount: isEditMode && initialData ? initialData.ratingCount : 0,
