@@ -4,7 +4,7 @@ import { MenuItem } from "@/types/menu-types";
 export const menuItems: MenuItem[] = [
   // SOUPS
   {
-    id: 1,
+    _id: "1",
     name: "Sinigang na Baboy",
     category: "Soup",
     available: true,
@@ -70,7 +70,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 2,
+    _id: "2",
     name: "Bulalo",
     category: "Soup",
     available: true,
@@ -136,7 +136,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 3,
+    _id: "3",
     name: "Tinolang Manok",
     category: "Soup",
     available: true,
@@ -202,7 +202,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 4,
+    _id: "4",
     name: "Nilagang Baka",
     category: "Soup",
     available: true,
@@ -268,7 +268,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 5,
+    _id: "5",
     name: "Arroz Caldo",
     category: "Soup",
     available: true,
@@ -336,7 +336,7 @@ export const menuItems: MenuItem[] = [
 
   // SALADS
   {
-    id: 6,
+    _id: "6",
     name: "Ensaladang Talong",
     category: "Salad",
     available: true,
@@ -402,7 +402,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 7,
+    _id: "7",
     name: "Kinilaw na Tuna",
     category: "Salad",
     available: true,
@@ -468,7 +468,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 8,
+    _id: "8",
     name: "Ensaladang Mangga",
     category: "Salad",
     available: true,
@@ -534,7 +534,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 9,
+    _id: "9",
     name: "Lato Salad (Seaweed Salad)",
     category: "Salad",
     available: true,
@@ -600,7 +600,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 10,
+    _id: "10",
     name: "Pinakbet Salad",
     category: "Salad",
     available: true,
@@ -667,7 +667,7 @@ export const menuItems: MenuItem[] = [
 
   // BEEF
   {
-    id: 11,
+    _id: "11",
     name: "Beef Caldereta",
     category: "Beef",
     available: true,
@@ -737,7 +737,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 12,
+    _id: "12",
     name: "Beef Mechado",
     category: "Beef",
     available: true,
@@ -807,7 +807,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 13,
+    _id: "13",
     name: "Bistek Tagalog",
     category: "Beef",
     available: true,
@@ -873,7 +873,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 14,
+    _id: "14",
     name: "Beef Kare-Kare",
     category: "Beef",
     available: true,
@@ -943,7 +943,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 15,
+    _id: "15",
     name: "Beef Morcon",
     category: "Beef",
     available: true,
@@ -1016,7 +1016,7 @@ export const menuItems: MenuItem[] = [
 
   // PORK
   {
-    id: 16,
+    _id: "16",
     name: "Lechon Kawali",
     category: "Pork",
     available: true,
@@ -1080,7 +1080,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 17,
+    _id: "17",
     name: "Pork Adobo",
     category: "Pork",
     available: true,
@@ -1146,7 +1146,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 18,
+    _id: "18",
     name: "Crispy Pata",
     category: "Pork",
     available: true,
@@ -1211,7 +1211,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 19,
+    _id: "19",
     name: "Sisig",
     category: "Pork",
     available: true,
@@ -1278,7 +1278,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 20,
+    _id: "20",
     name: "Lechon Paksiw",
     category: "Pork",
     available: true,
@@ -1347,7 +1347,7 @@ export const menuItems: MenuItem[] = [
 
   // NOODLES
   {
-    id: 21,
+    _id: "21",
     name: "Pancit Canton",
     category: "Noodle",
     available: true,
@@ -1417,7 +1417,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 22,
+    _id: "22",
     name: "Pancit Bihon",
     category: "Noodle",
     available: true,
@@ -1487,7 +1487,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 23,
+    _id: "23",
     name: "Pancit Palabok",
     category: "Noodle",
     available: true,
@@ -1557,7 +1557,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 24,
+    _id: "24",
     name: "Pancit Malabon",
     category: "Noodle",
     available: true,
@@ -1627,7 +1627,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 25,
+    _id: "25",
     name: "Sotanghon Guisado",
     category: "Noodle",
     available: true,
@@ -1698,7 +1698,7 @@ export const menuItems: MenuItem[] = [
 
   // CHICKEN
   {
-    id: 26,
+    _id: "26",
     name: "Chicken Adobo",
     category: "Chicken",
     available: true,
@@ -1764,7 +1764,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 27,
+    _id: "27",
     name: "Chicken Inasal",
     category: "Chicken",
     available: true,
@@ -1831,7 +1831,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 28,
+    _id: "28",
     name: "Chicken Afritada",
     category: "Chicken",
     available: true,
@@ -1901,7 +1901,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 29,
+    _id: "29",
     name: "Fried Chicken with Gravy",
     category: "Chicken",
     available: true,
@@ -1970,7 +1970,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 30,
+    _id: "30",
     name: "Chicken Binakol",
     category: "Chicken",
     available: true,
@@ -2041,7 +2041,7 @@ export const menuItems: MenuItem[] = [
 
   // SEAFOOD
   {
-    id: 31,
+    _id: "31",
     name: "Sinigang na Hipon",
     category: "Seafood",
     available: true,
@@ -2108,7 +2108,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 32,
+    _id: "32",
     name: "Inihaw na Pusit",
     category: "Seafood",
     available: true,
@@ -2174,7 +2174,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 33,
+    _id: "33",
     name: "Escabeche (Sweet and Sour Fish)",
     category: "Seafood",
     available: true,
@@ -2244,7 +2244,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 34,
+    _id: "34",
     name: "Ginataang Alimasag",
     category: "Seafood",
     available: true,
@@ -2312,7 +2312,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 35,
+    _id: "35",
     name: "Kilawing Tanigue",
     category: "Seafood",
     available: true,
@@ -2380,7 +2380,7 @@ export const menuItems: MenuItem[] = [
 
   // VEGETABLES
   {
-    id: 36,
+    _id: "36",
     name: "Pinakbet",
     category: "Vegetable",
     available: true,
@@ -2448,7 +2448,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 37,
+    _id: "37",
     name: "Ginisang Ampalaya",
     category: "Vegetable",
     available: true,
@@ -2514,7 +2514,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 38,
+    _id: "38",
     name: "Laing",
     category: "Vegetable",
     available: true,
@@ -2580,7 +2580,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 39,
+    _id: "39",
     name: "Ginataang Kalabasa at Sitaw",
     category: "Vegetable",
     available: true,
@@ -2648,7 +2648,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 40,
+    _id: "40",
     name: "Chopsuey",
     category: "Vegetable",
     available: true,
@@ -2721,7 +2721,7 @@ export const menuItems: MenuItem[] = [
 
   // DESSERTS
   {
-    id: 41,
+    _id: "41",
     name: "Halo-Halo",
     category: "Dessert",
     available: true,
@@ -2789,7 +2789,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 42,
+    _id: "42",
     name: "Leche Flan",
     category: "Dessert",
     available: true,
@@ -2852,7 +2852,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 43,
+    _id: "43",
     name: "Biko",
     category: "Dessert",
     available: true,
@@ -2915,7 +2915,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 44,
+    _id: "44",
     name: "Bibingka",
     category: "Dessert",
     available: true,
@@ -2982,7 +2982,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 45,
+    _id: "45",
     name: "Ube Halaya",
     category: "Dessert",
     available: true,
@@ -3047,7 +3047,7 @@ export const menuItems: MenuItem[] = [
 
   // BEVERAGES
   {
-    id: 46,
+    _id: "46",
     name: "Sago't Gulaman",
     category: "Beverage",
     available: true,
@@ -3111,7 +3111,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 47,
+    _id: "47",
     name: "Calamansi Juice",
     category: "Beverage",
     available: true,
@@ -3167,7 +3167,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 48,
+    _id: "48",
     name: "Buko Juice",
     category: "Beverage",
     available: true,
@@ -3228,7 +3228,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 49,
+    _id: "49",
     name: "Tsokolate",
     category: "Beverage",
     available: true,
@@ -3291,7 +3291,7 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: 50,
+    _id: "50",
     name: "Salabat",
     category: "Beverage",
     available: true,

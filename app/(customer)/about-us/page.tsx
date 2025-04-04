@@ -5,6 +5,7 @@ import { principles, teams } from "../../../lib/customer/metadata";
 import Image from "next/image";
 import WhyChooseUs from "@/components/shared/WhyChooseUs";
 import { Metadata } from "next";
+import { Card } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -12,10 +13,10 @@ export const metadata: Metadata = {
 
 const Highlights = ({ metric, title }: { metric: string; title: string }) => {
   return (
-    <div className="flex-1 p-4 rounded-sm text-center">
+    <Card className="flex-1 p-4 border-2 rounded-sm sm:text-center">
       <span className="text-4xl font-medium">{metric} </span>{" "}
       <p className="text-muted-foreground text-sm min-w-max">{title}</p>
-    </div>
+    </Card>
   );
 };
 
@@ -23,7 +24,7 @@ export default function AboutPage() {
   const { leadership, culinary, event, service } = teams;
 
   return (
-    <main className="flex-1">
+    <main className="flex-1 ">
       {/* Hero Section */}
       <section className="flex text-center justify-center items-center  h-[93.5dvh] bg-[url('/images/about.jpg')] bg-cover bg-center">
         <div className="absolute inset-0 bg-black/50"></div>
@@ -46,7 +47,7 @@ export default function AboutPage() {
       </section>
 
       {/* Principles Section */}
-      <section className="py-24 max-w-[1200px] mx-auto">
+      <section className="py-24 max-w-[1200px] mx-auto px-[5%]">
         <div className="">
           <h2 className="text-3xl font-bold text-center mb-4">
             The Principles We Stand By
@@ -83,7 +84,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section */}
-      <section className="py-24">
+      <section className="py-24 px-[5%]">
         <div className="">
           <h2 className="text-3xl font-bold text-center mb-4">
             The People Who Make Up Our Team

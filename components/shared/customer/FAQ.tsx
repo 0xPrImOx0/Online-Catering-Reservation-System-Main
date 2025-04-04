@@ -30,20 +30,20 @@ export default function FAQ() {
     },
   ];
   return (
-    <section className="flex items-center py-24 justify-between max-w-[1200px] mx-auto">
-      <Skeleton className="min-w-[500px] h-[400px]" />
+    <section className="flex items-center py-24 justify-between max-w-[1200px] mx-auto max-sm:flex-col px-[5%] gap-6">
+      <Skeleton className="w-full max-w-[500px] h-[400px]" />
 
-      <div className="mx-auto min-w-[600px]">
+      <div className="mx-auto sm:min-w-[600px]">
         <h2 className="text-3xl font-bold mb-8">Frequently asked questions</h2>
 
         <Accordion
           type="single"
           collapsible
-          className="max-w-[600px]"
+          className="max-w-[600px] w-full"
           defaultValue="first-faq"
         >
           {faqs.map((faq) => (
-            <AccordionItem value={faq.id} key={faq.id} className="py-2">
+            <AccordionItem value={faq.id} key={faq.id} className="py-2 w-full">
               <AccordionPrimitive.Header className="flex">
                 <AccordionPrimitive.Trigger className="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left leading-6 font-semibold transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
                   {faq.title}

@@ -54,7 +54,8 @@ export default function BookNowForm() {
 
   // Function to go to previous form step
   const prevStep = () => {
-    if (formStep > 0) {
+    if (formStep > 0 || maxLoader) {
+      setMaxLoader(false);
       setFormStep(formStep - 1);
     }
   };
@@ -66,7 +67,7 @@ export default function BookNowForm() {
   };
 
   return (
-    <div className="">
+    <div>
       <ReservationSteps formStep={formStep} maxLoader={maxLoader} />
       <div className="relative my-4">
         <div className=" h-1 bg-muted">
@@ -136,7 +137,7 @@ export default function BookNowForm() {
           </div>
           <DialogFooter>
             <Button
-              variant={"secondary"}
+              variant={"ghost"}
               onClick={() => setShowConfirmation(false)}
             >
               Close

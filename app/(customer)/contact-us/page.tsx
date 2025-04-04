@@ -29,7 +29,7 @@ export default function ContactPage() {
           description="Secure your date and menu selection now to ensure availability for your upcoming event."
           buttonLabel="Book Now"
           href="/book-now"
-          px={false}
+          px
           Icon={ClipboardCheck}
         />
       </div>

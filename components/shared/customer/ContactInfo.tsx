@@ -34,11 +34,11 @@ export default function ContactInfo() {
     },
   ];
   return (
-    <section className="flex flex-col max-w-[950px] mx-auto gap-8 mt-10">
+    <section className="flex flex-col max-w-[950px] mx-auto gap-8 mt-10 px-[5%]">
       {/* Get In Touch */}
       <div className="space-y-6">
         <h2 className="text-xl font-semibold">Get in Touch</h2>
-        <div className="flex gap-4">
+        <div className="flex gap-4 max-sm:flex-col">
           {contactInfos.map((info) => (
             <Card className="flex py-4 px-6 gap-4 flex-1" key={info.title}>
               <info.icon className="h-5 w-5 text-gray-500 mt-0.5" />

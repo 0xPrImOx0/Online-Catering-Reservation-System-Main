@@ -2,6 +2,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { menuItems } from "@/lib/menu-lists";
 import { categories } from "@/lib/menu-select";
 import { CategoryProps, MenuItem } from "@/types/menu-types";
 import { FormData } from "@/types/package-types";
@@ -18,18 +19,18 @@ export default function CategoryOptions({
   };
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }) {
-  const [menus, setMenus] = useState([]);
+  // const [menus, setMenus] = useState([]);
 
-  useEffect(() => {
-    const getMenus = async () => {
-      const response = await axios.get("http://localhost:5500/api/menus");
-      setMenus(response.data.data);
-    };
-    getMenus();
-  }, []);
+  // useEffect(() => {
+  //   const getMenus = async () => {
+  //     const response = await axios.get("http://localhost:5500/api/menus");
+  //     setMenus(response.data.data);
+  //   };
+  //   getMenus();
+  // }, []);
   // Function to get dishes by category
   const getMenusByCategory = (category: CategoryProps) => {
-    return menus.filter((menu: MenuItem) => menu.category === category);
+    return menuItems.filter((menu: MenuItem) => menu.category === category);
   };
 
   // Then your handleMenuSelection function is mostly fine, just make sure to handle if the category property doesn't exist yet:
