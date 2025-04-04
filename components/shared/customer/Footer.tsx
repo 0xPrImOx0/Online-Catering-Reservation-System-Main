@@ -67,7 +67,7 @@ export default function Page() {
             <p className="text-sm text-muted-foreground mb-4 text-justify">
               Subscribe to our newsletter for special offers and updates.
             </p>
-            <form className="flex flex-col xl:flex-row space-y-2 w-[400px] sm:max-w-[450px] md:w-full">
+            <form className="flex flex-col xl:flex-row space-y-2 w-full sm:max-w-[450px] md:w-full">
               <Input
                 placeholder="Your email"
                 className="text-sm h-10 xl:mt-2"

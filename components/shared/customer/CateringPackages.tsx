@@ -8,33 +8,34 @@ import CustomPackageForm from "./CustomPacakgeForm";
 import SelectedEventContainer from "./SelectedEventContainer";
 import axios from "axios";
 import PlatedWarning from "../PlatedWarning";
+import { cateringPackages } from "@/lib/customer/packages-metadata";
 
-async function fetchPackages() {
-  const packages = await axios.get("http://localhost:5500/api/packages");
-  return packages.data.data;
-}
+// async function fetchPackages() {
+//   const packages = await axios.get("http://localhost:5500/api/packages");
+//   return packages.data.data;
+// }
 
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState<string>("Buffet");
   const [isPlated, setIsPlated] = useState(false);
   const [selectedEventType, setSelectedEventType] =
     useState<EventType>("Birthday");
-  const [cateringPackages, setCateringPackages] = useState<
-    CateringPackagesProps[]
-  >([]);
+  // const [cateringPackages, setCateringPackages] = useState<
+  //   CateringPackagesProps[]
+  // >([]);
 
-  useEffect(() => {
-    const getPackages = async () => {
-      try {
-        const pkg = await fetchPackages();
-        if (pkg) setCateringPackages(pkg);
-      } catch (error) {
-        console.error("Failed to fetch menus:", error); // Log any errors
-        setCateringPackages([]); // Set empty array if fetch fails
-      }
-    };
-    getPackages();
-  }, []);
+  // useEffect(() => {
+  //   const getPackages = async () => {
+  //     try {
+  //       const pkg = await fetchPackages();
+  //       if (pkg) setCateringPackages(pkg);
+  //     } catch (error) {
+  //       console.error("Failed to fetch menus:", error); // Log any errors
+  //       setCateringPackages([]); // Set empty array if fetch fails
+  //     }
+  //   };
+  //   getPackages();
+  // }, []);
 
   const buffetPlatedPackages = cateringPackages.filter(
     (pkg) => pkg.packageType === "BuffetPlated"

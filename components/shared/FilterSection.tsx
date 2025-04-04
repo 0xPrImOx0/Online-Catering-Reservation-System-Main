@@ -56,7 +56,7 @@ export default function FilterSection({
         </div>
       </div>
       {openFilter && (
-        <div className="gap-4 flex">
+        <div className="gap-4 flex overflow-y-auto">
           <div className="flex-1 space-y-2">
             <Label className="text-sm font-normal">Menu Category</Label>
             <CustomSelect

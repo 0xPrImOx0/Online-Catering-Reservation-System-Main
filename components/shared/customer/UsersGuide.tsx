@@ -35,9 +35,9 @@ const HowItWorksContent = ({
   image: string;
 }) => {
   return (
-    <div className="flex flex-wrap items-center justify-center min-h-[500px] gap-12 mt-20">
+    <div className="flex flex-wrap mt-8 sm:items-center justify-center min-h-[500px] sm:gap-12 sm:mt-20">
       <div className="flex-1 basis-[200px] flex">
-        <div className="mx-auto">
+        <div className="mx-auto mb-4">
           <span className="text-muted-foreground">Step 0{step}</span>
           <h3 className="text-3xl font-semibold mb-2">{title}</h3>
           <p className="text-muted-foreground min-w-[32ch] max-w-[48ch]">
@@ -45,7 +45,7 @@ const HowItWorksContent = ({
           </p>
         </div>
       </div>
-      <div className="flex-1 basis-[200px] w-[450px] h-[450px]">
+      <div className="flex-1 basis-[200px] max-w-[450px] min-h-[300px] max-h-[450px]">
         <Image
           src={image}
           width={1600}
@@ -77,7 +77,7 @@ export const UsersGuide = () => {
           defaultValue="one"
           onValueChange={setActiveTab}
         >
-          <TabsList className="text-foreground flex overflow-x-auto scrollbar-thin w-full justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1">
+          <TabsList className="text-foreground overflow-y-auto flex overflow-x-auto scrollbar-thin w-full justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1">
             <TabsTriggerStyle value="one" title="Step 01" />
             <TabsTriggerStyle value="two" title="Step 02" />
             <TabsTriggerStyle value="three" title="Step 03" />

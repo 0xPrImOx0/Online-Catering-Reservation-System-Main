@@ -17,20 +17,20 @@ const AboutCards = ({
   return (
     <Link
       href={link}
-      className="flex flex-1 overflow-hidden min-h-[400px] rounded-lg border"
+      className="flex flex-col nav-md:flex-row flex-1 overflow-hidden min-h-[400px] max-h-[520px] mx-auto rounded-lg border"
     >
-      <div className="flex-1 ">
+      <div className="flex-1 max-nav-md:h-[280px]">
         <Image
           src={image}
-          width={1200}
-          height={800}
+          width={300}
+          height={500}
           alt={title}
-          className="w-full h-full object-cover"
+          className="w-full  object-cover"
         />
       </div>
       <div className="flex-1 p-4 flex flex-col justify-between">
         <h3 className="text-3xl font-semibold">{title}</h3>
-        <div>
+        <div className="mt-4">
           <Separator decorative className="h-1 bg-foreground" />
           <div className="flex pt-4 items-center gap-4">
             {link === "/menus" ? <UtensilsCrossed /> : <Info />}
@@ -48,14 +48,14 @@ const AboutCards = ({
 export default function About() {
   return (
     <section className="min-h-[70vh] mt-24 gap-16 flex flex-col justify-center px-[5%]">
-      <div className="flex">
+      <div className="flex flex-col sm:flex-row">
         <div>
           <span className="text-muted-foreground text-sm">Food Sentinel</span>
-          <h2 className="text-5xl font-semibold mb-8 text-center">
+          <h2 className="text-4xl font-semibold mb-4 sm:mb-8 sm:text-5xl sm:text-center">
             Get to know us
           </h2>
         </div>
-        <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+        <p className="text-muted-foreground text-justify text-lg max-w-3xl mx-auto">
           At Food Sentinel, we make catering reservations simple, fast, and
           hassle-free. Whether you're planning an intimate gathering or a grand
           celebration, our platform connects you with expertly crafted menus and
@@ -65,7 +65,7 @@ export default function About() {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-20">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-6">
         <AboutCards
           title="Amazing Chefs behind Every Dishes!"
           link="/about-us"

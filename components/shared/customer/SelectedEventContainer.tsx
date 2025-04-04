@@ -9,7 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import PlatedWarning from "../PlatedWarning";
-import { Info } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function SelectedEventContainer({
   selectedEventType,
@@ -18,10 +19,13 @@ export default function SelectedEventContainer({
 }: SelectedEventContainerProps) {
   const [serviceType, setServiceType] = useState("Buffet");
   const [isPlated, setIsPlated] = useState(false);
+  const [changeEventMobile, setChangeEventMobile] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     serviceType === "Plated" ? setIsPlated(true) : setIsPlated(false);
-  }, [serviceType]);
+    setChangeEventMobile(false);
+  }, [serviceType, selectedEventType]);
 
   const eventPackages = cateringPackages.filter(
     (pkg) => pkg.packageType === "Event" && pkg.eventType === selectedEventType
@@ -51,23 +55,52 @@ export default function SelectedEventContainer({
   ];
 
   return (
-    <div className="flex gap-10 relative min-h-screen overflow-y-auto">
-      <div className="border border-t-0 rounded-lg rounded-t-none p-4 min-w-[200px] bg-white z-10 relative">
-        <Label className="text-muted-foreground">Event Types</Label>
-        <div className="flex flex-col items-s space-y-4 mt-4">
-          {eventTypes.map((event) => (
-            <Button
-              variant={selectedEventType === event ? "default" : "ghost"}
-              className={clsx("font-medium rounded-sm justify-start", {
-                "text-muted-foreground": selectedEventType !== event,
-              })}
-              onClick={() => setSelectedEventType(event)}
-              key={event}
-            >
-              <span className="text-left">{event}</span>
-            </Button>
-          ))}
+    <div className="flex max-sm:flex-col sm:gap-10 relative min-h-screen overflow-y-auto">
+      <div className={clsx("mt-4 -mb-3", )}>
+        <Button
+          className=""
+          onClick={() => setChangeEventMobile((prev) => !prev)}
+          size={"custom"}
+          variant={"link"}
+        >
+          <Menu className="min-h-5 min-w-5" /> Change Event Type
+        </Button>
+      </div>
+      <div
+        className={clsx(
+          "border flex flex-col border-t-0 rounded-lg rounded-t-none p-4 min-w-[200px] bg-white z-10",
+          isMobile ? "absolute top-0 left-0 right-0" : "relative",
+          changeEventMobile ? "" : "hidden"
+        )}
+      >
+        {isMobile && (
+          <Button
+            className="max-w-fit ml-auto text-destructive "
+            onClick={() => setChangeEventMobile((prev) => !prev)}
+            size={"custom"}
+            variant={"link"}
+          >
+            <X className="min-h-5 min-w-5" /> Close
+          </Button>
+        )}
+        <div>
+          <Label className="text-muted-foreground">Event Types</Label>
+          <div className="flex flex-col items-s space-y-4 mt-4">
+            {eventTypes.map((event) => (
+              <Button
+                variant={selectedEventType === event ? "default" : "ghost"}
+                className={clsx("font-medium rounded-sm justify-start", {
+                  "text-muted-foreground": selectedEventType !== event,
+                })}
+                onClick={() => setSelectedEventType(event)}
+                key={event}
+              >
+                <span className="text-left">{event}</span>
+              </Button>
+            ))}
+          </div>
         </div>
+
         <Separator className="mt-16 mb-4" />
         <div className="flex flex-col space-y-4">
           <Label className="text-muted-foreground">Package Types</Label>
