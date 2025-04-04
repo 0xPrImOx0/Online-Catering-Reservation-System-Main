@@ -56,7 +56,7 @@ export default function SelectedEventContainer({
 
   return (
     <div className="flex max-sm:flex-col sm:gap-10 relative min-h-screen overflow-y-auto">
-      <div className={clsx("mt-4 -mb-3", )}>
+      <div className={clsx("mt-4 -mb-3", !isMobile && "hidden")}>
         <Button
           className=""
           onClick={() => setChangeEventMobile((prev) => !prev)}
@@ -68,9 +68,9 @@ export default function SelectedEventContainer({
       </div>
       <div
         className={clsx(
-          "border flex flex-col border-t-0 rounded-lg rounded-t-none p-4 min-w-[200px] bg-white z-10",
+          "border border-t-0 rounded-lg rounded-t-none p-4 min-w-[200px] bg-white z-10",
           isMobile ? "absolute top-0 left-0 right-0" : "relative",
-          changeEventMobile ? "" : "hidden"
+          !changeEventMobile && isMobile && "hidden"
         )}
       >
         {isMobile && (

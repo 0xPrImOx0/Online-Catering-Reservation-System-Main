@@ -24,6 +24,7 @@ export default function CustomerSiteHeader() {
     return (
       <Link
         href={href}
+        onClick={() => setMobileMenu(false)}
         className={clsx(
           "text-sm font-medium relative pb-1 hover:text-foreground underline-offset-4 group",
           { "!text-base": isMobile }

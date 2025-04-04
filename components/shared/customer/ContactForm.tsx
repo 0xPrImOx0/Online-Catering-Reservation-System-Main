@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 
 export default function ContactForm() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mx-[5%]">
       <div className="w-full max-w-[700px]">
         <Card>
           <CardHeader>
