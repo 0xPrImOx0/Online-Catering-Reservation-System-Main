@@ -51,14 +51,16 @@ export default function CustomerSiteHeader() {
             "py-4": isMobile,
           })}
         >
-          <Button
-            className=""
-            onClick={() => setMobileMenu((prev) => !prev)}
-            variant={"link"}
-            size={"custom"}
-          >
-            <Menu className="min-w-6 min-h-6" />
-          </Button>
+          {isMobile && (
+            <Button
+              className=""
+              onClick={() => setMobileMenu((prev) => !prev)}
+              variant={"link"}
+              size={"custom"}
+            >
+              <Menu className="min-w-6 min-h-6" />
+            </Button>
+          )}
           {!isMobile && <Logo imageSize={40} />}
           <nav
             className={clsx(

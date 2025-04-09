@@ -5,6 +5,7 @@ import type {
 
 export const cateringPackages: CateringPackagesProps[] = [
   {
+    _id: "pkg-1",
     name: "Set A - Basic Feast",
     description:
       "A simple yet satisfying selection of Filipino favorites for small gatherings.",
@@ -43,6 +44,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 370, // ((100 * 4) / 20) + 350 = 370
   },
   {
+    _id: "pkg-2",
     name: "Set B - Family Celebration",
     description:
       "A hearty selection of dishes perfect for family celebrations and small parties.",
@@ -86,6 +88,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 465, // ((100 * 4.5) / 30) + 450 = 465
   },
   {
+    _id: "pkg-3",
     name: "Set C - Fiesta Favorites",
     description:
       "A complete Filipino fiesta experience with a wide variety of traditional dishes.",
@@ -131,6 +134,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 560, // ((100 * 5) / 50) + 550 = 560
   },
   {
+    _id: "pkg-4",
     name: "Set D - Premium Celebration",
     description:
       "An elevated dining experience featuring premium Filipino dishes for special occasions.",
@@ -183,6 +187,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 661, // ((100 * 5.5) / 50) + 650 = 661
   },
   {
+    _id: "pkg-5",
     name: "Set E - Grand Feast",
     description:
       "A grand Filipino feast featuring a comprehensive selection of dishes for large celebrations.",
@@ -247,6 +252,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 758, // ((100 * 6) / 80) + 750 = 757.5 ≈ 758
   },
   {
+    _id: "pkg-6",
     name: "Set F - Royal Filipino Banquet",
     description:
       "The ultimate Filipino banquet experience featuring our finest dishes and premium service.",
@@ -316,6 +322,7 @@ export const cateringPackages: CateringPackagesProps[] = [
   },
   //Birthday
   {
+    _id: "pkg-7",
     name: "Birthday Celebration - Basic",
     description: "A fun and festive package perfect for birthday celebrations.",
     available: true,
@@ -361,6 +368,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 463, // ((100 * 4) / 30) + 450 = 463.33 ≈ 463
   },
   {
+    _id: "pkg-8",
     name: "Birthday Celebration - Premium",
     description:
       "An enhanced birthday package with more food options and better service.",
@@ -420,6 +428,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 560, // ((100 * 5) / 50) + 550 = 560
   },
   {
+    _id: "pkg-9",
     name: "Birthday Celebration - Deluxe",
     description:
       "A comprehensive birthday package for a memorable celebration.",
@@ -488,6 +497,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 658, // ((100 * 6) / 80) + 650 = 657.5 ≈ 658
   },
   {
+    _id: "pkg-10",
     name: "Birthday Celebration - Ultimate",
     description:
       "The ultimate birthday package for an unforgettable celebration.",
@@ -566,6 +576,7 @@ export const cateringPackages: CateringPackagesProps[] = [
   },
   //Wedding
   {
+    _id: "pkg-11",
     name: "Wedding Reception - Essential",
     description:
       "An essential wedding reception package for intimate celebrations.",
@@ -620,6 +631,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 558, // ((100 * 4) / 50) + 550 = 558
   },
   {
+    _id: "pkg-12",
     name: "Wedding Reception - Classic",
     description: "A classic wedding reception package with enhanced offerings.",
     available: true,
@@ -681,6 +693,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 756, // ((100 * 5) / 80) + 750 = 756.25 ≈ 756
   },
   {
+    _id: "pkg-13",
     name: "Wedding Reception - Elegant",
     description:
       "An elegant wedding reception package for a beautiful celebration.",
@@ -762,6 +775,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 960, // ((100 * 6) / 100) + 950 = 960
   },
   {
+    _id: "pkg-14",
     name: "Wedding Reception - Luxurious",
     description:
       "A luxurious wedding reception package for an unforgettable celebration.",
@@ -849,6 +863,7 @@ export const cateringPackages: CateringPackagesProps[] = [
 
   //Corporate
   {
+    _id: "pkg-15",
     name: "Corporate Event - Basic",
     description:
       "A basic corporate event package suitable for meetings and small gatherings.",
@@ -901,6 +916,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 463, // ((100 * 4) / 30) + 450 = 463.33 ≈ 463
   },
   {
+    _id: "pkg-16",
     name: "Corporate Event - Standard",
     description:
       "A standard corporate event package for professional gatherings.",
@@ -957,6 +973,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 560, // ((100 * 5) / 50) + 550 = 560
   },
   {
+    _id: "pkg-17",
     name: "Corporate Event - Executive",
     description:
       "An executive corporate event package for important business functions.",
@@ -1017,6 +1034,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 658, // ((100 * 6) / 80) + 650 = 657.5 ≈ 658
   },
   {
+    _id: "pkg-18",
     name: "Corporate Event - Premium",
     description:
       "A premium corporate event package for high-profile business functions.",
@@ -1091,6 +1109,7 @@ export const cateringPackages: CateringPackagesProps[] = [
   },
   //Graduation
   {
+    _id: "pkg-19",
     name: "Graduation Celebration - Basic",
     description: "A basic graduation celebration package for the new graduate.",
     available: true,
@@ -1142,6 +1161,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 413, // ((100 * 4) / 30) + 400 = 413.33 ≈ 413
   },
   {
+    _id: "pkg-20",
     name: "Graduation Celebration - Standard",
     description:
       "A standard graduation celebration package for a memorable achievement.",
@@ -1204,6 +1224,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 510, // ((100 * 5) / 50) + 500 = 510
   },
   {
+    _id: "pkg-21",
     name: "Graduation Celebration - Deluxe",
     description:
       "A deluxe graduation celebration package for an important milestone.",
@@ -1276,6 +1297,7 @@ export const cateringPackages: CateringPackagesProps[] = [
     pricePerPaxWithServiceCharge: 608, // ((100 * 6) / 80) + 600 = 607.5 ≈ 608
   },
   {
+    _id: "pkg-22",
     name: "Graduation Celebration - Premium",
     description:
       "A premium graduation celebration package for an unforgettable achievement.",
@@ -1357,7 +1379,7 @@ export const cateringPackages: CateringPackagesProps[] = [
 ];
 
 // Custom Package Form Steps
-export const formSteps: FormStepType[] = [
+export const bookNowFormSteps: FormStepType[] = [
   {
     id: "customer-info",
     title: "Customer Information",

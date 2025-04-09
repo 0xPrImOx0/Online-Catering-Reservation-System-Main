@@ -67,11 +67,7 @@ import {
 import Link from "next/link";
 import { format } from "date-fns";
 import { concerns, customers } from "../../../lib/caterer/customers-metadata";
-import {
-  ConcernType,
-  CustomerType,
-} from "../../../types/caterer/caterer-types";
-// import { ConcernType, CustomerType } from "./customer-type";
+import { ConcernType, CustomerType } from "@/types/customer-types";
 
 export default function CustomersPage() {
   const [selectedCustomer, setSelectedCustomer] = useState<CustomerType | null>(
@@ -212,7 +208,7 @@ export default function CustomersPage() {
             <Users className="mr-2 h-5 w-5 text-muted-foreground" />
             <h2 className="text-xl font-semibold">Registered Customers</h2>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 overflow-y-auto">
             <div className="relative w-64">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input

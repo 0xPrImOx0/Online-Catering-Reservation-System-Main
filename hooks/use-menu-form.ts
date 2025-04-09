@@ -48,6 +48,7 @@ const formSchema = z.object({
     )
     .min(1, { message: "Add at least one price tier" }),
   imageUrl: z.string().url({ message: "Please enter a valid URL" }),
+  imageFile: z.instanceof(File).optional(),
   imageUploadType: z.enum(["url", "upload"]).default("url"),
   perServing: z.string(),
   servingUnit: z.enum(["g", "kg"]).default("g"),
@@ -78,6 +79,7 @@ const defaultValues: FormValues = {
   prices: [],
   regularPricePerPax: 0,
   imageUrl: "",
+  imageFile: undefined,
   imageUploadType: "url",
   spicy: false,
   perServing: "",

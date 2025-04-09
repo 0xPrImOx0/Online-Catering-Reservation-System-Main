@@ -2,23 +2,29 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { menuItems } from "@/lib/menu-lists";
 import { categories } from "@/lib/menu-select";
 import { CategoryProps, MenuItem } from "@/types/menu-types";
 import { FormData } from "@/types/package-types";
-import axios from "axios";
-import { useEffect, useState } from "react";
+// import axios from "axios";
+// import { useEffect, useState } from "react";
 
 export default function CategoryOptions({
+  id,
   formData,
   setFormData,
 }: {
+  id: string;
   formData: {
     selectedMenus: Record<CategoryProps, string[]>;
     specialRequests: string;
   };
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }) {
+  const prefix = id.slice(0, 3);
+  const numberPart = parseInt(id[0].split("-")[1], 10);
+  const newCategory = cateringPackages[6].options;
   // const [menus, setMenus] = useState([]);
 
   // useEffect(() => {
@@ -62,7 +68,8 @@ export default function CategoryOptions({
   };
   return (
     <div className="space-y-6">
-      {categories.map((category) => (
+      {numberPart}
+      {newCategory.map(({ category }) => (
         <div key={category} className="space-y-2">
           <h3 className="font-medium">{category} Options</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -73,9 +80,12 @@ export default function CategoryOptions({
                   onCheckedChange={(checked) => {
                     handleMenuSelection(category, menu._id, checked as boolean);
                   }}
-                  checked={(
-                    formData.selectedMenus[category as CategoryProps] || []
-                  ).includes(menu._id)}
+                  checked={
+                    menu._id == id ||
+                    (
+                      formData.selectedMenus[category as CategoryProps] || []
+                    ).includes(menu._id)
+                  }
                 />
                 <div className="grid gap-1.5">
                   <Label htmlFor={`dish-${menu._id}`} className="font-medium">

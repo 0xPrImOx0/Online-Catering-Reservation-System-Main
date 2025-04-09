@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { formSteps } from "@/lib/customer/packages-metadata";
+import { bookNowFormSteps } from "@/lib/customer/packages-metadata";
 import { Check } from "lucide-react";
 
 export default function ReservationSteps({
@@ -10,7 +10,6 @@ export default function ReservationSteps({
   formStep: number;
   maxLoader: boolean;
 }) {
-
   return (
     <div className="flex items-center">
       <div className="flex flex-col mb-4 gap-3 sm:hidden">
@@ -22,11 +21,11 @@ export default function ReservationSteps({
             {formStep + 1}
           </div>
           <span className="text-xl font-medium">
-            {formSteps[formStep].title}
+            {bookNowFormSteps[formStep].title}
           </span>
         </div>
       </div>
-      {formSteps.map((step, index) => (
+      {bookNowFormSteps.map((step, index) => (
         <div
           key={step.id}
           className={` flex-1 flex-col items-center hidden sm:flex ${

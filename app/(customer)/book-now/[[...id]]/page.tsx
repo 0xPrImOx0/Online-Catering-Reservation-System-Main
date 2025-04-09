@@ -23,7 +23,7 @@ export default async function Home({
           </p>
         </div>
       </div>
-      <BookNowForm />
+      <BookNowForm id={id} />
     </div>
   );
 }

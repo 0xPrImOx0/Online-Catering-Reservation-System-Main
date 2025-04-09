@@ -19,7 +19,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Check } from "lucide-react";
-import { formSteps } from "@/lib/customer/packages-metadata";
+import { bookNowFormSteps } from "@/lib/customer/packages-metadata";
 import { PackageCategory, FormData } from "@/types/package-types";
 import Link from "next/link";
 import CustomerInformation from "@/components/shared/customer/CustomerInformation";
@@ -27,8 +27,8 @@ import EventDetails from "@/components/shared/customer/EventDetails";
 import ReservationSteps from "@/components/shared/customer/ReservationSteps";
 import CategoryOptions from "./CategoryOptions";
 import SummaryBooking from "./SummaryBooking";
-export default function BookNowForm() {
-  const [formStep, setFormStep] = useState(0);
+export default function BookNowForm({ id }: { id: string }) {
+  const [formStep, setFormStep] = useState(2);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [maxLoader, setMaxLoader] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -47,7 +47,7 @@ export default function BookNowForm() {
 
   // Function to go to next form step
   const nextStep = () => {
-    if (formStep < formSteps.length - 1) {
+    if (formStep < bookNowFormSteps.length - 1) {
       setFormStep(formStep + 1);
     }
   };
@@ -75,7 +75,7 @@ export default function BookNowForm() {
             className="h-1 bg-primary transition-all rounded-full"
             style={{
               width: `${
-                maxLoader ? "100" : (formStep / formSteps.length) * 100
+                maxLoader ? "100" : (formStep / bookNowFormSteps.length) * 100
               }%`,
             }}
           />
@@ -84,8 +84,10 @@ export default function BookNowForm() {
 
       <Card>
         <CardHeader>
-          <CardTitle>{formSteps[formStep].title}</CardTitle>
-          <CardDescription>{formSteps[formStep].description}</CardDescription>
+          <CardTitle>{bookNowFormSteps[formStep].title}</CardTitle>
+          <CardDescription>
+            {bookNowFormSteps[formStep].description}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {formStep === 0 && (
@@ -100,7 +102,11 @@ export default function BookNowForm() {
           )}
 
           {formStep === 2 && (
-            <CategoryOptions formData={formData} setFormData={setFormData} />
+            <CategoryOptions
+              id={id}
+              formData={formData}
+              setFormData={setFormData}
+            />
           )}
 
           {formStep === 3 && <SummaryBooking formData={formData} />}
@@ -113,7 +119,7 @@ export default function BookNowForm() {
           ) : (
             <div></div>
           )}
-          {formStep < formSteps.length - 1 ? (
+          {formStep < bookNowFormSteps.length - 1 ? (
             <Button onClick={nextStep}>Next</Button>
           ) : (
             <Button onClick={submitForm}>Submit Request</Button>
