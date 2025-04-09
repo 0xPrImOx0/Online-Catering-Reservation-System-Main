@@ -11,7 +11,7 @@ import { links } from "@/lib/customer/customer-links";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function CustomerSiteHeader() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const pathname = usePathname();
   const isMobile = useIsMobile();
   const [mobileMenu, setMobileMenu] = useState(false);

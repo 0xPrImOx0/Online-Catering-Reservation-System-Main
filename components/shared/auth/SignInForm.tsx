@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
@@ -26,10 +25,10 @@ export const SignInForm = ({ form, onSubmit }: SignInFormProps) => {
     <>
       <CardHeader className="flex flex-col items-center space-y-1 pb-1 text-center">
         <CardTitle className="text-2xl font-bold">
-          Sing-in to your account
+          Sign in to your account
         </CardTitle>
         <CardDescription className="text-balance text-sm text-muted-foreground">
-          Enter your email below to Sing-in to your account
+          Enter your email below to Sign in to your account
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
