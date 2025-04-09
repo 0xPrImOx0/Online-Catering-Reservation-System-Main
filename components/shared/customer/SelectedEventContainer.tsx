@@ -55,20 +55,24 @@ export default function SelectedEventContainer({
   ];
 
   return (
-    <div className="flex max-sm:flex-col sm:gap-10 relative min-h-screen overflow-y-auto">
-      <div className={clsx("mt-4 -mb-3", !isMobile && "hidden")}>
+    <div
+      className={clsx("flex gap-10 relative min-h-screen overflow-y-auto", {
+        "flex-col !gap-0": isMobile,
+      })}
+    >
+      <div className={clsx("mt-4 -mb-3 w-full", !isMobile && "hidden")}>
         <Button
           className=""
           onClick={() => setChangeEventMobile((prev) => !prev)}
           size={"custom"}
           variant={"link"}
         >
-          <Menu className="min-h-5 min-w-5" /> Change Event Type
+          <Menu className="min-h-5 min-w-5 ml-auto" /> Change Event Type
         </Button>
       </div>
       <div
         className={clsx(
-          "border border-t-0 rounded-lg rounded-t-none p-4 min-w-[200px] bg-white z-10",
+          "border border-t-0 rounded-lg rounded-t-none p-4 min-w-[200px] bg-background z-10",
           isMobile ? "absolute top-0 left-0 right-0" : "relative",
           !changeEventMobile && isMobile && "hidden"
         )}

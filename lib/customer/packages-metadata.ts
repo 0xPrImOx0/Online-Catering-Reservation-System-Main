@@ -357,7 +357,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Dedicated server per 10 guests" },
       { typeOfCustomer: "Plated", includes: "Course-by-course serving" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://greatex.org/wp-content/uploads/2024/03/birthday-shop.webp",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 4,
@@ -417,7 +418,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Synchronized serving" },
       { typeOfCustomer: "Plated", includes: "Water and wine service" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://www.lumina.com.ph/assets/news-and-blogs-photos/Celebrate-Birthday-at-Home-with-Family-5-Simple-Ideas-and-Themes/Celebrate-Birthday-at-Home-with-Family-5-Simple-Ideas-and-Themes.webp",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 5,
@@ -486,7 +488,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Full beverage service" },
       { typeOfCustomer: "Plated", includes: "White glove service" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://ik.imagekit.io/9um5tdigihm/8/storage/post/353.UJ24S611c7c9ddeacd.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 6,
@@ -564,7 +567,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "White glove service" },
       { typeOfCustomer: "Plated", includes: "Personal sommelier service" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://img.freepik.com/free-photo/couples-celebrating-birthday_23-2149891235.jpg?semt=ais_hybrid&w=740",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 8,
@@ -620,7 +624,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Basic menu cards" },
       { typeOfCustomer: "Plated", includes: "Course-by-course serving" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://media.istockphoto.com/id/1399000012/photo/guests-throwing-confetti-over-bride-and-groom-as-they-walk-past-after-their-wedding-ceremony.jpg?s=612x612&w=0&k=20&c=_KRu-9eoSqH8yazsoIDYy15NEzSOTTJQRJ0I7IJTMGA=",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 4,
@@ -682,7 +687,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Synchronized serving" },
       { typeOfCustomer: "Plated", includes: "Water and wine service" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://inspirations.ph/wp-content/uploads/2024/10/22-1536x1024.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 5,
@@ -764,7 +770,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Full beverage service" },
       { typeOfCustomer: "Plated", includes: "White glove service" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://banquetsofmn.com/wp-content/uploads/2023/10/Wedding-Ceremony-Order-Emilys-Photography.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 6,
@@ -850,7 +857,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Personal sommelier service" },
       { typeOfCustomer: "Plated", includes: "Custom plate presentation" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://www.brides.com/thmb/Drx8BL_uJXvolhPv7k0yYVVUtA0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/guests-at-reception-toasting-logal-cole-photography-recirc-0923-60cb1c61779a48bc95dd61e42a5d2b06.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 8,
@@ -905,7 +913,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Simple menu cards" },
       { typeOfCustomer: "Plated", includes: "Course-by-course serving" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://alwaince.com/wp-content/uploads/2021/05/corporate-events.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 4,
@@ -962,7 +971,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Synchronized serving" },
       { typeOfCustomer: "Plated", includes: "Water service" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://www.srisowbarnikaadecorator.com/wp-content/uploads/2023/01/10-Tips-for-Professional-Corporate-Event-Planning-1536x1024.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 5,
@@ -1023,7 +1033,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Full beverage service" },
       { typeOfCustomer: "Plated", includes: "Professional service staff" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://ambrosiaeventsmke.com/wp-content/uploads/2022/01/Linens-1.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 6,
@@ -1097,7 +1108,8 @@ export const cateringPackages: CateringPackagesProps[] = [
         includes: "Custom corporate branding on service items",
       },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://events.enderuncolleges.com/wp-content/uploads/2019/03/image1-3.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 8,
@@ -1150,7 +1162,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Simple menu cards" },
       { typeOfCustomer: "Plated", includes: "Course-by-course serving" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://www.shutterstock.com/image-photo/cheerful-african-american-guy-graduation-600nw-1953680575.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 4,
@@ -1213,7 +1226,8 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Synchronized serving" },
       { typeOfCustomer: "Plated", includes: "Water and juice service" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://hips.hearstapps.com/hmg-prod/images/graduating-class-royalty-free-image-1713814886.jpg?crop=0.672xw:1.00xh;0.267xw,0&resize=1200:*",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 5,
@@ -1286,7 +1300,7 @@ export const cateringPackages: CateringPackagesProps[] = [
       { typeOfCustomer: "Plated", includes: "Full beverage service" },
       { typeOfCustomer: "Plated", includes: "Professional service staff" },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl: "https://tie.usprogramming8.com/articles/3241.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 6,
@@ -1366,7 +1380,8 @@ export const cateringPackages: CateringPackagesProps[] = [
         includes: "Personalized service for graduate and family",
       },
     ],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl:
+      "https://ual-media-res.cloudinary.com/image/fetch/c_fill,f_auto,fl_lossy,q_auto,w_2000,g_auto,g_auto/https://www.arts.ac.uk/__data/assets/image/0027/446724/R6AC3315.jpg",
     rating: 4.5,
     ratingCount: 200,
     serviceHours: 8,
