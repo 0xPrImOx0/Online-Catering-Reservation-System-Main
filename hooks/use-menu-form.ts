@@ -334,6 +334,7 @@ export function useMenuForm({
       ...data,
       rating: isEditMode && initialData ? initialData.rating : 0,
       ratingCount: isEditMode && initialData ? initialData.ratingCount : 0,
+      _id: ""
     };
 
     console.log(

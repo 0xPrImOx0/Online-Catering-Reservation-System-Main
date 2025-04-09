@@ -39,7 +39,7 @@ export default function FAQ() {
         <Accordion
           type="single"
           collapsible
-          className="max-w-[600px] w-full"
+          className="max-w-[600px] w-full sm:min-w-[600px]"
           defaultValue="first-faq"
         >
           {faqs.map((faq) => (

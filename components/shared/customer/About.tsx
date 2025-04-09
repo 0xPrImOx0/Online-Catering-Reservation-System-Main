@@ -17,7 +17,7 @@ const AboutCards = ({
   return (
     <Link
       href={link}
-      className="flex flex-col nav-md:flex-row flex-1 overflow-hidden min-h-[400px] max-h-[520px] mx-auto rounded-lg border"
+      className="flex flex-col nav-md:flex-row flex-1 overflow-hidden min-h-[400px] mx-auto rounded-lg border"
     >
       <div className="flex-1 max-nav-md:h-[280px]">
         <Image
@@ -25,7 +25,7 @@ const AboutCards = ({
           width={300}
           height={500}
           alt={title}
-          className="w-full  object-cover"
+          className="w-full h-full object-cover"
         />
       </div>
       <div className="flex-1 p-4 flex flex-col justify-between">

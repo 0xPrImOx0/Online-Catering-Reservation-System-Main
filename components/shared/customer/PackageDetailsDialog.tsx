@@ -75,7 +75,7 @@ export default function PackageDetailsDialog({
                 )}
               </div>
               <Button asChild variant={"secondary"}>
-                <Link href={"/book-now"}>Book Now</Link>
+                <Link href={`/book-now/${pkg._id}`}>Book Now</Link>
               </Button>
             </div>
           </div>
