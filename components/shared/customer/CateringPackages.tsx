@@ -18,8 +18,6 @@ import { cateringPackages } from "@/lib/customer/packages-metadata";
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState<string>("Buffet");
   const [isPlated, setIsPlated] = useState(false);
-  const [selectedEventType, setSelectedEventType] =
-    useState<EventType>("Birthday");
   // const [cateringPackages, setCateringPackages] = useState<
   //   CateringPackagesProps[]
   // >([]);
@@ -105,12 +103,7 @@ export default function CateringPackages() {
         </TabsContent>
 
         <TabsContent value="Event" className="mt-0">
-          <SelectedEventContainer
-            selectedEventType={selectedEventType}
-            setSelectedEventType={setSelectedEventType}
-            isPlated={isPlated}
-            cateringPackages={cateringPackages}
-          />
+          <SelectedEventContainer cateringPackages={cateringPackages} />
         </TabsContent>
         <TabsContent value="Custom" className="mt-12 sm:mx-0 lg:mx-8 xl:mx-20">
           <CustomPackageForm />

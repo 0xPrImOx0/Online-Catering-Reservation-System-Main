@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { reservations } from "@/lib/caterer/reservation-dummy";
 import {
   Calendar,
-  Filter,
   LucideIcon,
   MessageSquare,
   Users,
@@ -13,6 +12,7 @@ import Link from "next/link";
 import { concerns, metricCards, registeredCustomers } from "../../../lib/caterer/dashboard-metadata";
 import RecentConcerns from "@/components/shared/caterer/RecentConcerns";
 import RecentCustomers from "@/components/shared/caterer/RecentCustomers";
+import { Metadata } from "next";
 
 const RecentHeaders = ({
   title,
@@ -37,6 +37,11 @@ const RecentHeaders = ({
     </div>
   );
 };
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
+
 
 export default function DashboardPage() {
   return (

@@ -9,11 +9,11 @@ import { menuItems } from "@/lib/menu-lists";
 import { AddMenuDialog } from "@/components/shared/caterer/AddMenuForm";
 import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
 import { selectorItems } from "@/lib/menu-select";
-export default function MenuManagement() {
+export default function Page() {
   // State responsible for opening/closing the dialogs for dialog visibility
   const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [query, setQuery] = useState("");
+  // const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  // const [query, setQuery] = useState("");
 
   return (
     <main className="space-y-8 px-6 max-w-[1440px] mx-auto">
@@ -23,7 +23,7 @@ export default function MenuManagement() {
       />
 
       {/* Search and View Controls */}
-      <div className="flex justify-between mb-6">
+      {/* <div className="flex justify-between mb-6">
         <SearchInput
           query={query}
           setQuery={setQuery}
@@ -37,9 +37,9 @@ export default function MenuManagement() {
           />
           <ViewModeButtons viewMode={viewMode} setViewMode={setViewMode} />
         </div>
-      </div>
+      </div> */}
 
-      <PaginatedMenus items={menuItems} />
+      <PaginatedMenus />
 
       <AddMenuDialog
         isAddMenuOpen={isAddMenuOpen}

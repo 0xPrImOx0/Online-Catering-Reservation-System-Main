@@ -22,9 +22,9 @@ export default function CategoryOptions({
   };
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }) {
-  const prefix = id.slice(0, 3);
-  const numberPart = parseInt(id[0].split("-")[1], 10);
-  const newCategory = cateringPackages[6].options;
+  // const prefix = id.slice(0, 3);
+  // const numberPart = parseInt(id[0].split("-")[1], 10);
+  // const newCategory = cateringPackages[6].options;
   // const [menus, setMenus] = useState([]);
 
   // useEffect(() => {
@@ -68,8 +68,8 @@ export default function CategoryOptions({
   };
   return (
     <div className="space-y-6">
-      {numberPart}
-      {newCategory.map(({ category }) => (
+      {/* {numberPart} */}
+      {categories.map((category) => (
         <div key={category} className="space-y-2">
           <h3 className="font-medium">{category} Options</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

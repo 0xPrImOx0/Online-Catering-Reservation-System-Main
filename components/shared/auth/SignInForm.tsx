@@ -28,7 +28,7 @@ export const SignInForm = ({ form, onSubmit }: SignInFormProps) => {
           Sign in to your account
         </CardTitle>
         <CardDescription className="text-balance text-sm text-muted-foreground">
-          Enter your email below to Sign in to your account
+          Enter your email below to sign in to your account
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
@@ -78,7 +78,7 @@ export const SignInForm = ({ form, onSubmit }: SignInFormProps) => {
               )}
             />
             <Button type="submit" className="w-full mt-4">
-              SignIn
+              Sign in
             </Button>
           </form>
         </Form>
@@ -89,7 +89,7 @@ export const SignInForm = ({ form, onSubmit }: SignInFormProps) => {
         </div>
         <Button variant="outline" className="w-full">
           <Google />
-          SignIn with Google
+          Sign in with Google
         </Button>
       </CardContent>
       <CardFooter className="text-sm flex justify-center space-x-2">

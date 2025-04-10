@@ -11,7 +11,7 @@ import { links } from "@/lib/customer/customer-links";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function CustomerSiteHeader() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
   const isMobile = useIsMobile();
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -77,7 +77,7 @@ export default function CustomerSiteHeader() {
           {isLoggedIn ? (
             <CustomerNavUser user={user} />
           ) : (
-            <div>
+            <div className="space-x-4">
               <Link className="max-sm:hidden" href={"/sign-in"}>
                 <Button variant={"ghost"}>
                   <User /> Sign In

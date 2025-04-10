@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { eventTypes } from "@/types/package-types";
+import { EventType, eventTypes } from "@/types/package-types";
 import CustomerPackageCard from "./CustomerPackageCard";
 import { SelectedEventContainerProps } from "@/types/component-types";
 import clsx from "clsx";
@@ -13,11 +13,10 @@ import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function SelectedEventContainer({
-  selectedEventType,
-  setSelectedEventType,
   cateringPackages,
 }: SelectedEventContainerProps) {
   const [serviceType, setServiceType] = useState("Buffet");
+  const [selectedEventType, setSelectedEventType] = useState<EventType>("All");
   const [isPlated, setIsPlated] = useState(false);
   const [changeEventMobile, setChangeEventMobile] = useState(false);
   const isMobile = useIsMobile();
@@ -27,11 +26,20 @@ export default function SelectedEventContainer({
     setChangeEventMobile(false);
   }, [serviceType, selectedEventType]);
 
-  const eventPackages = cateringPackages.filter(
-    (pkg) => pkg.packageType === "Event" && pkg.eventType === selectedEventType
-  );
+  const eventPackages =
+    selectedEventType === "All"
+      ? cateringPackages.filter((pkg) => pkg.packageType === "Event")
+      : cateringPackages.filter(
+          (pkg) =>
+            pkg.packageType === "Event" && pkg.eventType === selectedEventType
+        );
 
   const pkgDescriptions = [
+    {
+      event: "All",
+      description:
+        "Celebrate your special day with our delicious Filipino cuisine.",
+    },
     {
       event: "Birthday",
       description:
@@ -90,6 +98,15 @@ export default function SelectedEventContainer({
         <div>
           <Label className="text-muted-foreground">Event Types</Label>
           <div className="flex flex-col items-s space-y-4 mt-4">
+            <Button
+              variant={selectedEventType === "All" ? "default" : "ghost"}
+              className={clsx("font-medium rounded-sm justify-start", {
+                "text-muted-foreground": selectedEventType !== "All",
+              })}
+              onClick={() => setSelectedEventType("All")}
+            >
+              <span className="text-left">All</span>
+            </Button>
             {eventTypes.map((event) => (
               <Button
                 variant={selectedEventType === event ? "default" : "ghost"}
@@ -125,6 +142,9 @@ export default function SelectedEventContainer({
       <div className="space-y-8">
         <div className="mt-6 space-y-5">
           <div className="relative">
+            {selectedEventType === "All" && (
+              <h3 className="text-4xl font-semibold">All Packages</h3>
+            )}
             {eventTypes.map((event, index) => (
               <h3 className="text-4xl font-semibold" key={index}>
                 {event === selectedEventType && `${event} Packages`}

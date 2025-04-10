@@ -28,7 +28,7 @@ import ReservationSteps from "@/components/shared/customer/ReservationSteps";
 import CategoryOptions from "./CategoryOptions";
 import SummaryBooking from "./SummaryBooking";
 export default function BookNowForm({ id }: { id: string }) {
-  const [formStep, setFormStep] = useState(2);
+  const [formStep, setFormStep] = useState(0);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [maxLoader, setMaxLoader] = useState(false);
   const [formData, setFormData] = useState<FormData>({

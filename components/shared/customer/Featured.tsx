@@ -29,9 +29,11 @@ export default async function Featured() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Package Showcase */}
-          {cateringPackages.map((pkg: CateringPackagesProps, index: number) => (
-            <CustomerPackageCard item={pkg} key={index} />
-          ))}
+          {cateringPackages
+            .slice(0, 6)
+            .map((pkg: CateringPackagesProps, index: number) => (
+              <CustomerPackageCard item={pkg} key={index} />
+            ))}
         </div>
       </div>
       <Button size={"landing"} variant={"outline"} asChild>
