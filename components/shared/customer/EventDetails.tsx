@@ -2,20 +2,15 @@
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import LabelGroup from "../LabelGroup";
-import { eventTypes, FormData } from "@/types/package-types";
+import { eventTypes } from "@/types/package-types";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  ReservationValues,
-  useReservationForm,
-} from "@/hooks/use-reservation-form";
+import { ReservationValues } from "@/hooks/use-reservation-form";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -24,14 +19,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { BookNowProps } from "@/types/reservation-types";
 import { useFormContext } from "react-hook-form";
 
 export default function EventDetails() {
-  const {
-    control,
-    formState: { isSubmitted },
-  } = useFormContext<ReservationValues>();
+  const { control } = useFormContext<ReservationValues>();
   const hoursArray = ["4 hours", "5 hours", "6 hours", "8 hours", "10 hours"];
 
   return (
@@ -59,7 +50,7 @@ export default function EventDetails() {
                   ))}
                 </SelectContent>
               </Select>
-              {isSubmitted && <FormMessage />}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -82,7 +73,7 @@ export default function EventDetails() {
                   }
                 />
               </FormControl>
-              {isSubmitted && <FormMessage />}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -97,9 +88,24 @@ export default function EventDetails() {
                 Number of Guests <span className="text-destructive">*</span>{" "}
               </FormLabel>
               <FormControl>
-                <Input placeholder="Enter expected guests" {...field} />
+                <Input
+                  placeholder="Enter expected guests"
+                  type="number"
+                  {...field}
+                  onChange={(e) => {
+                    // Handle the 0 issue by replacing the value completely
+                    const value = e.target.value;
+                    if (value === "0" || value === "") {
+                      field.onChange(0);
+                    } else {
+                      // Remove leading zeros and convert to number
+                      field.onChange(Number(value.replace(/^0+/, "")));
+                    }
+                  }}
+                  value={field.value || ""}
+                />
               </FormControl>
-              {isSubmitted && <FormMessage />}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -114,7 +120,7 @@ export default function EventDetails() {
               <FormControl>
                 <Input placeholder="Enter your event venue" {...field} />
               </FormControl>
-              {isSubmitted && <FormMessage />}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -145,7 +151,7 @@ export default function EventDetails() {
                   </div>
                 </RadioGroup>
               </FormControl>
-              {isSubmitted && <FormMessage />}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -171,21 +177,10 @@ export default function EventDetails() {
                   ))}
                 </SelectContent>
               </Select>
-              {isSubmitted && <FormMessage />}
+              <FormMessage />
             </FormItem>
           )}
         />
-
-        {/* <LabelGroup
-          title="Service Hours"
-          placeholder="Select service hours"
-          type="select"
-          selectData={hoursArray}
-          value={formData.serviceHours}
-          onChange={(value) =>
-            handleFormChange("serviceHours", value as string)
-          }
-        /> */}
       </div>
     </div>
   );

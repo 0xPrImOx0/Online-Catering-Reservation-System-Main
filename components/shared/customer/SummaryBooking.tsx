@@ -2,16 +2,10 @@
 import { Separator } from "@/components/ui/separator";
 import { ReservationValues } from "@/hooks/use-reservation-form";
 import { menuItems } from "@/lib/menu-lists";
-import { MenuItem } from "@/types/menu-types";
-import { FormData } from "@/types/package-types";
-import { BookNowProps } from "@/types/reservation-types";
-import axios from "axios";
 import { Check } from "lucide-react";
-import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 export default function SummaryBooking() {
-  // const [menus, setMenus] = useState<MenuItem[]>([]);
   const { watch } = useFormContext<ReservationValues>();
 
   // Use watch to get reactive form values

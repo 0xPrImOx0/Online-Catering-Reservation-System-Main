@@ -217,9 +217,9 @@ export function MultiStepForm({
               <>
                 <Button
                   variant="outline"
-                  effect={"hoverUnderline"}
+                  // effect={"hoverUnderline"}
                   onClick={onCancel}
-                  className="hover:bg-destructive"
+                  className="hover:bg-destructive hover:text-background"
                 >
                   {cancelButtonText}
                 </Button>

@@ -49,6 +49,7 @@ export default function BookNowForm({ id }: { id: string }) {
 
   // Handle form submission
   const handleSubmit = () => {
+    setShowConfirmation(true);
     reservationForm.handleSubmit((data) => {
       onSubmit(data);
       setIsSubmitComplete(true);

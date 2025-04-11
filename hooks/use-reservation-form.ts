@@ -1,4 +1,3 @@
-import { CategoryProps } from "@/types/menu-types";
 import { PackageCategory } from "@/types/package-types";
 import { ReservationItem } from "@/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,15 +13,14 @@ const reservationSchema = z.object({
   email: z
     .string({ required_error: "Please provide your email address" })
     .email("Please enter a valid email address"),
-  contactNumber: z
-    .number({ required_error: "Please provide a valid contact number" })
-    .min(10, "Contact Number must be at least 10 characters")
-    .max(10, "Contact Number cannot exceed 10 characters"),
+  contactNumber: z.number().refine((num) => num.toString().length === 10, {
+    message: "Contact Number must have exactly 10 digits",
+  }),
   eventType: z.string(),
   eventDate: z.date(),
   eventTime: z.string().time(),
-  guestCount: z.number(),
-  venue: z.string(),
+  guestCount: z.number().min(20).max(200),
+  venue: z.string({ required_error: "Venue is Required" }),
   serviceType: z.string(),
   serviceHours: z.string(),
   selectedPackage: z.string(),
@@ -36,13 +34,13 @@ const defaultValues: ReservationValues = {
   fullName: "",
   email: "",
   contactNumber: 0,
-  eventType: "",
+  eventType: "Birthday",
   eventDate: new Date(),
   eventTime: "",
   guestCount: 0,
   venue: "",
   serviceType: "Buffet",
-  serviceHours: "",
+  serviceHours: "4 hours",
   selectedPackage: "",
   selectedMenus: {} as Record<PackageCategory, string[]>,
   specialRequests: "",
@@ -60,15 +58,9 @@ export function useReservationForm() {
   });
   // Validate a specific step
   const validateStep = async (step: number): Promise<boolean> => {
-    setIsValidationAttempted(true);
-    // const fieldsToValidate = getFieldsToValidate(step);
-    // const isValid = await form.trigger(fieldsToValidate);
-
-    if (isValidationAttempted) {
-      setIsValidationAttempted(false);
-    }
-
-    return isValidationAttempted;
+    const fieldsToValidate = getFieldsToValidate(step);
+    const isValid = await reservationForm.trigger(fieldsToValidate);
+    return isValid;
   };
 
   // Submit form function
@@ -85,6 +77,28 @@ export function useReservationForm() {
 
     // Return the new menu item
     return reservation;
+  };
+
+  const getFieldsToValidate = (
+    step: number
+  ): Array<keyof ReservationValues> => {
+    switch (step) {
+      case 0:
+        return ["fullName", "email", "contactNumber"];
+      case 1:
+        return [
+          "eventType",
+          "eventDate",
+          "guestCount",
+          "venue",
+          "serviceType",
+          "serviceHours",
+        ];
+      case 2:
+        return ["selectedMenus"];
+      default:
+        return [];
+    }
   };
   return {
     reservationForm,

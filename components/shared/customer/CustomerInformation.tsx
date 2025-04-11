@@ -1,31 +1,17 @@
 "use client";
-
-import LabelGroup from "../LabelGroup";
-import { FormData } from "@/types/package-types";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  ReservationValues,
-  useReservationForm,
-} from "@/hooks/use-reservation-form";
+import { ReservationValues } from "@/hooks/use-reservation-form";
 import { Input } from "@/components/ui/input";
-import { BookNowProps } from "@/types/reservation-types";
 import { useFormContext } from "react-hook-form";
 
 export default function CustomerInformation() {
-  // const handleFormChange = (field: string, value: string) => {
-  //   setFormData((prev) => ({ ...prev, [field]: value }));
-  // };
-  const {
-    control,
-    formState: { isSubmitted },
-  } = useFormContext<ReservationValues>();
+  const { control } = useFormContext<ReservationValues>();
 
   return (
     <div className="space-y-4">
@@ -41,7 +27,7 @@ export default function CustomerInformation() {
               <FormControl>
                 <Input placeholder="Enter your full name" {...field} />
               </FormControl>
-              {isSubmitted && <FormMessage />}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -56,7 +42,7 @@ export default function CustomerInformation() {
               <FormControl>
                 <Input placeholder="johndoe@example.com" {...field} />
               </FormControl>
-              {isSubmitted && <FormMessage />}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -73,9 +59,20 @@ export default function CustomerInformation() {
                   placeholder="Enter your contact number"
                   type="number"
                   {...field}
+                  onChange={(e) => {
+                    // Handle the 0 issue by replacing the value completely
+                    const value = e.target.value;
+                    if (value === "0" || value === "") {
+                      field.onChange(0);
+                    } else {
+                      // Remove leading zeros and convert to number
+                      field.onChange(Number(value.replace(/^0+/, "")));
+                    }
+                  }}
+                  value={field.value || ""}
                 />
               </FormControl>
-              {isSubmitted && <FormMessage />}
+              <FormMessage />
             </FormItem>
           )}
         />

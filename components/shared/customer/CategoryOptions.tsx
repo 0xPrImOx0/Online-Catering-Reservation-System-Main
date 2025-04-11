@@ -2,25 +2,18 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  ReservationValues,
-  useReservationForm,
-} from "@/hooks/use-reservation-form";
-import { cateringPackages } from "@/lib/customer/packages-metadata";
+import { ReservationValues } from "@/hooks/use-reservation-form";
 import { menuItems } from "@/lib/menu-lists";
 import { categories } from "@/lib/menu-select";
 import { CategoryProps, MenuItem } from "@/types/menu-types";
-import { FormData } from "@/types/package-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { BookNowProps } from "@/types/reservation-types";
 import { useFormContext } from "react-hook-form";
 // import axios from "axios";
 // import { useEffect, useState } from "react";
@@ -99,7 +92,7 @@ export default function CategoryOptions() {
                 </div>
               </div>
             ))}
-            {isSubmitted && <FormMessage />}
+            <FormMessage />
           </FormItem>
         )}
       />
