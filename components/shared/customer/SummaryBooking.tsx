@@ -1,22 +1,29 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
+import { ReservationValues } from "@/hooks/use-reservation-form";
 import { menuItems } from "@/lib/menu-lists";
 import { MenuItem } from "@/types/menu-types";
 import { FormData } from "@/types/package-types";
+import { BookNowProps } from "@/types/reservation-types";
 import axios from "axios";
 import { Check } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 
-export default function SummaryBooking({ formData }: { formData: FormData }) {
+export default function SummaryBooking() {
   // const [menus, setMenus] = useState<MenuItem[]>([]);
+  const { watch } = useFormContext<ReservationValues>();
 
-  // useEffect(() => {
-  //   const getMenus = async () => {
-  //     const response = await axios.get("http://localhost:5500/api/menus");
-  //     setMenus(response.data.data);
-  //   };
-  //   getMenus();
-  // }, []);
+  // Use watch to get reactive form values
+  const formValues = watch();
+
+  const formattedDate = formValues.eventDate
+    ? formValues.eventDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "No date selected";
 
   return (
     <div className="space-y-4">
@@ -26,15 +33,15 @@ export default function SummaryBooking({ formData }: { formData: FormData }) {
           <ul className="text-sm space-y-1">
             <li className="flex justify-between">
               <span className="text-muted-foreground">Name:</span>
-              <span>{formData.name}</span>
+              <span>{formValues.fullName || "Not provided"}</span>
             </li>
             <li className="flex justify-between">
               <span className="text-muted-foreground">Email:</span>
-              <span>{formData.email}</span>
+              <span>{formValues.email || "Not provided"}</span>
             </li>
             <li className="flex justify-between">
               <span className="text-muted-foreground">Phone:</span>
-              <span>{formData.phone}</span>
+              <span>{formValues.contactNumber || "Not provided"}</span>
             </li>
           </ul>
         </div>
@@ -43,27 +50,31 @@ export default function SummaryBooking({ formData }: { formData: FormData }) {
           <ul className="text-sm space-y-1">
             <li className="flex justify-between">
               <span className="text-muted-foreground">Event Type:</span>
-              <span>{formData.eventType}</span>
+              <span>{formValues.eventType || "Not provided"}</span>
             </li>
             <li className="flex justify-between">
               <span className="text-muted-foreground">Date:</span>
-              <span>{formData.eventDate}</span>
+              <span>{formattedDate}</span>
             </li>
             <li className="flex justify-between">
               <span className="text-muted-foreground">Guests:</span>
-              <span>{formData.guestCount}</span>
+              <span>{formValues.guestCount || "Not provided"}</span>
             </li>
             <li className="flex justify-between">
               <span className="text-muted-foreground">Venue:</span>
-              <span>{formData.venue}</span>
+              <span>{formValues.venue || "Not provided"}</span>
             </li>
             <li className="flex justify-between">
               <span className="text-muted-foreground">Service Type:</span>
-              <span>{formData.serviceType}</span>
+              <span>{formValues.serviceType || "Not provided"}</span>
             </li>
             <li className="flex justify-between">
               <span className="text-muted-foreground">Service Hours:</span>
-              <span>{formData.serviceHours} hours</span>
+              <span>
+                {formValues.serviceHours
+                  ? `${formValues.serviceHours}`
+                  : "Not provided"}
+              </span>
             </li>
           </ul>
         </div>
@@ -72,33 +83,35 @@ export default function SummaryBooking({ formData }: { formData: FormData }) {
       <div>
         <h3 className="font-medium mb-2">Selected Menu</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {Object.entries(formData.selectedMenus).map(([category, menuIds]) => {
-            if (menuIds.length === 0) return null;
-            return (
-              <div key={category}>
-                <h4 className="text-sm font-medium">{category}</h4>
-                <ul className="text-sm space-y-1 mt-1">
-                  {menuIds.map((id) => {
-                    const menu = menuItems.find((d) => d._id === id);
-                    return menu ? (
-                      <li key={id} className="flex items-center gap-2">
-                        <Check className="h-3 w-3 text-primary" />
-                        {menu.name}
-                      </li>
-                    ) : null;
-                  })}
-                </ul>
-              </div>
-            );
-          })}
+          {Object.entries(formValues.selectedMenus).map(
+            ([category, menuIds]) => {
+              if (menuIds.length === 0) return null;
+              return (
+                <div key={category}>
+                  <h4 className="text-sm font-medium">{category}</h4>
+                  <ul className="text-sm space-y-1 mt-1">
+                    {menuIds.map((id) => {
+                      const menu = menuItems.find((d) => d._id === id);
+                      return menu ? (
+                        <li key={id} className="flex items-center gap-2">
+                          <Check className="h-3 w-3 text-primary" />
+                          {menu.name}
+                        </li>
+                      ) : null;
+                    })}
+                  </ul>
+                </div>
+              );
+            }
+          )}
         </div>
       </div>
-      {formData.specialRequests && (
+      {formValues.specialRequests && (
         <>
           <Separator />
           <div>
             <h3 className="font-medium mb-2">Special Requests</h3>
-            <p className="text-sm">{formData.specialRequests}</p>
+            <p className="text-sm">{formValues.specialRequests}</p>
           </div>
         </>
       )}

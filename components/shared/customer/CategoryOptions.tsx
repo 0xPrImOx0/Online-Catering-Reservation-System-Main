@@ -2,29 +2,39 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  ReservationValues,
+  useReservationForm,
+} from "@/hooks/use-reservation-form";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { menuItems } from "@/lib/menu-lists";
 import { categories } from "@/lib/menu-select";
 import { CategoryProps, MenuItem } from "@/types/menu-types";
 import { FormData } from "@/types/package-types";
+import { useEffect, useState } from "react";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { BookNowProps } from "@/types/reservation-types";
+import { useFormContext } from "react-hook-form";
 // import axios from "axios";
 // import { useEffect, useState } from "react";
 
-export default function CategoryOptions({
-  id,
-  formData,
-  setFormData,
-}: {
-  id: string;
-  formData: {
-    selectedMenus: Record<CategoryProps, string[]>;
-    specialRequests: string;
-  };
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-}) {
+export default function CategoryOptions() {
+  // const destructuredId = id ? id[0] : "";
+  const {
+    control,
+    formState: { isSubmitted },
+  } = useFormContext<ReservationValues>();
+  const [newCategories, setNewCategories] = useState(categories);
   // const prefix = id.slice(0, 3);
   // const numberPart = parseInt(id[0].split("-")[1], 10);
-  // const newCategory = cateringPackages[6].options;
+  // const newCategories = cateringPackages[6].options;
   // const [menus, setMenus] = useState([]);
 
   // useEffect(() => {
@@ -34,81 +44,80 @@ export default function CategoryOptions({
   //   };
   //   getMenus();
   // }, []);
+
   // Function to get dishes by category
   const getMenusByCategory = (category: CategoryProps) => {
     return menuItems.filter((menu: MenuItem) => menu.category === category);
   };
 
-  // Then your handleMenuSelection function is mostly fine, just make sure to handle if the category property doesn't exist yet:
-  const handleMenuSelection = (
-    category: CategoryProps,
-    menuId: string,
-    selected: boolean
-  ) => {
-    setFormData((prev) => {
-      const currentSelection = prev.selectedMenus[category] || [];
-      let newSelection;
-      if (selected) {
-        newSelection = [...currentSelection, menuId];
-      } else {
-        newSelection = currentSelection.filter((id: string) => id !== menuId);
-      }
-      return {
-        ...prev,
-        selectedMenus: {
-          ...prev.selectedMenus,
-          [category]: newSelection,
-        },
-      };
-    });
-  };
-
-  const handleFormChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
   return (
     <div className="space-y-6">
       {/* {numberPart} */}
-      {categories.map((category) => (
-        <div key={category} className="space-y-2">
-          <h3 className="font-medium">{category} Options</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {getMenusByCategory(category).map((menu: MenuItem) => (
-              <div key={menu._id} className="flex items-start space-x-2">
-                <Checkbox
-                  id={`menu-${menu._id}`}
-                  onCheckedChange={(checked) => {
-                    handleMenuSelection(category, menu._id, checked as boolean);
-                  }}
-                  checked={
-                    menu._id == id ||
-                    (
-                      formData.selectedMenus[category as CategoryProps] || []
-                    ).includes(menu._id)
-                  }
-                />
-                <div className="grid gap-1.5">
-                  <Label htmlFor={`dish-${menu._id}`} className="font-medium">
-                    {menu.name}
-                  </Label>
-                  <p className="text-sm text-muted-foreground">
-                    {menu.shortDescription}
-                  </p>
+      <FormField
+        control={control}
+        name="selectedMenus"
+        render={({ field }) => (
+          <FormItem>
+            {newCategories.map((category) => (
+              <div key={category} className="space-y-2">
+                <FormLabel className="font-medium text-base">
+                  {category} Options
+                </FormLabel>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {getMenusByCategory(category).map((menu) => (
+                    <div key={menu._id} className="flex items-start space-x-2">
+                      <FormControl>
+                        <Checkbox
+                          id={`menu-${menu._id}`}
+                          checked={field.value[category]?.includes(menu._id)}
+                          onCheckedChange={(checked) => {
+                            const updatedMenus = checked
+                              ? [...(field.value[category] || []), menu._id]
+                              : field.value[category].filter(
+                                  (id) => id !== menu._id
+                                );
+                            field.onChange({
+                              ...field.value,
+                              [category]: updatedMenus,
+                            });
+                          }}
+                        />
+                      </FormControl>
+                      <div className="grid gap-1.5">
+                        <Label
+                          htmlFor={`menu-${menu._id}`}
+                          className="font-medium"
+                        >
+                          {menu.name}
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          {menu.shortDescription}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      ))}
-      <div className="space-y-2">
-        <Label htmlFor="specialRequests">Special Requests</Label>
-        <Textarea
-          id="specialRequests"
-          placeholder="Any special requests or dietary requirements?"
-          value={formData.specialRequests}
-          onChange={(e) => handleFormChange("specialRequests", e.target.value)}
-        />
-      </div>
+            {isSubmitted && <FormMessage />}
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={control}
+        name="specialRequests"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Special Requests</FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder="Any special requests or dietary requirements?"
+                {...field}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
     </div>
   );
 }

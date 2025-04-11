@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Highlights = ({ metric, title }: { metric: string; title: string }) => {
   return (
-    <Card className="flex-1 p-4 border-2 rounded-sm sm:text-center">
+    <Card className="flex-1 p-4 rounded-sm sm:text-center">
       <span className="text-4xl font-medium">{metric} </span>{" "}
       <p className="text-muted-foreground text-sm min-w-max">{title}</p>
     </Card>

@@ -44,7 +44,7 @@ export interface ReviewsProps {
 }
 
 export interface CateringPackagesProps {
-  _id: string,
+  _id: string;
   name: string;
   description: string;
   available: boolean;
@@ -88,6 +88,7 @@ export interface BookingFormData {
 }
 
 export interface FormData extends BookingFormData {
+  selectedPackage?: string;
   serviceType: string;
   selectedMenus: Record<CategoryProps, string[]>;
 }

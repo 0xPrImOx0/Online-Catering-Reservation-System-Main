@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "../ui/progress";
+import clsx from "clsx";
 
 export type FormStepType = {
   id: string;
@@ -34,6 +35,7 @@ type MultiStepFormProps = {
   previousButtonText?: string;
   doneButtonText?: string;
   cancelButtonText?: string;
+  isReservationForm?: boolean;
 };
 
 export function MultiStepForm({
@@ -52,6 +54,7 @@ export function MultiStepForm({
   previousButtonText = "Previous",
   doneButtonText = "Done",
   cancelButtonText = "Cancel",
+  isReservationForm = false,
 }: MultiStepFormProps) {
   const [formStep, setFormStep] = useState<number>(initialStep || 0);
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
@@ -98,10 +101,27 @@ export function MultiStepForm({
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col h-full">
-      <div className="sticky top-0 z-10 bg-background md:pt-4 pb-2 px-6">
+      <div
+        className={clsx("bg-background md:pt-4 pb-2 px-6", {
+          "sticky top-0 z-10": !isReservationForm,
+        })}
+      >
         <div className="text-center mb-4">
-          <h2 className="text-2xl font-bold">{title}</h2>
-          <p className="text-muted-foreground text-sm">{description}</p>
+          <h2
+            className={clsx(
+              "font-bold",
+              isReservationForm ? "text-3xl mb-2" : "text-2xl"
+            )}
+          >
+            {title}
+          </h2>
+          <p
+            className={clsx("text-muted-foreground", {
+              "text-sm": !isReservationForm,
+            })}
+          >
+            {description}
+          </p>
         </div>
 
         {/* Mobile step indicator */}

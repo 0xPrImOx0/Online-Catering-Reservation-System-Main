@@ -1,3 +1,6 @@
+import { useReservationForm } from "@/hooks/use-reservation-form";
+import { PackageCategory } from "./package-types";
+
 //Reservation Related Types
 export type reservationType = {
   id: string;
@@ -23,7 +26,27 @@ export type reservationType = {
   isUrgent: boolean;
 };
 
+export interface ReservationItem {
+  fullName: string;
+  email: string;
+  contactNumber: number;
+  eventType: string;
+  eventDate: Date;
+  eventTime: string;
+  guestCount: number;
+  venue: string;
+  serviceType: string;
+  serviceHours: string;
+  selectedPackage: string;
+  selectedMenus: Record<PackageCategory, string[]>;
+  specialRequests: string;
+}
+
 export type ReservationTableProps = {
   reservations: reservationType[];
   dashboard?: boolean;
 };
+
+export interface BookNowProps {
+  formHook: ReturnType<typeof useReservationForm>;
+}
