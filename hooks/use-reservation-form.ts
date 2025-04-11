@@ -85,7 +85,11 @@ export function useReservationForm() {
     switch (step) {
       case 0:
         return ["fullName", "email", "contactNumber"];
-      case 1:
+      case 2:
+        return [];
+      case 2:
+        return ["selectedMenus"];
+      case 3:
         return [
           "eventType",
           "eventDate",
@@ -94,8 +98,6 @@ export function useReservationForm() {
           "serviceType",
           "serviceHours",
         ];
-      case 2:
-        return ["selectedMenus"];
       default:
         return [];
     }
