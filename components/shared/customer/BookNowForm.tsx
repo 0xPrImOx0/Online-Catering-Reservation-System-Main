@@ -21,11 +21,12 @@ import { Form } from "@/components/ui/form";
 import { useReservationForm } from "@/hooks/use-reservation-form";
 import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { useRouter } from "next/navigation";
+import PackageSelection from "./PackageSelection";
 export default function BookNowForm({ id }: { id: string }) {
   const router = useRouter();
   const { reservationForm, validateStep, onSubmit } = useReservationForm();
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(2);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
 
   // Convert our form steps to the format expected by MultiStepForm
@@ -66,8 +67,9 @@ export default function BookNowForm({ id }: { id: string }) {
 
   const formStepComponents = [
     <CustomerInformation key={"customer-information"} />,
-    <EventDetails key={"event-details"} />,
+    <PackageSelection key={"package-selection"} />,
     <CategoryOptions key={"category-options"} />,
+    <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,
   ];
 

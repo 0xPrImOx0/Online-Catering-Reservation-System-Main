@@ -1401,9 +1401,9 @@ export const bookNowFormSteps: FormStepType[] = [
     description: "Please provide your contact details",
   },
   {
-    id: "event-details",
-    title: "Event Details",
-    description: "Tell us about your event",
+    id: "package-selection",
+    title: "Package Selection",
+    description: "Select a predefined package or create your own custom menu",
   },
   {
     id: "menu-selection",
@@ -1411,32 +1411,13 @@ export const bookNowFormSteps: FormStepType[] = [
     description: "Choose your preferred dishes",
   },
   {
-    id: "review",
-    title: "Review",
-    description: "Review your custom package",
-  },
-];
-
-// Booking steps
-export const bookingSteps: FormStepType[] = [
-  {
-    id: "customer-info",
-    title: "Customer Information",
-    description: "Please provide your contact details",
+    id: "order-details",
+    title: "Reservation Details",
+    description: "Provide event or delivery details for your reservation",
   },
   {
-    id: "event-details",
-    title: "Event Details",
-    description: "Tell us about your event",
-  },
-  {
-    id: "package-selection",
-    title: "Package Selection",
-    description: "Review your selected package and add any special requests",
-  },
-  {
-    id: "review",
-    title: "Review",
-    description: "Review your booking details",
+    id: "summary",
+    title: "Summary",
+    description: "Summary your order details",
   },
 ];

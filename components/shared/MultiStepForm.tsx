@@ -60,6 +60,8 @@ export function MultiStepForm({
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
     useState<boolean>(false);
 
+  const checkSizing = isReservationForm ? 24 : 16;
+
   // Function to go to next form step
   const nextStep = async () => {
     if (formStep < formSteps.length - 1) {
@@ -146,11 +148,11 @@ export function MultiStepForm({
         </div>
 
         {/* Desktop step indicators */}
-        <div className="items-center justify-between hidden sm:flex">
+        <div className="justify-between items-start hidden sm:flex">
           {formSteps.map((step, index) => (
             <div
               key={step.id}
-              className={`flex-1 flex flex-col items-center ${
+              className={`flex-1 flex flex-col items-center  ${
                 index < formStep
                   ? "text-primary"
                   : index === formStep
@@ -159,26 +161,28 @@ export function MultiStepForm({
               }`}
             >
               <div
-                className={`w-7 h-7 rounded-full flex items-center justify-center mb-1 ${
+                className={clsx(
+                  "rounded-full flex items-center justify-center mb-1 mt-22",
                   index < formStep || isSubmitComplete
                     ? "bg-primary text-primary-foreground"
                     : index === formStep
                     ? "border-2 border-primary"
-                    : "border-2 border-muted"
-                }`}
+                    : "border-2 border-muted",
+                  isReservationForm ? "w-9 h-9" : "w-7 h-7"
+                )}
               >
                 {index < formStep ? (
-                  <Check className="h-4 w-4" />
+                  <Check width={checkSizing} height={checkSizing} />
                 ) : isSubmitComplete ? (
-                  <Check className="h-4 w-4" />
+                  <Check width={checkSizing} height={checkSizing} />
                 ) : (
                   <span className="text-xs">{index + 1}</span>
                 )}
               </div>
               <span
                 className={clsx(
-                  "text-xs font-medium text-center px-1 line-clamp-2 h-8",
-                  { "lg:text-sm": isReservationForm }
+                  "text-xs font-medium text-center px-1 line-clamp-2 min-h-8",
+                  { "lg:text-sm ": isReservationForm }
                 )}
               >
                 {step.title}
