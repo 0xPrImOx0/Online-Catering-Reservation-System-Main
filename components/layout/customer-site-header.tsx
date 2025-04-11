@@ -13,7 +13,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 export default function CustomerSiteHeader() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(!isLoggedIn ? 1024 : 900);
   const [mobileMenu, setMobileMenu] = useState(false);
   const user = {
     name: "Rey Daug",

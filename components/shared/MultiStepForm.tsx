@@ -100,7 +100,11 @@ export function MultiStepForm({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto flex flex-col h-full">
+    <div
+      className={clsx("w-full max-w-4xl mx-auto flex flex-col h-full", {
+        "rounded-xl border bg-card text-card-foreground p-4": isReservationForm,
+      })}
+    >
       <div
         className={clsx("bg-background md:pt-4 pb-2 px-6", {
           "sticky top-0 z-10": !isReservationForm,
@@ -171,7 +175,12 @@ export function MultiStepForm({
                   <span className="text-xs">{index + 1}</span>
                 )}
               </div>
-              <span className="text-xs font-medium text-center px-1 line-clamp-2 h-8">
+              <span
+                className={clsx(
+                  "text-xs font-medium text-center px-1 line-clamp-2 h-8",
+                  { "lg:text-sm": isReservationForm }
+                )}
+              >
                 {step.title}
               </span>
             </div>
@@ -207,8 +216,8 @@ export function MultiStepForm({
           </Card>
         </div>
 
-        <div className="sticky bottom-0 bg-background pt-2 pb-6 md:py-2 px-6 border-t">
-          <div className="flex justify-between">
+        <div className="sticky bottom-0 bg-background pt-2 pb-6 md:py-2 px-6 border-t ">
+          <div className="flex justify-between mt-2">
             {isSubmitComplete ? (
               <Button className="ml-auto" onClick={completeForm}>
                 {doneButtonText}

@@ -20,7 +20,9 @@ import SummaryBooking from "./SummaryBooking";
 import { Form } from "@/components/ui/form";
 import { useReservationForm } from "@/hooks/use-reservation-form";
 import { FormStepType, MultiStepForm } from "../MultiStepForm";
+import { useRouter } from "next/navigation";
 export default function BookNowForm({ id }: { id: string }) {
+  const router = useRouter();
   const { reservationForm, validateStep, onSubmit } = useReservationForm();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -44,7 +46,7 @@ export default function BookNowForm({ id }: { id: string }) {
 
   // Add a handleCancel function:
   const handleCancel = () => {
-    // setIsAddMenuOpen(false);
+    router.back();
   };
 
   // Handle form submission
