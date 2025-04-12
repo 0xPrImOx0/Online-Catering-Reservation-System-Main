@@ -88,7 +88,7 @@ export default function ReviewStep({ formHook }: ReviewStepProps) {
                         Service Type
                       </h5>
                       <Badge variant="outline" className="mt-1">
-                        {form.watch("serviceType")}
+                        {packageType}
                       </Badge>
                     </div>
                   )}
@@ -321,7 +321,7 @@ export default function ReviewStep({ formHook }: ReviewStepProps) {
                         Service Charge per Hour
                       </h5>
                       <p className="text-sm">
-                        ₱{form.watch("serviceChargePerHour")}
+                        ₱ {form.watch("pricePerPaxWithServiceCharge")}
                       </p>
                     </div>
                   </div>
@@ -354,7 +354,7 @@ export default function ReviewStep({ formHook }: ReviewStepProps) {
                   <CardTitle className="text-base">Image</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4">
-                  <div className="overflow-hidden h-40 flex items-center justify-center bg-muted rounded-md">
+                  <div className="relative overflow-hidden h-96 flex items-center justify-center bg-muted rounded-md">
                     <Image
                       src={
                         form.watch("imageUploadType") === "url"

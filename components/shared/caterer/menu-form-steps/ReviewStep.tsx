@@ -188,7 +188,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
                           </span>
                           <div className="text-sm text-muted-foreground">
                             {price.discount > 0 &&
-                              `${price.discount}% discount`}
+                              `${(price.discount * 100).toFixed(0)}% discount`}
                           </div>
                         </div>
                         <div className="text-right">
@@ -239,7 +239,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
                   <CardTitle className="text-lg">Image</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4">
-                  <div className="overflow-hidden h-40 flex items-center justify-center bg-muted rounded-md">
+                  <div className="relative overflow-hidden h-96 flex items-center justify-center bg-muted rounded-md">
                     <Image
                       src={
                         form.watch("imageUploadType") === "url"
@@ -247,6 +247,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
                           : previewImage || ""
                       }
                       alt="Menu item preview"
+                      fill
                       className="max-h-full max-w-full object-contain"
                     />
                   </div>

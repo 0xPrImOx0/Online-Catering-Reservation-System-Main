@@ -44,7 +44,6 @@ export interface ReviewsProps {
 }
 
 export interface CateringPackagesProps {
-  _id: string;
   name: string;
   description: string;
   available: boolean;

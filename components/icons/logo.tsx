@@ -6,11 +6,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-interface LogoProps {
+type LogoProps = {
   withLabel?: boolean;
   imageSize?: number;
   withTitle?: boolean;
-}
+};
 
 const Logo = ({
   withLabel = false,
