@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FormControl, FormField, FormItem } from "../ui/form";
-import { useReservationForm } from "@/hooks/use-reservation-form";
+import { ReservationValues } from "@/hooks/use-reservation-form";
 import {
   Card,
   CardContent,
@@ -17,6 +17,8 @@ import { DialogDescription, DialogHeader } from "../ui/dialog";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { SelectServiceModeProps } from "@/types/reservation-types";
+import { useFormContext } from "react-hook-form";
 
 const options = [
   {
@@ -40,11 +42,8 @@ const options = [
 export default function SelectServiceModeDialog({
   showSelectServiceMode,
   setShowSelectServiceMode,
-}: {
-  showSelectServiceMode: boolean;
-  setShowSelectServiceMode: (open: boolean) => void;
-}) {
-  const { reservationForm } = useReservationForm();
+}: SelectServiceModeProps) {
+  const { control } = useFormContext<ReservationValues>();
   const router = useRouter();
 
   return (
@@ -62,7 +61,7 @@ export default function SelectServiceModeDialog({
           </DialogTitle>
         </DialogHeader>
         <FormField
-          control={reservationForm.control}
+          control={control}
           name="serviceMode"
           render={({ field }) => (
             <FormItem className="flex gap-4 space-y-0  max-sm:flex-col">

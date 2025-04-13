@@ -11,8 +11,7 @@ import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
 
 export default function CustomerInformation() {
-  const { control } = useFormContext<ReservationValues>();
-
+  const { control, getValues } = useFormContext<ReservationValues>();
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 gap-4">
@@ -77,7 +76,6 @@ export default function CustomerInformation() {
           )}
         />
       </div>
-      
     </div>
   );
 }

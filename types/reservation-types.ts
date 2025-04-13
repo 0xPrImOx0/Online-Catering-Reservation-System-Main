@@ -50,3 +50,8 @@ export type ReservationTableProps = {
 export interface BookNowProps {
   formHook: ReturnType<typeof useReservationForm>;
 }
+
+export type SelectServiceModeProps = {
+  showSelectServiceMode: boolean;
+  setShowSelectServiceMode: (open: boolean) => void;
+};

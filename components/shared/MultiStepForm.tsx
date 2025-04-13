@@ -1,6 +1,6 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { Check, Info } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "../ui/progress";
 import clsx from "clsx";
+import PackageChangeWarning from "./PackageChangeWarning";
+import { MultiStepFormProps } from "@/types/component-types";
 
 export type FormStepType = {
   id: string;
@@ -19,24 +21,6 @@ export type FormStepType = {
   description: string;
 };
 
-type MultiStepFormProps = {
-  formSteps: FormStepType[];
-  title: string;
-  description: string;
-  children: ReactNode[];
-  onSubmit: () => void;
-  onNextStep?: (currentStep: number) => Promise<boolean>;
-  onComplete?: () => void;
-  onCancel?: () => void;
-  initialStep?: number;
-  isSubmitComplete?: boolean;
-  submitButtonText?: string;
-  nextButtonText?: string;
-  previousButtonText?: string;
-  doneButtonText?: string;
-  cancelButtonText?: string;
-  isReservationForm?: boolean;
-};
 
 export function MultiStepForm({
   formSteps,
@@ -55,11 +39,11 @@ export function MultiStepForm({
   doneButtonText = "Done",
   cancelButtonText = "Cancel",
   isReservationForm = false,
+  setShowSelectServiceMode,
 }: MultiStepFormProps) {
   const [formStep, setFormStep] = useState<number>(initialStep || 0);
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
     useState<boolean>(false);
-
 
   const checkSizing = isReservationForm ? 24 : 16;
 
@@ -208,7 +192,7 @@ export function MultiStepForm({
         <div className="flex-1 overflow-y-auto px-6 py-4">
           <Card className="border-0 shadow-none">
             <CardHeader className="px-0 pt-4">
-              <CardTitle className="text-lg">
+              <CardTitle className="text-lg flex">
                 {!isSubmitComplete && formSteps[formStep].title}
               </CardTitle>
               <CardDescription>
@@ -217,6 +201,11 @@ export function MultiStepForm({
             </CardHeader>
             <CardContent className="px-0 pb-16">
               {children[formStep]}
+              {isReservationForm && (
+                <PackageChangeWarning
+                  setShowSelectServiceMode={setShowSelectServiceMode}
+                />
+              )}
             </CardContent>
           </Card>
         </div>
