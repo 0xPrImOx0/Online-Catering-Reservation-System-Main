@@ -1,3 +1,4 @@
+import { CategoryProps, MenuItem } from "@/types/menu-types";
 import { PackageCategory } from "@/types/package-types";
 import { ReservationItem } from "@/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,7 +44,7 @@ const defaultValues: ReservationValues = {
   serviceMode: "event",
   serviceType: "Buffet",
   serviceHours: "4 hours",
-  selectedPackage: "",
+  selectedPackage: "pkg-1",
   selectedMenus: {} as Record<PackageCategory, string[]>,
   specialRequests: "",
 };
@@ -87,7 +88,7 @@ export function useReservationForm() {
     switch (step) {
       case 0:
         return ["fullName", "email", "contactNumber"];
-      case 2:
+      case 1:
         return ["serviceMode"];
       case 2:
         return ["selectedMenus"];
@@ -104,11 +105,32 @@ export function useReservationForm() {
         return [];
     }
   };
+
+  const handleCheckboxChange = (
+    checked: string | boolean,
+    field: any,
+    category: CategoryProps,
+    menu: MenuItem,
+    limit: number // Add the limit as a parameter
+  ) => {
+    const currentSelection = field.value[category] || [];
+    const updatedMenus = checked
+      ? currentSelection.length < limit // Check if the limit is reached
+        ? [...currentSelection, menu._id]
+        : currentSelection // If limit is reached, don't add the item
+      : currentSelection.filter((id: string) => id !== menu._id); // Remove the item if unchecked
+
+    field.onChange({
+      ...field.value,
+      [category]: updatedMenus,
+    });
+  };
   return {
     reservationForm,
     validateStep,
     isValidationAttempted,
     onSubmit,
     isSubmitSuccess,
+    handleCheckboxChange,
   };
 }

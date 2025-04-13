@@ -1,5 +1,6 @@
 import { CustomSelectItemProps } from "@/types/component-types";
 import { CategoryProps } from "@/types/menu-types";
+import { PackageOption } from "@/types/package-types";
 
 export const categories: CategoryProps[] = [
   "Soup",
@@ -12,6 +13,19 @@ export const categories: CategoryProps[] = [
   "Vegetable",
   "Dessert",
   "Beverage",
+];
+
+export const defaultCategoryAndCount: PackageOption[] = [
+  { category: "Soup", count: 5 },
+  { category: "Salad", count: 5 },
+  { category: "Beef", count: 5 },
+  { category: "Pork", count: 5 },
+  { category: "Noodle", count: 5 },
+  { category: "Chicken", count: 5 },
+  { category: "Seafood", count: 5 },
+  { category: "Vegetable", count: 5 },
+  { category: "Dessert", count: 5 },
+  { category: "Beverage", count: 5 },
 ];
 
 type AllergenProps = {
