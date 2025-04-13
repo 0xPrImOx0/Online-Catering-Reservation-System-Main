@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 
 import {
-  packageFormSteps,
-  customFormSteps,
+  eventPackageFormSteps,
+  customPackageFormSteps,
   cateringPackages,
 } from "@/lib/customer/packages-metadata";
 import CustomerInformation from "@/components/shared/customer/CustomerInformation";
@@ -23,7 +23,9 @@ export default function BookNowForm({ id }: { id: string }) {
   const { reservationForm, validateStep, onSubmit } = useReservationForm();
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
-  const [bookNowFormSteps, setBookNowFormSteps] = useState(packageFormSteps);
+  const [bookNowFormSteps, setBookNowFormSteps] = useState(
+    eventPackageFormSteps
+  );
   const [showSelectServiceMode, setShowSelectServiceMode] = useState(false);
   const { setValue } = reservationForm;
   const deconstructedId = id && id[0];
@@ -70,19 +72,27 @@ export default function BookNowForm({ id }: { id: string }) {
     );
     if (isMenu) {
       setValue("serviceMode", "custom");
-      setBookNowFormSteps(customFormSteps);
+      setBookNowFormSteps(customPackageFormSteps);
       return;
     }
     if (isPackage) {
       setValue("serviceMode", "event");
-      setBookNowFormSteps(packageFormSteps);
+      setBookNowFormSteps(eventPackageFormSteps);
       return;
     }
   }, [id, deconstructedId, setValue]);
 
-  const formStepComponents = [
+  const eventPackageFormComponents = [
     <CustomerInformation key={"customer-information"} />,
     <PackageSelection key={"package-selection"} />,
+    <CategoryOptions key={"category-options"} />,
+    <EventDetails key={"event-details"} />,
+    <SummaryBooking key={"summary-booking"} />,
+  ];
+
+  const customPackageFormComponents = [
+    <CustomerInformation key={"customer-information"} />,
+    // <PackageSelection key={"package-selection"} />,
     <CategoryOptions key={"category-options"} />,
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,
@@ -103,7 +113,9 @@ export default function BookNowForm({ id }: { id: string }) {
         doneButtonText="Close"
         isReservationForm
       >
-        {formStepComponents}
+        {bookNowFormSteps === eventPackageFormSteps
+          ? eventPackageFormComponents
+          : customPackageFormComponents}
       </MultiStepForm>
       <SelectServiceModeDialog
         showSelectServiceMode={showSelectServiceMode}
@@ -112,9 +124,5 @@ export default function BookNowForm({ id }: { id: string }) {
     </Form>
   );
 
-  return (
-    <div>
-      {formContent}
-    </div>
-  );
+  return <section>{formContent}</section>;
 }

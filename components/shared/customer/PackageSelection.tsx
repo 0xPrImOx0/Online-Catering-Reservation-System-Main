@@ -10,26 +10,9 @@ import { useFormContext } from "react-hook-form";
 
 export default function PackageSelection() {
   const { control, getValues } = useFormContext<ReservationValues>();
-
-  const options = [
-    {
-      label: "Event Catering",
-      value: "event",
-      description: "Plan your perfect event with our predefined packages.",
-      bg: "border-yellow-500",
-    },
-    {
-      label: "Catering on Demand",
-      value: "custom",
-      description:
-        "Order your dishes for delivery or pickup, whenever you want.",
-      bg: "border-green-500",
-    },
-  ];
-
   return (
     <section>
-      <FormField
+      {/* <FormField
         control={control}
         name="serviceMode"
         render={({ field }) => (
@@ -50,7 +33,7 @@ export default function PackageSelection() {
             <FormMessage />
           </FormItem>
         )}
-      />
+      /> */}
     </section>
   );
 }

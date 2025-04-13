@@ -1394,7 +1394,7 @@ export const cateringPackages: CateringPackagesProps[] = [
 ];
 
 // Custom Package Form Steps
-export const packageFormSteps: FormStepType[] = [
+export const eventPackageFormSteps: FormStepType[] = [
   {
     id: "customer-info",
     title: "Customer Information",
@@ -1423,7 +1423,7 @@ export const packageFormSteps: FormStepType[] = [
 ];
 
 // Custom Package Form Steps
-export const customFormSteps: FormStepType[] = [
+export const customPackageFormSteps: FormStepType[] = [
   {
     id: "customer-info",
     title: "Customer Information",
