@@ -60,6 +60,7 @@ export function MultiStepForm({
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
     useState<boolean>(false);
 
+
   const checkSizing = isReservationForm ? 24 : 16;
 
   // Function to go to next form step

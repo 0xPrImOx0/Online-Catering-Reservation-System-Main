@@ -1,18 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Check } from "lucide-react";
-import { bookNowFormSteps } from "@/lib/customer/packages-metadata";
-import Link from "next/link";
+  packageFormSteps,
+  customFormSteps,
+  cateringPackages,
+} from "@/lib/customer/packages-metadata";
 import CustomerInformation from "@/components/shared/customer/CustomerInformation";
 import EventDetails from "@/components/shared/customer/EventDetails";
 import CategoryOptions from "./CategoryOptions";
@@ -22,12 +16,17 @@ import { useReservationForm } from "@/hooks/use-reservation-form";
 import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { useRouter } from "next/navigation";
 import PackageSelection from "./PackageSelection";
+import { menuItems } from "@/lib/menu-lists";
+import SelectServiceModeDialog from "../SelectServiceModeDialog";
 export default function BookNowForm({ id }: { id: string }) {
   const router = useRouter();
   const { reservationForm, validateStep, onSubmit } = useReservationForm();
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
+  const [bookNowFormSteps, setBookNowFormSteps] = useState(packageFormSteps);
+  const [showSelectServiceMode, setShowSelectServiceMode] = useState(false);
+  const { setValue } = reservationForm;
+  const deconstructedId = id && id[0];
 
   // Convert our form steps to the format expected by MultiStepForm
   const multiFormSteps: FormStepType[] = bookNowFormSteps.map((step) => ({
@@ -52,7 +51,6 @@ export default function BookNowForm({ id }: { id: string }) {
 
   // Handle form submission
   const handleSubmit = () => {
-    setShowConfirmation(true);
     reservationForm.handleSubmit((data) => {
       onSubmit(data);
       setIsSubmitComplete(true);
@@ -64,6 +62,23 @@ export default function BookNowForm({ id }: { id: string }) {
     setCurrentStep(0);
     setIsSubmitComplete(false);
   };
+
+  useEffect(() => {
+    const isMenu = menuItems.some((pkg) => pkg._id === deconstructedId);
+    const isPackage = cateringPackages.some(
+      (pkg) => pkg._id === deconstructedId
+    );
+    if (isMenu) {
+      setValue("serviceMode", "custom");
+      setBookNowFormSteps(customFormSteps);
+      return;
+    }
+    if (isPackage) {
+      setValue("serviceMode", "event");
+      setBookNowFormSteps(packageFormSteps);
+      return;
+    }
+  }, [id, deconstructedId, setValue]);
 
   const formStepComponents = [
     <CustomerInformation key={"customer-information"} />,
@@ -90,43 +105,16 @@ export default function BookNowForm({ id }: { id: string }) {
       >
         {formStepComponents}
       </MultiStepForm>
+      <SelectServiceModeDialog
+        showSelectServiceMode={showSelectServiceMode}
+        setShowSelectServiceMode={setShowSelectServiceMode}
+      />
     </Form>
   );
 
   return (
     <div>
       {formContent}
-      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Reservation Request Sent!</DialogTitle>
-            <DialogDescription>
-              Thank you for your reservation request. Our caterer will call you
-              within 1 hour to discuss the details and provide you with a quote.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex items-center justify-center py-4">
-            <div className="rounded-full p-3 bg-green-500">
-              <Check className="size-10 text-white" />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant={"ghost"}
-              onClick={() => setShowConfirmation(false)}
-            >
-              Close
-            </Button>
-            <Button
-              variant={"default"}
-              onClick={() => setShowConfirmation(false)}
-              asChild
-            >
-              <Link href={"/"}>Go to home</Link>
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

@@ -21,6 +21,7 @@ const reservationSchema = z.object({
   eventTime: z.string().time(),
   guestCount: z.number().min(20).max(200),
   venue: z.string({ required_error: "Venue is Required" }),
+  serviceMode: z.enum(["event", "custom"]),
   serviceType: z.string(),
   serviceHours: z.string(),
   selectedPackage: z.string(),
@@ -39,6 +40,7 @@ const defaultValues: ReservationValues = {
   eventTime: "",
   guestCount: 0,
   venue: "",
+  serviceMode: "event",
   serviceType: "Buffet",
   serviceHours: "4 hours",
   selectedPackage: "",
@@ -86,7 +88,7 @@ export function useReservationForm() {
       case 0:
         return ["fullName", "email", "contactNumber"];
       case 2:
-        return [];
+        return ["serviceMode"];
       case 2:
         return ["selectedMenus"];
       case 3:

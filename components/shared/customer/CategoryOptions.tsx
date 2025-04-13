@@ -20,10 +20,7 @@ import { useFormContext } from "react-hook-form";
 
 export default function CategoryOptions() {
   // const destructuredId = id ? id[0] : "";
-  const {
-    control,
-    formState: { isSubmitted },
-  } = useFormContext<ReservationValues>();
+  const { control, getValues } = useFormContext<ReservationValues>();
   const [newCategories, setNewCategories] = useState(categories);
   // const prefix = id.slice(0, 3);
   // const numberPart = parseInt(id[0].split("-")[1], 10);
@@ -37,6 +34,21 @@ export default function CategoryOptions() {
   //   };
   //   getMenus();
   // }, []);
+
+  const handleCheckboxChange = (
+    checked: string | boolean,
+    field: any,
+    category: CategoryProps,
+    menu: MenuItem
+  ) => {
+    const updatedMenus = checked
+      ? [...(field.value[category] || []), menu._id]
+      : field.value[category].filter((id: string) => id !== menu._id);
+    field.onChange({
+      ...field.value,
+      [category]: updatedMenus,
+    });
+  };
 
   // Function to get dishes by category
   const getMenusByCategory = (category: CategoryProps) => {
@@ -63,17 +75,9 @@ export default function CategoryOptions() {
                         <Checkbox
                           id={`menu-${menu._id}`}
                           checked={field.value[category]?.includes(menu._id)}
-                          onCheckedChange={(checked) => {
-                            const updatedMenus = checked
-                              ? [...(field.value[category] || []), menu._id]
-                              : field.value[category].filter(
-                                  (id) => id !== menu._id
-                                );
-                            field.onChange({
-                              ...field.value,
-                              [category]: updatedMenus,
-                            });
-                          }}
+                          onCheckedChange={(checked) =>
+                            handleCheckboxChange(checked, field, category, menu)
+                          }
                         />
                       </FormControl>
                       <div className="grid gap-1.5">
