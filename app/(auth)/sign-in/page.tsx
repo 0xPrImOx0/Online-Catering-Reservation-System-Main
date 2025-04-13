@@ -1,13 +1,13 @@
 "use client";
 
 import { SignInForm } from "@/components/shared/auth/SignInForm";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { SignInFormValues } from "../../../types/auth-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/utils/form-validation";
 import { toast } from "sonner";
+import Image from "next/image";
 
 export default function LoginPage() {
   const form = useForm<SignInFormValues>({
@@ -40,8 +40,16 @@ export default function LoginPage() {
           </Card>
         </div>
       </div>
-      <div className="relative hidden bg-muted lg:block">
-        <Skeleton className="flex w-[100%] h-[100%] rounded-none" />
+      <div className="relative hidden lg:block">
+        {/* Gradient overlay on the left side */}
+        <div className="absolute left-1 top-0 h-full w-[10%] z-10 rounded-l-[50px] bg-gradient-to-r from-black/30 to-transparent" />
+
+        <Image
+          src="/auth/sign-in-img.jpg"
+          fill
+          alt="Sign In Image"
+          className="object-cover object-left-bottom brightness-[90%] rounded-l-[50px] border-l-2 border-red-500 dark:border-white"
+        />
       </div>
     </div>
   );

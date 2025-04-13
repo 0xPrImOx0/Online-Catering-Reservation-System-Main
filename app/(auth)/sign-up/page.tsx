@@ -1,13 +1,13 @@
 "use client";
 
 import { SignUpForm } from "@/components/shared/auth/SignUpForm";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { SignUpFormValues } from "../../../types/auth-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/utils/form-validation";
 import { toast } from "sonner";
+import Image from "next/image";
 
 export default function RegisterPage() {
   const form = useForm<SignUpFormValues>({
@@ -35,8 +35,13 @@ export default function RegisterPage() {
   };
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="relative hidden bg-muted lg:block">
-        <Skeleton className="flex w-[100%] h-[100%] rounded-none" />
+      <div className="relative hidden lg:block">
+        <Image
+          src="/auth/sign-up-img.png"
+          fill
+          alt="Sign In Image"
+          className="object-cover object-left-bottom brightness-125 rounded-e-[50px] border-r-2 border-red-500 dark:border-white/60"
+        />
       </div>
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex flex-1 items-center justify-center">
