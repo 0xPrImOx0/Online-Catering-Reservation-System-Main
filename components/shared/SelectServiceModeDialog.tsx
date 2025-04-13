@@ -26,7 +26,7 @@ const options = [
     value: "event",
     description: "Plan your perfect event with our predefined packages.",
     imageUrl:
-      "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*jQSVrNafdz4IW5D7",
+      "https://www.travelwisconsin.com/uploads/places/ac/ac77b893-b6c0-4bb7-ba38-33a1b285c3d7-431017935_914661377327082_7598367058503880550_n.jpg",
     bg: "border-yellow-500",
   },
   {
@@ -34,7 +34,7 @@ const options = [
     value: "custom",
     description: "Order your dishes for delivery or pickup, whenever you want.",
     imageUrl:
-      "https://www.travelwisconsin.com/uploads/places/ac/ac77b893-b6c0-4bb7-ba38-33a1b285c3d7-431017935_914661377327082_7598367058503880550_n.jpg",
+      "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*jQSVrNafdz4IW5D7",
     bg: "border-green-500",
   },
 ];
@@ -82,7 +82,7 @@ export default function SelectServiceModeDialog({
                         className="w-full h-40 rounded-t-lg mb-2 object-cover"
                       />
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="mt-4 space-y-2">
                       <CardTitle>{option.label}</CardTitle>
                       <CardDescription>{option.description}</CardDescription>
                     </CardContent>

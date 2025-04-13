@@ -1,5 +1,5 @@
 import { CategoryProps, MenuItem } from "@/types/menu-types";
-import { PackageCategory } from "@/types/package-types";
+import { EventType, eventTypes, PackageCategory } from "@/types/package-types";
 import { ReservationItem } from "@/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -10,24 +10,69 @@ import * as z from "zod";
 const reservationSchema = z.object({
   fullName: z
     .string({ required_error: "Please provide your Full Name" })
-    .min(2, "Full Name must be at least 2 characters"),
+    .min(2, "Full Name must be at least 2 characters")
+    .max(50, "Full Name must not exceed 50 characters"),
   email: z
     .string({ required_error: "Please provide your email address" })
     .email("Please enter a valid email address"),
-  contactNumber: z.number().refine((num) => num.toString().length === 10, {
-    message: "Contact Number must have exactly 10 digits",
+  contactNumber: z
+    .string({ required_error: "Please provide your Contact Number" })
+    .regex(/^\d{10}$/, "Contact Number must have exactly 10 digits"),
+  eventType: z.enum(eventTypes as [EventType, ...EventType[]], {
+    required_error: "Please select an Event Type",
   }),
-  eventType: z.string(),
-  eventDate: z.date(),
-  eventTime: z.string().time(),
-  guestCount: z.number().min(20).max(200),
-  venue: z.string().min(3, "Venue must be at least 2 characters"),
-  serviceMode: z.enum(["event", "custom"]),
-  serviceType: z.string(),
-  serviceHours: z.string(),
-  selectedPackage: z.string(),
-  selectedMenus: z.record(z.string(), z.array(z.string())),
-  specialRequests: z.string(),
+  eventDate: z
+    .date({
+      required_error: "Please provide the Event Date",
+    })
+    .refine((date) => date >= new Date(), {
+      message: "Event Date cannot be in the past",
+    }),
+  eventTime: z
+    .string({ required_error: "Please provide the Event Time" })
+    .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Please enter a valid time (HH:mm)"),
+  guestCount: z
+    .number({ required_error: "Please provide the Guest Count" })
+    .min(20, "Guest Count must be at least 20")
+    .max(200, "Guest Count must not exceed 200"),
+  venue: z
+    .string({ required_error: "Please provide the Venue" })
+    .min(3, "Venue must be at least 3 characters")
+    .max(100, "Venue must not exceed 100 characters"),
+  serviceMode: z.enum(["event", "custom"], {
+    required_error: "Please select a Service Mode",
+  }),
+  serviceType: z.enum(["Buffet", "Plated"], {
+    required_error: "Please select a Service Type",
+  }),
+  serviceHours: z
+    .string({ required_error: "Please provide the Service Hours" })
+    .regex(/^\d+ hours$/, "Service Hours must be in the format 'X hours'"),
+  selectedPackage: z
+    .string({ required_error: "Please select a Package" })
+    .min(1, "Package selection is required"),
+  selectedMenus: z
+    .record(z.string(), z.array(z.string()))
+    .refine(
+      (menus) => Object.values(menus).every((items) => items.length > 0),
+      { message: "At least one menu item must be selected for each category" }
+    ),
+  specialRequests: z
+    .string()
+    .max(500, "Special Requests must not exceed 500 characters")
+    .optional(),
+  deliveryOption: z.enum(["Pickup", "Delivery"], {
+    required_error: "Please select a Delivery Option",
+  }),
+  deliveryAddress: z
+    .string()
+    .min(1, "Delivery address is required")
+    .max(200, "Delivery address must not exceed 200 characters")
+    .optional(),
+  deliveryInstructions: z
+    .string()
+    .max(300, "Delivery Instructions must not exceed 300 characters")
+    .optional(),
 });
 
 export type ReservationValues = z.infer<typeof reservationSchema>;
@@ -35,7 +80,7 @@ export type ReservationValues = z.infer<typeof reservationSchema>;
 const defaultValues: ReservationValues = {
   fullName: "",
   email: "",
-  contactNumber: 0,
+  contactNumber: "0",
   eventType: "Birthday",
   eventDate: new Date(),
   eventTime: "",
@@ -47,6 +92,9 @@ const defaultValues: ReservationValues = {
   selectedPackage: "pkg-1",
   selectedMenus: {} as Record<PackageCategory, string[]>,
   specialRequests: "",
+  deliveryOption: "Pickup",
+  deliveryAddress: "",
+  deliveryInstructions: "",
 };
 
 export function useReservationForm() {

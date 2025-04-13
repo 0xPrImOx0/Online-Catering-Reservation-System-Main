@@ -58,17 +58,6 @@ export default function CustomerInformation() {
                   placeholder="Enter your contact number"
                   type="number"
                   {...field}
-                  onChange={(e) => {
-                    // Handle the 0 issue by replacing the value completely
-                    const value = e.target.value;
-                    if (value === "0" || value === "") {
-                      field.onChange(0);
-                    } else {
-                      // Remove leading zeros and convert to number
-                      field.onChange(Number(value.replace(/^0+/, "")));
-                    }
-                  }}
-                  value={field.value || ""}
                 />
               </FormControl>
               <FormMessage />

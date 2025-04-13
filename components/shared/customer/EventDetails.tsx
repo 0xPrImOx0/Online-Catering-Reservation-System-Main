@@ -20,9 +20,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function EventDetails() {
-  const { control } = useFormContext<ReservationValues>();
+  const { control, getValues } = useFormContext<ReservationValues>();
   const hoursArray = ["4 hours", "5 hours", "6 hours", "8 hours", "10 hours"];
 
   return (
@@ -181,6 +183,83 @@ export default function EventDetails() {
             </FormItem>
           )}
         />
+      </div>
+      <Separator className="" />
+      <div>
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold">Delivery Details</h3>
+          <p className="text-sm text-muted-foreground">
+            Please provide details about the delivery location and any special
+            instructions for the delivery team.
+          </p>
+        </div>
+        <FormField
+          control={control}
+          name="deliveryOption"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="">
+                Delivery Option <span className="text-destructive">*</span>{" "}
+              </FormLabel>
+              <RadioGroup
+                defaultValue="Pickup"
+                onValueChange={field.onChange}
+                className="grid grid-cols-2 pt-2"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Pickup" id="pickup" />
+                  <Label htmlFor="pickup">Pickup</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Delivery" id="delivery" />
+                  <Label htmlFor="delivery">Delivery (₱300)</Label>
+                </div>
+              </RadioGroup>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {getValues("deliveryOption") === "Delivery" && (
+          <div className="space-y-4 mt-4">
+            <FormField
+              control={control}
+              name="deliveryAddress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="">
+                   Delivery Address
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Enter your delivery address"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="deliveryInstructions"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="">
+                    Special Delivery Instructions
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Provide any special instructions for the delivery team (e.g., landmarks, preferred time, etc.)"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

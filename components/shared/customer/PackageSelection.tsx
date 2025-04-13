@@ -1,11 +1,23 @@
-import { FormField, FormItem, FormMessage } from "@/components/ui/form";
+"use client"
+
+import { FormField, FormItem } from "@/components/ui/form";
 import { ReservationValues } from "@/hooks/use-reservation-form";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { useFormContext } from "react-hook-form";
 import MiniCateringPackageCard from "./MiniCateringPackageCard";
+import { useEffect } from "react";
 
 export default function PackageSelection() {
-  const { control } = useFormContext<ReservationValues>();
+  const { control, watch, setValue } = useFormContext<ReservationValues>();
+  const packageSelection = watch("selectedPackage");
+  useEffect(() => {
+    const selectedPackage = cateringPackages.find((pkg) => pkg._id === packageSelection);
+    if (selectedPackage) {
+      // Update the form with the selected package details
+      setValue("eventType", selectedPackage?.eventType ?? "");
+    }
+  }, [packageSelection])
+  
   return (
     <section>
       <div className="space-y-3">
