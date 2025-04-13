@@ -21,7 +21,7 @@ import SelectServiceModeDialog from "../SelectServiceModeDialog";
 export default function BookNowForm({ id }: { id: string }) {
   const router = useRouter();
   const { reservationForm, validateStep, onSubmit } = useReservationForm();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [bookNowFormSteps, setBookNowFormSteps] = useState(
     eventPackageFormSteps

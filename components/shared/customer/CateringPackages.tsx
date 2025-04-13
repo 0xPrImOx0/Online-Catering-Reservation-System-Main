@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CateringPackagesProps, EventType } from "@/types/package-types";
 import CustomerPackageCard from "./CustomerPackageCard";
 import CustomPackageForm from "./CustomPacakgeForm";
 import SelectedEventContainer from "./SelectedEventContainer";

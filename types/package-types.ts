@@ -116,7 +116,8 @@ export interface PackageDetailsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   isPlated?: boolean;
-  platedInclusions: InclusionsProps[];
+  platedInclusions?: InclusionsProps[];
+  isReservationForm?: boolean;
 }
 
 export interface PackageBookFormProps {

@@ -1403,7 +1403,7 @@ export const eventPackageFormSteps: FormStepType[] = [
   {
     id: "package-selection",
     title: "Package Selection",
-    description: "Select a predefined package or create your own custom menu",
+    description: "Select a predefined package for your event needs",
   },
   {
     id: "menu-selection",
