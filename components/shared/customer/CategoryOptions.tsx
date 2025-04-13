@@ -57,7 +57,7 @@ export default function CategoryOptions() {
         <h3 className="font-medium">
           Available Categories for {currentPackage}
         </h3>
-        <div className="gap-3 flex items-center">
+        <div className="gap-3 flex flex-wrap items-center">
           {categoryAndCount.map(({ category, count }) => {
             let isLimitReached =
               (selectedMenus[category]?.length || 0) >= count;
@@ -65,7 +65,7 @@ export default function CategoryOptions() {
               <Badge
                 variant={"outline"}
                 className={clsx(
-                  "",
+                  "flex-1 max-w-fit",
                   isLimitReached
                     ? "bg-green-500 border-green-500 text-background space-x-2"
                     : "border-green-500 "
@@ -78,7 +78,7 @@ export default function CategoryOptions() {
                 }
               >
                 {isLimitReached && <CheckCircle className="w-4 h-4" />}
-                <span className="">{`${count} ${category}`}</span>
+                <span className="min-w-max">{`${count} ${category}`}</span>
               </Badge>
             );
           })}

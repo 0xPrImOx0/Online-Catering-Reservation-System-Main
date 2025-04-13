@@ -70,10 +70,10 @@ export function MultiStepForm({
 
   // Function to go to previous form step
   const prevStep = () => {
+    reservationRef.current?.scrollIntoView({ behavior: "smooth" });
     if (formStep > 0) {
       setFormStep(formStep - 1);
     }
-    reservationRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   // Function to submit the form
