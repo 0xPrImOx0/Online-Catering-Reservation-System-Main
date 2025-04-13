@@ -70,15 +70,19 @@ export default function BookNowForm({ id }: { id: string }) {
     const isPackage = cateringPackages.some(
       (pkg) => pkg._id === deconstructedId
     );
-    if (isMenu) {
-      setValue("serviceMode", "custom");
-      setBookNowFormSteps(customPackageFormSteps);
-      return;
-    }
-    if (isPackage) {
-      setValue("serviceMode", "event");
-      setBookNowFormSteps(eventPackageFormSteps);
-      return;
+    if (deconstructedId) {
+      if (isMenu) {
+        setValue("serviceMode", "custom");
+        setBookNowFormSteps(customPackageFormSteps);
+        return;
+      }
+      if (isPackage) {
+        setValue("serviceMode", "event");
+        setBookNowFormSteps(eventPackageFormSteps);
+        return;
+      }
+    } else {
+      setShowSelectServiceMode(true);
     }
   }, [id, deconstructedId, setValue]);
 
