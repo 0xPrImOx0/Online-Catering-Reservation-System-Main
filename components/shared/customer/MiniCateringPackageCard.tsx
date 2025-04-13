@@ -23,7 +23,7 @@ export default function MiniCateringPackageCard({
 
   return (
     <FormControl key={pkg._id} className="">
-      <div >
+      <div>
         <Card
           onClick={() => field.onChange(pkg._id)}
           className={clsx(
