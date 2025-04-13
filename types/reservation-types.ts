@@ -1,5 +1,5 @@
 import { useReservationForm } from "@/hooks/use-reservation-form";
-import { PackageCategory } from "./package-types";
+import { PackageCategory, ServiceType } from "./package-types";
 
 //Reservation Related Types
 export type reservationType = {
@@ -29,17 +29,21 @@ export type reservationType = {
 export interface ReservationItem {
   fullName: string;
   email: string;
-  contactNumber: number;
+  contactNumber: string;
   eventType: string;
   eventDate: Date;
   eventTime: string;
   guestCount: number;
   venue: string;
-  serviceType: string;
+  serviceMode: "event" | "custom";
+  serviceType: ServiceType;
   serviceHours: string;
   selectedPackage: string;
   selectedMenus: Record<PackageCategory, string[]>;
-  specialRequests: string;
+  specialRequests?: string;
+  deliveryOption: "Pickup" | "Delivery";
+  deliveryAddress?: string;
+  deliveryInstructions?: string;
 }
 
 export type ReservationTableProps = {
@@ -50,3 +54,8 @@ export type ReservationTableProps = {
 export interface BookNowProps {
   formHook: ReturnType<typeof useReservationForm>;
 }
+
+export type SelectServiceModeProps = {
+  showSelectServiceMode: boolean;
+  setShowSelectServiceMode: (open: boolean) => void;
+};

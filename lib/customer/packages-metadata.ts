@@ -1394,7 +1394,7 @@ export const cateringPackages: CateringPackagesProps[] = [
 ];
 
 // Custom Package Form Steps
-export const bookNowFormSteps: FormStepType[] = [
+export const eventPackageFormSteps: FormStepType[] = [
   {
     id: "customer-info",
     title: "Customer Information",
@@ -1403,7 +1403,31 @@ export const bookNowFormSteps: FormStepType[] = [
   {
     id: "package-selection",
     title: "Package Selection",
-    description: "Select a predefined package or create your own custom menu",
+    description: "Select a predefined package for your event needs",
+  },
+  {
+    id: "menu-selection",
+    title: "Menu Selection",
+    description: "Choose your preferred dishes",
+  },
+  {
+    id: "order-details",
+    title: "Reservation Details",
+    description: "Provide event or delivery details for your reservation",
+  },
+  {
+    id: "summary",
+    title: "Summary",
+    description: "Summary your order details",
+  },
+];
+
+// Custom Package Form Steps
+export const customPackageFormSteps: FormStepType[] = [
+  {
+    id: "customer-info",
+    title: "Customer Information",
+    description: "Please provide your contact details",
   },
   {
     id: "menu-selection",

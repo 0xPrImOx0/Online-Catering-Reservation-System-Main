@@ -33,6 +33,8 @@ const nextConfig: NextConfig = {
       "hips.hearstapps.com",
       "tie.usprogramming8.com",
       "ual-media-res.cloudinary.com",
+      "miro.medium.com",
+      "www.travelwisconsin.com",
     ],
   },
 };

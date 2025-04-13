@@ -16,6 +16,7 @@ export default function PackageDetailsDialog({
   onOpenChange,
   isPlated = false,
   platedInclusions = [],
+  isReservationForm = false
 }: PackageDetailsDialogProps) {
   // If no platedInclusions are provided, use the package's own inclusions
   const displayInclusions =
@@ -61,7 +62,7 @@ export default function PackageDetailsDialog({
           <div className="p-6 bg-background border-b border-border">
             <DialogTitle className="text-2xl font-bold">{pkg.name}</DialogTitle>
             <p className="text-muted-foreground mt-2">{pkg.description}</p>
-            <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
+            {!isReservationForm && <div className="flex justify-between items-center mt-4 bg-primary text-primary-foreground px-3 py-2 rounded-md">
               <div>
                 <span className="text-lg font-bold">
                   {isPlated
@@ -77,7 +78,7 @@ export default function PackageDetailsDialog({
               <Button asChild variant={"secondary"}>
                 <Link href={`/book-now/${pkg._id}`}>Book Now</Link>
               </Button>
-            </div>
+            </div>}
           </div>
         </div>
         {/* Scrollable Content Section */}

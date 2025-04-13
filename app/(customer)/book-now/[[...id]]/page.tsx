@@ -12,8 +12,8 @@ export default async function Home({
 }) {
   const { id } = await params;
   return (
-    <div className="w-full max-w-4xl mx-auto py-12 px-[5%]">
+    <main className="w-full max-w-4xl mx-auto py-12 px-[5%]">
       <BookNowForm id={id} />
-    </div>
+    </main>
   );
 }
