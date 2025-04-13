@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import api from "@/lib/axiosInstance";
 import { toast } from "sonner";
 import { IAuthContext } from "@/types/auth-types";
+import axios from "axios";
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
@@ -19,17 +20,37 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const res = await api.get("/auth/me");
         toast(<div className="p-4">{JSON.stringify(res, null, 2)}</div>);
 
+        console.log(res);
+
         setCustomer(res.data.customer);
       } catch (err) {
-        setCustomer(null);
-        console.error(err);
+        if (axios.isAxiosError(err) && err.response?.status === 401) {
+          try {
+            const refreshRes = await api.post("/auth/refresh");
+
+            if (refreshRes.status !== 200) setCustomer(null);
+
+            const retryRes = await api.get("/auth/me");
+
+            setCustomer(retryRes.data.customer);
+          } catch (refreshErr) {
+            setCustomer(null);
+            console.log(
+              "Refresh token expired or invalid / Customer not authenticated!",
+              refreshErr
+            );
+          }
+        } else {
+          setCustomer(null);
+          console.error("Unhandled error in auth", err);
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     getCurrentCustomer();
-  }, [customer]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ customer, isLoading }}>
