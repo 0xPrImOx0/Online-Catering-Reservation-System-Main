@@ -20,7 +20,6 @@ export default function LoginPage() {
 
   const onSubmit = (values: SignInFormValues) => {
     try {
-      console.log(values);
       toast(
         <div className="p-4">
           <p>{JSON.stringify(values, null, 2)}</p>
