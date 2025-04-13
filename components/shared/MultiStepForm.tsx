@@ -1,7 +1,7 @@
 "use client";
 
-import { Check, Info } from "lucide-react";
-import { type ReactNode, useState } from "react";
+import { Check } from "lucide-react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,7 +20,6 @@ export type FormStepType = {
   title: string;
   description: string;
 };
-
 
 export function MultiStepForm({
   formSteps,
@@ -44,6 +43,7 @@ export function MultiStepForm({
   const [formStep, setFormStep] = useState<number>(initialStep || 0);
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
     useState<boolean>(false);
+  const reservationRef = useRef<HTMLDivElement>(null);
 
   const checkSizing = isReservationForm ? 24 : 16;
 
@@ -65,6 +65,7 @@ export function MultiStepForm({
 
       setIsNextButtonDisabled(false);
     }
+    reservationRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   // Function to go to previous form step
@@ -72,6 +73,7 @@ export function MultiStepForm({
     if (formStep > 0) {
       setFormStep(formStep - 1);
     }
+    reservationRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   // Function to submit the form
@@ -92,6 +94,9 @@ export function MultiStepForm({
         "rounded-xl border bg-card text-card-foreground p-4": isReservationForm,
       })}
     >
+      {isReservationForm && (
+        <div className="absolute top-0" ref={reservationRef} />
+      )}
       <div
         className={clsx("bg-background md:pt-4 pb-2 px-6", {
           "sticky top-0 z-10": !isReservationForm,
@@ -201,7 +206,7 @@ export function MultiStepForm({
             </CardHeader>
             <CardContent className="px-0 pb-16">
               {children[formStep]}
-              {isReservationForm && (
+              {isReservationForm && formStep != 4 && (
                 <PackageChangeWarning
                   setShowSelectServiceMode={setShowSelectServiceMode}
                 />

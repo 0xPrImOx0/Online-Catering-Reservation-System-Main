@@ -130,7 +130,7 @@ export default function CategoryOptions() {
                     </div>
                   ))}
                 </div>
-                {field.value[category]?.length >= count && (
+                {selectedMenus[category]?.length >= count && (
                   <p className="text-sm text-destructive">
                     You can only select up to {count} items for {category}.
                   </p>
