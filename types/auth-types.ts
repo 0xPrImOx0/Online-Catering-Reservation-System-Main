@@ -1,4 +1,5 @@
 import { UseFormReturn } from "react-hook-form";
+import { CustomerProps } from "./customer-types";
 
 export type SignInFormValues = {
   email: string;
@@ -29,4 +30,9 @@ export type ForgotPasswordFormValues = {
 export interface ForgotPasswordFormProps {
   form: UseFormReturn<ForgotPasswordFormValues>;
   onSubmit: (data: ForgotPasswordFormValues) => void;
+}
+
+export interface IAuthContext {
+  customer: CustomerProps | null;
+  isLoading: boolean;
 }

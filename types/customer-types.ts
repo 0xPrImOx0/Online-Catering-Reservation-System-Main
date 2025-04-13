@@ -23,3 +23,13 @@ export type ConcernType = {
   status: string;
   isRegistered: boolean;
 };
+
+export type CustomerProps = {
+  _id: string;
+  fullName: string;
+  email: string;
+  role: "customer" | "caterer";
+  createdAt: string;
+  updatedAt: string;
+  __v?: number;
+};

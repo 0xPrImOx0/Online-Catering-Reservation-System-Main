@@ -12,6 +12,7 @@ import Image from "next/image";
 export default function LoginPage() {
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(loginSchema),
+    mode: "all",
     defaultValues: {
       email: "",
       password: "",
