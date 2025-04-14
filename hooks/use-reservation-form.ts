@@ -98,8 +98,8 @@ const defaultValues: ReservationValues = {
 };
 
 export function useReservationForm() {
-  const [isValidationAttempted, setIsValidationAttempted] = useState(false);
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
+  const [showPackageSelection, setShowPackageSelection] = useState(false);
 
   const reservationForm = useForm<ReservationValues>({
     resolver: zodResolver(reservationSchema),
@@ -107,8 +107,15 @@ export function useReservationForm() {
     mode: "onChange",
     reValidateMode: "onSubmit",
   });
+
+  const { watch } = reservationForm;
+  const serviceMode = watch("serviceMode");
+  const selectedPackage = watch("selectedPackage");
   // Validate a specific step
   const validateStep = async (step: number): Promise<boolean> => {
+    if (serviceMode === "event" && selectedPackage === "") {
+      setShowPackageSelection(true);
+    }
     const fieldsToValidate = getFieldsToValidate(step);
     const isValid = await reservationForm.trigger(fieldsToValidate);
     return isValid;
@@ -137,7 +144,7 @@ export function useReservationForm() {
       case 0:
         return ["fullName", "email", "contactNumber"];
       case 1:
-        return ["serviceMode"];
+        return ["serviceMode", "selectedPackage"];
       case 2:
         return ["selectedMenus"];
       case 3:
@@ -176,9 +183,10 @@ export function useReservationForm() {
   return {
     reservationForm,
     validateStep,
-    isValidationAttempted,
     onSubmit,
     isSubmitSuccess,
     handleCheckboxChange,
+    showPackageSelection,
+    setShowPackageSelection,
   };
 }

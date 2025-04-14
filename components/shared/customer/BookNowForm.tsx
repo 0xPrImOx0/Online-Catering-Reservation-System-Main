@@ -19,7 +19,16 @@ import PackageSelection from "./PackageSelection";
 import { menuItems } from "@/lib/menu-lists";
 export default function BookNowForm({ id }: { id: string }) {
   const router = useRouter();
-  const { reservationForm, validateStep, onSubmit } = useReservationForm();
+  const {
+    reservationForm,
+    validateStep,
+    onSubmit,
+    setShowPackageSelection,
+    showPackageSelection,
+  } = useReservationForm();
+  console.log(showPackageSelection);
+
+  const { watch } = reservationForm;
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [bookNowFormSteps, setBookNowFormSteps] = useState(
@@ -38,6 +47,11 @@ export default function BookNowForm({ id }: { id: string }) {
   // Handle next step validation
   const handleNextStep = async (currentStep: number) => {
     const isValid = await validateStep(currentStep);
+    // const selectedPackage = watch("serviceMode");
+    // if (selectedPackage === "event" && !watch("selectedPackage") && !isValid) {
+    //   setShowPackageSelection(true);
+    //   return false;
+    // }
     if (isValid) {
       setCurrentStep(currentStep + 1);
     }
@@ -86,7 +100,10 @@ export default function BookNowForm({ id }: { id: string }) {
 
   const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,
-    <PackageSelection key={"package-selection"} />,
+    <PackageSelection
+      key={"package-selection"}
+      showPackageSelection={showPackageSelection}
+    />,
     <CategoryOptions key={"category-options"} />,
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,

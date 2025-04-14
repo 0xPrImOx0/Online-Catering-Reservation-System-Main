@@ -42,14 +42,12 @@ export function MultiStepForm({
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
     useState<boolean>(false);
   const reservationRef = useRef<HTMLDivElement>(null);
-
   const checkSizing = isReservationForm ? 24 : 16;
 
   // Function to go to next form step
   const nextStep = async () => {
     if (formStep < formSteps.length - 1) {
       setIsNextButtonDisabled(true);
-
       // If validation function is provided, use it
       if (onNextStep) {
         const isValid = await onNextStep(formStep);
