@@ -1,15 +1,6 @@
 "use client";
 
-import {
-  ChevronDown,
-  ClipboardCheck,
-  LogOut,
-  LucideIcon,
-  Moon,
-  Settings,
-  Sun,
-  User,
-} from "lucide-react";
+import { ChevronDown, LogOut, LucideIcon, Moon, Sun } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -27,14 +18,7 @@ import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { links, registeredLinks } from "@/lib/customer/customer-links";
-
-type CustomerNavUserProps = {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-};
+import { CustomerProps } from "@/types/customer-types";
 
 type DropdownLinkProps = {
   data: {
@@ -44,7 +28,11 @@ type DropdownLinkProps = {
   };
 };
 
-export default function CustomerNavUser({ user }: CustomerNavUserProps) {
+type CustomerNavUserProps = {
+  customer: CustomerProps;
+};
+
+export default function CustomerNavUser({ customer }: CustomerNavUserProps) {
   const { setTheme, theme } = useTheme();
   const isMobile = useIsMobile();
 
@@ -69,11 +57,18 @@ export default function CustomerNavUser({ user }: CustomerNavUserProps) {
           className="data-[state=open]:bg-sidebar-accent p-1 data-[state=open]:text-sidebar-accent-foreground"
         >
           <Avatar className="h-8 w-8 rounded-full">
-            <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+            <AvatarImage src={customer.profileImage} alt={customer.fullName} />
+            <AvatarFallback className="rounded-lg">
+              {customer.fullName
+                .split(" ")
+                .slice(0, 2)
+                .map((word) => word[0])
+                .join("")
+                .toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <span className="truncate font-semibold max-md:hidden">
-            {user.name}
+            {customer.fullName}
           </span>
           <ChevronDown />
         </Button>
@@ -87,12 +82,24 @@ export default function CustomerNavUser({ user }: CustomerNavUserProps) {
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-full">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+              <AvatarImage
+                src={customer.profileImage}
+                alt={customer.fullName}
+              />
+              <AvatarFallback className="rounded-lg">
+                {customer.fullName
+                  .split(" ")
+                  .slice(0, 2)
+                  .map((word) => word[0])
+                  .join("")
+                  .toUpperCase()}
+              </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-semibold">{user.name}</span>
-              <span className="truncate text-xs">{user.email}</span>
+              <span className="truncate font-semibold">
+                {customer.fullName}
+              </span>
+              <span className="truncate text-xs">{customer.email}</span>
             </div>
           </div>
         </DropdownMenuLabel>

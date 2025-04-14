@@ -16,11 +16,7 @@ export default function CustomerSiteHeader() {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 640px)");
   const [mobileMenu, setMobileMenu] = useState(false);
-  const user = {
-    name: "Rey Daug",
-    email: "m@example.com",
-    avatar: "/daug-avatar.jpg",
-  };
+
   const PageLink = ({ href, title }: { href: string; title: string }) => {
     return (
       <Link
@@ -76,7 +72,7 @@ export default function CustomerSiteHeader() {
         </div>
         <div className="flex gap-4">
           {customer ? (
-            <CustomerNavUser user={user} />
+            <CustomerNavUser customer={customer} />
           ) : (
             <div className="space-x-4">
               <Link className="max-sm:hidden" href={"/sign-in"}>
