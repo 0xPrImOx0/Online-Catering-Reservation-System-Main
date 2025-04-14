@@ -6,10 +6,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  ReservationValues,
-  useReservationForm,
-} from "@/hooks/use-reservation-form";
+import { ReservationValues } from "@/hooks/use-reservation-form";
 import { cateringPackages, options } from "@/lib/customer/packages-metadata";
 import { useFormContext } from "react-hook-form";
 import MiniCateringPackageCard from "./MiniCateringPackageCard";
@@ -50,7 +47,7 @@ export default function PackageSelection({
         {!showPackageSelection && (
           <FormField
             control={control}
-            name="serviceMode"
+            name="cateringOptions"
             render={({ field }) => (
               <FormItem className="flex gap-4 space-y-0  max-sm:flex-col">
                 {options.map((option) => (

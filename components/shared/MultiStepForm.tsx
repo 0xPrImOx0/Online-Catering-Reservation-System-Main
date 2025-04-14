@@ -37,6 +37,7 @@ export function MultiStepForm({
   doneButtonText = "Done",
   cancelButtonText = "Cancel",
   isReservationForm = false,
+  setShowPackageSelection,
 }: MultiStepFormProps) {
   const [formStep, setFormStep] = useState<number>(initialStep || 0);
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
@@ -46,6 +47,7 @@ export function MultiStepForm({
 
   // Function to go to next form step
   const nextStep = async () => {
+    reservationRef.current?.scrollIntoView({ behavior: "smooth" });
     if (formStep < formSteps.length - 1) {
       setIsNextButtonDisabled(true);
       // If validation function is provided, use it
@@ -61,12 +63,16 @@ export function MultiStepForm({
 
       setIsNextButtonDisabled(false);
     }
-    reservationRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   // Function to go to previous form step
   const prevStep = () => {
     reservationRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (previousButtonText === "Change Catering Options") {
+      setFormStep(1);
+      setShowPackageSelection?.(false);
+      return;
+    }
     if (formStep > 0) {
       setFormStep(formStep - 1);
     }

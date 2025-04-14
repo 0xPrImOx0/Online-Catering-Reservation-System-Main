@@ -118,4 +118,5 @@ export type MultiStepFormProps = {
   doneButtonText?: string;
   cancelButtonText?: string;
   isReservationForm?: boolean;
+  setShowPackageSelection?: Dispatch<SetStateAction<boolean>>;
 };

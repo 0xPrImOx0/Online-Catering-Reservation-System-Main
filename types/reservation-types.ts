@@ -35,7 +35,7 @@ export interface ReservationItem {
   eventTime: string;
   guestCount: number;
   venue: string;
-  serviceMode: "event" | "custom";
+  cateringOptions: "event" | "custom";
   serviceType: ServiceType;
   serviceHours: string;
   selectedPackage: string;
@@ -55,7 +55,7 @@ export interface BookNowProps {
   formHook: ReturnType<typeof useReservationForm>;
 }
 
-export type SelectServiceModeProps = {
-  showSelectServiceMode: boolean;
-  setShowSelectServiceMode: (open: boolean) => void;
+export type SelectcateringOptionsProps = {
+  showSelectcateringOptions: boolean;
+  setShowSelectcateringOptions: (open: boolean) => void;
 };

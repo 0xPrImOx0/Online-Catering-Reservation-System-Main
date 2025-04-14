@@ -39,7 +39,7 @@ const reservationSchema = z.object({
     .string({ required_error: "Please provide the Venue" })
     .min(3, "Venue must be at least 3 characters")
     .max(100, "Venue must not exceed 100 characters"),
-  serviceMode: z.enum(["event", "custom"], {
+  cateringOptions: z.enum(["event", "custom"], {
     required_error: "Please select a Service Mode",
   }),
   serviceType: z.enum(["Buffet", "Plated"], {
@@ -86,7 +86,7 @@ const defaultValues: ReservationValues = {
   eventTime: "",
   guestCount: 0,
   venue: "",
-  serviceMode: "event",
+  cateringOptions: "event",
   serviceType: "Buffet",
   serviceHours: "4 hours",
   selectedPackage: "",
@@ -109,12 +109,15 @@ export function useReservationForm() {
   });
 
   const { watch } = reservationForm;
-  const serviceMode = watch("serviceMode");
+  const cateringOptions = watch("cateringOptions");
   const selectedPackage = watch("selectedPackage");
   // Validate a specific step
   const validateStep = async (step: number): Promise<boolean> => {
-    if (serviceMode === "event" && selectedPackage === "") {
+    if (cateringOptions === "event" && selectedPackage === "") {
       setShowPackageSelection(true);
+    }
+    if (cateringOptions === "custom") {
+      return true;
     }
     const fieldsToValidate = getFieldsToValidate(step);
     const isValid = await reservationForm.trigger(fieldsToValidate);
@@ -144,7 +147,7 @@ export function useReservationForm() {
       case 0:
         return ["fullName", "email", "contactNumber"];
       case 1:
-        return ["serviceMode", "selectedPackage"];
+        return ["cateringOptions", "selectedPackage"];
       case 2:
         return ["selectedMenus"];
       case 3:
