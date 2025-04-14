@@ -17,7 +17,6 @@ import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { useRouter } from "next/navigation";
 import PackageSelection from "./PackageSelection";
 import { menuItems } from "@/lib/menu-lists";
-import SelectServiceModeDialog from "../SelectServiceModeDialog";
 export default function BookNowForm({ id }: { id: string }) {
   const router = useRouter();
   const { reservationForm, validateStep, onSubmit } = useReservationForm();
@@ -26,8 +25,7 @@ export default function BookNowForm({ id }: { id: string }) {
   const [bookNowFormSteps, setBookNowFormSteps] = useState(
     eventPackageFormSteps
   );
-  const [showSelectServiceMode, setShowSelectServiceMode] = useState(false);
-  const { setValue, getValues } = reservationForm;
+  const { setValue } = reservationForm;
   const deconstructedId = id && id[0];
 
   // Convert our form steps to the format expected by MultiStepForm
@@ -83,8 +81,6 @@ export default function BookNowForm({ id }: { id: string }) {
         setValue("selectedPackage", deconstructedId);
         return;
       }
-    } else {
-      setShowSelectServiceMode(true);
     }
   }, [id, deconstructedId, setValue]);
 
@@ -115,6 +111,5 @@ export default function BookNowForm({ id }: { id: string }) {
       </MultiStepForm>
     </Form>
   );
-
   return <section>{formContent}</section>;
 }

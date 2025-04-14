@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "../ui/progress";
 import clsx from "clsx";
-import PackageChangeWarning from "./PackageChangeWarning";
 import { MultiStepFormProps } from "@/types/component-types";
 
 export type FormStepType = {
