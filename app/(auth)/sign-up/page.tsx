@@ -10,7 +10,8 @@ import Image from "next/image";
 import api from "@/lib/axiosInstance";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 export default function RegisterPage() {
   const form = useForm<SignUpFormValues>({
@@ -24,6 +25,7 @@ export default function RegisterPage() {
   });
   const router = useRouter();
   const [error, setError] = useState("");
+  const { customer } = useAuthContext();
 
   const onSubmit = async (values: SignUpFormValues) => {
     try {
@@ -41,6 +43,12 @@ export default function RegisterPage() {
       }
     }
   };
+
+  useEffect(() => {
+    if (customer) {
+      router.replace("/");
+    }
+  }, [customer, router]);
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="relative hidden lg:block">
