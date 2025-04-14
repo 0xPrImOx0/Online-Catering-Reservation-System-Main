@@ -19,6 +19,9 @@ import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { links, registeredLinks } from "@/lib/customer/customer-links";
 import { CustomerProps } from "@/types/customer-types";
+import axios from "axios";
+import api from "@/lib/axiosInstance";
+import { useRouter } from "next/navigation";
 
 type DropdownLinkProps = {
   data: {
@@ -35,6 +38,7 @@ type CustomerNavUserProps = {
 export default function CustomerNavUser({ customer }: CustomerNavUserProps) {
   const { setTheme, theme } = useTheme();
   const isMobile = useIsMobile();
+  const router = useRouter();
 
   const DropdownLink = ({ data }: DropdownLinkProps) => {
     const { title, href, Icon } = data;
@@ -48,6 +52,18 @@ export default function CustomerNavUser({ customer }: CustomerNavUserProps) {
     );
   };
 
+  const handleSignOut = async () => {
+    try {
+      await api.post("/auth/sign-out");
+
+      router.replace("/");
+    } catch (err: unknown) {
+      if (axios.isAxiosError<{ error: string }>(err)) {
+        const message = err.response?.data.error || "Unexpected Error Occur";
+        console.error("Error Sign Out", message);
+      }
+    }
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -134,7 +150,7 @@ export default function CustomerNavUser({ customer }: CustomerNavUserProps) {
           className="text-destructive dark:text-red-500"
           asChild
         >
-          <Link href={"/sign-in"} className="text-base">
+          <Link href="/" onClick={handleSignOut} className="text-base">
             <LogOut />
             Log out
           </Link>
