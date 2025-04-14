@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/ui/password-input";
 
-export const SignUpForm = ({ form, onSubmit }: SignUpFormProps) => {
+export const SignUpForm = ({ form, onSubmit, error }: SignUpFormProps) => {
   return (
     <>
       <CardHeader className="flex flex-col items-center space-y-1 pb-1 text-center">
@@ -116,15 +116,7 @@ export const SignUpForm = ({ form, onSubmit }: SignUpFormProps) => {
             </Button>
           </form>
         </Form>
-        {/* <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-          <span className="relative z-10 bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-        <Button variant="outline" className="w-full">
-          <Google />
-          Sign Up with Google
-        </Button> */}
+        <p>{error}</p>
       </CardContent>
       <CardFooter className="text-sm flex justify-center space-x-2">
         <p>Already Have an Account?</p>

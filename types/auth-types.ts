@@ -22,6 +22,7 @@ export type SignUpFormValues = {
 export interface SignUpFormProps {
   form: UseFormReturn<SignUpFormValues>;
   onSubmit: (data: SignUpFormValues) => void;
+  error: string;
 }
 
 export type ForgotPasswordFormValues = {

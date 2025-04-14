@@ -8,9 +8,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/utils/form-validation";
 import Image from "next/image";
 import api from "@/lib/axiosInstance";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 export default function LoginPage() {
   const form = useForm<SignInFormValues>({
@@ -23,6 +24,7 @@ export default function LoginPage() {
   });
   const router = useRouter();
   const [error, setError] = useState("");
+  const { customer } = useAuthContext();
 
   const onSubmit = async (values: SignInFormValues) => {
     try {
@@ -44,6 +46,12 @@ export default function LoginPage() {
       }
     }
   };
+
+  useEffect(() => {
+    if (customer) {
+      router.replace("/");
+    }
+  }, [customer, router]);
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">

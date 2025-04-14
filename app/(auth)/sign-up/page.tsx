@@ -6,8 +6,11 @@ import { useForm } from "react-hook-form";
 import { SignUpFormValues } from "../../../types/auth-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/utils/form-validation";
-import { toast } from "sonner";
 import Image from "next/image";
+import api from "@/lib/axiosInstance";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useState } from "react";
 
 export default function RegisterPage() {
   const form = useForm<SignUpFormValues>({
@@ -19,18 +22,23 @@ export default function RegisterPage() {
       confirmPassword: "",
     },
   });
+  const router = useRouter();
+  const [error, setError] = useState("");
 
-  const onSubmit = (values: SignUpFormValues) => {
+  const onSubmit = async (values: SignUpFormValues) => {
     try {
-      console.log(values);
-      toast(
-        <div className="p-4">
-          <p>{JSON.stringify(values, null, 2)}</p>
-        </div>
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      await api.post("/auth/sign-up", values);
+
+      router.replace("/");
+    } catch (err: unknown) {
+      console.log("ERRRORRR SIGN UPP", err);
+
+      if (axios.isAxiosError<{ error: string }>(err)) {
+        const message = err.response?.data.error || "Unexpected Error Occur";
+        if (err.response?.status === 400) form.setError("email", { message });
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     }
   };
   return (
@@ -46,7 +54,7 @@ export default function RegisterPage() {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex flex-1 items-center justify-center">
           <Card className="w-full max-w-sm p-2 space-y-3">
-            <SignUpForm form={form} onSubmit={onSubmit} />
+            <SignUpForm form={form} onSubmit={onSubmit} error={error} />
           </Card>
         </div>
       </div>
