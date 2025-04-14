@@ -118,5 +118,4 @@ export type MultiStepFormProps = {
   doneButtonText?: string;
   cancelButtonText?: string;
   isReservationForm?: boolean;
-  setShowSelectServiceMode?: (show: boolean) => void;
 };

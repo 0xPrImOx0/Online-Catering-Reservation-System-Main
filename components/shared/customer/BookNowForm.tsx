@@ -21,14 +21,13 @@ import SelectServiceModeDialog from "../SelectServiceModeDialog";
 export default function BookNowForm({ id }: { id: string }) {
   const router = useRouter();
   const { reservationForm, validateStep, onSubmit } = useReservationForm();
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [bookNowFormSteps, setBookNowFormSteps] = useState(
     eventPackageFormSteps
   );
   const [showSelectServiceMode, setShowSelectServiceMode] = useState(false);
   const { setValue, getValues } = reservationForm;
-  const serviceMode = getValues("serviceMode");
   const deconstructedId = id && id[0];
 
   // Convert our form steps to the format expected by MultiStepForm
@@ -67,7 +66,7 @@ export default function BookNowForm({ id }: { id: string }) {
   };
 
   useEffect(() => {
-    const isMenu = menuItems.some((pkg) => pkg._id === deconstructedId);
+    const isMenu = menuItems.find((pkg) => pkg._id === deconstructedId);
     const isPackage = cateringPackages.some(
       (pkg) => pkg._id === deconstructedId
     );
@@ -75,11 +74,13 @@ export default function BookNowForm({ id }: { id: string }) {
       if (isMenu) {
         setValue("serviceMode", "custom");
         setBookNowFormSteps(customPackageFormSteps);
+        setValue("selectedMenus", { [isMenu.category]: [deconstructedId] });
         return;
       }
       if (isPackage) {
         setValue("serviceMode", "event");
         setBookNowFormSteps(eventPackageFormSteps);
+        setValue("selectedPackage", deconstructedId);
         return;
       }
     } else {
@@ -87,34 +88,13 @@ export default function BookNowForm({ id }: { id: string }) {
     }
   }, [id, deconstructedId, setValue]);
 
-  const eventPackageFormComponents = [
+  const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,
     <PackageSelection key={"package-selection"} />,
     <CategoryOptions key={"category-options"} />,
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,
   ];
-
-  const customPackageFormComponents = [
-    <CustomerInformation key={"customer-information"} />,
-    // <PackageSelection key={"package-selection"} />,
-    <CategoryOptions key={"category-options"} />,
-    <EventDetails key={"event-details"} />,
-    <SummaryBooking key={"summary-booking"} />,
-  ];
-
-  const [formComponents, setFormComponents] = useState(
-    eventPackageFormComponents
-  );
-  useEffect(() => {
-    if (serviceMode === "event") {
-      setBookNowFormSteps(eventPackageFormSteps);
-      setFormComponents(eventPackageFormComponents);
-    } else if (serviceMode === "custom") {
-      setBookNowFormSteps(customPackageFormSteps);
-      setFormComponents(customPackageFormComponents);
-    }
-  }, [serviceMode]);
 
   const formContent = (
     <Form {...reservationForm}>
@@ -130,14 +110,9 @@ export default function BookNowForm({ id }: { id: string }) {
         isSubmitComplete={isSubmitComplete}
         doneButtonText="Close"
         isReservationForm
-        setShowSelectServiceMode={setShowSelectServiceMode}
       >
-        {formComponents}
+        {reservationFormComponents}
       </MultiStepForm>
-      <SelectServiceModeDialog
-        showSelectServiceMode={showSelectServiceMode}
-        setShowSelectServiceMode={setShowSelectServiceMode}
-      />
     </Form>
   );
 

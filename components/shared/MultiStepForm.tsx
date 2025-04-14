@@ -38,7 +38,6 @@ export function MultiStepForm({
   doneButtonText = "Done",
   cancelButtonText = "Cancel",
   isReservationForm = false,
-  setShowSelectServiceMode,
 }: MultiStepFormProps) {
   const [formStep, setFormStep] = useState<number>(initialStep || 0);
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
@@ -206,11 +205,6 @@ export function MultiStepForm({
             </CardHeader>
             <CardContent className="px-0 pb-16">
               {children[formStep]}
-              {isReservationForm && formStep != 4 && (
-                <PackageChangeWarning
-                  setShowSelectServiceMode={setShowSelectServiceMode}
-                />
-              )}
             </CardContent>
           </Card>
         </div>
