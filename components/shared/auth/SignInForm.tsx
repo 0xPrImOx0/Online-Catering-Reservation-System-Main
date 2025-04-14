@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/ui/password-input";
 
-export const SignInForm = ({ form, onSubmit }: SignInFormProps) => {
+export const SignInForm = ({ form, onSubmit, error }: SignInFormProps) => {
   return (
     <>
       <CardHeader className="flex flex-col items-center space-y-1 pb-1 text-center">
@@ -82,6 +82,7 @@ export const SignInForm = ({ form, onSubmit }: SignInFormProps) => {
             </Button>
           </form>
         </Form>
+        <p>{error}</p>
       </CardContent>
       <CardFooter className="text-sm flex justify-center space-x-2">
         <p>Don&apos;t have an account?</p>

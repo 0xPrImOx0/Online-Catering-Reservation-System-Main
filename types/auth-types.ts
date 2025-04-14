@@ -9,6 +9,7 @@ export type SignInFormValues = {
 export interface SignInFormProps {
   form: UseFormReturn<SignInFormValues>;
   onSubmit: (data: SignInFormValues) => void;
+  error: string;
 }
 
 export type SignUpFormValues = {

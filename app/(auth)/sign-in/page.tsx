@@ -6,8 +6,11 @@ import { useForm } from "react-hook-form";
 import { SignInFormValues } from "../../../types/auth-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/utils/form-validation";
-import { toast } from "sonner";
 import Image from "next/image";
+import api from "@/lib/axiosInstance";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const form = useForm<SignInFormValues>({
@@ -18,25 +21,36 @@ export default function LoginPage() {
       password: "",
     },
   });
+  const router = useRouter();
+  const [error, setError] = useState("");
 
-  const onSubmit = (values: SignInFormValues) => {
+  const onSubmit = async (values: SignInFormValues) => {
     try {
-      toast(
-        <div className="p-4">
-          <p>{JSON.stringify(values, null, 2)}</p>
-        </div>
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      await api.post("/auth/sign-in", values);
+
+      router.replace("/");
+    } catch (err: unknown) {
+      console.log("ERRRORRR", err);
+
+      if (axios.isAxiosError<{ error: string }>(err)) {
+        const message = err.response?.data.error || "Unexpected Error Occur";
+        if (err.response?.status === 404) {
+          form.setError("email", { message });
+        } else if (err.response?.status === 401) {
+          form.setError("password", { message });
+        }
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     }
   };
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex flex-1 items-center justify-center">
           <Card className="w-full max-w-sm p-2 space-y-3">
-            <SignInForm form={form} onSubmit={onSubmit} />
+            <SignInForm form={form} onSubmit={onSubmit} error={error} />
           </Card>
         </div>
       </div>
