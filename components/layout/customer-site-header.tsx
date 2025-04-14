@@ -8,12 +8,13 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import CustomerNavUser from "../shared/customer/CustomerNavUser";
 import { links } from "@/lib/customer/customer-links";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 export default function CustomerSiteHeader() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { customer } = useAuthContext();
   const pathname = usePathname();
-  const isMobile = useIsMobile(!isLoggedIn ? 1024 : 900);
+  const isMobile = useMediaQuery("(max-width: 640px)");
   const [mobileMenu, setMobileMenu] = useState(false);
   const user = {
     name: "Rey Daug",
@@ -65,7 +66,7 @@ export default function CustomerSiteHeader() {
           <nav
             className={clsx(
               "flex gap-10 flex-1 justify-center",
-              isLoggedIn ? "max-nav-md:hidden" : "max-lg:hidden"
+              customer ? "max-nav-md:hidden" : "max-lg:hidden"
             )}
           >
             {links.map((link) => (
@@ -74,7 +75,7 @@ export default function CustomerSiteHeader() {
           </nav>
         </div>
         <div className="flex gap-4">
-          {isLoggedIn ? (
+          {customer ? (
             <CustomerNavUser user={user} />
           ) : (
             <div className="space-x-4">
