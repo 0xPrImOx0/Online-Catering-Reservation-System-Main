@@ -14,7 +14,7 @@ import SummaryBooking from "./SummaryBooking";
 import { Form } from "@/components/ui/form";
 import { useReservationForm } from "@/hooks/use-reservation-form";
 import { FormStepType, MultiStepForm } from "../MultiStepForm";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import PackageSelection from "./PackageSelection";
 import { menuItems } from "@/lib/menu-lists";
 import { Button } from "@/components/ui/button";
@@ -31,6 +31,7 @@ import { Check } from "lucide-react";
 
 export default function BookNowForm({ id }: { id: string }) {
   const router = useRouter();
+  const pathname = usePathname();
   const {
     reservationForm,
     validateStep,
@@ -41,12 +42,10 @@ export default function BookNowForm({ id }: { id: string }) {
 
   const { watch } = reservationForm;
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [bookNowFormSteps, setBookNowFormSteps] = useState(
-    eventPackageFormSteps
-  );
+  const [nextPageCount, setNextPageCount] = useState(0);
 
   const { setValue } = reservationForm;
   const deconstructedId = id && id[0];
@@ -63,7 +62,7 @@ export default function BookNowForm({ id }: { id: string }) {
       : "Next";
 
   // Convert our form steps to the format expected by MultiStepForm
-  const multiFormSteps: FormStepType[] = bookNowFormSteps.map((step) => ({
+  const multiFormSteps: FormStepType[] = eventPackageFormSteps.map((step) => ({
     id: step.id,
     title: step.title,
     description: step.description ?? "", // Description is optional
@@ -73,7 +72,12 @@ export default function BookNowForm({ id }: { id: string }) {
   const handleNextStep = async (currentStep: number) => {
     const isValid = await validateStep(currentStep);
     if (isValid) {
-      setCurrentStep(currentStep + 1);
+      if (pathname === `/book-now/${id}` && nextPageCount < 2) {
+        setCurrentStep(currentStep + 2);
+      } else {
+        setCurrentStep(currentStep + 1);
+      }
+      setNextPageCount((prev) => prev + 1);
     }
     return isValid;
   };
@@ -114,14 +118,13 @@ export default function BookNowForm({ id }: { id: string }) {
     if (deconstructedId) {
       if (isMenu) {
         setValue("cateringOptions", "custom");
-        setBookNowFormSteps(customPackageFormSteps);
         setValue("selectedMenus", { [isMenu.category]: [deconstructedId] });
         return;
       }
       if (isPackage) {
         setValue("cateringOptions", "event");
-        setBookNowFormSteps(eventPackageFormSteps);
         setValue("selectedPackage", deconstructedId);
+        setShowPackageSelection(true);
         return;
       }
     }
