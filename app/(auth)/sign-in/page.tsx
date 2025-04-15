@@ -30,6 +30,8 @@ export default function LoginPage() {
     try {
       await api.post("/auth/sign-in", values);
 
+      // ✅ Tell AuthProvider to re-fetch customer
+      window.dispatchEvent(new Event("refresh-customer"));
       router.replace("/");
     } catch (err: unknown) {
       console.log("ERRRORRR", err);
