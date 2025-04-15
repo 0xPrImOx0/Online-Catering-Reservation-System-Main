@@ -3,19 +3,16 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import CustomerPackageCard from "./CustomerPackageCard";
 import { CateringPackagesProps } from "@/types/package-types";
-import axios from "axios";
-import { cateringPackages } from "@/lib/customer/packages-metadata";
+import api from "@/lib/axiosInstance";
+// import { cateringPackages } from "@/lib/customer/packages-metadata";
 
-// async function fetchFeatured() {
-//   const response = await axios.get("http://localhost:5500/api/packages");
-//   const featuredPackages = response.data.data.filter(
-//     (pkg: { packageType: string }) => pkg.packageType === "BuffetPlated"
-//   );
-//   return featuredPackages;
-// }
+async function fetchFeatured() {
+  const response = await api.get("/packages/featured");
+  return response.data.data;
+}
 
 export default async function Featured() {
-  // const cateringPackages = await fetchFeatured();
+  const cateringPackages = await fetchFeatured();
   return (
     <section className="px-[5%] mt-24 flex flex-col items-center gap-14">
       <div className="">
