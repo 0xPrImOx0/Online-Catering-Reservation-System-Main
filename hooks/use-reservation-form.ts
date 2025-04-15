@@ -115,7 +115,7 @@ export function useReservationForm() {
   const reservationType = watch("reservationType");
   // Validate a specific step
   const validateStep = async (step: number): Promise<boolean> => {
-    if (cateringOptions === "event" && selectedPackage === "") {
+    if (cateringOptions === "event" && selectedPackage === "" && step !== 0) {
       setShowPackageSelection(true);
     }
     if (cateringOptions === "custom" && step === 1) {
