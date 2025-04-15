@@ -74,12 +74,13 @@ export function MultiStepForm({
       setShowPackageSelection?.(false);
       return;
     }
-    if (onPrevStep) {
+    if (onPrevStep && isReservationForm) {
       const isValid = onPrevStep(formStep);
       if (isValid) {
         setFormStep(formStep - 1);
       }
     }
+    setFormStep(formStep - 1);
   };
 
   // Function to submit the form
