@@ -37,7 +37,7 @@ export interface ReservationItem {
   venue: string;
   cateringOptions: "event" | "custom";
   serviceType: ServiceType;
-  serviceHours: string;
+  serviceHours?: string;
   selectedPackage: string;
   selectedMenus: Record<PackageCategory, string[]>;
   specialRequests?: string;

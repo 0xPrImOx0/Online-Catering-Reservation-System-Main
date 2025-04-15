@@ -1,5 +1,9 @@
 import { CategoryProps, MenuItem } from "@/types/menu-types";
-import { EventType, eventTypes, PackageCategory } from "@/types/package-types";
+import {
+  EventType,
+  PackageCategory,
+  reservationEventTypes,
+} from "@/types/package-types";
 import { ReservationItem } from "@/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -19,16 +23,12 @@ const reservationSchema = z.object({
     .string({ required_error: "Please provide your Contact Number" })
     .regex(/^\d{10}$/, "Contact Number must have exactly 10 digits"),
   reservationType: z.enum(["event", "personal"]),
-  eventType: z.enum(eventTypes as [EventType, ...EventType[]], {
+  eventType: z.enum(reservationEventTypes as [EventType, ...EventType[]], {
     required_error: "Please select an Event Type",
   }),
-  eventDate: z
-    .date({
-      required_error: "Please provide the Event Date",
-    })
-    .refine((date) => date >= new Date(), {
-      message: "Event Date cannot be in the past",
-    }),
+  eventDate: z.date({
+    required_error: "Please provide the Event Date",
+  }),
   eventTime: z
     .string({ required_error: "Please provide the Event Time" })
     .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Please enter a valid time (HH:mm)"),
@@ -46,9 +46,7 @@ const reservationSchema = z.object({
   serviceType: z.enum(["Buffet", "Plated"], {
     required_error: "Please select a Service Type",
   }),
-  serviceHours: z
-    .string({ required_error: "Please provide the Service Hours" })
-    .regex(/^\d+ hours$/, "Service Hours must be in the format 'X hours'"),
+  serviceHours: z.string().optional(),
   selectedPackage: z
     .string({ required_error: "Please select a Package" })
     .min(1, "Package selection is required"),
@@ -83,14 +81,14 @@ const defaultValues: ReservationValues = {
   email: "",
   contactNumber: "0",
   reservationType: "event",
-  eventType: "",
+  eventType: "Birthday",
   eventDate: new Date(),
   eventTime: "",
   guestCount: 0,
   venue: "",
   cateringOptions: "event",
   serviceType: "Buffet",
-  serviceHours: "4 hours",
+  serviceHours: "",
   selectedPackage: "",
   selectedMenus: {} as Record<PackageCategory, string[]>,
   specialRequests: "",
@@ -118,7 +116,7 @@ export function useReservationForm() {
     if (cateringOptions === "event" && selectedPackage === "") {
       setShowPackageSelection(true);
     }
-    if (cateringOptions === "custom") {
+    if (cateringOptions === "custom" && step === 1) {
       return true;
     }
     const fieldsToValidate = getFieldsToValidate(step);

@@ -28,7 +28,8 @@ interface PackageSelectionProps {
 export default function PackageSelection({
   showPackageSelection,
 }: PackageSelectionProps) {
-  const { control, watch, setValue } = useFormContext<ReservationValues>();
+  const { control, watch, setValue, getValues } =
+    useFormContext<ReservationValues>();
   const packageSelection = watch("selectedPackage");
 
   useEffect(() => {
@@ -37,7 +38,10 @@ export default function PackageSelection({
     );
     if (selectedPackage) {
       // Update the form with the selected package details
-      setValue("eventType", selectedPackage?.eventType ?? "");
+      setValue("eventType", selectedPackage?.eventType ?? "No Event");
+      console.log(getValues("eventType"));
+
+      setValue("reservationType", "event");
     }
   }, [packageSelection]);
 

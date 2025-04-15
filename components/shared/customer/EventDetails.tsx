@@ -2,7 +2,6 @@
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { eventTypes } from "@/types/package-types";
 import {
   FormControl,
   FormField,
@@ -27,13 +26,14 @@ import EventType from "./EventType";
 import EventDate from "./EventDate";
 import DeliveryDetails from "./DeliveryDetails";
 import DeliveryOption from "./DeliveryOption";
+import { hoursArray } from "@/types/package-types";
 
 export default function EventDetails() {
   const { control, getValues, watch } = useFormContext<ReservationValues>();
-  const hoursArray = ["4 hours", "5 hours", "6 hours", "8 hours", "10 hours"];
   const reservationType = watch("reservationType");
   const cateringOptions = watch("cateringOptions");
   const serviceType = watch("serviceType");
+  const eventType = watch("eventType");
 
   return (
     <div className="space-y-4">
@@ -41,7 +41,9 @@ export default function EventDetails() {
         {cateringOptions === "custom" && (
           <WhatsTheOccasionCard control={control} />
         )}
-        {reservationType === "event" && <EventType control={control} />}
+        {reservationType === "event" && eventType !== "No Event" && (
+          <EventType control={control} />
+        )}
         <EventDate control={control} />
         <FormField
           control={control}
@@ -73,21 +75,23 @@ export default function EventDetails() {
             </FormItem>
           )}
         />
-        <FormField
-          control={control}
-          name="venue"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="">
-                Venue <span className="text-destructive">*</span>{" "}
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your event venue" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {reservationType === "event" && (
+          <FormField
+            control={control}
+            name="venue"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="">
+                  Venue <span className="text-destructive">*</span>{" "}
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter your event venue" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
       </div>
 
       {reservationType === "event" && (

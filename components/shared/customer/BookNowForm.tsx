@@ -17,6 +17,18 @@ import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { useRouter } from "next/navigation";
 import PackageSelection from "./PackageSelection";
 import { menuItems } from "@/lib/menu-lists";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import Link from "next/link";
+import { Check } from "lucide-react";
+
 export default function BookNowForm({ id }: { id: string }) {
   const router = useRouter();
   const {
@@ -31,9 +43,11 @@ export default function BookNowForm({ id }: { id: string }) {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [bookNowFormSteps, setBookNowFormSteps] = useState(
     eventPackageFormSteps
   );
+
   const { setValue } = reservationForm;
   const deconstructedId = id && id[0];
   const cateringOptions = watch("cateringOptions");
@@ -79,6 +93,7 @@ export default function BookNowForm({ id }: { id: string }) {
 
   // Handle form submission
   const handleSubmit = () => {
+    setShowConfirmation(true);
     reservationForm.handleSubmit((data) => {
       onSubmit(data);
       setIsSubmitComplete(true);
@@ -146,5 +161,40 @@ export default function BookNowForm({ id }: { id: string }) {
       </MultiStepForm>
     </Form>
   );
-  return <section>{formContent}</section>;
+  return (
+    <section>
+      {formContent}
+      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Reservation Request Sent!</DialogTitle>
+            <DialogDescription>
+              Thank you for your reservation request. Our caterer will call you
+              within 1 hour to discuss the details and provide you with a quote.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex items-center justify-center py-4">
+            <div className="rounded-full p-3 bg-green-500">
+              <Check className="size-10 text-white" />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant={"ghost"}
+              onClick={() => setShowConfirmation(false)}
+            >
+              Close
+            </Button>
+            <Button
+              variant={"default"}
+              onClick={() => setShowConfirmation(false)}
+              asChild
+            >
+              <Link href={"/"}>Go to home</Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </section>
+  );
 }

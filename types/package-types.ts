@@ -23,6 +23,7 @@ export type EventType =
   | "Corporate"
   | "Graduation"
   | "All"
+  | "No Event"
   | "";
 
 export type PackageType = "BuffetPlated" | "Event";
@@ -155,6 +156,22 @@ export const eventTypes: EventType[] = [
   "Corporate",
   "Graduation",
 ];
+
+export const reservationEventTypes: EventType[] = [
+  "Birthday",
+  "Wedding",
+  "Corporate",
+  "Graduation",
+  "No Event",
+];
+
+export const hoursArray: string[] = [
+  "4 hours",
+  "5 hours",
+  "6 hours",
+  "8 hours",
+  "10 hours",
+]
 
 export const serviceTypes: ServiceType[] = ["Buffet", "Plated"];
 
