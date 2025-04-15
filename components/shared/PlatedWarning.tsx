@@ -26,8 +26,10 @@ export default function PlatedWarning({ isPlated }: { isPlated: boolean }) {
       </Button>
       <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative text-yellow-500" />
       <div className="space-y-2">
-        <h3 className="font-medium">Plated Course Service</h3>
-        <p className="text-sm text-foreground text-justify max-w-[1000px]">
+        <h3 className="font-medium dark:text-background">
+          Plated Course Service
+        </h3>
+        <p className="text-sm text-foreground dark:text-background text-justify max-w-[1000px]">
           Our plated course packages include professional waitstaff who will
           serve each course directly to your guests&apos; tables. An additional
           service fee of ₱100 per hour is included in the price per person.

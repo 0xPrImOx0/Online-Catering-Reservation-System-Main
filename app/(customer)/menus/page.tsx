@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   return (
-    <main className="px-[5%]">
-      <div className=" py-12">
+    <main className="max-w-[1400px] mx-auto">
+      <div className="py-12">
         <div className="space-y-4 mb-10">
           <h1 className="text-5xl font-bold">Our Menus</h1>
           <p className="text-muted-foreground">

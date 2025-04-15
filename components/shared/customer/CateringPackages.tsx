@@ -60,7 +60,7 @@ export default function CateringPackages() {
   };
 
   return (
-    <div className="mx-[5%]">
+    <div>
       <div className="">
         <h1 className="text-5xl font-bold mb-4 ">
           <span className="capitalize">{activeTab}</span> Packages

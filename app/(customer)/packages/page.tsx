@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="max-w-[1440px] mx-auto">
+    <main className="max-w-[1400px] mx-auto">
       <div className="py-12">
         {/* Package Showcase */}
         <CateringPackages />
 
         {/* Testimonials */}
-        <section className="mt-16 rounded-lg px-[5%]">
+        <section className="mt-16 rounded-lg">
           <h2 className="text-2xl font-bold mb-8 text-center">
             What Clients Say About Our Food
           </h2>
@@ -29,9 +29,9 @@ export default function Page() {
                 <Star className="h-5 w-5 fill-current text-yellow-500" />
               </div>
               <blockquote className="mb-4 italic">
-                "The Executive Lunch menu was perfect for our corporate event.
-                The presentation was beautiful, and everyone raved about the
-                quality of the food. Highly recommend!"
+                &quot;The Executive Lunch menu was perfect for our corporate
+                event. The presentation was beautiful, and everyone raved about
+                the quality of the food. Highly recommend!&quot;
               </blockquote>
               <p className="font-semibold">— Jennifer R., Marketing Director</p>
             </div>
@@ -44,9 +44,10 @@ export default function Page() {
                 <Star className="h-5 w-5 fill-current text-yellow-500" />
               </div>
               <blockquote className="mb-4 italic">
-                "We chose the Gourmet Dinner Service for our wedding, and it
-                exceeded all expectations. The chef accommodated our dietary
-                restrictions without compromising on flavor or presentation."
+                &quot;We chose the Gourmet Dinner Service for our wedding, and
+                it exceeded all expectations. The chef accommodated our dietary
+                restrictions without compromising on flavor or
+                presentation.&quot;
               </blockquote>
               <p className="font-semibold">
                 — Michael & David, Wedding Clients
@@ -62,7 +63,7 @@ export default function Page() {
           buttonLabel="Book Now"
           href="/book-now"
           Icon={ClipboardCheck}
-          px
+          px={false}
         />
       </div>
     </main>

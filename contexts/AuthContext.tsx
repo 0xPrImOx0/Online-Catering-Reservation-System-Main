@@ -3,7 +3,6 @@
 import { CustomerProps } from "@/types/customer-types";
 import { createContext, useContext, useEffect, useState } from "react";
 import api from "@/lib/axiosInstance";
-import { toast } from "sonner";
 import { IAuthContext } from "@/types/auth-types";
 import axios from "axios";
 
