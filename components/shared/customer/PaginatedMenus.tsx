@@ -6,15 +6,15 @@ import { AllergenProps, MenuItem } from "@/types/menu-types";
 import { usePathname } from "next/navigation";
 import CatererMenuCard from "../caterer/CatererMenuCard";
 import FilterSection from "../FilterSection";
-import axios from "axios";
-import { menuItems } from "@/lib/menu-lists";
+// import { menuItems } from "@/lib/menu-lists";
+import api from "@/lib/axiosInstance";
 
-// async function fetchMenus(page: number, limit: number) {
-//   const response = await axios.get("http://localhost:5500/api/menus", {
-//     params: { page, limit },
-//   });
-//   return response.data.data;
-// }
+async function fetchMenus(page: number, limit: number) {
+  const response = await api.get("/menus", {
+    params: { page, limit },
+  });
+  return response.data.data;
+}
 
 export default function PaginatedMenus() {
   const [query, setQuery] = useState("");
@@ -24,25 +24,24 @@ export default function PaginatedMenus() {
     allergens: "" as AllergenProps,
     sortBy: "",
   });
-  // const [menus, setMenus] = useState<MenuItem[]>([]);
+  const [menus, setMenus] = useState<MenuItem[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const menusPerPage = 9;
-  
 
-  // useEffect(() => {
-  //   const getMenus = async () => {
-  //     try {
-  //       const menus = await fetchMenus(currentPage, menusPerPage);
-  //       setMenus(menus || []);
-  //     } catch (error) {
-  //       console.error("Failed to fetch menus:", error); // Log any errors
-  //       setMenus([]); // Set empty array if fetch fails
-  //     }
-  //   };
-  //   getMenus();
-  // }, [currentPage]);
+  useEffect(() => {
+    const getMenus = async () => {
+      try {
+        const menus = await fetchMenus(currentPage, menusPerPage);
+        setMenus(menus || []);
+      } catch (error) {
+        console.error("Failed to fetch menus:", error); // Log any errors
+        setMenus([]); // Set empty array if fetch fails
+      }
+    };
+    getMenus();
+  }, [currentPage]);
 
-  const filterSelectMenus = menuItems.filter((menu) => {
+  const filterSelectMenus = menus.filter((menu) => {
     const matchesQuery = menu.name.toLowerCase().includes(query.toLowerCase());
     const matchesCategory =
       !filters.category || menu.category.toLowerCase() === filters.category;

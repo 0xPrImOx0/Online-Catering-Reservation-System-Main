@@ -33,9 +33,9 @@ export default async function Page() {
                 <Star className="h-5 w-5 fill-current text-yellow-500" />
               </div>
               <blockquote className="mb-4 italic">
-                "The Executive Lunch menu was perfect for our corporate event.
-                The presentation was beautiful, and everyone raved about the
-                quality of the food. Highly recommend!"
+                &quot;The Executive Lunch menu was perfect for our corporate
+                event. The presentation was beautiful, and everyone raved about
+                the quality of the food. Highly recommend!&quot;
               </blockquote>
               <p className="font-semibold">— Jennifer R., Marketing Director</p>
             </div>
@@ -48,9 +48,10 @@ export default async function Page() {
                 <Star className="h-5 w-5 fill-current text-yellow-500" />
               </div>
               <blockquote className="mb-4 italic">
-                "We chose the Gourmet Dinner Service for our wedding, and it
-                exceeded all expectations. The chef accommodated our dietary
-                restrictions without compromising on flavor or presentation."
+                &quot;We chose the Gourmet Dinner Service for our wedding, and
+                it exceeded all expectations. The chef accommodated our dietary
+                restrictions without compromising on flavor or
+                presentation.&quot;
               </blockquote>
               <p className="font-semibold">
                 — Michael & David, Wedding Clients
