@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const form = useForm<SignInFormValues>({
@@ -33,6 +34,7 @@ export default function LoginPage() {
       // ✅ Tell AuthProvider to re-fetch customer
       window.dispatchEvent(new Event("refresh-customer"));
       router.replace("/");
+      toast.success("Signed in successfully!");
     } catch (err: unknown) {
       console.log("ERRRORRR", err);
 
@@ -52,6 +54,9 @@ export default function LoginPage() {
   useEffect(() => {
     if (customer) {
       router.replace("/");
+      setTimeout(() => {
+        toast.success(`Currently signed in as ${customer.fullName}`);
+      }, 500);
     }
   }, [customer, router]);
 

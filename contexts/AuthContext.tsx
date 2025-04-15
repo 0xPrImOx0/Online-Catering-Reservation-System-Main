@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     try {
       const res = await api.get("/auth/me");
-      toast(<div className="p-4">{JSON.stringify(res, null, 2)}</div>);
+      // toast(<div className="p-4">{JSON.stringify(res, null, 2)}</div>);
       setCustomer(res.data.customer);
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 401) {

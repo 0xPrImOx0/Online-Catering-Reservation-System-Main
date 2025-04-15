@@ -22,6 +22,7 @@ import { CustomerProps } from "@/types/customer-types";
 import axios from "axios";
 import api from "@/lib/axiosInstance";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type DropdownLinkProps = {
   data: {
@@ -56,7 +57,10 @@ export default function CustomerNavUser({ customer }: CustomerNavUserProps) {
     try {
       await api.post("/auth/sign-out");
 
+      // ✅ Tell AuthProvider to re-fetch customer
+      window.dispatchEvent(new Event("refresh-customer"));
       router.replace("/");
+      toast.success("Signed out successfully!");
     } catch (err: unknown) {
       if (axios.isAxiosError<{ error: string }>(err)) {
         const message = err.response?.data.error || "Unexpected Error Occur";

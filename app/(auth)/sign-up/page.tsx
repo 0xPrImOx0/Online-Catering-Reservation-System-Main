@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const form = useForm<SignUpFormValues>({
@@ -31,7 +32,11 @@ export default function RegisterPage() {
     try {
       await api.post("/auth/sign-up", values);
 
+      // ✅ Tell AuthProvider to re-fetch customer
+      window.dispatchEvent(new Event("refresh-customer"));
       router.replace("/");
+
+      toast.success("Signed up successfully!");
     } catch (err: unknown) {
       console.log("ERRRORRR SIGN UPP", err);
 
@@ -47,6 +52,9 @@ export default function RegisterPage() {
   useEffect(() => {
     if (customer) {
       router.replace("/");
+      setTimeout(() => {
+        toast.success(`Currently signed in as ${customer.fullName}`);
+      }, 500);
     }
   }, [customer, router]);
   return (
