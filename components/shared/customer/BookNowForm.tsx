@@ -36,12 +36,13 @@ export default function BookNowForm({ id }: { id: string }) {
   );
   const { setValue } = reservationForm;
   const deconstructedId = id && id[0];
+  const cateringOptions = watch("cateringOptions");
   const dynamicPreviousBtn =
     showPackageSelection && currentStep === 1
       ? "Change Catering Options"
       : "Previous";
   const dynamicNextBtn =
-    watch("cateringOptions") === "custom" || currentStep !== 1
+    cateringOptions === "custom" || currentStep !== 1
       ? "Next"
       : !showPackageSelection
       ? "Choose a Package"
@@ -53,7 +54,6 @@ export default function BookNowForm({ id }: { id: string }) {
     title: step.title,
     description: step.description ?? "", // Description is optional
   }));
-  console.log(currentStep);
 
   // Handle next step validation
   const handleNextStep = async (currentStep: number) => {

@@ -87,7 +87,7 @@ export default function PackageSelection({
             control={control}
             name="selectedPackage"
             render={({ field }) => (
-              <FormItem className="grid grid-cols-2 gap-4 space-y-0">
+              <FormItem className="grid sm:grid-cols-2 gap-4 space-y-0">
                 {cateringPackages.map((pkg) => (
                   <MiniCateringPackageCard
                     pkg={pkg}
