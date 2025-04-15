@@ -27,6 +27,7 @@ export function MultiStepForm({
   children,
   onSubmit,
   onNextStep,
+  onPrevStep,
   onComplete,
   onCancel,
   initialStep,
@@ -73,8 +74,11 @@ export function MultiStepForm({
       setShowPackageSelection?.(false);
       return;
     }
-    if (formStep > 0) {
-      setFormStep(formStep - 1);
+    if (onPrevStep) {
+      const isValid = onPrevStep(formStep);
+      if (isValid) {
+        setFormStep(formStep - 1);
+      }
     }
   };
 

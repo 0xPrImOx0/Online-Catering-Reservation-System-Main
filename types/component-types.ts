@@ -108,6 +108,7 @@ export type MultiStepFormProps = {
   children: ReactNode[];
   onSubmit: () => void;
   onNextStep?: (currentStep: number) => Promise<boolean>;
+  onPrevStep?: (currentStep: number) => boolean;
   onComplete?: () => void;
   onCancel?: () => void;
   initialStep?: number;

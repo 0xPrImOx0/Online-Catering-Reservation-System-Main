@@ -27,8 +27,8 @@ export default function MiniCateringPackageCard({
         <Card
           onClick={() => field.onChange(pkg._id)}
           className={clsx(
-            "flex-1 p-4 cursor-pointer border transition-all hover:bg-gray-100 hover:border-foreground",
-            { "border-foreground": field.value === pkg._id }
+            "flex-1 p-4 cursor-pointer border transition-all hover:bg-gray-100 hover:border-green-500",
+            { "border-green-500 bg-green-50": field.value === pkg._id }
           )}
         >
           <CardTitle>{pkg.name}</CardTitle>

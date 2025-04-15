@@ -26,7 +26,6 @@ export default function BookNowForm({ id }: { id: string }) {
     showPackageSelection,
     setShowPackageSelection,
   } = useReservationForm();
-  console.log(showPackageSelection);
 
   const { watch } = reservationForm;
 
@@ -42,7 +41,7 @@ export default function BookNowForm({ id }: { id: string }) {
       ? "Change Catering Options"
       : "Previous";
   const dynamicNextBtn =
-    watch("cateringOptions") === "custom"
+    watch("cateringOptions") === "custom" || currentStep !== 1
       ? "Next"
       : !showPackageSelection
       ? "Choose a Package"
@@ -54,6 +53,7 @@ export default function BookNowForm({ id }: { id: string }) {
     title: step.title,
     description: step.description ?? "", // Description is optional
   }));
+  console.log(currentStep);
 
   // Handle next step validation
   const handleNextStep = async (currentStep: number) => {
@@ -64,9 +64,17 @@ export default function BookNowForm({ id }: { id: string }) {
     return isValid;
   };
 
+  const handlePreviousStep = (currentStep: number) => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+      return true;
+    }
+    return false;
+  };
+
   // Add a handleCancel function:
   const handleCancel = () => {
-    router.back();
+    router.push("/");
   };
 
   // Handle form submission
@@ -123,6 +131,7 @@ export default function BookNowForm({ id }: { id: string }) {
         formSteps={multiFormSteps}
         onSubmit={handleSubmit}
         onNextStep={handleNextStep}
+        onPrevStep={handlePreviousStep}
         onComplete={handleComplete}
         onCancel={handleCancel}
         initialStep={currentStep}
