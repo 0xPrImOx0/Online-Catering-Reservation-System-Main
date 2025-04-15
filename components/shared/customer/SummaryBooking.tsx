@@ -1,24 +1,12 @@
-"use client";
 import { Separator } from "@/components/ui/separator";
 import { ReservationValues } from "@/hooks/use-reservation-form";
 import { menuItems } from "@/lib/menu-lists";
 import { Check } from "lucide-react";
 import { useFormContext } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import Link from "next/link";
-import { useState } from "react";
+
 
 export default function SummaryBooking() {
   const { watch } = useFormContext<ReservationValues>();
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   // Use watch to get reactive form values
   const formValues = watch();
@@ -74,14 +62,16 @@ export default function SummaryBooking() {
               <span className="text-muted-foreground">Service Type:</span>
               <span>{formValues.serviceType || "Not provided"}</span>
             </li>
-            <li className="flex justify-between">
-              <span className="text-muted-foreground">Service Hours:</span>
-              <span>
-                {formValues.serviceHours
-                  ? `${formValues.serviceHours}`
-                  : "Not provided"}
-              </span>
-            </li>
+            {formValues.serviceType === "Plated" && formValues.serviceHours && (
+              <li className="flex justify-between">
+                <span className="text-muted-foreground">Service Hours:</span>
+                <span>
+                  {formValues.serviceHours
+                    ? `${formValues.serviceHours}`
+                    : "Not provided"}
+                </span>
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -121,37 +111,7 @@ export default function SummaryBooking() {
           </div>
         </>
       )}
-      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Reservation Request Sent!</DialogTitle>
-            <DialogDescription>
-              Thank you for your reservation request. Our caterer will call you
-              within 1 hour to discuss the details and provide you with a quote.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex items-center justify-center py-4">
-            <div className="rounded-full p-3 bg-green-500">
-              <Check className="size-10 text-white" />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant={"ghost"}
-              onClick={() => setShowConfirmation(false)}
-            >
-              Close
-            </Button>
-            <Button
-              variant={"default"}
-              onClick={() => setShowConfirmation(false)}
-              asChild
-            >
-              <Link href={"/"}>Go to home</Link>
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      
     </div>
   );
 }

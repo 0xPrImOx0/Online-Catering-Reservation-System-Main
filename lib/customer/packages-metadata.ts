@@ -1445,3 +1445,22 @@ export const customPackageFormSteps: FormStepType[] = [
     description: "Summary your order details",
   },
 ];
+
+export const options = [
+  {
+    label: "Event Catering",
+    value: "event",
+    description: "Plan your perfect event with our predefined packages.",
+    imageUrl:
+      "https://www.travelwisconsin.com/uploads/places/ac/ac77b893-b6c0-4bb7-ba38-33a1b285c3d7-431017935_914661377327082_7598367058503880550_n.jpg",
+  },
+  {
+    label: "Catering on Demand",
+    value: "custom",
+    description: "Order your dishes for delivery or pickup, whenever you want.",
+    imageUrl:
+      "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*jQSVrNafdz4IW5D7",
+  },
+];
+
+

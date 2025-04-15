@@ -17,19 +17,50 @@ import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { useRouter } from "next/navigation";
 import PackageSelection from "./PackageSelection";
 import { menuItems } from "@/lib/menu-lists";
-import SelectServiceModeDialog from "../SelectServiceModeDialog";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import Link from "next/link";
+import { Check } from "lucide-react";
+
 export default function BookNowForm({ id }: { id: string }) {
   const router = useRouter();
-  const { reservationForm, validateStep, onSubmit } = useReservationForm();
-  const [currentStep, setCurrentStep] = useState(3);
+  const {
+    reservationForm,
+    validateStep,
+    onSubmit,
+    showPackageSelection,
+    setShowPackageSelection,
+  } = useReservationForm();
+
+  const { watch } = reservationForm;
+
+  const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [bookNowFormSteps, setBookNowFormSteps] = useState(
     eventPackageFormSteps
   );
-  const [showSelectServiceMode, setShowSelectServiceMode] = useState(false);
-  const { setValue, getValues } = reservationForm;
-  const serviceMode = getValues("serviceMode");
+
+  const { setValue } = reservationForm;
   const deconstructedId = id && id[0];
+  const cateringOptions = watch("cateringOptions");
+  const dynamicPreviousBtn =
+    showPackageSelection && currentStep === 1
+      ? "Change Catering Options"
+      : "Previous";
+  const dynamicNextBtn =
+    cateringOptions === "custom" || currentStep !== 1
+      ? "Next"
+      : !showPackageSelection
+      ? "Choose a Package"
+      : "Next";
 
   // Convert our form steps to the format expected by MultiStepForm
   const multiFormSteps: FormStepType[] = bookNowFormSteps.map((step) => ({
@@ -47,13 +78,22 @@ export default function BookNowForm({ id }: { id: string }) {
     return isValid;
   };
 
+  const handlePreviousStep = (currentStep: number) => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+      return true;
+    }
+    return false;
+  };
+
   // Add a handleCancel function:
   const handleCancel = () => {
-    router.back();
+    router.push("/");
   };
 
   // Handle form submission
   const handleSubmit = () => {
+    setShowConfirmation(true);
     reservationForm.handleSubmit((data) => {
       onSubmit(data);
       setIsSubmitComplete(true);
@@ -67,54 +107,36 @@ export default function BookNowForm({ id }: { id: string }) {
   };
 
   useEffect(() => {
-    const isMenu = menuItems.some((pkg) => pkg._id === deconstructedId);
+    const isMenu = menuItems.find((pkg) => pkg._id === deconstructedId);
     const isPackage = cateringPackages.some(
       (pkg) => pkg._id === deconstructedId
     );
     if (deconstructedId) {
       if (isMenu) {
-        setValue("serviceMode", "custom");
+        setValue("cateringOptions", "custom");
         setBookNowFormSteps(customPackageFormSteps);
+        setValue("selectedMenus", { [isMenu.category]: [deconstructedId] });
         return;
       }
       if (isPackage) {
-        setValue("serviceMode", "event");
+        setValue("cateringOptions", "event");
         setBookNowFormSteps(eventPackageFormSteps);
+        setValue("selectedPackage", deconstructedId);
         return;
       }
-    } else {
-      setShowSelectServiceMode(true);
     }
   }, [id, deconstructedId, setValue]);
 
-  const eventPackageFormComponents = [
+  const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,
-    <PackageSelection key={"package-selection"} />,
+    <PackageSelection
+      key={"package-selection"}
+      showPackageSelection={showPackageSelection}
+    />,
     <CategoryOptions key={"category-options"} />,
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,
   ];
-
-  const customPackageFormComponents = [
-    <CustomerInformation key={"customer-information"} />,
-    // <PackageSelection key={"package-selection"} />,
-    <CategoryOptions key={"category-options"} />,
-    <EventDetails key={"event-details"} />,
-    <SummaryBooking key={"summary-booking"} />,
-  ];
-
-  const [formComponents, setFormComponents] = useState(
-    eventPackageFormComponents
-  );
-  useEffect(() => {
-    if (serviceMode === "event") {
-      setBookNowFormSteps(eventPackageFormSteps);
-      setFormComponents(eventPackageFormComponents);
-    } else if (serviceMode === "custom") {
-      setBookNowFormSteps(customPackageFormSteps);
-      setFormComponents(customPackageFormComponents);
-    }
-  }, [serviceMode]);
 
   const formContent = (
     <Form {...reservationForm}>
@@ -124,22 +146,55 @@ export default function BookNowForm({ id }: { id: string }) {
         formSteps={multiFormSteps}
         onSubmit={handleSubmit}
         onNextStep={handleNextStep}
+        onPrevStep={handlePreviousStep}
         onComplete={handleComplete}
         onCancel={handleCancel}
         initialStep={currentStep}
+        nextButtonText={dynamicNextBtn}
+        previousButtonText={dynamicPreviousBtn}
         isSubmitComplete={isSubmitComplete}
         doneButtonText="Close"
         isReservationForm
-        setShowSelectServiceMode={setShowSelectServiceMode}
+        setShowPackageSelection={setShowPackageSelection}
       >
-        {formComponents}
+        {reservationFormComponents}
       </MultiStepForm>
-      <SelectServiceModeDialog
-        showSelectServiceMode={showSelectServiceMode}
-        setShowSelectServiceMode={setShowSelectServiceMode}
-      />
     </Form>
   );
-
-  return <section>{formContent}</section>;
+  return (
+    <section>
+      {formContent}
+      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Reservation Request Sent!</DialogTitle>
+            <DialogDescription>
+              Thank you for your reservation request. Our caterer will call you
+              within 1 hour to discuss the details and provide you with a quote.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex items-center justify-center py-4">
+            <div className="rounded-full p-3 bg-green-500">
+              <Check className="size-10 text-white" />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant={"ghost"}
+              onClick={() => setShowConfirmation(false)}
+            >
+              Close
+            </Button>
+            <Button
+              variant={"default"}
+              onClick={() => setShowConfirmation(false)}
+              asChild
+            >
+              <Link href={"/"}>Go to home</Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </section>
+  );
 }

@@ -305,6 +305,7 @@ export function usePackageForm({
       eventType: data.packageType === "Event" ? data.eventType : undefined,
       packageType: displayPackageType,
       pricePerPaxWithServiceCharge: pricePerPaxWithServiceCharge,
+      _id: ""
     };
 
     console.log(

@@ -108,6 +108,7 @@ export type MultiStepFormProps = {
   children: ReactNode[];
   onSubmit: () => void;
   onNextStep?: (currentStep: number) => Promise<boolean>;
+  onPrevStep?: (currentStep: number) => boolean;
   onComplete?: () => void;
   onCancel?: () => void;
   initialStep?: number;
@@ -118,5 +119,5 @@ export type MultiStepFormProps = {
   doneButtonText?: string;
   cancelButtonText?: string;
   isReservationForm?: boolean;
-  setShowSelectServiceMode?: (show: boolean) => void;
+  setShowPackageSelection?: Dispatch<SetStateAction<boolean>>;
 };

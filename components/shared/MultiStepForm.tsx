@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "../ui/progress";
 import clsx from "clsx";
-import PackageChangeWarning from "./PackageChangeWarning";
 import { MultiStepFormProps } from "@/types/component-types";
 
 export type FormStepType = {
@@ -28,6 +27,7 @@ export function MultiStepForm({
   children,
   onSubmit,
   onNextStep,
+  onPrevStep,
   onComplete,
   onCancel,
   initialStep,
@@ -38,20 +38,19 @@ export function MultiStepForm({
   doneButtonText = "Done",
   cancelButtonText = "Cancel",
   isReservationForm = false,
-  setShowSelectServiceMode,
+  setShowPackageSelection,
 }: MultiStepFormProps) {
   const [formStep, setFormStep] = useState<number>(initialStep || 0);
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
     useState<boolean>(false);
   const reservationRef = useRef<HTMLDivElement>(null);
-
   const checkSizing = isReservationForm ? 24 : 16;
 
   // Function to go to next form step
   const nextStep = async () => {
+    reservationRef.current?.scrollIntoView({ behavior: "smooth" });
     if (formStep < formSteps.length - 1) {
       setIsNextButtonDisabled(true);
-
       // If validation function is provided, use it
       if (onNextStep) {
         const isValid = await onNextStep(formStep);
@@ -65,14 +64,21 @@ export function MultiStepForm({
 
       setIsNextButtonDisabled(false);
     }
-    reservationRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   // Function to go to previous form step
   const prevStep = () => {
     reservationRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (formStep > 0) {
-      setFormStep(formStep - 1);
+    if (previousButtonText === "Change Catering Options") {
+      setFormStep(1);
+      setShowPackageSelection?.(false);
+      return;
+    }
+    if (onPrevStep) {
+      const isValid = onPrevStep(formStep);
+      if (isValid) {
+        setFormStep(formStep - 1);
+      }
     }
   };
 
@@ -206,11 +212,6 @@ export function MultiStepForm({
             </CardHeader>
             <CardContent className="px-0 pb-16">
               {children[formStep]}
-              {isReservationForm && formStep != 4 && (
-                <PackageChangeWarning
-                  setShowSelectServiceMode={setShowSelectServiceMode}
-                />
-              )}
             </CardContent>
           </Card>
         </div>
