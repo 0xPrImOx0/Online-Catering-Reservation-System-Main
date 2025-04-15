@@ -18,7 +18,7 @@ export default function WhyChooseUs() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -34,20 +34,24 @@ export default function WhyChooseUs() {
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-              <div
-                className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-full mb-5 transition-all duration-300",
-                  "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground"
-                )}
-              >
-                <feature.icon className={"size-6"} />
+              <div className="flex items-center space-x-4">
+                <div
+                  className={cn(
+                    "flex h-14 w-14 items-center justify-center rounded-full mb-5 transition-all duration-300",
+                    "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground"
+                  )}
+                >
+                  <feature.icon className={"size-6"} />
+                </div>
+
+                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                  {feature.title}
+                </h3>
               </div>
 
-              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                {feature.title}
-              </h3>
-
-              <p className="text-muted-foreground">{feature.description}</p>
+              <p className="text-muted-foreground text-justify">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </div>
