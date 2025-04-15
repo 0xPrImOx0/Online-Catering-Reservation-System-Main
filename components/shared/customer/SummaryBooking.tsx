@@ -4,7 +4,6 @@ import { menuItems } from "@/lib/menu-lists";
 import { Check } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
-
 export default function SummaryBooking() {
   const { watch } = useFormContext<ReservationValues>();
 
@@ -54,23 +53,30 @@ export default function SummaryBooking() {
               <span className="text-muted-foreground">Guests:</span>
               <span>{formValues.guestCount || "Not provided"}</span>
             </li>
-            <li className="flex justify-between">
-              <span className="text-muted-foreground">Venue:</span>
-              <span>{formValues.venue || "Not provided"}</span>
-            </li>
-            <li className="flex justify-between">
-              <span className="text-muted-foreground">Service Type:</span>
-              <span>{formValues.serviceType || "Not provided"}</span>
-            </li>
-            {formValues.serviceType === "Plated" && formValues.serviceHours && (
-              <li className="flex justify-between">
-                <span className="text-muted-foreground">Service Hours:</span>
-                <span>
-                  {formValues.serviceHours
-                    ? `${formValues.serviceHours}`
-                    : "Not provided"}
-                </span>
-              </li>
+            {formValues.reservationType === "event" && (
+              <>
+                <li className="flex justify-between">
+                  <span className="text-muted-foreground">Venue:</span>
+                  <span>{formValues.venue || "Not provided"}</span>
+                </li>
+                <li className="flex justify-between">
+                  <span className="text-muted-foreground">Service Type:</span>
+                  <span>{formValues.serviceType || "Not provided"}</span>
+                </li>
+                {formValues.serviceType === "Plated" &&
+                  formValues.serviceHours && (
+                    <li className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        Service Hours:
+                      </span>
+                      <span>
+                        {formValues.serviceHours
+                          ? `${formValues.serviceHours}`
+                          : "Not provided"}
+                      </span>
+                    </li>
+                  )}
+              </>
             )}
           </ul>
         </div>
@@ -111,7 +117,24 @@ export default function SummaryBooking() {
           </div>
         </>
       )}
-      
+      {formValues.deliveryAddress && (
+        <>
+          <Separator />
+          <div>
+            <h3 className="font-medium mb-2">Delivery Address</h3>
+            <p className="text-sm">{formValues.deliveryAddress}</p>
+          </div>
+        </>
+      )}
+      {formValues.deliveryInstructions && (
+        <>
+          <Separator />
+          <div>
+            <h3 className="font-medium mb-2">Delivery Instructions</h3>
+            <p className="text-sm">{formValues.deliveryInstructions}</p>
+          </div>
+        </>
+      )}
     </div>
   );
 }

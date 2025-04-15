@@ -44,7 +44,7 @@ export default function CheckboxMenus({
               />
             </FormControl>
             <div className="grid gap-1.5">
-              <Label htmlFor={`menu-${menu._id}`} className="font-medium">
+              <Label htmlFor={menu._id} className="font-medium">
                 {menu.name}
               </Label>
               <p className="text-sm text-muted-foreground">

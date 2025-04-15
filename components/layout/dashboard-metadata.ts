@@ -6,6 +6,7 @@ import {
   ClipboardList,
   HandCoins,
   LayoutDashboard,
+  Settings,
   User,
   UsersRound,
 } from "lucide-react";
@@ -61,14 +62,9 @@ export const data = {
   ],
   navSecondary: [
     {
-      title: "Account Settings",
-      url: "/caterer/account-settings",
-      icon: User,
-    },
-    {
-      title: "Business Settings",
-      url: "/caterer/business-settings",
-      icon: BriefcaseBusiness,
+      title: "Settings",
+      url: "/caterer/settings",
+      icon: Settings,
     },
   ],
 };

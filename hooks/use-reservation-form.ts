@@ -1,6 +1,7 @@
 import { CategoryProps, MenuItem } from "@/types/menu-types";
 import {
   EventType,
+  eventTypes,
   PackageCategory,
   reservationEventTypes,
 } from "@/types/package-types";
@@ -111,9 +112,10 @@ export function useReservationForm() {
   const { watch } = reservationForm;
   const cateringOptions = watch("cateringOptions");
   const selectedPackage = watch("selectedPackage");
+  const reservationType = watch("reservationType");
   // Validate a specific step
   const validateStep = async (step: number): Promise<boolean> => {
-    if (cateringOptions === "event" && selectedPackage === "") {
+    if (cateringOptions === "event" && selectedPackage === "" && step !== 0) {
       setShowPackageSelection(true);
     }
     if (cateringOptions === "custom" && step === 1) {
@@ -151,14 +153,19 @@ export function useReservationForm() {
       case 2:
         return ["selectedMenus"];
       case 3:
-        return [
-          "eventType",
-          "eventDate",
-          "guestCount",
-          "venue",
-          "serviceType",
-          "serviceHours",
-        ];
+        if (reservationType === "event") {
+          return [
+            "eventType",
+            "eventDate",
+            "guestCount",
+            "venue",
+            "serviceType",
+            "serviceHours",
+          ];
+        }
+        if (reservationType === "personal") {
+          return ["eventDate", "guestCount"];
+        }
       default:
         return [];
     }
