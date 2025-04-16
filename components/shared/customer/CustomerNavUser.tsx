@@ -23,6 +23,7 @@ import axios from "axios";
 import api from "@/lib/axiosInstance";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { avatarFallBack } from "@/utils/avatar-fallback";
 
 type DropdownLinkProps = {
   data: {
@@ -79,12 +80,7 @@ export default function CustomerNavUser({ customer }: CustomerNavUserProps) {
           <Avatar className="h-8 w-8 rounded-full">
             <AvatarImage src={customer.profileImage} alt={customer.fullName} />
             <AvatarFallback className="rounded-lg">
-              {customer.fullName
-                .split(" ")
-                .slice(0, 2)
-                .map((word) => word[0])
-                .join("")
-                .toUpperCase()}
+              {avatarFallBack(customer.fullName)}
             </AvatarFallback>
           </Avatar>
           <span className="truncate font-semibold max-md:hidden">

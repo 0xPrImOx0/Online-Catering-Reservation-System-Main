@@ -5,7 +5,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CustomerPackageCard from "./CustomerPackageCard";
 import CustomPackageForm from "./CustomPacakgeForm";
 import SelectedEventContainer from "./SelectedEventContainer";
-import axios from "axios";
 import PlatedWarning from "../PlatedWarning";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 
