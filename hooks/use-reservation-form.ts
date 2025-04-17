@@ -12,68 +12,85 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 // Reservation Schema for Zod
-const reservationSchema = z.object({
-  fullName: z
-    .string({ required_error: "Please provide your Full Name" })
-    .min(2, "Full Name must be at least 2 characters")
-    .max(50, "Full Name must not exceed 50 characters"),
-  email: z
-    .string({ required_error: "Please provide your email address" })
-    .email("Please enter a valid email address"),
-  contactNumber: z
-    .string({ required_error: "Please provide your Contact Number" })
-    .regex(/^\d{10}$/, "Contact Number must have exactly 10 digits"),
-  reservationType: z.enum(["event", "personal"]),
-  eventType: z.enum(reservationEventTypes as [EventType, ...EventType[]], {
-    required_error: "Please select an Event Type",
-  }),
-  eventDate: z.date({
-    required_error: "Please provide the Event Date",
-  }),
-  eventTime: z
-    .string({ required_error: "Please provide the Event Time" })
-    .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Please enter a valid time (HH:mm)"),
-  guestCount: z
-    .number({ required_error: "Please provide the Guest Count" })
-    .min(20, "Guest Count must be at least 20")
-    .max(200, "Guest Count must not exceed 200"),
-  venue: z
-    .string({ required_error: "Please provide the Venue" })
-    .min(3, "Venue must be at least 3 characters")
-    .max(100, "Venue must not exceed 100 characters"),
-  cateringOptions: z.enum(["event", "custom"], {
-    required_error: "Please select a Service Mode",
-  }),
-  serviceType: z.enum(["Buffet", "Plated"], {
-    required_error: "Please select a Service Type",
-  }),
-  serviceHours: z.string().optional(),
-  selectedPackage: z
-    .string({ required_error: "Please select a Package" })
-    .min(1, "Package selection is required"),
-  selectedMenus: z
-    .record(z.string(), z.array(z.string()))
-    .refine(
-      (menus) => Object.values(menus).every((items) => items.length > 0),
-      { message: "At least one menu item must be selected for each category" }
+const reservationSchema = z
+  .object({
+    fullName: z
+      .string({ required_error: "Please provide your Full Name" })
+      .min(2, "Full Name must be at least 2 characters")
+      .max(50, "Full Name must not exceed 50 characters"),
+    email: z
+      .string({ required_error: "Please provide your email address" })
+      .email("Please enter a valid email address"),
+    contactNumber: z
+      .string({ required_error: "Please provide your Contact Number" })
+      .regex(/^\d{10}$/, "Contact Number must have exactly 10 digits"),
+    reservationType: z.enum(["event", "personal"]),
+    eventType: z.enum(reservationEventTypes as [EventType, ...EventType[]], {
+      required_error: "Please select an Event Type",
+    }),
+    eventDate: z.date({
+      required_error: "Please provide the Event Date",
+    }),
+    eventTime: z
+      .string({ required_error: "Please provide the Event Time" })
+      .regex(
+        /^([01]\d|2[0-3]):([0-5]\d)$/,
+        "Please enter a valid time (HH:mm)"
+      ),
+    guestCount: z
+      .number({ required_error: "Please provide the Guest Count" })
+      .min(20, "Guest Count must be at least 20")
+      .max(200, "Guest Count must not exceed 200"),
+    venue: z
+      .string({ required_error: "Please provide the Venue" })
+      .min(3, "Venue must be at least 3 characters")
+      .max(100, "Venue must not exceed 100 characters"),
+    cateringOptions: z.enum(["event", "custom"], {
+      required_error: "Please select a Service Mode",
+    }),
+    serviceType: z.enum(["Buffet", "Plated"], {
+      required_error: "Please select a Service Type",
+    }),
+    serviceHours: z.string().optional(),
+    selectedPackage: z
+      .string({ required_error: "Please select a Package" })
+      .min(1, "Package selection is required"),
+    selectedMenus: z.record(z.string(), z.array(z.string())).refine(
+      (menus) => Object.keys(menus).length > 0, // Ensure the object is not empty
+      { message: "You must select at least one menu item." }
     ),
-  specialRequests: z
-    .string()
-    .max(500, "Special Requests must not exceed 500 characters")
-    .optional(),
-  deliveryOption: z.enum(["Pickup", "Delivery"], {
-    required_error: "Please select a Delivery Option",
-  }),
-  deliveryAddress: z
-    .string()
-    .min(1, "Delivery address is required")
-    .max(200, "Delivery address must not exceed 200 characters")
-    .optional(),
-  deliveryInstructions: z
-    .string()
-    .max(300, "Delivery Instructions must not exceed 300 characters")
-    .optional(),
-});
+    specialRequests: z
+      .string()
+      .max(500, "Special Requests must not exceed 500 characters")
+      .optional(),
+    deliveryOption: z.enum(["Pickup", "Delivery"], {
+      required_error: "Please select a Delivery Option",
+    }),
+    deliveryAddress: z
+      .string()
+      .min(1, "Delivery address is required")
+      .max(200, "Delivery address must not exceed 200 characters")
+      .optional(),
+    deliveryInstructions: z
+      .string()
+      .max(300, "Delivery Instructions must not exceed 300 characters")
+      .optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.selectedPackage) {
+      const allCategoriesHaveMenus = Object.values(data.selectedMenus).every(
+        (items) => items.length > 0
+      );
+
+      if (!allCategoriesHaveMenus) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "At least one menu item must be selected for each category",
+          path: ["selectedMenus"],
+        });
+      }
+    }
+  });
 
 export type ReservationValues = z.infer<typeof reservationSchema>;
 
@@ -176,13 +193,13 @@ export function useReservationForm() {
     field: any,
     category: CategoryProps,
     menu: MenuItem,
-    limit: number // Add the limit as a parameter
+    count: number
   ) => {
     const currentSelection = field.value[category] || [];
     const updatedMenus = checked
-      ? currentSelection.length < limit // Check if the limit is reached
+      ? currentSelection.length < count // Check if the count is reached
         ? [...currentSelection, menu._id]
-        : currentSelection // If limit is reached, don't add the item
+        : currentSelection // If count is reached, don't add the item
       : currentSelection.filter((id: string) => id !== menu._id); // Remove the item if unchecked
 
     field.onChange({

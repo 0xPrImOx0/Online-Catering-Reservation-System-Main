@@ -38,9 +38,12 @@ export default function PackageSelection({
     );
     if (selectedPackage) {
       // Update the form with the selected package details
-      setValue("eventType", selectedPackage?.eventType ?? "No Event");
-      console.log(getValues("eventType"));
+      const selectedMenus = Object.fromEntries(
+        selectedPackage.options.map((opt) => [opt.category, []])
+      );
 
+      setValue("selectedMenus", selectedMenus);
+      setValue("eventType", selectedPackage?.eventType ?? "No Event");
       setValue("reservationType", "event");
     }
   }, [packageSelection]);
