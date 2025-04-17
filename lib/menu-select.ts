@@ -64,6 +64,7 @@ export const selectorItems: CustomSelectItemProps[] = [
 ];
 
 export const categorySelect: CustomSelectItemProps[] = [
+  { value: "all", title: "All" },
   { value: "soup", title: "Soup" },
   { value: "salad", title: "Salad" },
   { value: "beef", title: "Beef" },

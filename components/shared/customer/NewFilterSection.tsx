@@ -11,6 +11,14 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useClickOutside } from "@/hooks/ues-click-outside";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import CustomSelect from "../CustomSelect";
+import { Switch } from "@/components/ui/switch";
+import { Slider } from "@/components/ui/slider";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 export default function FilterSection({
   query = "",
@@ -23,7 +31,7 @@ export default function FilterSection({
   const [excludedAllergens, setExcludedAllergens] = useState<AllergenProps[]>(
     []
   );
-  const filterRef = useRef<HTMLDivElement>(null);
+  const filterRef = useRef<HTMLDivElement | null>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
 
   // Prevent scrolling when filter panel is open
@@ -112,7 +120,7 @@ export default function FilterSection({
   const getCategoryCount = (category: string) => {
     // This would typically come from your data
     // For now, just return a placeholder
-    return "2 items";
+    return category || "2 items";
   };
 
   // Category icons mapping
@@ -188,18 +196,18 @@ export default function FilterSection({
                   : "bg-white border border-gray-200 hover:bg-gray-50"
               )}
             >
-              <div className="w-8 h-8 mb-2 flex items-center justify-center hidden sm:flex">
+              <div className="w-8 h-8 mb-2 items-center justify-center hidden sm:flex">
                 <Image
                   src={
                     categoryIcons[category.value] ||
                     "/placeholder.svg?height=24&width=24"
                   }
-                  alt={category.label}
+                  alt={category.title}
                   width={24}
                   height={24}
                 />
               </div>
-              <span className="text-sm font-medium">{category.label}</span>
+              <span className="text-sm font-medium">{category.title}</span>
               <span className="text-xs opacity-70 hidden sm:inline">
                 {getCategoryCount(category.value)}
               </span>
@@ -332,7 +340,7 @@ export default function FilterSection({
                           {excludedAllergens.includes(
                             allergen.value as AllergenProps
                           ) && <X className="mr-1 h-3 w-3" />}
-                          {allergen.label}
+                          {allergen.title}
                         </Badge>
                       ))}
                     </div>
