@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { CustomerMenuCard } from "./CustomerMenuCard";
-import CustomPagination from "../CustomPagination";
-import { AllergenProps, MenuItem } from "@/types/menu-types";
+import type { AllergenProps } from "@/types/menu-types";
 import { usePathname } from "next/navigation";
-import CatererMenuCard from "../caterer/CatererMenuCard";
-import FilterSection from "../FilterSection";
-// import { menuItems } from "@/lib/menu-lists";
+import { menuItems } from "@/lib/menu-lists";
 import api from "@/lib/axiosInstance";
+import FilterSection from "./NewFilterSection";
+import CatererMenuCard from "../caterer/CatererMenuCard";
+import CustomPagination from "../CustomPagination";
 
 async function fetchMenus(page: number, limit: number) {
   const response = await api.get("/menus", {
@@ -23,31 +23,55 @@ export default function PaginatedMenus() {
     category: "",
     allergens: "" as AllergenProps,
     sortBy: "",
+    excludedAllergens: [] as AllergenProps[],
+    minPrice: 0,
+    maxPrice: 500,
+    available: false,
+    spicy: false,
   });
-  const [menus, setMenus] = useState<MenuItem[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const menusPerPage = 9;
 
-  useEffect(() => {
-    const getMenus = async () => {
-      try {
-        const menus = await fetchMenus(currentPage, menusPerPage);
-        setMenus(menus || []);
-      } catch (error) {
-        console.error("Failed to fetch menus:", error); // Log any errors
-        setMenus([]); // Set empty array if fetch fails
-      }
-    };
-    getMenus();
-  }, [currentPage]);
-
-  const filterSelectMenus = menus.filter((menu) => {
+  const filterSelectMenus = menuItems.filter((menu) => {
+    // Match search query
     const matchesQuery = menu.name.toLowerCase().includes(query.toLowerCase());
+
+    // Match category - case insensitive comparison
     const matchesCategory =
-      !filters.category || menu.category.toLowerCase() === filters.category;
+      !filters.category ||
+      menu.category.toLowerCase() === filters.category.toLowerCase();
+
+    // Match allergens
     const matchesAllergens =
       !filters.allergens || menu.allergens.includes(filters.allergens);
-    return matchesQuery && matchesCategory && matchesAllergens;
+
+    // Exclude selected allergens
+    const noExcludedAllergens =
+      filters.excludedAllergens.length === 0 ||
+      !menu.allergens.some((allergen) =>
+        filters.excludedAllergens.includes(allergen as AllergenProps)
+      );
+
+    // Match price range
+    const matchesPrice =
+      menu.regularPricePerPax >= filters.minPrice &&
+      menu.regularPricePerPax <= filters.maxPrice;
+
+    // Match availability
+    const matchesAvailability = !filters.available || menu.available;
+
+    // Match spicy
+    const matchesSpicy = !filters.spicy || menu.spicy;
+
+    return (
+      matchesQuery &&
+      matchesCategory &&
+      matchesAllergens &&
+      noExcludedAllergens &&
+      matchesPrice &&
+      matchesAvailability &&
+      matchesSpicy
+    );
   });
 
   const totalMenus = filterSelectMenus.length;
@@ -56,6 +80,11 @@ export default function PaginatedMenus() {
   const startIndex = (currentPage - 1) * menusPerPage;
   const endIndex = startIndex + menusPerPage;
   const paginatedMenu = filterSelectMenus.slice(startIndex, endIndex);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters, query]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= Math.ceil(totalMenus / menusPerPage)) {
@@ -78,7 +107,6 @@ export default function PaginatedMenus() {
       />
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
         {/* MenuLists */}
-
         {paginatedMenu.length > 0 ? (
           isCaterer ? (
             paginatedMenu.map((menu) => (

@@ -87,24 +87,24 @@ export interface FilterSectionProps {
     category: string;
     allergens: AllergenProps;
     sortBy: string;
-    excludedAllergens?: AllergenProps[];
-    minPrice?: number;
-    maxPrice?: number;
-    available?: boolean;
-    spicy?: boolean;
-    [key: string]: string | number | boolean | AllergenProps[] | undefined;
+    excludedAllergens: AllergenProps[];
+    minPrice: number;
+    maxPrice: number;
+    available: boolean;
+    spicy: boolean;
+    [key: string]: string | number | boolean | AllergenProps[];
   };
   setFilters: React.Dispatch<
-    SetStateAction<{
+    React.SetStateAction<{
       category: string;
       allergens: AllergenProps;
       sortBy: string;
-      excludedAllergens?: AllergenProps[];
-      minPrice?: number;
-      maxPrice?: number;
-      available?: boolean;
-      spicy?: boolean;
-      [key: string]: string | number | boolean | AllergenProps[] | undefined;
+      excludedAllergens: AllergenProps[];
+      minPrice: number;
+      maxPrice: number;
+      available: boolean;
+      spicy: boolean;
+      [key: string]: string | number | boolean | AllergenProps[];
     }>
   >;
 }
