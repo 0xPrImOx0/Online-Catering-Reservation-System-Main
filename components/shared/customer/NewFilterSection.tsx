@@ -19,6 +19,7 @@ import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import SearchInput from "../SearchInput";
 
 export default function FilterSection({
   query = "",
@@ -142,59 +143,37 @@ export default function FilterSection({
     <section className="mb-8 relative">
       <div className="max-w-2xl mx-auto relative">
         <div className="relative">
-          <Input
-            type="text"
-            placeholder="Search for dishes..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="pl-10 pr-10 py-6 rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          <SearchInput
+            query={query}
+            setQuery={setQuery}
+            placeholderTitle="for dishes..."
+            iconStyle="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-5"
+            inputStyle="pl-10 pr-10 py-5 rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            hasFilter={true}
+            activeFilterCount={activeFilterCount}
+            openFilter={openFilter}
+            setOpenFilter={setOpenFilter}
           />
-          <Search
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-            size={20}
-          />
-          <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative"
-              onClick={() => setOpenFilter(!openFilter)}
-            >
-              <SlidersHorizontal
-                className={cn(
-                  "h-5 w-5",
-                  openFilter ? "text-green-500" : "text-gray-500"
-                )}
-              />
-              {activeFilterCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex items-center justify-center bg-green-500 text-white text-xs rounded-full w-4 h-4">
-                  {activeFilterCount}
-                </span>
-              )}
-            </Button>
-          </div>
         </div>
 
         {/* Horizontally scrollable category selector */}
         <div
-          ref={categoriesRef}
-          className={cn(
-            "mt-4 flex overflow-x-auto pb-2 gap-2 scrollbar-hide",
-            openFilter ? "opacity-0 pointer-events-none" : "opacity-100"
-          )}
+          className={"mt-4 flex overflow-x-auto pb-2 gap-2 scrollbar-hide"}
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {categorySelect.map((category) => (
-            <button
+            <Button
               key={category.value}
-              onClick={() => updateFilter("category", category.value)}
-              className={cn(
-                "flex-shrink-0 flex flex-col items-center justify-center p-3 rounded-lg transition-colors min-w-[100px]",
+              variant={
                 filters.category ===
-                  (category.value === "all" ? "" : category.value)
-                  ? "bg-black text-white"
-                  : "bg-white border border-gray-200 hover:bg-gray-50"
-              )}
+                (category.value === "all" ? "" : category.value)
+                  ? "default"
+                  : "outline"
+              }
+              onClick={() => updateFilter("category", category.value)}
+              className={
+                "flex-shrink-0 flex flex-col items-center justify-center p-3 rounded-lg transition-colors min-w-32 h-32"
+              }
             >
               <div className="w-8 h-8 mb-2 items-center justify-center hidden sm:flex">
                 <Image
@@ -211,7 +190,7 @@ export default function FilterSection({
               <span className="text-xs opacity-70 hidden sm:inline">
                 {getCategoryCount(category.value)}
               </span>
-            </button>
+            </Button>
           ))}
         </div>
 

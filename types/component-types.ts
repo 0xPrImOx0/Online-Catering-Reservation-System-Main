@@ -1,7 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { AllergenProps, MenuItem } from "./menu-types";
 import { SetStateBoolean } from "./global-types";
-import { CateringPackagesProps, EventType, ServiceType } from "./package-types";
+import { CateringPackagesProps } from "./package-types";
 import { FormStepType } from "@/components/shared/MultiStepForm";
 
 //Search Bar Types
@@ -9,6 +9,12 @@ export type SearchInputProps = {
   query: string;
   setQuery: (query: string) => void;
   placeholderTitle: string;
+  iconStyle?: string;
+  inputStyle?: string;
+  hasFilter?: boolean;
+  activeFilterCount?: number;
+  openFilter?: boolean;
+  setOpenFilter?: Dispatch<SetStateAction<boolean>>;
 };
 
 //Custom Select Types
