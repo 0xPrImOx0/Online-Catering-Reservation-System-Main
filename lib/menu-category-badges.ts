@@ -4,17 +4,19 @@ import {
   Salad,
   Beef,
   HamIcon as Bacon,
-  SoupIcon as Noodles,
+  CookingPot as Noodles,
   BirdIcon as Chicken,
   Fish,
   CarrotIcon as Vegetable,
   Cake,
   Coffee,
   type LucideIcon,
+  Utensils,
 } from "lucide-react";
 
 export function getCategoryIcon(category: CategoryProps): LucideIcon {
   const icons: Record<CategoryProps, LucideIcon> = {
+    All: Utensils,
     Soup: Soup,
     Salad: Salad,
     Beef: Beef,

@@ -31,7 +31,7 @@ export default function SearchInput({
           <Button
             variant="ghost"
             size="icon"
-            className="relative"
+            className="relative "
             onClick={() => setOpenFilter?.(!openFilter)}
           >
             <SlidersHorizontal

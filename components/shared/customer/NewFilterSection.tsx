@@ -1,17 +1,15 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import type { FilterSectionProps } from "@/types/component-types";
-import type { AllergenProps } from "@/types/menu-types";
+import type { AllergenProps, CategoryProps } from "@/types/menu-types";
 import {
   categorySelect,
   allergensSelect,
   selectorItems,
 } from "@/lib/menu-select";
-import { Search, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useClickOutside } from "@/hooks/ues-click-outside";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import CustomSelect from "../CustomSelect";
@@ -20,6 +18,9 @@ import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import SearchInput from "../SearchInput";
+import { Utensils, X } from "lucide-react";
+import { getCategoryIcon } from "@/lib/menu-category-badges";
+import { getColorClasses } from "./MenuCategoryBadge";
 
 export default function FilterSection({
   query = "",
@@ -124,21 +125,6 @@ export default function FilterSection({
     return category || "2 items";
   };
 
-  // Category icons mapping
-  const categoryIcons: Record<string, string> = {
-    all: "/placeholder.svg?height=24&width=24",
-    soup: "/placeholder.svg?height=24&width=24",
-    salad: "/placeholder.svg?height=24&width=24",
-    beef: "/placeholder.svg?height=24&width=24",
-    pork: "/placeholder.svg?height=24&width=24",
-    noodle: "/placeholder.svg?height=24&width=24",
-    chicken: "/placeholder.svg?height=24&width=24",
-    seafood: "/placeholder.svg?height=24&width=24",
-    vegetable: "/placeholder.svg?height=24&width=24",
-    dessert: "/placeholder.svg?height=24&width=24",
-    beverage: "/placeholder.svg?height=24&width=24",
-  };
-
   return (
     <section className="mb-8 relative">
       <div className="max-w-2xl mx-auto relative">
@@ -158,40 +144,51 @@ export default function FilterSection({
 
         {/* Horizontally scrollable category selector */}
         <div
+          ref={categoriesRef}
           className={"mt-4 flex overflow-x-auto pb-2 gap-2 scrollbar-hide"}
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {categorySelect.map((category) => (
-            <Button
-              key={category.value}
-              variant={
-                filters.category ===
-                (category.value === "all" ? "" : category.value)
-                  ? "default"
-                  : "outline"
-              }
-              onClick={() => updateFilter("category", category.value)}
-              className={
-                "flex-shrink-0 flex flex-col items-center justify-center p-3 rounded-lg transition-colors min-w-32 h-32"
-              }
-            >
-              <div className="w-8 h-8 mb-2 items-center justify-center hidden sm:flex">
-                <Image
-                  src={
-                    categoryIcons[category.value] ||
-                    "/placeholder.svg?height=24&width=24"
-                  }
-                  alt={category.title}
-                  width={24}
-                  height={24}
-                />
-              </div>
-              <span className="text-sm font-medium">{category.title}</span>
-              <span className="text-xs opacity-70 hidden sm:inline">
-                {getCategoryCount(category.value)}
-              </span>
-            </Button>
-          ))}
+          {categorySelect.map((category) => {
+            const Icon = getCategoryIcon(
+              (category.value.charAt(0).toUpperCase() +
+                category.value.slice(1).toLowerCase()) as CategoryProps
+            );
+
+            return (
+              <Button
+                key={category.value}
+                variant={
+                  filters.category ===
+                  (category.value === "all" ? "" : category.value)
+                    ? "default"
+                    : "outline"
+                }
+                onClick={() => updateFilter("category", category.value)}
+                className={
+                  "flex flex-col items-center justify-center p-3 rounded-lg transition-colors md:min-w-32 md:h-32"
+                }
+              >
+                <div className="mb-2 items-center justify-center hidden md:flex">
+                  <Icon
+                    strokeWidth={1}
+                    style={{
+                      width: "35px",
+                      height: "35px",
+                      background: "transparent", // Set fill to transparent
+                    }}
+                    className={`${getColorClasses(
+                      (category.value.charAt(0).toUpperCase() +
+                        category.value.slice(1).toLowerCase()) as CategoryProps
+                    )} bg-transparent`}
+                  />
+                </div>
+                <span className="text-sm font-medium">{category.title}</span>
+                <span className="text-xs opacity-70 hidden md:inline">
+                  {getCategoryCount(category.value)}
+                </span>
+              </Button>
+            );
+          })}
         </div>
 
         {openFilter && (
