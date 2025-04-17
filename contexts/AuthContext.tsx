@@ -19,22 +19,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const res = await api.get("/auth/me");
       // toast(<div className="p-4">{JSON.stringify(res, null, 2)}</div>);
       setCustomer(res.data.customer);
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response?.status === 401) {
-        try {
-          const refreshRes = await api.post("/auth/refresh");
-
-          if (refreshRes.status !== 200) setCustomer(null);
-
-          const retryRes = await api.get("/auth/me");
-          setCustomer(retryRes.data.customer);
-        } catch (refreshErr) {
-          setCustomer(null);
-          console.log("Refresh token expired or invalid!", refreshErr);
-        }
-      } else {
+    } catch (err: unknown) {
+      if (!axios.isAxiosError(err) || err.response?.status !== 401) {
         setCustomer(null);
-        console.error("Unhandled error in auth", err);
+        console.error("Unexpected Error:", err);
+        return;
+      }
+
+      try {
+        const refreshRes = await api.post("/auth/refresh");
+
+        if (refreshRes.status !== 200) setCustomer(null);
+
+        const retryRes = await api.get("/auth/me");
+        setCustomer(retryRes.data.customer);
+      } catch (refreshErr) {
+        setCustomer(null);
+        console.log("Refresh token expired or invalid!", refreshErr);
       }
     } finally {
       setIsLoading(false);

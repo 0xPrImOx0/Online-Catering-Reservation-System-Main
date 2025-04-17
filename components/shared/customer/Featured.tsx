@@ -7,6 +7,8 @@ import CustomerPackageCard from "./CustomerPackageCard";
 import { CateringPackagesProps } from "@/types/package-types";
 import api from "@/lib/axiosInstance";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import axios from "axios";
 // use this if you want to render the packages offline
 // import { cateringPackages } from "@/lib/customer/packages-metadata";
 
@@ -17,8 +19,13 @@ export default function Featured() {
 
   useEffect(() => {
     const fetchFeatured = async () => {
-      const response = await api.get("/packages/featured");
-      setCateringPackages(response.data.data);
+      try {
+        const response = await api.get("/packages/featured");
+        setCateringPackages(response.data.data);
+      } catch (err: unknown) {
+        if (axios.isAxiosError<{ message: string }>(err))
+          toast.error(err.message);
+      }
     };
 
     fetchFeatured();
