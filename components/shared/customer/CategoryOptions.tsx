@@ -32,7 +32,6 @@ export default function CategoryOptions() {
     if (cateringOptions === "custom") {
       setCurrentPackage("");
       setValue("selectedPackage", "");
-      setValue("selectedMenus", {});
       clearErrors("selectedMenus");
       setCategoryAndCount(defaultCategoryAndCount);
       return;
