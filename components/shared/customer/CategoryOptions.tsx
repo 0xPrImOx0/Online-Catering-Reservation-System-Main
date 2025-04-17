@@ -18,7 +18,7 @@ import CheckboxMenus from "./CheckboxMenus";
 import CategoryOptionsBadge from "./CategoryOptionsBadge";
 
 export default function CategoryOptions() {
-  const { control, getValues, setValue, watch } =
+  const { control, getValues, setValue, watch, clearErrors } =
     useFormContext<ReservationValues>();
   const selectedMenus = watch("selectedMenus");
   const cateringOptions = watch("cateringOptions");
@@ -32,6 +32,8 @@ export default function CategoryOptions() {
     if (cateringOptions === "custom") {
       setCurrentPackage("");
       setValue("selectedPackage", "");
+      setValue("selectedMenus", {});
+      clearErrors("selectedMenus");
       setCategoryAndCount(defaultCategoryAndCount);
       return;
     }
@@ -44,6 +46,7 @@ export default function CategoryOptions() {
         setCategoryAndCount(selectedPackageData.options);
       }
     }
+    console.log(getValues("selectedMenus"));
   }, [cateringOptions, selectedPackage]);
 
   return (

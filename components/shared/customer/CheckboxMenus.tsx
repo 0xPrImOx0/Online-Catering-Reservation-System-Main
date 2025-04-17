@@ -55,8 +55,8 @@ export default function CheckboxMenus({
         ))}
       </div>
       {selectedMenus[category]?.length >= count && (
-        <p className="text-sm text-destructive">
-          You can only select up to {count} items for {category}.
+        <p className="text-xs text-muted-foreground italic">
+          *You can only select up to {count} item/s for {category}.*
         </p>
       )}
     </div>

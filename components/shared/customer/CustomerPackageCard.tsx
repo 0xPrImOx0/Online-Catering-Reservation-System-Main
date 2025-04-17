@@ -183,7 +183,7 @@ export default function CustomerPackageCard({
       </CardContent>
       <CardFooter className="mt-auto">
         <Button className="w-full" onClick={() => setDialogOpen(true)}>
-          Select Package
+          View Details
         </Button>
       </CardFooter>
 
