@@ -103,12 +103,7 @@ export default function CustomerNavUser({ customer }: CustomerNavUserProps) {
                 alt={customer.fullName}
               />
               <AvatarFallback className="rounded-lg">
-                {customer.fullName
-                  .split(" ")
-                  .slice(0, 2)
-                  .map((word) => word[0])
-                  .join("")
-                  .toUpperCase()}
+                {avatarFallBack(customer.fullName)}
               </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">

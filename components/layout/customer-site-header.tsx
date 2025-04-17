@@ -1,15 +1,15 @@
 "use client";
 import Link from "next/link";
-import Logo from "../icons/logo";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
+import Logo from "../icons/logo";
 import { Button } from "../ui/button";
-import { Calendar, Menu, User } from "lucide-react";
 import { usePathname } from "next/navigation";
-import clsx from "clsx";
-import CustomerNavUser from "../shared/customer/CustomerNavUser";
+import { Calendar, Menu, User } from "lucide-react";
 import { links } from "@/lib/customer/customer-links";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useAuthContext } from "@/contexts/AuthContext";
+import CustomerNavUser from "../shared/customer/CustomerNavUser";
 
 export default function CustomerSiteHeader() {
   const { customer } = useAuthContext();
@@ -22,7 +22,7 @@ export default function CustomerSiteHeader() {
       <Link
         href={href}
         onClick={() => setMobileMenu(false)}
-        className={clsx(
+        className={cn(
           "text-sm font-medium relative pb-1 hover:text-foreground underline-offset-4 group",
           { "!text-base": isMobile }
         )}
@@ -30,7 +30,7 @@ export default function CustomerSiteHeader() {
         {title}
         {!isMobile && (
           <span
-            className={clsx(
+            className={cn(
               "absolute left-0 bottom-0 h-[2px] bg-foreground transition-all duration-300 ease-in-out",
               pathname === href ? "w-full" : "w-0 group-hover:w-full"
             )}
@@ -44,7 +44,7 @@ export default function CustomerSiteHeader() {
     <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex mx-[5%] items-center justify-between">
         <div
-          className={clsx("relative flex flex-1 items-center gap-4 ", {
+          className={cn("relative flex flex-1 items-center gap-4 ", {
             "py-4": isMobile,
           })}
         >
@@ -60,7 +60,7 @@ export default function CustomerSiteHeader() {
           )}
           {!isMobile && <Logo imageSize={40} />}
           <nav
-            className={clsx(
+            className={cn(
               "flex gap-10 flex-1 justify-center",
               customer ? "max-nav-md:hidden" : "max-lg:hidden"
             )}
@@ -76,7 +76,7 @@ export default function CustomerSiteHeader() {
           ) : (
             <div className="space-x-4">
               <Link className="max-sm:hidden" href={"/sign-in"}>
-                <Button variant={"ghost"}>
+                <Button variant={"link"} effect={"hoverUnderline"}>
                   <User /> Sign In
                 </Button>
               </Link>

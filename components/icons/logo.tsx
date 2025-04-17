@@ -1,6 +1,6 @@
 "use client";
 
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,7 +14,7 @@ type LogoProps = {
 
 const Logo = ({
   withLabel = false,
-  imageSize = 75,
+  imageSize = 50,
   withTitle = true,
 }: LogoProps) => {
   const pathname = usePathname();
@@ -22,7 +22,7 @@ const Logo = ({
   return (
     <Link
       href={pathname.includes("/caterer") ? "/caterer/dashboard" : "/"}
-      className={clsx("flex items-center my-2 max-w-fit", {
+      className={cn("flex items-center my-2 max-w-fit", {
         "mx-auto": pathname === "/about-us",
       })}
     >
@@ -36,7 +36,7 @@ const Logo = ({
         />
       </div>
       <div
-        className={clsx(
+        className={cn(
           "flex flex-col",
           withLabel ? "text-left" : "ml-2 text-center items-center"
         )}
