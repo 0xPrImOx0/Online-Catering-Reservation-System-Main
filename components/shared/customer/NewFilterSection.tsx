@@ -1,9 +1,5 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { Separator } from "./ui/separator";
 import type { FilterSectionProps } from "@/types/component-types";
 import type { AllergenProps } from "@/types/menu-types";
 import {
@@ -12,13 +8,9 @@ import {
   selectorItems,
 } from "@/lib/menu-select";
 import { Search, SlidersHorizontal, X } from "lucide-react";
-import { Badge } from "./ui/badge";
-import { Switch } from "./ui/switch";
-import { Slider } from "./ui/slider";
 import { cn } from "@/lib/utils";
-import CustomSelect from "./CustomSelect";
-import { useClickOutside } from "@/hooks/use-click-outside";
 import Image from "next/image";
+import { useClickOutside } from "@/hooks/ues-click-outside";
 
 export default function FilterSection({
   query = "",
@@ -61,7 +53,9 @@ export default function FilterSection({
 
   const toggleAllergen = (allergen: AllergenProps) => {
     if (excludedAllergens.includes(allergen)) {
-      setExcludedAllergens(excludedAllergens.filter((a) => a !== allergen));
+      setExcludedAllergens(
+        excludedAllergens.filter((prev) => prev !== allergen)
+      );
     } else {
       setExcludedAllergens([...excludedAllergens, allergen]);
     }
