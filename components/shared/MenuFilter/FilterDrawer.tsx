@@ -84,7 +84,7 @@ export function FilterDrawer({
               <Card className="rounded-md">
                 <CardContent className="p-4 flex items-center justify-between">
                   <div className="space-y-1">
-                    <h4 className="font-medium">Available Only</h4>
+                    <h4 className="text-sm font-medium">Available Only</h4>
                     <p className="text-xs text-gray-500">
                       Show only available items
                     </p>
@@ -101,7 +101,7 @@ export function FilterDrawer({
               <Card className="rounded-md">
                 <CardContent className="p-4 flex items-center justify-between">
                   <div className="space-y-1">
-                    <h4 className="font-medium">Spicy</h4>
+                    <h4 className="text-sm font-medium">Spicy</h4>
                     <p className="text-xs text-gray-500">
                       Show only spicy items
                     </p>
@@ -131,9 +131,9 @@ export function FilterDrawer({
               />
             </div>
 
-            <div>
+            <div className="space-y-4">
               <Label className="text-sm font-medium">Exclude Allergens</Label>
-              <div className="mt-2 flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-4 justify-evenly">
                 {allergensSelect.slice(1).map((allergen) => (
                   <Badge
                     key={allergen.value}
@@ -145,7 +145,7 @@ export function FilterDrawer({
                         : "outline"
                     }
                     className={cn(
-                      "cursor-pointer",
+                      "cursor-pointer text-sm",
                       excludedAllergens.includes(
                         allergen.value as AllergenProps
                       )

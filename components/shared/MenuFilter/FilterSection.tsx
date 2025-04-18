@@ -231,7 +231,7 @@ export default function FilterSection({
   return (
     <section className="mb-8 relative w-full">
       <div className="flex flex-col justify-center items-center w-full">
-        <div className="w-[80%]">
+        <div className="w-full md:w-[80%]">
           <SearchInput
             query={query}
             setQuery={setQuery}
@@ -252,7 +252,7 @@ export default function FilterSection({
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-muted-background/100 shadow-sm"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-foreground/15 shadow-sm"
               onClick={() => scrollCategories("left")}
             >
               <ChevronLeft className="h-4 w-4" />
@@ -296,7 +296,7 @@ export default function FilterSection({
                     onClick={() => updateFilter("category", category.value)}
                     className={cn(
                       "flex-shrink-0 flex flex-col items-center justify-center p-3 rounded-lg transition-colors",
-                      "md:min-w-[100px] md:min-h-[100px]",
+                      "md:min-w-[150px] md:min-h-[100px]",
                       "min-w-[80px]"
                     )}
                   >
@@ -313,7 +313,7 @@ export default function FilterSection({
                             category.value
                               .slice(1)
                               .toLowerCase()) as CategoryProps
-                        )} bg-transparent`}
+                        )}`}
                       />
                     </div>
                     <span className="text-sm font-medium">
@@ -329,7 +329,7 @@ export default function FilterSection({
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 shadow-sm"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-foreground/15 shadow-sm"
               onClick={() => scrollCategories("right")}
             >
               <ChevronRight className="h-4 w-4" />
@@ -353,7 +353,7 @@ export default function FilterSection({
         )}
 
         {getActiveFilterCount() > 0 && !openFilter && (
-          <div className="mt-2 flex flex-wrap gap-2">
+          <div className="mt-2 flex flex-wrap gap-3">
             {filters.category && (
               <Badge variant="outline" className="bg-background">
                 {filters.category.charAt(0).toUpperCase() +

@@ -129,7 +129,7 @@ export function FilterDialog({
               />
             </div>
 
-            <div className="col-span-1 md:col-span-2">
+            <div className="col-span-1 md:col-span-2 space-y-4">
               <Label className="text-sm font-medium">Exclude Allergens</Label>
               <div className="mt-2 flex flex-wrap gap-2">
                 {allergensSelect.slice(1).map((allergen) => (
