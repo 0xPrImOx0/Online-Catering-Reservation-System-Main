@@ -23,6 +23,7 @@ import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export function FilterDrawer({
   open,
@@ -79,28 +80,40 @@ export function FilterDrawer({
               />
             </div>
 
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label className="text-sm font-medium">Available Only</Label>
-                <Switch
-                  checked={filters.available}
-                  onCheckedChange={(checked) =>
-                    updateFilter("available", checked ? "true" : "")
-                  }
-                />
-              </div>
-            </div>
+            <div className="grid grid-cols-1 gap-4">
+              <Card className="rounded-md">
+                <CardContent className="p-4 flex items-center justify-between">
+                  <div className="space-y-1">
+                    <h4 className="font-medium">Available Only</h4>
+                    <p className="text-xs text-gray-500">
+                      Show only available items
+                    </p>
+                  </div>
+                  <Switch
+                    checked={filters.available}
+                    onCheckedChange={(checked) =>
+                      updateFilter("available", checked ? "true" : "")
+                    }
+                  />
+                </CardContent>
+              </Card>
 
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label className="text-sm font-medium">Spicy</Label>
-                <Switch
-                  checked={filters.spicy}
-                  onCheckedChange={(checked) =>
-                    updateFilter("spicy", checked ? "true" : "")
-                  }
-                />
-              </div>
+              <Card className="rounded-md">
+                <CardContent className="p-4 flex items-center justify-between">
+                  <div className="space-y-1">
+                    <h4 className="font-medium">Spicy</h4>
+                    <p className="text-xs text-gray-500">
+                      Show only spicy items
+                    </p>
+                  </div>
+                  <Switch
+                    checked={filters.spicy}
+                    onCheckedChange={(checked) =>
+                      updateFilter("spicy", checked ? "true" : "")
+                    }
+                  />
+                </CardContent>
+              </Card>
             </div>
 
             <div className="space-y-4">

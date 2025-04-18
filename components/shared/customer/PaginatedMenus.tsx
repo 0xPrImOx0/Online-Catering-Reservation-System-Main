@@ -32,47 +32,74 @@ export default function PaginatedMenus() {
   const [currentPage, setCurrentPage] = useState(1);
   const menusPerPage = 9;
 
-  const filterSelectMenus = menuItems.filter((menu) => {
-    // Match search query
-    const matchesQuery = menu.name.toLowerCase().includes(query.toLowerCase());
+  // Add this function before the return statement in PaginatedMenus component
+  const sortMenus = (menus: typeof menuItems) => {
+    if (!filters.sortBy) return menus;
 
-    // Match category - case insensitive comparison
-    const matchesCategory =
-      !filters.category ||
-      menu.category.toLowerCase() === filters.category.toLowerCase();
+    return [...menus].sort((a, b) => {
+      switch (filters.sortBy) {
+        case "price-asc":
+          return a.regularPricePerPax - b.regularPricePerPax;
+        case "price-desc":
+          return b.regularPricePerPax - a.regularPricePerPax;
+        case "rating-desc":
+          return (b.rating || 0) - (a.rating || 0);
+        case "name-asc":
+          return a.name.localeCompare(b.name);
+        case "name-desc":
+          return b.name.localeCompare(a.name);
+        default:
+          return 0;
+      }
+    });
+  };
 
-    // Match allergens
-    const matchesAllergens =
-      !filters.allergens || menu.allergens.includes(filters.allergens);
+  // Update the filterSelectMenus variable to apply sorting
+  const filterSelectMenus = sortMenus(
+    menuItems.filter((menu) => {
+      // Match search query
+      const matchesQuery = menu.name
+        .toLowerCase()
+        .includes(query.toLowerCase());
 
-    // Exclude selected allergens
-    const noExcludedAllergens =
-      filters.excludedAllergens.length === 0 ||
-      !menu.allergens.some((allergen) =>
-        filters.excludedAllergens.includes(allergen as AllergenProps)
+      // Match category - case insensitive comparison
+      const matchesCategory =
+        !filters.category ||
+        menu.category.toLowerCase() === filters.category.toLowerCase();
+
+      // Match allergens
+      const matchesAllergens =
+        !filters.allergens || menu.allergens.includes(filters.allergens);
+
+      // Exclude selected allergens
+      const noExcludedAllergens =
+        filters.excludedAllergens.length === 0 ||
+        !menu.allergens.some((allergen) =>
+          filters.excludedAllergens.includes(allergen as AllergenProps)
+        );
+
+      // Match price range
+      const matchesPrice =
+        menu.regularPricePerPax >= filters.minPrice &&
+        menu.regularPricePerPax <= filters.maxPrice;
+
+      // Match availability
+      const matchesAvailability = !filters.available || menu.available;
+
+      // Match spicy
+      const matchesSpicy = !filters.spicy || menu.spicy;
+
+      return (
+        matchesQuery &&
+        matchesCategory &&
+        matchesAllergens &&
+        noExcludedAllergens &&
+        matchesPrice &&
+        matchesAvailability &&
+        matchesSpicy
       );
-
-    // Match price range
-    const matchesPrice =
-      menu.regularPricePerPax >= filters.minPrice &&
-      menu.regularPricePerPax <= filters.maxPrice;
-
-    // Match availability
-    const matchesAvailability = !filters.available || menu.available;
-
-    // Match spicy
-    const matchesSpicy = !filters.spicy || menu.spicy;
-
-    return (
-      matchesQuery &&
-      matchesCategory &&
-      matchesAllergens &&
-      noExcludedAllergens &&
-      matchesPrice &&
-      matchesAvailability &&
-      matchesSpicy
-    );
-  });
+    })
+  );
 
   const totalMenus = filterSelectMenus.length;
 
