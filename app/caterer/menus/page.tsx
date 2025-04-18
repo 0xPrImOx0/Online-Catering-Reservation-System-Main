@@ -1,14 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import SearchInput from "@/components/shared/SearchInput";
-import CustomSelect from "@/components/shared/CustomSelect";
-import ViewModeButtons from "@/components/shared/ViewModeButtons";
 import HeaderWithAddButton from "@/components/shared/caterer/HeaderWithAddButton";
-import { menuItems } from "@/lib/menu-lists";
 import { AddMenuDialog } from "@/components/shared/caterer/AddMenuForm";
 import PaginatedMenus from "@/components/shared/customer/PaginatedMenus";
-import { selectorItems } from "@/lib/menu-select";
 export default function Page() {
   // State responsible for opening/closing the dialogs for dialog visibility
   const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);

@@ -4,17 +4,9 @@ import { CustomerMenuCard } from "./CustomerMenuCard";
 import type { AllergenProps } from "@/types/menu-types";
 import { usePathname } from "next/navigation";
 import { menuItems } from "@/lib/menu-lists";
-import api from "@/lib/axiosInstance";
 import FilterSection from "./NewFilterSection";
 import CatererMenuCard from "../caterer/CatererMenuCard";
 import CustomPagination from "../CustomPagination";
-
-async function fetchMenus(page: number, limit: number) {
-  const response = await api.get("/menus", {
-    params: { page, limit },
-  });
-  return response.data.data;
-}
 
 export default function PaginatedMenus() {
   const [query, setQuery] = useState("");
@@ -126,12 +118,14 @@ export default function PaginatedMenus() {
   return (
     <div>
       <div className="absolute top-0" ref={menuListRef} />
-      <FilterSection
-        query={query}
-        setQuery={setQuery}
-        filters={filters}
-        setFilters={setFilters}
-      />
+      <div>
+        <FilterSection
+          query={query}
+          setQuery={setQuery}
+          filters={filters}
+          setFilters={setFilters}
+        />
+      </div>
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
         {/* MenuLists */}
         {paginatedMenu.length > 0 ? (

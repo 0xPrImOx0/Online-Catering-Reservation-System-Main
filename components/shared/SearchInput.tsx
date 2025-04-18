@@ -17,7 +17,7 @@ export default function SearchInput({
   setOpenFilter,
 }: SearchInputProps) {
   return (
-    <div className="relative flex-1 md:max-w-sm">
+    <div className="relative flex-1 w-full">
       <Search className={`${iconStyle}`} />
       <Input
         type="search"

@@ -6,7 +6,6 @@ import { categorySelect, selectorItems } from "@/lib/menu-select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import SearchInput from "../SearchInput";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { getCategoryIcon } from "@/lib/menu-category-badges";
 import { getColorClasses } from "./MenuCategoryBadge";
@@ -14,6 +13,7 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { FilterDialog } from "./FilterDialog";
 import { FilterDrawer } from "./FilterDrawer";
 import { cn } from "@/lib/utils";
+import SearchInput from "../SearchInput";
 
 export default function FilterSection({
   query = "",
@@ -29,10 +29,60 @@ export default function FilterSection({
   const categoriesRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 640px)");
 
+  // Add state to track scroll position
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [needsScrolling, setNeedsScrolling] = useState(false);
+
+  // Function to check if scrolling is needed and update button visibility
+  const checkScrollability = () => {
+    if (categoriesRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = categoriesRef.current;
+
+      // Check if content is wider than container
+      setNeedsScrolling(scrollWidth > clientWidth + 5); // Add small buffer for rounding errors
+
+      // Check if we can scroll left
+      setCanScrollLeft(scrollLeft > 10);
+
+      // Check if we can scroll right
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // Add buffer for rounding errors
+    }
+  };
+
+  // Check scrollability on mount and when window resizes
+  useEffect(() => {
+    checkScrollability();
+
+    const handleResize = () => {
+      checkScrollability();
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // Add scroll event listener to update button visibility
+  useEffect(() => {
+    const categoriesElement = categoriesRef.current;
+    if (categoriesElement) {
+      const handleScroll = () => {
+        checkScrollability();
+      };
+
+      categoriesElement.addEventListener("scroll", handleScroll);
+      return () => {
+        categoriesElement.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, []);
+
   // Function to scroll the categories container
   const scrollCategories = (direction: "left" | "right") => {
     if (categoriesRef.current) {
-      const scrollAmount = 300; // Adjust as needed
+      const scrollAmount = categoriesRef.current.clientWidth * 0.8; // Scroll 80% of visible width
       const currentScroll = categoriesRef.current.scrollLeft;
 
       categoriesRef.current.scrollTo({
@@ -67,22 +117,12 @@ export default function FilterSection({
           left: scrollLeft,
           behavior: "smooth",
         });
+
+        // Update scroll buttons after scrolling
+        setTimeout(checkScrollability, 300);
       }
     }
   }, [filters.category]);
-
-  // Prevent scrolling when filter panel is open
-  useEffect(() => {
-    if (openFilter) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [openFilter]);
 
   const updateFilter = (key: keyof typeof filters, value: string) => {
     setFilters((prev) => ({
@@ -166,9 +206,9 @@ export default function FilterSection({
   };
 
   return (
-    <section className="mb-8 relative">
-      <div className="max-w-2xl mx-auto relative">
-        <div className="relative">
+    <section className="mb-8 relative w-full">
+      <div className="flex flex-col justify-center items-center w-full">
+        <div className="w-[80%]">
           <SearchInput
             query={query}
             setQuery={setQuery}
@@ -183,73 +223,95 @@ export default function FilterSection({
         </div>
 
         {/* Horizontally scrollable category selector with navigation buttons */}
-        <div className="mt-4 relative">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 shadow-sm"
-            onClick={() => scrollCategories("left")}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
+        <div className="mt-4 relative w-full">
+          {/* Only show left button if we can scroll left */}
+          {needsScrolling && canScrollLeft && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 shadow-sm"
+              onClick={() => scrollCategories("left")}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+          )}
 
           {/* Horizontally scrollable category selector */}
           <div
             ref={categoriesRef}
-            className={"mt-4 flex overflow-x-auto pb-2 gap-2 scrollbar-hide"}
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            className="mt-4 flex overflow-x-auto pb-2 gap-2 scrollbar-hide w-full"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              WebkitOverflowScrolling: "touch",
+              maskImage: needsScrolling
+                ? "linear-gradient(to right, transparent, black 5%, black 95%, transparent)"
+                : "none",
+              WebkitMaskImage: needsScrolling
+                ? "linear-gradient(to right, transparent, black 5%, black 95%, transparent)"
+                : "none",
+            }}
+            onScroll={checkScrollability}
           >
-            {categorySelect.map((category) => {
-              const Icon = getCategoryIcon(
-                (category.value.charAt(0).toUpperCase() +
-                  category.value.slice(1).toLowerCase()) as CategoryProps
-              );
+            <div className="flex gap-2 px-2 w-full justify-between min-w-full">
+              {categorySelect.map((category) => {
+                const Icon = getCategoryIcon(
+                  (category.value.charAt(0).toUpperCase() +
+                    category.value.slice(1).toLowerCase()) as CategoryProps
+                );
 
-              return (
-                <Button
-                  id={`category-${category.value}`}
-                  key={category.value}
-                  variant={
-                    filters.category ===
-                    (category.value === "all" ? "" : category.value)
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => updateFilter("category", category.value)}
-                  className={cn(
-                    "flex-shrink-0 flex flex-col items-center justify-center p-3 rounded-lg transition-colors min-w-[100px] min-h-[100px]"
-                  )}
-                >
-                  <div className="mb-2 items-center justify-center hidden md:flex">
-                    <Icon
-                      strokeWidth={1}
-                      style={{
-                        width: "35px",
-                        height: "35px",
-                        background: "transparent", // Set fill to transparent
-                      }}
-                      className={`${getColorClasses(
-                        (category.value.charAt(0).toUpperCase() +
-                          category.value
-                            .slice(1)
-                            .toLowerCase()) as CategoryProps
-                      )} bg-transparent`}
-                    />
-                  </div>
-                  <span className="text-sm font-medium">{category.title}</span>
-                </Button>
-              );
-            })}
+                return (
+                  <Button
+                    id={`category-${category.value}`}
+                    key={category.value}
+                    variant={
+                      filters.category ===
+                      (category.value === "all" ? "" : category.value)
+                        ? "default"
+                        : "outline"
+                    }
+                    onClick={() => updateFilter("category", category.value)}
+                    className={cn(
+                      "flex-shrink-0 flex flex-col items-center justify-center p-3 rounded-lg transition-colors",
+                      "md:min-w-[100px] md:min-h-[100px]",
+                      "min-w-[80px]"
+                    )}
+                  >
+                    <div className="mb-2 items-center justify-center hidden md:flex">
+                      <Icon
+                        strokeWidth={1}
+                        style={{
+                          width: "35px",
+                          height: "35px",
+                          background: "transparent",
+                        }}
+                        className={`${getColorClasses(
+                          (category.value.charAt(0).toUpperCase() +
+                            category.value
+                              .slice(1)
+                              .toLowerCase()) as CategoryProps
+                        )} bg-transparent`}
+                      />
+                    </div>
+                    <span className="text-sm font-medium">
+                      {category.title}
+                    </span>
+                  </Button>
+                );
+              })}
+            </div>
           </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 shadow-sm"
-            onClick={() => scrollCategories("right")}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
+          {needsScrolling && canScrollRight && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 shadow-sm"
+              onClick={() => scrollCategories("right")}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          )}
         </div>
 
         {/* Use Dialog for desktop and Drawer for mobile */}
