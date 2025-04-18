@@ -11,30 +11,15 @@ export default function Page() {
   // const [query, setQuery] = useState("");
 
   return (
-    <main className="space-y-8 px-6 max-w-[1440px] mx-auto">
+    <main className="space-y-8 px-3 sm:px-6 max-w-[1440px] w-full mx-auto overflow-hidden">
       <HeaderWithAddButton
         title="Menu"
         setIsAddInstanceOpen={setIsAddMenuOpen}
       />
 
-      {/* Search and View Controls */}
-      {/* <div className="flex justify-between mb-6">
-        <SearchInput
-          query={query}
-          setQuery={setQuery}
-          placeholderTitle="menus"
-        />
-        <div className="flex gap-4">
-          <CustomSelect
-            defaultValue="default"
-            placeholder="Sort By"
-            items={selectorItems}
-          />
-          <ViewModeButtons viewMode={viewMode} setViewMode={setViewMode} />
-        </div>
-      </div> */}
-
-      <PaginatedMenus />
+      <div className="relative w-full overflow-hidden">
+        <PaginatedMenus />
+      </div>
 
       <AddMenuDialog
         isAddMenuOpen={isAddMenuOpen}

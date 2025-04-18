@@ -16,7 +16,7 @@ export default async function Page() {
           <p className="text-muted-foreground">
             Check out our dishes available for your needs!
           </p>
-        </div>{" "}
+        </div>
         <PaginatedMenus />
         {/* Testimonials */}
         <section className="my-16 py-8 rounded-lg">

@@ -270,7 +270,7 @@ export default function FilterSection({
             }}
             onScroll={checkScrollability}
           >
-            <div className="flex gap-2 px-2 w-full justify-between min-w-full">
+            <div className="flex gap-2 px-2 w-full justify-between">
               {categorySelect.map((category) => {
                 const Icon = getCategoryIcon(
                   (category.value.charAt(0).toUpperCase() +
