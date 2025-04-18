@@ -2,25 +2,17 @@
 import { useState, useRef, useEffect } from "react";
 import type { FilterSectionProps } from "@/types/component-types";
 import type { AllergenProps, CategoryProps } from "@/types/menu-types";
-import {
-  categorySelect,
-  allergensSelect,
-  selectorItems,
-} from "@/lib/menu-select";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
+import { categorySelect } from "@/lib/menu-select";
 import { useClickOutside } from "@/hooks/ues-click-outside";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import CustomSelect from "../CustomSelect";
-import { Switch } from "@/components/ui/switch";
-import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import SearchInput from "../SearchInput";
-import { Utensils, X } from "lucide-react";
+import { X } from "lucide-react";
 import { getCategoryIcon } from "@/lib/menu-category-badges";
 import { getColorClasses } from "./MenuCategoryBadge";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { FilterDialog } from "./FilterDialog";
 
 export default function FilterSection({
   query = "",
@@ -35,6 +27,7 @@ export default function FilterSection({
   );
   const filterRef = useRef<HTMLDivElement | null>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery("(max-width: 640px)");
 
   // Prevent scrolling when filter panel is open
   useEffect(() => {
@@ -116,13 +109,15 @@ export default function FilterSection({
     return count;
   };
 
-  const activeFilterCount = getActiveFilterCount();
-
-  // Get count of menu items per category
-  const getCategoryCount = (category: string) => {
-    // This would typically come from your data
-    // For now, just return a placeholder
-    return category || "2 items";
+  const filterProps = {
+    filters,
+    updateFilter,
+    priceRange,
+    setPriceRange,
+    excludedAllergens,
+    toggleAllergen,
+    handleClearFilters,
+    setOpenFilter,
   };
 
   return (
@@ -136,7 +131,7 @@ export default function FilterSection({
             iconStyle="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-5"
             inputStyle="pl-10 pr-10 py-5 rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
             hasFilter={true}
-            activeFilterCount={activeFilterCount}
+            activeFilterCount={getActiveFilterCount()}
             openFilter={openFilter}
             setOpenFilter={setOpenFilter}
           />
@@ -183,172 +178,26 @@ export default function FilterSection({
                   />
                 </div>
                 <span className="text-sm font-medium">{category.title}</span>
-                <span className="text-xs opacity-70 hidden md:inline">
-                  {getCategoryCount(category.value)}
-                </span>
               </Button>
             );
           })}
         </div>
 
-        {openFilter && (
-          <>
-            {/* Overlay for entire screen */}
-            <div
-              className="fixed inset-0 bg-black/20 z-40"
-              onClick={() => setOpenFilter(false)}
-            />
-
-            {/* Filter panel */}
-            <div
-              ref={filterRef}
-              className={cn(
-                "fixed z-50 bg-white border border-gray-200 shadow-lg",
-                "transition-all duration-200 ease-in-out",
-                "inset-x-0 top-[72px] bottom-0 md:top-auto md:bottom-auto", // Full height excluding search bar
-                "md:absolute md:mt-2 md:w-full md:rounded-lg",
-                "flex flex-col"
-              )}
-            >
-              <div className="flex items-center justify-between p-4 border-b">
-                <h2 className="font-semibold text-lg">Filters</h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setOpenFilter(false)}
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-
-              <div className="overflow-y-auto flex-1 p-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Menu Category</Label>
-                    <CustomSelect
-                      defaultValue="all"
-                      placeholder="Find Category"
-                      items={categorySelect}
-                      value={filters.category || "all"}
-                      onValueChange={(value) => updateFilter("category", value)}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Sort By</Label>
-                    <CustomSelect
-                      defaultValue="default"
-                      placeholder="Sort By"
-                      items={selectorItems}
-                      value={filters.sortBy || "default"}
-                      onValueChange={(value) => updateFilter("sortBy", value)}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Label className="text-sm font-medium">
-                        Available Only
-                      </Label>
-                      <Switch
-                        checked={filters.available}
-                        onCheckedChange={(checked) =>
-                          updateFilter("available", checked ? "true" : "")
-                        }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Label className="text-sm font-medium">Spicy</Label>
-                      <Switch
-                        checked={filters.spicy}
-                        onCheckedChange={(checked) =>
-                          updateFilter("spicy", checked ? "true" : "")
-                        }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 col-span-1 md:col-span-2 lg:col-span-3">
-                    <Label className="text-sm font-medium">
-                      Price Range (₱{priceRange[0]} - ₱{priceRange[1]})
-                    </Label>
-                    <Slider
-                      defaultValue={[0, 500]}
-                      min={0}
-                      max={500}
-                      step={10}
-                      value={priceRange}
-                      onValueChange={setPriceRange}
-                      className="py-4"
-                    />
-                  </div>
-
-                  <div className="col-span-1 md:col-span-2 lg:col-span-3">
-                    <Label className="text-sm font-medium">
-                      Exclude Allergens
-                    </Label>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {allergensSelect.slice(1).map((allergen) => (
-                        <Badge
-                          key={allergen.value}
-                          variant={
-                            excludedAllergens.includes(
-                              allergen.value as AllergenProps
-                            )
-                              ? "default"
-                              : "outline"
-                          }
-                          className={cn(
-                            "cursor-pointer",
-                            excludedAllergens.includes(
-                              allergen.value as AllergenProps
-                            )
-                              ? "bg-red-100 text-red-800 hover:bg-red-200"
-                              : "hover:bg-gray-100"
-                          )}
-                          onClick={() =>
-                            toggleAllergen(allergen.value as AllergenProps)
-                          }
-                        >
-                          {excludedAllergens.includes(
-                            allergen.value as AllergenProps
-                          ) && <X className="mr-1 h-3 w-3" />}
-                          {allergen.title}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-end p-4 border-t mt-auto">
-                <div className="flex gap-2 w-full md:w-auto">
-                  <Button
-                    variant="outline"
-                    className="flex-1 md:flex-none"
-                    onClick={() => setOpenFilter(false)}
-                  >
-                    Close
-                  </Button>
-                  <Button
-                    className="flex-1 md:flex-none"
-                    onClick={handleClearFilters}
-                  >
-                    Clear Filters
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </>
+        {/* Use Dialog for desktop and Drawer for mobile */}
+        {isMobile ? (
+          ""
+        ) : (
+          <FilterDialog
+            open={openFilter}
+            onOpenChange={setOpenFilter}
+            {...filterProps}
+          />
         )}
 
-        {activeFilterCount > 0 && !openFilter && (
+        {getActiveFilterCount() > 0 && !openFilter && (
           <div className="mt-2 flex flex-wrap gap-2">
             {filters.category && (
-              <Badge variant="outline" className="bg-gray-100">
+              <Badge variant="outline" className="bg-background">
                 {filters.category}
                 <X
                   className="ml-1 h-3 w-3 cursor-pointer"
@@ -357,7 +206,7 @@ export default function FilterSection({
               </Badge>
             )}
             {filters.available && (
-              <Badge variant="outline" className="bg-gray-100">
+              <Badge variant="outline" className="bg-background">
                 Available Only
                 <X
                   className="ml-1 h-3 w-3 cursor-pointer"
@@ -366,7 +215,7 @@ export default function FilterSection({
               </Badge>
             )}
             {filters.spicy && (
-              <Badge variant="outline" className="bg-gray-100">
+              <Badge variant="outline" className="bg-background">
                 Spicy
                 <X
                   className="ml-1 h-3 w-3 cursor-pointer"
@@ -375,7 +224,7 @@ export default function FilterSection({
               </Badge>
             )}
             {excludedAllergens.map((allergen) => (
-              <Badge key={allergen} variant="outline" className="bg-gray-100">
+              <Badge key={allergen} variant="outline" className="bg-background">
                 No {allergen}
                 <X
                   className="ml-1 h-3 w-3 cursor-pointer"
@@ -384,7 +233,7 @@ export default function FilterSection({
               </Badge>
             ))}
             {(priceRange[0] > 0 || priceRange[1] < 500) && (
-              <Badge variant="outline" className="bg-gray-100">
+              <Badge variant="outline" className="bg-background">
                 ₱{priceRange[0]} - ₱{priceRange[1]}
                 <X
                   className="ml-1 h-3 w-3 cursor-pointer"
@@ -394,7 +243,7 @@ export default function FilterSection({
             )}
             <Button
               variant="ghost"
-              size="sm"
+              size="custom"
               className="text-xs text-red-500 hover:text-red-700"
               onClick={handleClearFilters}
             >

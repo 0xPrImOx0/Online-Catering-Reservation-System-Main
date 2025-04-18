@@ -55,12 +55,11 @@ export const allergens: AllergenProps[] = [
 
 export const selectorItems: CustomSelectItemProps[] = [
   { value: "default", title: "Default" },
-  { value: "name-asc", title: "Name (A-Z)" },
-  { value: "name-desc", title: "Name (Z-A)" },
-  { value: "price-asc", title: "Price (Low - High)" },
-  { value: "price-desc", title: "Price (High - Low)" },
-  { value: "ordered-desc", title: "Most Ordered" },
-  { value: "ordered-asc", title: "Least Ordered" },
+  { value: "price-asc", title: "Price: Low to High" },
+  { value: "price-desc", title: "Price: High to Low" },
+  { value: "rating-desc", title: "Highest Rated" },
+  { value: "name-asc", title: "Name: A to Z" },
+  { value: "name-desc", title: "Name: Z to A" },
 ];
 
 export const categorySelect: CustomSelectItemProps[] = [

@@ -86,20 +86,22 @@ export interface ImageDialogProps {
   setIsImageDialogOpen: SetStateBoolean;
 }
 
+export type FiltersProps = {
+  category: string;
+  allergens: AllergenProps;
+  sortBy: string;
+  excludedAllergens: AllergenProps[];
+  minPrice: number;
+  maxPrice: number;
+  available: boolean;
+  spicy: boolean;
+  [key: string]: string | number | boolean | AllergenProps[];
+};
+
 export interface FilterSectionProps {
   query?: string;
   setQuery: (query: string) => void;
-  filters: {
-    category: string;
-    allergens: AllergenProps;
-    sortBy: string;
-    excludedAllergens: AllergenProps[];
-    minPrice: number;
-    maxPrice: number;
-    available: boolean;
-    spicy: boolean;
-    [key: string]: string | number | boolean | AllergenProps[];
-  };
+  filters: FiltersProps;
   setFilters: React.Dispatch<
     React.SetStateAction<{
       category: string;
