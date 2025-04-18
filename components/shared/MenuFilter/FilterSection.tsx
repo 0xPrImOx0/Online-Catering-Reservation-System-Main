@@ -267,12 +267,6 @@ export default function FilterSection({
               scrollbarWidth: "none",
               msOverflowStyle: "none",
               WebkitOverflowScrolling: "touch",
-              maskImage: needsScrolling
-                ? "linear-gradient(to right, transparent, black 5%, black 95%, transparent)"
-                : "none",
-              WebkitMaskImage: needsScrolling
-                ? "linear-gradient(to right, transparent, black 5%, black 95%, transparent)"
-                : "none",
             }}
             onScroll={checkScrollability}
           >
@@ -356,6 +350,9 @@ export default function FilterSection({
           <div className="mt-2 flex flex-wrap gap-3">
             {filters.category && (
               <Badge variant="outline" className="bg-background">
+                <p className="text-green-950 dark:text-green-500">
+                  Category:&nbsp;&nbsp;
+                </p>
                 {filters.category.charAt(0).toUpperCase() +
                   filters.category.slice(1).toLowerCase()}
                 <X
@@ -366,7 +363,10 @@ export default function FilterSection({
             )}
             {filters.sortBy && (
               <Badge variant="outline" className="bg-background">
-                Sort: {getSortByLabel()}
+                <p className="text-green-950 dark:text-green-500">
+                  Sort:&nbsp;&nbsp;
+                </p>
+                {getSortByLabel()}
                 <X
                   className="ml-1 h-3 w-3 cursor-pointer"
                   onClick={() => updateFilter("sortBy", "default")}

@@ -148,7 +148,7 @@ export function FilterDialog({
                         allergen.value as AllergenProps
                       )
                         ? "bg-red-100 text-red-800 hover:bg-red-200"
-                        : "hover:bg-gray-100"
+                        : "hover:bg-foreground/20"
                     )}
                     onClick={() =>
                       toggleAllergen(allergen.value as AllergenProps)

@@ -8,7 +8,6 @@ import {
   selectorItems,
 } from "@/lib/menu-select";
 import type { AllergenProps } from "@/types/menu-types";
-import { useEffect } from "react";
 import { FilterComponentProps } from "./FilterDialog";
 import {
   Drawer,
@@ -36,19 +35,6 @@ export function FilterDrawer({
   toggleAllergen,
   handleClearFilters,
 }: FilterComponentProps) {
-  // Prevent scrolling when drawer is open
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="max-h-[85vh]">
@@ -150,7 +136,7 @@ export function FilterDrawer({
                         allergen.value as AllergenProps
                       )
                         ? "bg-red-100 text-red-800 hover:bg-red-200"
-                        : "hover:bg-gray-100"
+                        : "hover:bg-foreground/20"
                     )}
                     onClick={() =>
                       toggleAllergen(allergen.value as AllergenProps)
