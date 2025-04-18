@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { getCategoryIcon } from "@/lib/menu-category-badges";
-import { getColorClasses } from "./MenuCategoryBadge";
+import { getColorClasses } from "../customer/MenuCategoryBadge";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { FilterDialog } from "./FilterDialog";
 import { FilterDrawer } from "./FilterDrawer";
@@ -124,6 +124,29 @@ export default function FilterSection({
     }
   }, [filters.category]);
 
+  // Add wheel event listener for horizontal scrolling
+  useEffect(() => {
+    const categoriesElement = categoriesRef.current;
+    if (categoriesElement) {
+      const handleWheel = (e: WheelEvent) => {
+        if (needsScrolling) {
+          e.preventDefault();
+          // Scroll horizontally based on vertical wheel movement
+          // Adjust the scroll speed by multiplying deltaY
+          categoriesElement.scrollLeft += e.deltaY * 0.5;
+          checkScrollability();
+        }
+      };
+
+      categoriesElement.addEventListener("wheel", handleWheel, {
+        passive: false,
+      });
+      return () => {
+        categoriesElement.removeEventListener("wheel", handleWheel);
+      };
+    }
+  }, [needsScrolling]);
+
   const updateFilter = (key: keyof typeof filters, value: string) => {
     setFilters((prev) => ({
       ...prev,
@@ -229,7 +252,7 @@ export default function FilterSection({
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 shadow-sm"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-muted-background/100 shadow-sm"
               onClick={() => scrollCategories("left")}
             >
               <ChevronLeft className="h-4 w-4" />

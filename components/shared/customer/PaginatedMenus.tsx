@@ -4,7 +4,7 @@ import { CustomerMenuCard } from "./CustomerMenuCard";
 import type { AllergenProps } from "@/types/menu-types";
 import { usePathname } from "next/navigation";
 import { menuItems } from "@/lib/menu-lists";
-import FilterSection from "./NewFilterSection";
+import FilterSection from "../MenuFilter/FilterSection";
 import CatererMenuCard from "../caterer/CatererMenuCard";
 import CustomPagination from "../CustomPagination";
 
