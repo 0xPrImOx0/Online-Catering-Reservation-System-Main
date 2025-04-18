@@ -13,6 +13,7 @@ import { getCategoryIcon } from "@/lib/menu-category-badges";
 import { getColorClasses } from "./MenuCategoryBadge";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { FilterDialog } from "./FilterDialog";
+import { FilterDrawer } from "./FilterDrawer";
 
 export default function FilterSection({
   query = "",
@@ -185,7 +186,11 @@ export default function FilterSection({
 
         {/* Use Dialog for desktop and Drawer for mobile */}
         {isMobile ? (
-          ""
+          <FilterDrawer
+            open={openFilter}
+            onOpenChange={setOpenFilter}
+            {...filterProps}
+          />
         ) : (
           <FilterDialog
             open={openFilter}

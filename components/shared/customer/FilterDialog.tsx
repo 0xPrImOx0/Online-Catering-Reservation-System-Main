@@ -10,6 +10,7 @@ import {
 import type { AllergenProps } from "@/types/menu-types";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -24,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import { FiltersProps } from "@/types/component-types";
 import { Separator } from "@/components/ui/separator";
 
-interface FilterDialogProps {
+export interface FilterComponentProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   filters: FiltersProps;
@@ -46,12 +47,12 @@ export function FilterDialog({
   excludedAllergens,
   toggleAllergen,
   handleClearFilters,
-}: FilterDialogProps) {
+}: FilterComponentProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Filters</DialogTitle>
+          <DialogTitle>Menu Filters</DialogTitle>
         </DialogHeader>
 
         <Separator className="my-2" />
