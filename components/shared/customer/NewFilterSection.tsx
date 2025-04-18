@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import type { FilterSectionProps } from "@/types/component-types";
 import type { AllergenProps, CategoryProps } from "@/types/menu-types";
-import { categorySelect } from "@/lib/menu-select";
+import { categorySelect, selectorItems } from "@/lib/menu-select";
 import { useClickOutside } from "@/hooks/ues-click-outside";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -110,6 +110,14 @@ export default function FilterSection({
     return count;
   };
 
+  // Get sort by label
+  const getSortByLabel = () => {
+    const sortItem = selectorItems.find(
+      (item) => item.value === filters.sortBy
+    );
+    return sortItem ? sortItem.title : "";
+  };
+
   const filterProps = {
     filters,
     updateFilter,
@@ -203,10 +211,20 @@ export default function FilterSection({
           <div className="mt-2 flex flex-wrap gap-2">
             {filters.category && (
               <Badge variant="outline" className="bg-background">
-                {filters.category}
+                {filters.category.charAt(0).toUpperCase() +
+                  filters.category.slice(1).toLowerCase()}
                 <X
                   className="ml-1 h-3 w-3 cursor-pointer"
                   onClick={() => updateFilter("category", "all")}
+                />
+              </Badge>
+            )}
+            {filters.sortBy && (
+              <Badge variant="outline" className="bg-background">
+                Sort: {getSortByLabel()}
+                <X
+                  className="ml-1 h-3 w-3 cursor-pointer"
+                  onClick={() => updateFilter("sortBy", "default")}
                 />
               </Badge>
             )}
