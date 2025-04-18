@@ -82,7 +82,7 @@ export function FilterDialog({
               <Card className="rounded-md">
                 <CardContent className="p-4 flex items-center justify-between">
                   <div className="space-y-1">
-                    <h4 className="font-medium">Available Only</h4>
+                    <h4 className="text-sm font-medium">Available Only</h4>
                     <p className="text-xs text-gray-500">
                       Show only available items
                     </p>
@@ -99,7 +99,7 @@ export function FilterDialog({
               <Card className="rounded-md">
                 <CardContent className="p-4 flex items-center justify-between">
                   <div className="space-y-1">
-                    <h4 className="font-medium">Spicy</h4>
+                    <h4 className="text-sm font-medium">Spicy</h4>
                     <p className="text-xs text-gray-500">
                       Show only spicy items
                     </p>

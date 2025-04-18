@@ -1,8 +1,6 @@
 "use client";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { TabsList } from "@radix-ui/react-tabs";
-import { CalendarDays, ChefHat, Clock } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 

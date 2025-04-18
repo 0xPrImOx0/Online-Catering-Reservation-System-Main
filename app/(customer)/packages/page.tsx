@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="max-w-[1400px] mx-auto">
+    <main className="max-w-[1400px] mx-auto px-2 sm:px-14 md:px-10">
       <div className="py-12">
         {/* Package Showcase */}
         <CateringPackages />
