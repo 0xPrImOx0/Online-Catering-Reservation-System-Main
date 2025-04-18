@@ -3,17 +3,17 @@ import { useState, useRef, useEffect } from "react";
 import type { FilterSectionProps } from "@/types/component-types";
 import type { AllergenProps, CategoryProps } from "@/types/menu-types";
 import { categorySelect, selectorItems } from "@/lib/menu-select";
-import { useClickOutside } from "@/hooks/ues-click-outside";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import SearchInput from "../SearchInput";
-import { X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { getCategoryIcon } from "@/lib/menu-category-badges";
 import { getColorClasses } from "./MenuCategoryBadge";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { FilterDialog } from "./FilterDialog";
 import { FilterDrawer } from "./FilterDrawer";
+import { cn } from "@/lib/utils";
 
 export default function FilterSection({
   query = "",
@@ -26,9 +26,50 @@ export default function FilterSection({
   const [excludedAllergens, setExcludedAllergens] = useState<AllergenProps[]>(
     []
   );
-  const filterRef = useRef<HTMLDivElement | null>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 640px)");
+
+  // Function to scroll the categories container
+  const scrollCategories = (direction: "left" | "right") => {
+    if (categoriesRef.current) {
+      const scrollAmount = 300; // Adjust as needed
+      const currentScroll = categoriesRef.current.scrollLeft;
+
+      categoriesRef.current.scrollTo({
+        left:
+          direction === "left"
+            ? currentScroll - scrollAmount
+            : currentScroll + scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // Scroll to the selected category
+  useEffect(() => {
+    if (categoriesRef.current && filters.category) {
+      const selectedCategory = document.getElementById(
+        `category-${filters.category}`
+      );
+      if (selectedCategory) {
+        const containerRect = categoriesRef.current.getBoundingClientRect();
+        const selectedRect = selectedCategory.getBoundingClientRect();
+
+        // Calculate the scroll position to center the selected category
+        const scrollLeft =
+          selectedRect.left -
+          containerRect.left -
+          containerRect.width / 2 +
+          selectedRect.width / 2 +
+          categoriesRef.current.scrollLeft;
+
+        categoriesRef.current.scrollTo({
+          left: scrollLeft,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [filters.category]);
 
   // Prevent scrolling when filter panel is open
   useEffect(() => {
@@ -42,11 +83,6 @@ export default function FilterSection({
       document.body.style.overflow = "";
     };
   }, [openFilter]);
-
-  // Close filter panel when clicking outside
-  useClickOutside(filterRef, () => {
-    if (openFilter) setOpenFilter(false);
-  });
 
   const updateFilter = (key: keyof typeof filters, value: string) => {
     setFilters((prev) => ({
@@ -146,50 +182,74 @@ export default function FilterSection({
           />
         </div>
 
-        {/* Horizontally scrollable category selector */}
-        <div
-          ref={categoriesRef}
-          className={"mt-4 flex overflow-x-auto pb-2 gap-2 scrollbar-hide"}
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {categorySelect.map((category) => {
-            const Icon = getCategoryIcon(
-              (category.value.charAt(0).toUpperCase() +
-                category.value.slice(1).toLowerCase()) as CategoryProps
-            );
+        {/* Horizontally scrollable category selector with navigation buttons */}
+        <div className="mt-4 relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 shadow-sm"
+            onClick={() => scrollCategories("left")}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
 
-            return (
-              <Button
-                key={category.value}
-                variant={
-                  filters.category ===
-                  (category.value === "all" ? "" : category.value)
-                    ? "default"
-                    : "outline"
-                }
-                onClick={() => updateFilter("category", category.value)}
-                className={
-                  "flex flex-col items-center justify-center p-3 rounded-lg transition-colors md:min-w-32 md:h-32"
-                }
-              >
-                <div className="mb-2 items-center justify-center hidden md:flex">
-                  <Icon
-                    strokeWidth={1}
-                    style={{
-                      width: "35px",
-                      height: "35px",
-                      background: "transparent", // Set fill to transparent
-                    }}
-                    className={`${getColorClasses(
-                      (category.value.charAt(0).toUpperCase() +
-                        category.value.slice(1).toLowerCase()) as CategoryProps
-                    )} bg-transparent`}
-                  />
-                </div>
-                <span className="text-sm font-medium">{category.title}</span>
-              </Button>
-            );
-          })}
+          {/* Horizontally scrollable category selector */}
+          <div
+            ref={categoriesRef}
+            className={"mt-4 flex overflow-x-auto pb-2 gap-2 scrollbar-hide"}
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {categorySelect.map((category) => {
+              const Icon = getCategoryIcon(
+                (category.value.charAt(0).toUpperCase() +
+                  category.value.slice(1).toLowerCase()) as CategoryProps
+              );
+
+              return (
+                <Button
+                  id={`category-${category.value}`}
+                  key={category.value}
+                  variant={
+                    filters.category ===
+                    (category.value === "all" ? "" : category.value)
+                      ? "default"
+                      : "outline"
+                  }
+                  onClick={() => updateFilter("category", category.value)}
+                  className={cn(
+                    "flex-shrink-0 flex flex-col items-center justify-center p-3 rounded-lg transition-colors min-w-[100px] min-h-[100px]"
+                  )}
+                >
+                  <div className="mb-2 items-center justify-center hidden md:flex">
+                    <Icon
+                      strokeWidth={1}
+                      style={{
+                        width: "35px",
+                        height: "35px",
+                        background: "transparent", // Set fill to transparent
+                      }}
+                      className={`${getColorClasses(
+                        (category.value.charAt(0).toUpperCase() +
+                          category.value
+                            .slice(1)
+                            .toLowerCase()) as CategoryProps
+                      )} bg-transparent`}
+                    />
+                  </div>
+                  <span className="text-sm font-medium">{category.title}</span>
+                </Button>
+              );
+            })}
+          </div>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 shadow-sm"
+            onClick={() => scrollCategories("right")}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
         </div>
 
         {/* Use Dialog for desktop and Drawer for mobile */}
