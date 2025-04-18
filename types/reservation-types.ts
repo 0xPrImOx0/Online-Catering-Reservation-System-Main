@@ -39,7 +39,7 @@ export interface ReservationItem {
   serviceType: ServiceType;
   serviceHours?: string;
   selectedPackage: string;
-  selectedMenus: Record<PackageCategory, string[]>;
+  selectedMenus: Record<PackageCategory, Record<string, number>>;
   specialRequests?: string;
   deliveryOption: "Pickup" | "Delivery";
   deliveryAddress?: string;

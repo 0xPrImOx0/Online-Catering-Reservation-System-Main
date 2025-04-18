@@ -55,10 +55,17 @@ const reservationSchema = z
     selectedPackage: z
       .string({ required_error: "Please select a Package" })
       .min(1, "Package selection is required"),
-    selectedMenus: z.record(z.string(), z.array(z.string())).refine(
-      (menus) => Object.keys(menus).length > 0, // Ensure the object is not empty
-      { message: "You must select at least one menu item." }
-    ),
+    selectedMenus: z
+      .record(z.string(), z.record(z.string(), z.number()))
+      .refine(
+        (menus) =>
+          Object.values(menus).some(
+            (dishMap) => Object.keys(dishMap).length > 0
+          ),
+        {
+          message: "You must select at least one menu item.",
+        }
+      ),
     specialRequests: z
       .string()
       .max(500, "Special Requests must not exceed 500 characters")
@@ -79,7 +86,7 @@ const reservationSchema = z
   .superRefine((data, ctx) => {
     if (data.selectedPackage) {
       const allCategoriesHaveMenus = Object.values(data.selectedMenus).every(
-        (items) => items.length > 0
+        (categoryMenus) => Object.keys(categoryMenus).length > 0
       );
 
       if (!allCategoriesHaveMenus) {
@@ -108,7 +115,7 @@ const defaultValues: ReservationValues = {
   serviceType: "Buffet",
   serviceHours: "",
   selectedPackage: "",
-  selectedMenus: {} as Record<PackageCategory, string[]>,
+  selectedMenus: {} as Record<PackageCategory, Record<string, number>>,
   specialRequests: "",
   deliveryOption: "Pickup",
   deliveryAddress: "",
@@ -188,25 +195,38 @@ export function useReservationForm() {
     }
   };
 
-  const handleCheckboxChange = (
-    checked: string | boolean,
-    field: any,
-    category: CategoryProps,
-    menu: MenuItem,
-    count: number
-  ) => {
-    const currentSelection = field.value[category] || [];
-    const updatedMenus = checked
-      ? currentSelection.length < count // Check if the count is reached
-        ? [...currentSelection, menu._id]
-        : currentSelection // If count is reached, don't add the item
-      : currentSelection.filter((id: string) => id !== menu._id); // Remove the item if unchecked
+const handleCheckboxChange = (
+  checked: boolean | string,
+  field: any,
+  category: PackageCategory,
+  menu: MenuItem,
+  count: number
+) => {
+  const currentSelection = field.value[category] || {};
+  const updatedMenus: Record<string, number> = { ...currentSelection };
+  const uniqueDishesSelected = Object.keys(updatedMenus).length;
 
-    field.onChange({
-      ...field.value,
-      [category]: updatedMenus,
-    });
-  };
+  if (checked === true) {
+    // Allow adding a new dish if under the limit
+    if (uniqueDishesSelected < count) {
+      updatedMenus[menu._id] = 1; // Set quantity to 1 when checked
+    }
+  } else {
+    // Remove the dish completely when unchecked
+    delete updatedMenus[menu._id];
+  }
+
+  // Clean up: remove category if no dishes are selected
+  const cleanedMenus = { ...field.value };
+  if (Object.keys(updatedMenus).length > 0) {
+    cleanedMenus[category] = updatedMenus;
+  } else {
+    delete cleanedMenus[category];
+  }
+
+  field.onChange(cleanedMenus);
+};
+
   return {
     reservationForm,
     validateStep,

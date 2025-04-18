@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Separator } from "@/components/ui/separator";
 
 export default function CheckboxMenus({
   category,
@@ -35,8 +36,8 @@ export default function CheckboxMenus({
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("");
   return (
-    <>
-      <div key={category} className="space-y-2">
+    <div>
+      <div key={category} className="space-y-3">
         <FormLabel className="font-medium text-base">
           {category} Options
         </FormLabel>
@@ -46,10 +47,10 @@ export default function CheckboxMenus({
               <FormControl>
                 <Checkbox
                   id={menu._id}
-                  checked={field.value[category]?.includes(menu._id)}
+                  checked={!!field.value[category]?.[menu._id]} // ✅ check if menu is selected (count > 0)
                   disabled={
-                    !field.value[category]?.includes(menu._id) && // Allow unchecking
-                    field.value[category]?.length >= count // Disable if limit is reached
+                    !field.value[category]?.[menu._id] && // ✅ allow unchecking
+                    field.value[category]?.length >= count
                   }
                   onCheckedChange={(checked) =>
                     handleCheckboxChange(checked, field, category, menu, count)
@@ -95,6 +96,7 @@ export default function CheckboxMenus({
           </p>
         )}
       </div>
-    </>
+      <Separator className="mt-4" />
+    </div>
   );
 }

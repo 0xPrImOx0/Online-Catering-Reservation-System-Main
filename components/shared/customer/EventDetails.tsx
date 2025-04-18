@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
 import WhatsTheOccasionCard from "./WhatsTheOccasionCard";
 import EventType from "./EventType";
 import EventDate from "./EventDate";

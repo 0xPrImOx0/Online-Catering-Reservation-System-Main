@@ -7,12 +7,12 @@ export default function CategoryOptionsBadge({
   selectedMenus,
 }: {
   categoryAndCount: { category: string; count: number }[];
-  selectedMenus: any;
+  selectedMenus: Record<string, Record<string, number>>;
 }) {
   return (
     <div className="gap-3 flex flex-wrap items-center">
       {categoryAndCount.map(({ category, count }) => {
-        let isLimitReached = (selectedMenus[category]?.length || 0) >= count;
+        let isLimitReached = (Object.keys(selectedMenus[category] || {}).length || 0) >= count;
         return (
           <Badge
             variant={"outline"}

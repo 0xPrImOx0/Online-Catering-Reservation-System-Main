@@ -19,7 +19,7 @@ export default function DeliveryOption({ control }: { control: any }) {
             Delivery Option <span className="text-destructive">*</span>{" "}
           </FormLabel>
           <RadioGroup
-            defaultValue="Pickup"
+            defaultValue={field.value}
             onValueChange={field.onChange}
             className="grid grid-cols-2 pt-2"
           >

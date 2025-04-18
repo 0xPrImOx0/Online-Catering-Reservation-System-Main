@@ -42,7 +42,7 @@ export default function BookNowForm({ id }: { id: string }) {
 
   const { watch } = reservationForm;
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [nextPageCount, setNextPageCount] = useState(0);
@@ -118,7 +118,9 @@ export default function BookNowForm({ id }: { id: string }) {
     if (deconstructedId) {
       if (isMenu) {
         setValue("cateringOptions", "custom");
-        setValue("selectedMenus", { [isMenu.category]: [deconstructedId] });
+        setValue("selectedMenus", {
+          [isMenu.category]: { deconstructedId: 0 },
+        });
         return;
       }
       if (isPackage) {
@@ -136,7 +138,7 @@ export default function BookNowForm({ id }: { id: string }) {
       key={"package-selection"}
       showPackageSelection={showPackageSelection}
     />,
-    <CategoryOptions key={"category-options"} />,
+    <CategoryOptions key={"category-options"} validateStep={validateStep} />,
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,
   ];
