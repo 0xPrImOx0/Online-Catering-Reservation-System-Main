@@ -128,8 +128,10 @@ export default function PaginatedMenus({ open }: { open?: boolean }) {
       </div>
       <div
         className={`grid ${
-          isCaterer && open ? "md:grid-cols-1" : "md:grid-cols-2"
-        } xl:grid-cols-3 gap-10`}
+          open
+            ? "md:grid-cols-1 md:px-32 xl:grid-cols-2 xl:px-0 2xl:grid-cols-3"
+            : "md:grid-cols-2 xl:grid-cols-3"
+        } gap-10`}
       >
         {/* MenuLists */}
         {paginatedMenu.length > 0 ? (
