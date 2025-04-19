@@ -375,7 +375,7 @@ export default function FilterSection({
             )}
             {filters.available && (
               <Badge variant="outline" className="bg-background">
-                Available Only
+                Currently Available
                 <X
                   className="ml-1 h-3 w-3 cursor-pointer"
                   onClick={() => updateFilter("available", "")}
@@ -402,6 +402,9 @@ export default function FilterSection({
             ))}
             {(priceRange[0] > 0 || priceRange[1] < 500) && (
               <Badge variant="outline" className="bg-background">
+                <p className="text-green-950 dark:text-green-500">
+                  Price:&nbsp;&nbsp;
+                </p>
                 ₱{priceRange[0]} - ₱{priceRange[1]}
                 <X
                   className="ml-1 h-3 w-3 cursor-pointer"
