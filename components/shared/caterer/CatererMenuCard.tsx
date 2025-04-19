@@ -33,7 +33,7 @@ export default function CatererMenuCard({ menu }: MenuCardProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   return (
-    <Card className="overflow-hidden max-w-md transition-all duration-300 hover:shadow-md flex flex-col h-full">
+    <Card className="min-w-[325px] flex-1 overflow-hidden border shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
       <div className="relative">
         <div className="aspect-video w-full overflow-hidden">
           <Image

@@ -8,7 +8,7 @@ import FilterSection from "../MenuFilter/FilterSection";
 import CatererMenuCard from "../caterer/CatererMenuCard";
 import CustomPagination from "../CustomPagination";
 
-export default function PaginatedMenus() {
+export default function PaginatedMenus({ open }: { open?: boolean }) {
   const [query, setQuery] = useState("");
   const menuListRef = useRef<HTMLDivElement>(null);
   const [filters, setFilters] = useState({
@@ -126,7 +126,11 @@ export default function PaginatedMenus() {
           setFilters={setFilters}
         />
       </div>
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
+      <div
+        className={`grid ${
+          isCaterer && open ? "md:grid-cols-1" : "md:grid-cols-2"
+        } xl:grid-cols-3 gap-10`}
+      >
         {/* MenuLists */}
         {paginatedMenu.length > 0 ? (
           isCaterer ? (
