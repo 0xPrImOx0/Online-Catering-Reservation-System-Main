@@ -28,7 +28,7 @@ import DeliveryOption from "./DeliveryOption";
 import { hoursArray } from "@/types/package-types";
 import PlatedWarning from "../PlatedWarning";
 import DeliveryWarning from "./DeliveryWarning";
-import { set } from "date-fns";
+import { useEffect } from "react";
 
 export default function EventDetails() {
   const { control, getValues, watch, setValue } =
@@ -36,18 +36,14 @@ export default function EventDetails() {
   const reservationType = watch("reservationType");
   const cateringOptions = watch("cateringOptions");
   const serviceType = watch("serviceType");
+  const serviceHours = watch("serviceHours");
   const eventType = watch("eventType");
   const totalPrice = watch("totalPrice");
 
-  const handlePlatedType = () => {
-    setValue("totalPrice", totalPrice + 100);
-    setValue("serviceHours", "4 hours");
-  };
-
-  const handleBuffetType = () => {
-    setValue("totalPrice", totalPrice - 100);
-    setValue("serviceHours", "");
-  };
+  useEffect(() => {
+    const hour = serviceHours?.slice(0, 2);
+    setValue("serviceFee", 100 * Number(hour));
+  }, [serviceHours]);
 
   return (
     <div className="space-y-4">
@@ -128,7 +124,10 @@ export default function EventDetails() {
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem
-                        onClick={handleBuffetType}
+                        onClick={() => {
+                          setValue("serviceFee", 0);
+                          setValue("serviceHours", "");
+                        }}
                         value="Buffet"
                         id="buffet"
                       />
@@ -138,7 +137,10 @@ export default function EventDetails() {
                       <RadioGroupItem
                         value="Plated"
                         id="plated"
-                        onClick={handlePlatedType}
+                        onClick={() => {
+                          setValue("serviceFee", 100 * 4);
+                          setValue("serviceHours", "4 hours");
+                        }}
                       />
                       <Label htmlFor="plated">Plated Service</Label>
                     </div>
@@ -202,7 +204,7 @@ export default function EventDetails() {
       <Separator />
 
       <div className="flex justify-between items-end">
-        <Label>Total Price</Label>
+        <Label>Total Bill</Label>
         <span className="text-green-500 text-2xl underline underline-offset-4">
           &#8369; {watch("totalPrice").toFixed(2)}
         </span>

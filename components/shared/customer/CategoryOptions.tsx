@@ -33,6 +33,7 @@ export default function CategoryOptions({
     useFormContext<ReservationValues>();
 
   const selectedMenus = watch("selectedMenus");
+
   const cateringOptions = watch("cateringOptions");
   const selectedPackage = getValues("selectedPackage");
 
@@ -63,22 +64,6 @@ export default function CategoryOptions({
     const menu = menuItems.find((item) => item._id === menuId);
     return menu ? menu.name : "";
   };
-
-  useEffect(() => {
-    const calculateTotal = () => {
-      let total = watch("totalPrice") || 0;
-
-      // Iterate through each category (Soup, Beverage)
-      Object.values(selectedMenus).forEach((category) => {
-        // Iterate through each menu item in the category
-        Object.values(category).forEach((item) => {
-          total += item.quantity * item.pricePerPax;
-        });
-      });
-      setValue("totalPrice", total);
-    };
-    calculateTotal();
-  }, [selectedMenus]);
 
   return (
     <div className="space-y-6">

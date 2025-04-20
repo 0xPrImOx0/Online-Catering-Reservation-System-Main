@@ -57,6 +57,7 @@ const reservationSchema = z
     serviceType: z.enum(["Buffet", "Plated"], {
       required_error: "Please select a Service Type",
     }),
+    serviceFee: z.number(),
     serviceHours: z.string().optional(),
     selectedPackage: z
       .string({ required_error: "Please select a Package" })
@@ -88,6 +89,7 @@ const reservationSchema = z
     deliveryOption: z.enum(["Pickup", "Delivery"], {
       required_error: "Please select a Delivery Option",
     }),
+    deliveryFee: z.number(),
     deliveryAddress: z
       .string()
       .min(1, "Delivery address is required")
@@ -128,12 +130,14 @@ const defaultValues: ReservationValues = {
   venue: "",
   cateringOptions: "event",
   serviceType: "Buffet",
+  serviceFee: 0,
   serviceHours: "",
   selectedPackage: "",
   selectedMenus: {} as Record<string, Record<string, MenuReservationDetails>>,
   totalPrice: 0,
   specialRequests: "",
   deliveryOption: "Pickup",
+  deliveryFee: 0,
   deliveryAddress: "",
   deliveryInstructions: "",
 };

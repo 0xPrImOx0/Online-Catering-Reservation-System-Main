@@ -64,12 +64,14 @@ export interface ReservationItem {
   venue: string;
   cateringOptions: "event" | "custom";
   serviceType: ServiceType;
+  serviceFee: number;
   serviceHours?: string;
   selectedPackage: string;
   selectedMenus: SelectedMenus;
   totalPrice: number;
   specialRequests?: string;
   deliveryOption: "Pickup" | "Delivery";
+  deliveryFee: number;
   deliveryAddress?: string;
   deliveryInstructions?: string;
 }

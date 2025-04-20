@@ -138,6 +138,27 @@ export default function BookNowForm({ id }: { id: string }) {
     }
   }, [id, deconstructedId, setValue]);
 
+  const serviceFee = watch("serviceFee");
+  const deliveryFee = watch("deliveryFee");
+  const selectedMenus = watch("selectedMenus");
+
+  useEffect(() => {
+    const calculateTotal = () => {
+      let total = 0;
+
+      // Iterate through each category (Soup, Beverage)
+      Object.values(selectedMenus).forEach((category) => {
+        // Iterate through each menu item in the category
+        Object.values(category).forEach((item) => {
+          total += item.quantity * item.pricePerPax;
+        });
+      });
+
+      setValue("totalPrice", total + serviceFee + deliveryFee);
+    };
+    calculateTotal();
+  }, [selectedMenus, serviceFee, deliveryFee]);
+
   const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,
     <PackageSelection

@@ -12,13 +12,13 @@ import { useFormContext } from "react-hook-form";
 
 export default function DeliveryOption({ control }: { control: any }) {
   const { watch, setValue } = useFormContext<ReservationValues>();
-  const totalPrice = watch("totalPrice");
+  const deliveryFee = watch("deliveryFee");
 
   const handleDeliveryOption = () => {
-    setValue("totalPrice", totalPrice + 300);
+    setValue("deliveryFee", 300);
   };
   const handlePickupOption = () => {
-    setValue("totalPrice", totalPrice - 300);
+    setValue("deliveryFee", deliveryFee - 300);
   };
   return (
     <FormField
