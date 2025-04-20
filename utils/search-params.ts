@@ -1,18 +1,27 @@
-export function hasOnlyAllowedSearchParams(
-  searchParams: URLSearchParams,
-  allowedKeys: string[]
-): boolean {
-  const entries = Array.from(searchParams.entries());
+// export function hasOnlyAllowedSearchParams( NOT RECOMMENDED MIGHT DELETE
+//   searchParams: URLSearchParams,
+//   allowedKeys: string[]
+// ): boolean {
+//   const entries = Array.from(searchParams.entries());
 
-  return (
-    entries.every(([key]) => allowedKeys.includes(key)) &&
-    entries.length === allowedKeys.length
-  );
-}
+//   return (
+//     entries.every(([key]) => allowedKeys.includes(key)) &&
+//     entries.length === allowedKeys.length
+//   );
+// }
 
-export function getQueryParam(
+export function getQueryParams(
   searchParams: URLSearchParams,
-  key: string
-): string | undefined {
-  return searchParams.get(key)?.toLowerCase();
+  keys: string[]
+): Record<string, string> {
+  const result: Record<string, string> = {};
+
+  for (const key of keys) {
+    const value = searchParams.get(key);
+    if (value !== null) {
+      result[key] = value.toLowerCase();
+    }
+  }
+
+  return result;
 }

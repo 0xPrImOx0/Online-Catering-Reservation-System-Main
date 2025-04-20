@@ -31,7 +31,6 @@ const Logo = ({
           src="/catering-logo.png"
           width={imageSize}
           height={imageSize}
-          priority={true}
           alt="Catering-Logo"
         />
       </div>

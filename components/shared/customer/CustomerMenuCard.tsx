@@ -26,14 +26,13 @@ import { CategoryBadge } from "./MenuCategoryBadge";
 import ImageDialog from "../ImageDialog";
 import { useMenuForm } from "@/hooks/use-menu-form";
 import { useSearchParams } from "next/navigation";
-import {
-  getQueryParam,
-  hasOnlyAllowedSearchParams,
-} from "@/utils/search-params";
+import { getQueryParams } from "@/utils/search-params";
 
 export function CustomerMenuCard({ menu }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
-  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState<boolean>(false);
+  const [isMenuDetailsDialogOpen, setIsMenuDetailsDialogOpen] =
+    useState<boolean>(false);
   const [menuPricePax, setMenuPricePax] = useState(menu.prices[0].price);
   const [discount, setDiscount] = useState(menu.prices[0].discount);
 
@@ -42,15 +41,22 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const isQueryValid = hasOnlyAllowedSearchParams(searchParams, [
-      "view",
-      "id",
-    ]);
+    const { view, id } = getQueryParams(searchParams, ["view", "id"]);
 
-    if (isQueryValid && getQueryParam(searchParams, "view") === "image") {
+    if (view === "image" && id === menu._id) {
       setIsImageDialogOpen(true);
+      return;
     }
-  }, [searchParams]);
+
+    if (view === "details" && id === menu._id) {
+      setIsMenuDetailsDialogOpen(true);
+      return;
+    }
+
+    setIsImageDialogOpen(false);
+
+    console.log("RRENDEREDD");
+  }, [searchParams, menu._id]);
 
   return (
     <Card className="min-w-[325px] flex-1 overflow-hidden border shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
@@ -226,22 +232,21 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
       </CardContent>
 
       <CardFooter className="flex justify-between">
-        <MenuDetailsDialog menu={menu}>
-          <Button
-            className={"w-full"}
-            variant={"default"}
-            size={"default"}
-            onClick={() =>
-              window.history.pushState(
-                {},
-                "",
-                `/menus?view=details&id=${menu._id}`
-              )
-            }
-          >
-            View Details
-          </Button>
-        </MenuDetailsDialog>
+        <Button
+          className={"w-full"}
+          variant={"default"}
+          size={"default"}
+          onClick={() => {
+            window.history.pushState(
+              {},
+              "",
+              `/menus?view=details&id=${menu._id}`
+            );
+            setIsMenuDetailsDialogOpen(true);
+          }}
+        >
+          View Details
+        </Button>
       </CardFooter>
 
       {/* Image Dialog */}
@@ -249,6 +254,12 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
         item={menu}
         isImageDialogOpen={isImageDialogOpen}
         setIsImageDialogOpen={setIsImageDialogOpen}
+      />
+
+      <MenuDetailsDialog
+        menu={menu}
+        isMenuDetailsDialogOpen={isMenuDetailsDialogOpen}
+        setIsMenuDetailsDialogOpen={setIsMenuDetailsDialogOpen}
       />
     </Card>
   );

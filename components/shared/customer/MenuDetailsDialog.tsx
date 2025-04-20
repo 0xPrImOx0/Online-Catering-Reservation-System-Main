@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogDescription,
   DialogTitle,
-  DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
 import {
@@ -26,17 +25,22 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-export function MenuDetailsDialog({ menu, children }: MenuDetailsDialogProps) {
+export function MenuDetailsDialog({
+  menu,
+  isMenuDetailsDialogOpen,
+  setIsMenuDetailsDialogOpen,
+}: MenuDetailsDialogProps) {
   const router = useRouter();
   return (
     <Dialog
+      open={isMenuDetailsDialogOpen}
       onOpenChange={(open) => {
+        setIsMenuDetailsDialogOpen(open);
         if (!open) {
           window.history.pushState({}, "", `/menus`);
         }
       }}
     >
-      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-md md:max-w-xl w-full p-0 gap-0 max-h-[85vh] flex flex-col overflow-hidden rounded-md">
         <div className="">
           <div className="relative w-full">

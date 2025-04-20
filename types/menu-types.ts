@@ -1,6 +1,6 @@
 import { useMenuForm } from "@/hooks/use-menu-form";
 import { SetStateBoolean } from "./global-types";
-import { CateringPackagesProps, ReviewsProps } from "./package-types";
+import { ReviewsProps } from "./package-types";
 
 export type ServingSize = 6 | 10 | 15 | 20;
 
@@ -95,13 +95,8 @@ export type StarSize = "small" | "medium" | "large";
 
 export interface MenuDetailsDialogProps {
   menu: MenuItem;
-  children: React.ReactNode;
-}
-
-export interface MenuImageDialogProps {
-  item: MenuItem | CateringPackagesProps;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  isMenuDetailsDialogOpen: boolean;
+  setIsMenuDetailsDialogOpen: SetStateBoolean;
 }
 
 export interface CategoryBadgeProps {
