@@ -45,6 +45,7 @@ export interface ReviewsProps {
 }
 
 export interface CateringPackagesProps {
+  _id: string;
   name: string;
   description: string;
   available: boolean;
@@ -170,7 +171,7 @@ export const hoursArray: string[] = [
   "6 hours",
   "8 hours",
   "10 hours",
-]
+];
 
 export const serviceTypes: ServiceType[] = ["Buffet", "Plated"];
 

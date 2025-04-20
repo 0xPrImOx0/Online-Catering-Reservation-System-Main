@@ -1,11 +1,17 @@
-import { CategoryProps, MenuItem } from "@/types/menu-types";
+import { cateringPackages } from "@/lib/customer/packages-metadata";
+import { MenuItem } from "@/types/menu-types";
 import {
   EventType,
-  eventTypes,
   PackageCategory,
   reservationEventTypes,
 } from "@/types/package-types";
-import { ReservationItem } from "@/types/reservation-types";
+import {
+  MenuReservationDetails,
+  paxArray,
+  PaxArrayType,
+  ReservationItem,
+  SelectedMenus,
+} from "@/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -37,10 +43,7 @@ const reservationSchema = z
         /^([01]\d|2[0-3]):([0-5]\d)$/,
         "Please enter a valid time (HH:mm)"
       ),
-    guestCount: z
-      .number({ required_error: "Please provide the Guest Count" })
-      .min(20, "Guest Count must be at least 20")
-      .max(200, "Guest Count must not exceed 200"),
+    guestCount: z.number({ required_error: "Please provide the Guest Count" }),
     venue: z
       .string({ required_error: "Please provide the Venue" })
       .min(3, "Venue must be at least 3 characters")
@@ -51,14 +54,31 @@ const reservationSchema = z
     serviceType: z.enum(["Buffet", "Plated"], {
       required_error: "Please select a Service Type",
     }),
+    serviceFee: z.number(),
     serviceHours: z.string().optional(),
     selectedPackage: z
       .string({ required_error: "Please select a Package" })
       .min(1, "Package selection is required"),
-    selectedMenus: z.record(z.string(), z.array(z.string())).refine(
-      (menus) => Object.keys(menus).length > 0, // Ensure the object is not empty
-      { message: "You must select at least one menu item." }
-    ),
+    selectedMenus: z
+      .record(
+        z.string(), // category
+        z.record(
+          z.string(), // dish ID
+          z.object({
+            quantity: z.number().min(1),
+            paxSelected: z.enum(paxArray as [PaxArrayType, ...PaxArrayType[]]),
+            pricePerPax: z.number().min(0),
+          })
+        )
+      )
+      .refine(
+        (menus) =>
+          Object.values(menus).some(
+            (category) => Object.keys(category).length > 0
+          ),
+        { message: "You must select at least one menu item." }
+      ),
+    totalPrice: z.number(),
     specialRequests: z
       .string()
       .max(500, "Special Requests must not exceed 500 characters")
@@ -66,6 +86,7 @@ const reservationSchema = z
     deliveryOption: z.enum(["Pickup", "Delivery"], {
       required_error: "Please select a Delivery Option",
     }),
+    deliveryFee: z.number(),
     deliveryAddress: z
       .string()
       .min(1, "Delivery address is required")
@@ -78,9 +99,21 @@ const reservationSchema = z
   })
   .superRefine((data, ctx) => {
     if (data.selectedPackage) {
-      const allCategoriesHaveMenus = Object.values(data.selectedMenus).every(
-        (items) => items.length > 0
+      const selectedPackage = cateringPackages.find(
+        (pkg) => pkg._id === data.selectedPackage
       );
+      let minimumGuestCount = selectedPackage?.minimumPax || 20;
+      const allCategoriesHaveMenus = Object.values(data.selectedMenus).every(
+        (categoryMenus) => Object.keys(categoryMenus).length > 0
+      );
+
+      if (data.guestCount < minimumGuestCount) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["guestCount"],
+          message: `Guest count must be at least ${minimumGuestCount}`,
+        });
+      }
 
       if (!allCategoriesHaveMenus) {
         ctx.addIssue({
@@ -89,6 +122,20 @@ const reservationSchema = z
           path: ["selectedMenus"],
         });
       }
+    }
+    if (data.guestCount < 20) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["guestCount"],
+        message: `Guest count must be at least 20 persons`,
+      });
+    }
+    if (data.guestCount > 200) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["guestCount"],
+        message: `Guest count must be at most 200 persons`,
+      });
     }
   });
 
@@ -106,11 +153,14 @@ const defaultValues: ReservationValues = {
   venue: "",
   cateringOptions: "event",
   serviceType: "Buffet",
+  serviceFee: 0,
   serviceHours: "",
   selectedPackage: "",
-  selectedMenus: {} as Record<PackageCategory, string[]>,
+  selectedMenus: {} as Record<string, Record<string, MenuReservationDetails>>,
+  totalPrice: 0,
   specialRequests: "",
   deliveryOption: "Pickup",
+  deliveryFee: 0,
   deliveryAddress: "",
   deliveryInstructions: "",
 };
@@ -181,7 +231,7 @@ export function useReservationForm() {
           ];
         }
         if (reservationType === "personal") {
-          return ["eventDate", "guestCount"];
+          return ["eventDate"];
         }
       default:
         return [];
@@ -189,24 +239,125 @@ export function useReservationForm() {
   };
 
   const handleCheckboxChange = (
-    checked: string | boolean,
+    checked: boolean | string,
     field: any,
-    category: CategoryProps,
+    category: PackageCategory,
     menu: MenuItem,
-    count: number
+    count: number,
+    price: number
   ) => {
-    const currentSelection = field.value[category] || [];
-    const updatedMenus = checked
-      ? currentSelection.length < count // Check if the count is reached
-        ? [...currentSelection, menu._id]
-        : currentSelection // If count is reached, don't add the item
-      : currentSelection.filter((id: string) => id !== menu._id); // Remove the item if unchecked
+    const currentSelection = field.value[category] || {};
+    const updatedMenus: Record<
+      string,
+      {
+        quantity: number;
+        paxSelected: string;
+        pricePerPax: number;
+      }
+    > = { ...currentSelection };
+    const uniqueMenusSelected = Object.keys(updatedMenus).length;
 
-    field.onChange({
+    if (checked === true) {
+      // Allow adding a new dish if under the limit
+      if (uniqueMenusSelected < count) {
+        updatedMenus[menu._id] = {
+          quantity: 1,
+          paxSelected: "Regular",
+          pricePerPax: price,
+        }; // Set quantity to 1 when checked
+      }
+    } else {
+      // Remove the dish completely when unchecked
+      delete updatedMenus[menu._id];
+    }
+
+    const newMenus = {
       ...field.value,
       [category]: updatedMenus,
+    };
+
+    // Optional: remove the category entirely if it's empty
+    if (Object.keys(updatedMenus).length === 0) {
+      delete newMenus[category];
+    }
+
+    field.onChange(newMenus);
+  };
+
+  const handleReduceQuantity = (
+    value: SelectedMenus,
+    category: string,
+    menu: string,
+    onChange: (value: SelectedMenus) => void
+  ) => {
+    // Check if the category exists and get the count of menu items
+    const currentCategory = value[category];
+    const currentCount = currentCategory
+      ? Object.keys(currentCategory).length
+      : 0;
+
+    // Proceed only if the category has menu items and the menu exists
+    if (currentCount > 0 && currentCategory && currentCategory[menu]) {
+      // Create updated category with the new quantity for the menu
+      const updatedCategory: Record<string, MenuReservationDetails> = {
+        ...currentCategory,
+        [menu]: {
+          ...currentCategory[menu],
+          quantity: currentCategory[menu].quantity - 1,
+        },
+      };
+
+      // Remove the menu if its quantity becomes 0
+      if (updatedCategory[menu].quantity === 0) {
+        delete updatedCategory[menu];
+      }
+
+      // If the category becomes empty, remove the category
+      if (Object.keys(updatedCategory).length === 0) {
+        const updatedFieldValue = { ...value };
+        delete updatedFieldValue[category];
+        onChange(updatedFieldValue);
+      } else {
+        onChange({
+          ...value,
+          [category]: updatedCategory,
+        });
+      }
+    }
+  };
+
+  const handleAddQuantity = (
+    value: SelectedMenus,
+    category: string,
+    menu: string,
+    onChange: (value: SelectedMenus) => void
+  ) => {
+    // Get the current category, default to empty object if undefined
+    const currentCategory = value[category] || {};
+
+    // Get the current menu item, default to a new MenuReservationDetails if undefined
+    const currentItem = currentCategory[menu] || {
+      quantity: 0,
+      paxSelected: "Adult", // Default value, adjust as needed
+      pricePerPax: 0, // Default value, adjust as needed
+    };
+
+    // Create updated category with incremented quantity
+    const updatedCategory: Record<string, MenuReservationDetails> = {
+      ...currentCategory,
+      [menu]: {
+        ...currentItem,
+        quantity: currentItem.quantity + 1,
+      },
+    };
+
+    // Update the value with the new category
+    onChange({
+      ...value,
+      [category]: updatedCategory,
     });
   };
+
   return {
     reservationForm,
     validateStep,
@@ -215,5 +366,7 @@ export function useReservationForm() {
     handleCheckboxChange,
     showPackageSelection,
     setShowPackageSelection,
+    handleReduceQuantity,
+    handleAddQuantity,
   };
 }

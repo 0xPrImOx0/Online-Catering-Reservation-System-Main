@@ -118,7 +118,15 @@ export default function BookNowForm({ id }: { id: string }) {
     if (deconstructedId) {
       if (isMenu) {
         setValue("cateringOptions", "custom");
-        setValue("selectedMenus", { [isMenu.category]: [deconstructedId] });
+        setValue("selectedMenus", {
+          [isMenu.category]: {
+            [deconstructedId]: {
+              quantity: 1,
+              paxSelected: "Regular",
+              pricePerPax: isMenu.regularPricePerPax,
+            },
+          },
+        });
         return;
       }
       if (isPackage) {
@@ -130,13 +138,43 @@ export default function BookNowForm({ id }: { id: string }) {
     }
   }, [id, deconstructedId, setValue]);
 
+  const serviceFee = watch("serviceFee");
+  const selectedPackage = watch("selectedPackage");
+  const deliveryFee = watch("deliveryFee");
+  const selectedMenus = watch("selectedMenus");
+  const guestCount = watch("guestCount") || 1;
+
+  useEffect(() => {
+    const isPackage = cateringPackages.find(
+      (pkg) => pkg._id === selectedPackage
+    );
+    const calculateTotal = () => {
+      let total = 0;
+
+      // Iterate through each category (Soup, Beverage)
+      Object.values(selectedMenus).forEach((category) => {
+        // Iterate through each menu item in the category
+        Object.values(category).forEach((item) => {
+          total += item.quantity * item.pricePerPax;
+        });
+      });
+
+      setValue("totalPrice", total + serviceFee + deliveryFee);
+    };
+    if (isPackage) {
+      setValue("totalPrice", isPackage.pricePerPax * guestCount);
+      return;
+    }
+    calculateTotal();
+  }, [selectedMenus, serviceFee, deliveryFee, guestCount]);
+
   const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,
     <PackageSelection
       key={"package-selection"}
       showPackageSelection={showPackageSelection}
     />,
-    <CategoryOptions key={"category-options"} />,
+    <CategoryOptions key={"category-options"} validateStep={validateStep} />,
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,
   ];

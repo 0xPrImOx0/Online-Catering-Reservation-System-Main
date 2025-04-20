@@ -14,6 +14,8 @@ export default function TrayPriceCard({
   };
   regularPrice: number;
 }) {
+  // ₱ = &#8369;
+
   const { minimumPax, maximumPax, price } = data;
   const { calculatePricePerPax, calculateSavings } = useMenuForm();
 

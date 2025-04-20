@@ -238,7 +238,7 @@ export function InclusionsServicesStep({
                 <FormControl>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                      ₱
+                      &#8369;
                     </span>
                     <Input
                       type="number"
@@ -297,7 +297,7 @@ export function InclusionsServicesStep({
                       <TooltipTrigger asChild>
                         <div className="relative">
                           <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                            ₱
+                            &#8369;
                           </span>
                           <Input
                             type="number"
@@ -336,7 +336,7 @@ export function InclusionsServicesStep({
                       <TooltipTrigger asChild>
                         <div className="relative">
                           <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                            ₱
+                            &#8369;
                           </span>
                           <Input
                             type="number"

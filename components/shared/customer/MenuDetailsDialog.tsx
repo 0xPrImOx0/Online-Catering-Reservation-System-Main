@@ -33,6 +33,7 @@ export function MenuDetailsDialog({
   const router = useRouter();
   const pathname = usePathname();
   const isCaterer = pathname.includes("/caterer");
+
   return (
     <Dialog
       open={isMenuDetailsDialogOpen}
@@ -108,20 +109,22 @@ export function MenuDetailsDialog({
               </TooltipProvider>
             </div>
 
-            <DialogDescription className="text-muted-foreground mt-2">
+            <DialogDescription className="text-muted-foreground mb-2">
               {menu.shortDescription}
             </DialogDescription>
-            <div className="flex justify-between items-center mt-2 bg-foreground text-background px-3 py-2 rounded-md">
-              <span className="text-lg font-bold">
-                &#8369;{menu.regularPricePerPax.toFixed(2)} per pax
-              </span>
-              <Button
-                variant={"secondary"}
-                onClick={() => router.push(`/book-now/${menu._id}`)}
-              >
-                Book Now
-              </Button>
-            </div>
+            {!isCaterer && (
+              <div className="flex justify-between items-center mb-2 bg-foreground text-background px-3 py-2 rounded-md">
+                <span className="text-lg font-bold">
+                  &#8369; {menu.regularPricePerPax.toFixed(2)} per pax
+                </span>
+                <Button
+                  variant={"secondary"}
+                  onClick={() => router.push(`/book-now/${menu._id}`)}
+                >
+                  Book Now
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 

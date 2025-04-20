@@ -20,20 +20,38 @@ import {
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
 import WhatsTheOccasionCard from "./WhatsTheOccasionCard";
 import EventType from "./EventType";
 import EventDate from "./EventDate";
 import DeliveryDetails from "./DeliveryDetails";
 import DeliveryOption from "./DeliveryOption";
 import { hoursArray } from "@/types/package-types";
+import PlatedWarning from "../PlatedWarning";
+import DeliveryWarning from "./DeliveryWarning";
+import { useEffect } from "react";
+import { cateringPackages } from "@/lib/customer/packages-metadata";
 
 export default function EventDetails() {
-  const { control, getValues, watch } = useFormContext<ReservationValues>();
+  const { control, getValues, watch, setValue } =
+    useFormContext<ReservationValues>();
   const reservationType = watch("reservationType");
   const cateringOptions = watch("cateringOptions");
+  const selectedPackage = getValues("selectedPackage");
   const serviceType = watch("serviceType");
+  const serviceHours = watch("serviceHours");
   const eventType = watch("eventType");
+
+  useEffect(() => {
+    const hour = serviceHours?.slice(0, 2);
+    setValue("serviceFee", 100 * Number(hour));
+  }, [serviceHours]);
+
+  const getRecommendedPax = () => {
+    const pkg = cateringPackages.find((pkg) => pkg._id === selectedPackage);
+    return pkg?.recommendedPax || 0;
+  };
+
+  const recommendedPax = getRecommendedPax();
 
   return (
     <div className="space-y-4">
@@ -45,36 +63,46 @@ export default function EventDetails() {
           <EventType control={control} />
         )}
         <EventDate control={control} />
-        <FormField
-          control={control}
-          name="guestCount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="">
-                Number of Guests <span className="text-destructive">*</span>{" "}
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter expected guests"
-                  type="number"
-                  {...field}
-                  onChange={(e) => {
-                    // Handle the 0 issue by replacing the value completely
-                    const value = e.target.value;
-                    if (value === "0" || value === "") {
-                      field.onChange(0);
-                    } else {
-                      // Remove leading zeros and convert to number
-                      field.onChange(Number(value.replace(/^0+/, "")));
-                    }
-                  }}
-                  value={field.value || ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {reservationType === "event" && (
+          <FormField
+            control={control}
+            name="guestCount"
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormLabel className="">
+                  Number of Guests <span className="text-destructive">*</span>{" "}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter expected guests"
+                    type="number"
+                    {...field}
+                    onChange={(e) => {
+                      // Handle the 0 issue by replacing the value completely
+                      const value = e.target.value;
+                      if (value === "0" || value === "") {
+                        field.onChange(0);
+                      } else {
+                        // Remove leading zeros and convert to number
+                        field.onChange(Number(value.replace(/^0+/, "")));
+                      }
+                    }}
+                    value={field.value || ""}
+                  />
+                </FormControl>
+                {fieldState.error ? (
+                  <FormMessage />
+                ) : (
+                  recommendedPax > 0 && (
+                    <span className="italic text-[0.8rem] font-medium text-muted-foreground">
+                      *Recommended pax is {recommendedPax} persons
+                    </span>
+                  )
+                )}
+              </FormItem>
+            )}
+          />
+        )}
         {reservationType === "event" && (
           <FormField
             control={control}
@@ -111,11 +139,25 @@ export default function EventDetails() {
                     className="grid grid-cols-2 pt-2"
                   >
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="Buffet" id="buffet" />
+                      <RadioGroupItem
+                        onClick={() => {
+                          setValue("serviceFee", 0);
+                          setValue("serviceHours", "");
+                        }}
+                        value="Buffet"
+                        id="buffet"
+                      />
                       <Label htmlFor="buffet">Buffet</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="Plated" id="plated" />
+                      <RadioGroupItem
+                        value="Plated"
+                        id="plated"
+                        onClick={() => {
+                          setValue("serviceFee", 100 * 4);
+                          setValue("serviceHours", "4 hours");
+                        }}
+                      />
                       <Label htmlFor="plated">Plated Service</Label>
                     </div>
                   </RadioGroup>
@@ -157,19 +199,32 @@ export default function EventDetails() {
           )}
         </div>
       )}
+      <PlatedWarning isPlated={serviceType === "Plated"} />
       <Separator className="" />
       <div>
         <div className="mb-4">
           <h3 className="text-lg font-semibold">Delivery Details</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground mb-4">
             Please provide details about the delivery location and any special
             instructions for the delivery team.
           </p>
+          <DeliveryWarning
+            isDelivery={getValues("deliveryOption") === "Delivery"}
+          />
         </div>
         <DeliveryOption control={control} />
         {getValues("deliveryOption") === "Delivery" && (
           <DeliveryDetails control={control} />
         )}
+      </div>
+      <Separator />
+
+      <div className="flex justify-between items-end">
+        <Label>Total Bill</Label>
+        <span className="text-green-500 text-2xl underline underline-offset-4">
+          &#8369;{" "}
+          {`${new Intl.NumberFormat("en-US").format(watch("totalPrice"))}.00`}
+        </span>
       </div>
     </div>
   );

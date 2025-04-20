@@ -32,7 +32,8 @@ export default function PlatedWarning({ isPlated }: { isPlated: boolean }) {
         <p className="text-sm text-foreground dark:text-background text-justify max-w-[1000px]">
           Our plated course packages include professional waitstaff who will
           serve each course directly to your guests&apos; tables. An additional
-          service fee of ₱100 per hour is included in the price per person.
+          service fee of &#8369;100 per hour is included in the price per
+          person.
         </p>
       </div>
     </div>

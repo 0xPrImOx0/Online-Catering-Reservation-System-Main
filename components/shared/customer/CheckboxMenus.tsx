@@ -14,6 +14,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Separator } from "@/components/ui/separator";
+import clsx from "clsx";
+import { SelectedMenus } from "@/types/reservation-types";
 
 export default function CheckboxMenus({
   category,
@@ -24,7 +27,7 @@ export default function CheckboxMenus({
   category: CategoryProps;
   field: any;
   count: number;
-  selectedMenus: any;
+  selectedMenus: SelectedMenus;
 }) {
   const { handleCheckboxChange } = useReservationForm();
   // Function to get dishes by category
@@ -32,11 +35,16 @@ export default function CheckboxMenus({
     return menuItems.filter((menu: MenuItem) => menu.category === category);
   };
 
+  const getMenuItemPrice = (menuId: string) => {
+    const menu = menuItems.find((item) => item._id === menuId);
+    return menu ? menu.regularPricePerPax : 0;
+  };
+
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("");
   return (
-    <>
-      <div key={category} className="space-y-2">
+    <div>
+      <div key={category} className="space-y-3">
         <FormLabel className="font-medium text-base">
           {category} Options
         </FormLabel>
@@ -46,14 +54,22 @@ export default function CheckboxMenus({
               <FormControl>
                 <Checkbox
                   id={menu._id}
-                  checked={field.value[category]?.includes(menu._id)}
+                  checked={!!field.value[category]?.[menu._id]} // ✅ check if menu is selected (count > 0)
                   disabled={
-                    !field.value[category]?.includes(menu._id) && // Allow unchecking
-                    field.value[category]?.length >= count // Disable if limit is reached
+                    !field.value[category]?.[menu._id] && // ✅ allow unchecking
+                    field.value[category]?.length >= count
                   }
                   onCheckedChange={(checked) =>
-                    handleCheckboxChange(checked, field, category, menu, count)
+                    handleCheckboxChange(
+                      checked,
+                      field,
+                      category,
+                      menu,
+                      count,
+                      getMenuItemPrice(menu._id)
+                    )
                   }
+                  className="data-[state=checked]:border-green-500 data-[state=checked]:bg-green-500 data-[state=checked]:text-background"
                 />
               </FormControl>
               <div className="flex flex-col justify-between">
@@ -63,7 +79,9 @@ export default function CheckboxMenus({
                       <Button
                         size={"custom"}
                         variant={"link"}
-                        className="font-medium max-w-fit -mt-1"
+                        className={clsx("font-medium max-w-fit -mt-1", {
+                          "text-green-500": field.value[category]?.[menu._id],
+                        })}
                         onClick={() => {
                           setActiveMenu(menu._id);
                           setIsImageDialogOpen(true);
@@ -75,9 +93,12 @@ export default function CheckboxMenus({
                     <TooltipContent>View Image</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                <p className="text-sm text-muted-foreground">
+                <Label
+                  htmlFor={menu._id}
+                  className="text-sm text-muted-foreground cursor-pointer"
+                >
                   {menu.shortDescription}
-                </p>
+                </Label>
                 {isImageDialogOpen && activeMenu === menu._id && (
                   <ImageDialog
                     item={menu}
@@ -89,12 +110,13 @@ export default function CheckboxMenus({
             </div>
           ))}
         </div>
-        {selectedMenus[category]?.length >= count && (
+        {Array.isArray(selectedMenus[category]) && selectedMenus[category].length >= count && (
           <p className="text-xs text-muted-foreground italic">
             *You can only select up to {count} item/s for {category}.*
           </p>
         )}
       </div>
-    </>
+      <Separator className="mt-4" />
+    </div>
   );
 }

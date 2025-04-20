@@ -1,18 +1,20 @@
 import { CheckCircle } from "lucide-react";
 import clsx from "clsx";
 import { Badge } from "@/components/ui/badge";
+import { MenuReservationDetails, SelectedMenus } from "@/types/reservation-types";
 
 export default function CategoryOptionsBadge({
   categoryAndCount,
   selectedMenus,
 }: {
   categoryAndCount: { category: string; count: number }[];
-  selectedMenus: any;
+  selectedMenus: SelectedMenus;
 }) {
   return (
     <div className="gap-3 flex flex-wrap items-center">
       {categoryAndCount.map(({ category, count }) => {
-        let isLimitReached = (selectedMenus[category]?.length || 0) >= count;
+        let isLimitReached =
+          (Object.keys(selectedMenus[category] || {}).length || 0) >= count;
         return (
           <Badge
             variant={"outline"}

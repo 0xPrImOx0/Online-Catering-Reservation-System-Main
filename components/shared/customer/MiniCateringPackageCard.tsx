@@ -46,7 +46,7 @@ export default function MiniCateringPackageCard({
                     : " group-hover:bg-green-500 group-hover:text-background text-muted-foreground"
                 )}
               >
-                <User className="" /> ₱
+                <User className="" /> &#8369;
                 {pkg.pricePerPaxWithServiceCharge.toFixed(2)}/pax
               </span>
             </Button>
