@@ -36,6 +36,8 @@ export default function CategoryOptions({
 
   const cateringOptions = watch("cateringOptions");
   const selectedPackage = getValues("selectedPackage");
+  const serviceFee = watch("serviceFee");
+  const deliveryFee = watch("deliveryFee");
 
   const [currentPackage, setCurrentPackage] = useState<string>();
   const [categoryAndCount, setCategoryAndCount] = useState<PackageOption[]>(
@@ -160,12 +162,15 @@ export default function CategoryOptions({
           </FormItem>
         )}
       />
-      <div className="flex justify-between items-end">
-        <Label>Partial Price</Label>
-        <span className="text-green-500 text-2xl underline underline-offset-4">
-          &#8369; {watch("totalPrice").toFixed(2)}
-        </span>
-      </div>
+      {watch("totalPrice") > 0 && (
+        <div className="flex justify-between items-end">
+          <Label>{serviceFee && deliveryFee ? "Total" : "Partial"} Price</Label>
+          <span className="text-green-500 text-2xl underline underline-offset-4">
+            &#8369;{" "}
+            {`${new Intl.NumberFormat("en-US").format(watch("totalPrice"))}.00`}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

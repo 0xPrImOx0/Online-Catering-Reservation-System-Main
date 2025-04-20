@@ -29,21 +29,29 @@ import { hoursArray } from "@/types/package-types";
 import PlatedWarning from "../PlatedWarning";
 import DeliveryWarning from "./DeliveryWarning";
 import { useEffect } from "react";
+import { cateringPackages } from "@/lib/customer/packages-metadata";
 
 export default function EventDetails() {
   const { control, getValues, watch, setValue } =
     useFormContext<ReservationValues>();
   const reservationType = watch("reservationType");
   const cateringOptions = watch("cateringOptions");
+  const selectedPackage = getValues("selectedPackage");
   const serviceType = watch("serviceType");
   const serviceHours = watch("serviceHours");
   const eventType = watch("eventType");
-  const totalPrice = watch("totalPrice");
 
   useEffect(() => {
     const hour = serviceHours?.slice(0, 2);
     setValue("serviceFee", 100 * Number(hour));
   }, [serviceHours]);
+
+  const getRecommendedPax = () => {
+    const pkg = cateringPackages.find((pkg) => pkg._id === selectedPackage);
+    return pkg?.recommendedPax || 0;
+  };
+
+  const recommendedPax = getRecommendedPax();
 
   return (
     <div className="space-y-4">
@@ -59,7 +67,7 @@ export default function EventDetails() {
           <FormField
             control={control}
             name="guestCount"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <FormLabel className="">
                   Number of Guests <span className="text-destructive">*</span>{" "}
@@ -82,7 +90,15 @@ export default function EventDetails() {
                     value={field.value || ""}
                   />
                 </FormControl>
-                <FormMessage />
+                {fieldState.error ? (
+                  <FormMessage />
+                ) : (
+                  recommendedPax > 0 && (
+                    <span className="italic text-[0.8rem] font-medium text-muted-foreground">
+                      *Recommended pax is {recommendedPax} persons
+                    </span>
+                  )
+                )}
               </FormItem>
             )}
           />
@@ -206,7 +222,8 @@ export default function EventDetails() {
       <div className="flex justify-between items-end">
         <Label>Total Bill</Label>
         <span className="text-green-500 text-2xl underline underline-offset-4">
-          &#8369; {watch("totalPrice").toFixed(2)}
+          &#8369;{" "}
+          {`${new Intl.NumberFormat("en-US").format(watch("totalPrice"))}.00`}
         </span>
       </div>
     </div>

@@ -1,7 +1,7 @@
-import { CategoryProps, MenuItem } from "@/types/menu-types";
+import { cateringPackages } from "@/lib/customer/packages-metadata";
+import { MenuItem } from "@/types/menu-types";
 import {
   EventType,
-  eventTypes,
   PackageCategory,
   reservationEventTypes,
 } from "@/types/package-types";
@@ -43,10 +43,7 @@ const reservationSchema = z
         /^([01]\d|2[0-3]):([0-5]\d)$/,
         "Please enter a valid time (HH:mm)"
       ),
-    guestCount: z
-      .number({ required_error: "Please provide the Guest Count" })
-      .min(20, "Guest Count must be at least 20")
-      .max(200, "Guest Count must not exceed 200"),
+    guestCount: z.number({ required_error: "Please provide the Guest Count" }),
     venue: z
       .string({ required_error: "Please provide the Venue" })
       .min(3, "Venue must be at least 3 characters")
@@ -102,9 +99,21 @@ const reservationSchema = z
   })
   .superRefine((data, ctx) => {
     if (data.selectedPackage) {
+      const selectedPackage = cateringPackages.find(
+        (pkg) => pkg._id === data.selectedPackage
+      );
+      let minimumGuestCount = selectedPackage?.minimumPax || 20;
       const allCategoriesHaveMenus = Object.values(data.selectedMenus).every(
         (categoryMenus) => Object.keys(categoryMenus).length > 0
       );
+
+      if (data.guestCount < minimumGuestCount) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["guestCount"],
+          message: `Guest count must be at least ${minimumGuestCount}`,
+        });
+      }
 
       if (!allCategoriesHaveMenus) {
         ctx.addIssue({
@@ -113,6 +122,20 @@ const reservationSchema = z
           path: ["selectedMenus"],
         });
       }
+    }
+    if (data.guestCount < 20) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["guestCount"],
+        message: `Guest count must be at least 20 persons`,
+      });
+    }
+    if (data.guestCount > 200) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["guestCount"],
+        message: `Guest count must be at most 200 persons`,
+      });
     }
   });
 
@@ -208,7 +231,7 @@ export function useReservationForm() {
           ];
         }
         if (reservationType === "personal") {
-          return ["eventDate", "guestCount"];
+          return ["eventDate"];
         }
       default:
         return [];

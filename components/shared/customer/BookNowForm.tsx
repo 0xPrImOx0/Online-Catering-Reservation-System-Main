@@ -42,7 +42,7 @@ export default function BookNowForm({ id }: { id: string }) {
 
   const { watch } = reservationForm;
 
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [nextPageCount, setNextPageCount] = useState(0);
@@ -139,10 +139,15 @@ export default function BookNowForm({ id }: { id: string }) {
   }, [id, deconstructedId, setValue]);
 
   const serviceFee = watch("serviceFee");
+  const selectedPackage = watch("selectedPackage");
   const deliveryFee = watch("deliveryFee");
   const selectedMenus = watch("selectedMenus");
+  const guestCount = watch("guestCount") || 1;
 
   useEffect(() => {
+    const isPackage = cateringPackages.find(
+      (pkg) => pkg._id === selectedPackage
+    );
     const calculateTotal = () => {
       let total = 0;
 
@@ -156,8 +161,12 @@ export default function BookNowForm({ id }: { id: string }) {
 
       setValue("totalPrice", total + serviceFee + deliveryFee);
     };
+    if (isPackage) {
+      setValue("totalPrice", isPackage.pricePerPax * guestCount);
+      return;
+    }
     calculateTotal();
-  }, [selectedMenus, serviceFee, deliveryFee]);
+  }, [selectedMenus, serviceFee, deliveryFee, guestCount]);
 
   const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,
