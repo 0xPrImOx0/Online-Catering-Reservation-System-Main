@@ -66,7 +66,7 @@ export default function CategoryOptions({
 
   useEffect(() => {
     const calculateTotal = () => {
-      let total = 0;
+      let total = watch("totalPrice") || 0;
 
       // Iterate through each category (Soup, Beverage)
       Object.values(selectedMenus).forEach((category) => {

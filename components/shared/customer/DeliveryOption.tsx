@@ -7,8 +7,19 @@ import {
 } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ReservationValues } from "@/hooks/use-reservation-form";
+import { useFormContext } from "react-hook-form";
 
 export default function DeliveryOption({ control }: { control: any }) {
+  const { watch, setValue } = useFormContext<ReservationValues>();
+  const totalPrice = watch("totalPrice");
+
+  const handleDeliveryOption = () => {
+    setValue("totalPrice", totalPrice + 300);
+  };
+  const handlePickupOption = () => {
+    setValue("totalPrice", totalPrice - 300);
+  };
   return (
     <FormField
       control={control}
@@ -24,12 +35,20 @@ export default function DeliveryOption({ control }: { control: any }) {
             className="grid grid-cols-2 pt-2"
           >
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="Pickup" id="pickup" />
+              <RadioGroupItem
+                value="Pickup"
+                id="pickup"
+                onClick={handlePickupOption}
+              />
               <Label htmlFor="pickup">Pickup</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="Delivery" id="delivery" />
-              <Label htmlFor="delivery">Delivery (&#8369;300)</Label>
+              <RadioGroupItem
+                value="Delivery"
+                id="delivery"
+                onClick={handleDeliveryOption}
+              />
+              <Label htmlFor="delivery">Delivery</Label>
             </div>
           </RadioGroup>
           <FormMessage />

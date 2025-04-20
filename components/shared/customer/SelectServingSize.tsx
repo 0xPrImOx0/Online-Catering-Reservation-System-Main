@@ -29,6 +29,8 @@ export default function SelectServingSize({
     return menuItems.find((item) => item._id === menu);
   };
 
+  const currentCategory = value[category] || {};
+  const paxSelected = value[category]?.[menu]?.paxSelected || "Regular";
   const handlePaxChange = (newPax: PaxArrayType) => {
     const menuItem = getMenuItem();
     if (!menuItem) return;
@@ -41,8 +43,6 @@ export default function SelectServingSize({
       "18-20 pax": menuItem.prices[3].price ?? 0,
     };
 
-    const currentCategory = value[category] || {};
-    const paxSelected = value[category]?.[menu]?.paxSelected || "Regular";
     const currentItem = currentCategory[menu] || {
       quantity: 0,
       paxSelected: paxSelected,
@@ -72,7 +72,7 @@ export default function SelectServingSize({
   }, [selectedMenus]);
 
   return (
-    <Select defaultValue="Regular" onValueChange={handlePaxChange}>
+    <Select defaultValue={paxSelected} onValueChange={handlePaxChange}>
       <SelectTrigger className="w-32">
         <SelectValue placeholder="Serving Size" />
       </SelectTrigger>

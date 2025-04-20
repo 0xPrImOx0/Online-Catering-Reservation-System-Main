@@ -26,13 +26,28 @@ import EventDate from "./EventDate";
 import DeliveryDetails from "./DeliveryDetails";
 import DeliveryOption from "./DeliveryOption";
 import { hoursArray } from "@/types/package-types";
+import PlatedWarning from "../PlatedWarning";
+import DeliveryWarning from "./DeliveryWarning";
+import { set } from "date-fns";
 
 export default function EventDetails() {
-  const { control, getValues, watch } = useFormContext<ReservationValues>();
+  const { control, getValues, watch, setValue } =
+    useFormContext<ReservationValues>();
   const reservationType = watch("reservationType");
   const cateringOptions = watch("cateringOptions");
   const serviceType = watch("serviceType");
   const eventType = watch("eventType");
+  const totalPrice = watch("totalPrice");
+
+  const handlePlatedType = () => {
+    setValue("totalPrice", totalPrice + 100);
+    setValue("serviceHours", "4 hours");
+  };
+
+  const handleBuffetType = () => {
+    setValue("totalPrice", totalPrice - 100);
+    setValue("serviceHours", "");
+  };
 
   return (
     <div className="space-y-4">
@@ -44,36 +59,38 @@ export default function EventDetails() {
           <EventType control={control} />
         )}
         <EventDate control={control} />
-        <FormField
-          control={control}
-          name="guestCount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="">
-                Number of Guests <span className="text-destructive">*</span>{" "}
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter expected guests"
-                  type="number"
-                  {...field}
-                  onChange={(e) => {
-                    // Handle the 0 issue by replacing the value completely
-                    const value = e.target.value;
-                    if (value === "0" || value === "") {
-                      field.onChange(0);
-                    } else {
-                      // Remove leading zeros and convert to number
-                      field.onChange(Number(value.replace(/^0+/, "")));
-                    }
-                  }}
-                  value={field.value || ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {reservationType === "event" && (
+          <FormField
+            control={control}
+            name="guestCount"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="">
+                  Number of Guests <span className="text-destructive">*</span>{" "}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter expected guests"
+                    type="number"
+                    {...field}
+                    onChange={(e) => {
+                      // Handle the 0 issue by replacing the value completely
+                      const value = e.target.value;
+                      if (value === "0" || value === "") {
+                        field.onChange(0);
+                      } else {
+                        // Remove leading zeros and convert to number
+                        field.onChange(Number(value.replace(/^0+/, "")));
+                      }
+                    }}
+                    value={field.value || ""}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         {reservationType === "event" && (
           <FormField
             control={control}
@@ -110,11 +127,19 @@ export default function EventDetails() {
                     className="grid grid-cols-2 pt-2"
                   >
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="Buffet" id="buffet" />
+                      <RadioGroupItem
+                        onClick={handleBuffetType}
+                        value="Buffet"
+                        id="buffet"
+                      />
                       <Label htmlFor="buffet">Buffet</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="Plated" id="plated" />
+                      <RadioGroupItem
+                        value="Plated"
+                        id="plated"
+                        onClick={handlePlatedType}
+                      />
                       <Label htmlFor="plated">Plated Service</Label>
                     </div>
                   </RadioGroup>
@@ -156,19 +181,31 @@ export default function EventDetails() {
           )}
         </div>
       )}
+      <PlatedWarning isPlated={serviceType === "Plated"} />
       <Separator className="" />
       <div>
         <div className="mb-4">
           <h3 className="text-lg font-semibold">Delivery Details</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground mb-4">
             Please provide details about the delivery location and any special
             instructions for the delivery team.
           </p>
+          <DeliveryWarning
+            isDelivery={getValues("deliveryOption") === "Delivery"}
+          />
         </div>
         <DeliveryOption control={control} />
         {getValues("deliveryOption") === "Delivery" && (
           <DeliveryDetails control={control} />
         )}
+      </div>
+      <Separator />
+
+      <div className="flex justify-between items-end">
+        <Label>Total Price</Label>
+        <span className="text-green-500 text-2xl underline underline-offset-4">
+          &#8369; {watch("totalPrice").toFixed(2)}
+        </span>
       </div>
     </div>
   );
