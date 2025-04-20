@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,11 @@ import { MenuDetailsDialog } from "./MenuDetailsDialog";
 import { CategoryBadge } from "./MenuCategoryBadge";
 import ImageDialog from "../ImageDialog";
 import { useMenuForm } from "@/hooks/use-menu-form";
+import { useSearchParams } from "next/navigation";
+import {
+  getQueryParam,
+  hasOnlyAllowedSearchParams,
+} from "@/utils/search-params";
 
 export function CustomerMenuCard({ menu }: MenuCardProps) {
   const [selectedServing, setSelectedServing] = useState<ServingSize>(6);
@@ -33,6 +38,19 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
   const [discount, setDiscount] = useState(menu.prices[0].discount);
 
   const { calculateSavings, calculateSavingsPercentage } = useMenuForm();
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const isQueryValid = hasOnlyAllowedSearchParams(searchParams, [
+      "view",
+      "id",
+    ]);
+
+    if (isQueryValid && getQueryParam(searchParams, "view") === "image") {
+      setIsImageDialogOpen(true);
+    }
+  }, [searchParams]);
 
   return (
     <Card className="min-w-[325px] flex-1 overflow-hidden border shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">

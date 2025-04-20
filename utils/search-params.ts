@@ -9,3 +9,10 @@ export function hasOnlyAllowedSearchParams(
     entries.length === allowedKeys.length
   );
 }
+
+export function getQueryParam(
+  searchParams: URLSearchParams,
+  key: string
+): string | undefined {
+  return searchParams.get(key)?.toLowerCase();
+}
