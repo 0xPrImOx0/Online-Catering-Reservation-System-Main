@@ -80,6 +80,7 @@ const reservationSchema = z
           ),
         { message: "You must select at least one menu item." }
       ),
+    totalPrice: z.number(),
     specialRequests: z
       .string()
       .max(500, "Special Requests must not exceed 500 characters")
@@ -130,6 +131,7 @@ const defaultValues: ReservationValues = {
   serviceHours: "",
   selectedPackage: "",
   selectedMenus: {} as Record<string, Record<string, MenuReservationDetails>>,
+  totalPrice: 0,
   specialRequests: "",
   deliveryOption: "Pickup",
   deliveryAddress: "",

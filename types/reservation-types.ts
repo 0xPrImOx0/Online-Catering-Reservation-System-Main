@@ -56,6 +56,7 @@ export interface ReservationItem {
   fullName: string;
   email: string;
   contactNumber: string;
+  reservationType: "event" | "personal";
   eventType: string;
   eventDate: Date;
   eventTime: string;
@@ -66,6 +67,7 @@ export interface ReservationItem {
   serviceHours?: string;
   selectedPackage: string;
   selectedMenus: SelectedMenus;
+  totalPrice: number;
   specialRequests?: string;
   deliveryOption: "Pickup" | "Delivery";
   deliveryAddress?: string;

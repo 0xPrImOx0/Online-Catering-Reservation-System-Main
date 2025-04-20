@@ -40,7 +40,6 @@ export default function CategoryOptions({
   const [categoryAndCount, setCategoryAndCount] = useState<PackageOption[]>(
     defaultCategoryAndCount
   );
-  const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     if (cateringOptions === "custom") {
       setCurrentPackage("");
@@ -76,8 +75,7 @@ export default function CategoryOptions({
           total += item.quantity * item.pricePerPax;
         });
       });
-
-      setTotalPrice(total);
+      setValue("totalPrice", total);
     };
     calculateTotal();
   }, [selectedMenus]);
@@ -177,9 +175,11 @@ export default function CategoryOptions({
           </FormItem>
         )}
       />
-      <div className="flex justify-between">
+      <div className="flex justify-between items-end">
         <Label>Partial Price</Label>
-        <span className="text-green-500">&#8369; {totalPrice.toFixed(2)}</span>
+        <span className="text-green-500 text-2xl underline underline-offset-4">
+          &#8369; {watch("totalPrice").toFixed(2)}
+        </span>
       </div>
     </div>
   );
