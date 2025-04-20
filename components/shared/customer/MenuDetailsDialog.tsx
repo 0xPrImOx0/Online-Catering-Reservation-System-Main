@@ -29,7 +29,13 @@ import { cn } from "@/lib/utils";
 export function MenuDetailsDialog({ menu, children }: MenuDetailsDialogProps) {
   const router = useRouter();
   return (
-    <Dialog>
+    <Dialog
+      onOpenChange={(open) => {
+        if (!open) {
+          window.history.pushState({}, "", `/menus`);
+        }
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-md md:max-w-xl w-full p-0 gap-0 max-h-[85vh] flex flex-col overflow-hidden rounded-md">
         <div className="">
@@ -37,9 +43,8 @@ export function MenuDetailsDialog({ menu, children }: MenuDetailsDialogProps) {
             <Image
               src={menu.imageUrl || "/placeholder.svg"}
               alt={menu.name}
-              priority
               width={600}
-              height={240}
+              height={100}
               className="object-cover max-h-[240px] overflow-hidden"
             />
 

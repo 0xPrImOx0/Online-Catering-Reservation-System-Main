@@ -45,7 +45,11 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
                 variant="ghost"
                 className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 onClick={() => {
-                  window.history.pushState({}, "", `/menus?id=${menu._id}`);
+                  window.history.pushState(
+                    {},
+                    "",
+                    `/menus?view=image&id=${menu._id}`
+                  );
                   setIsImageDialogOpen(true);
                 }}
               >
@@ -205,7 +209,18 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
 
       <CardFooter className="flex justify-between">
         <MenuDetailsDialog menu={menu}>
-          <Button className={"w-full"} variant={"default"} size={"default"}>
+          <Button
+            className={"w-full"}
+            variant={"default"}
+            size={"default"}
+            onClick={() =>
+              window.history.pushState(
+                {},
+                "",
+                `/menus?view=details&id=${menu._id}`
+              )
+            }
+          >
             View Details
           </Button>
         </MenuDetailsDialog>

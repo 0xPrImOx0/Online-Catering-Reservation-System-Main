@@ -16,7 +16,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image from "next/image";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 import { X } from "lucide-react";
 import { ImageDialogProps } from "@/types/component-types";
 
@@ -28,11 +27,23 @@ export default function ImageDialog({
   const imageRef = useRef<HTMLImageElement | null>(null);
 
   return (
-    <Dialog open={isImageDialogOpen} onOpenChange={setIsImageDialogOpen}>
+    <Dialog
+      open={isImageDialogOpen}
+      onOpenChange={(open) => {
+        setIsImageDialogOpen(open);
+        if (!open) {
+          window.history.pushState({}, "", `/menus`);
+        }
+      }}
+    >
       <DialogContent className="p-0 overflow-hidden bg-transparent border-0 shadow-none">
         <DialogHeader className="sr-only">
-          <DialogTitle>My Title</DialogTitle>
-          <DialogDescription>Fixed the warning</DialogDescription>
+          <DialogTitle>{item.name}</DialogTitle>
+          {"shortDescription" in item ? (
+            <DialogDescription>{item.shortDescription}</DialogDescription>
+          ) : (
+            <DialogDescription>{item.description}</DialogDescription>
+          )}
         </DialogHeader>
         <div className="relative w-auto h-auto">
           <TooltipProvider>
