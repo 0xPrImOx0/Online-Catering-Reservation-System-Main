@@ -22,7 +22,7 @@ import { CategoryBadge } from "./MenuCategoryBadge";
 import { Card } from "@/components/ui/card";
 import TrayPriceCard from "../TrayPriceCard";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 export function MenuDetailsDialog({
@@ -31,12 +31,22 @@ export function MenuDetailsDialog({
   setIsMenuDetailsDialogOpen,
 }: MenuDetailsDialogProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const isCaterer = pathname.includes("/caterer");
   return (
     <Dialog
       open={isMenuDetailsDialogOpen}
       onOpenChange={(open) => {
         setIsMenuDetailsDialogOpen(open);
+
         if (!open) {
+          // If the route is for caterer it goes back to /caterer/menus
+          if (isCaterer) {
+            window.history.pushState({}, "", `/caterer/menus`);
+            return;
+          }
+
+          // If the route is not for caterer it goes back to /menus
           window.history.pushState({}, "", `/menus`);
         }
       }}

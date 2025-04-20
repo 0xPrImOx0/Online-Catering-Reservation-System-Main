@@ -54,8 +54,7 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
     }
 
     setIsImageDialogOpen(false);
-
-    console.log("RRENDEREDD");
+    setIsMenuDetailsDialogOpen(false);
   }, [searchParams, menu._id]);
 
   return (

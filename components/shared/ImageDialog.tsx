@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import { X } from "lucide-react";
 import { ImageDialogProps } from "@/types/component-types";
+import { usePathname } from "next/navigation";
 
 export default function ImageDialog({
   item,
@@ -25,13 +26,23 @@ export default function ImageDialog({
   setIsImageDialogOpen,
 }: ImageDialogProps) {
   const imageRef = useRef<HTMLImageElement | null>(null);
+  const pathname = usePathname();
+  const isCaterer = pathname.includes("/caterer");
 
   return (
     <Dialog
       open={isImageDialogOpen}
       onOpenChange={(open) => {
         setIsImageDialogOpen(open);
+
         if (!open) {
+          // If the route is for caterer it goes back to /caterer/menus
+          if (isCaterer) {
+            window.history.pushState({}, "", `/caterer/menus`);
+            return;
+          }
+
+          // If the route is not for caterer it goes back to /menus
           window.history.pushState({}, "", `/menus`);
         }
       }}
