@@ -9,8 +9,6 @@ export default function Page() {
   // State responsible for opening/closing the dialogs for dialog visibility
   const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);
   const { open } = useSidebar();
-  // const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  // const [query, setQuery] = useState("");
 
   return (
     <main className="space-y-8 px-2 sm:px-14 md:px-10 max-w-[1440px] w-full mx-auto overflow-hidden">
@@ -19,7 +17,7 @@ export default function Page() {
         setIsAddInstanceOpen={setIsAddMenuOpen}
       />
 
-      <div className="relative w-full mx-auto overflow-hidden">
+      <div className="relative w-full mx-auto overflow-hidden py-2">
         <PaginatedMenus open={open} />
       </div>
 

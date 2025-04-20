@@ -44,7 +44,10 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
                 size="custom"
                 variant="ghost"
                 className="absolute inset-0 w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                onClick={() => setIsImageDialogOpen(true)}
+                onClick={() => {
+                  window.history.pushState({}, "", `/menus?id=${menu._id}`);
+                  setIsImageDialogOpen(true);
+                }}
               >
                 <Image
                   src={menu.imageUrl || "/placeholder.svg"}

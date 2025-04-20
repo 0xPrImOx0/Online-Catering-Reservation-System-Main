@@ -14,8 +14,6 @@ export default function TrayPriceCard({
   };
   regularPrice: number;
 }) {
-  // 8369 = ₱
-
   const { minimumPax, maximumPax, price } = data;
   const { calculatePricePerPax, calculateSavings } = useMenuForm();
 
@@ -34,13 +32,12 @@ export default function TrayPriceCard({
       <div className="text-right">
         <p className="font-bold">&#8369; {price.toFixed(2)}</p>
         <p className="text-sm text-emerald-600 dark:text-emerald-400">
-          &#8369;
+          Saved &#8369;
           {calculateSavings({
             regularPricePerPax: regularPrice,
             price,
             servingSize: maximumPax,
-          })}{" "}
-          Saved
+          })}
         </p>
       </div>
     </Card>

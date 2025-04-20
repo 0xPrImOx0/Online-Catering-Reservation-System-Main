@@ -5,6 +5,8 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
+  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
@@ -28,9 +30,10 @@ export default function ImageDialog({
   return (
     <Dialog open={isImageDialogOpen} onOpenChange={setIsImageDialogOpen}>
       <DialogContent className="p-0 overflow-hidden bg-transparent border-0 shadow-none">
-        <VisuallyHidden>
-          <DialogTitle>{item.name}</DialogTitle>
-        </VisuallyHidden>
+        <DialogHeader className="sr-only">
+          <DialogTitle>My Title</DialogTitle>
+          <DialogDescription>Fixed the warning</DialogDescription>
+        </DialogHeader>
         <div className="relative w-auto h-auto">
           <TooltipProvider>
             <Tooltip>
