@@ -26,6 +26,32 @@ export type reservationType = {
   isUrgent: boolean;
 };
 
+export type PaxArrayType =
+  | "Regular"
+  | "4-6 pax"
+  | "8-10 pax"
+  | "13-15 pax"
+  | "18-20 pax";
+
+export const paxArray: PaxArrayType[] = [
+  "Regular",
+  "4-6 pax",
+  "8-10 pax",
+  "13-15 pax",
+  "18-20 pax",
+];
+
+export interface MenuReservationDetails {
+  quantity: number;
+  paxSelected: PaxArrayType;
+  pricePerPax: number;
+}
+
+export type SelectedMenus = Record<
+  string,
+  Record<string, MenuReservationDetails>
+>;
+
 export interface ReservationItem {
   fullName: string;
   email: string;
@@ -39,7 +65,7 @@ export interface ReservationItem {
   serviceType: ServiceType;
   serviceHours?: string;
   selectedPackage: string;
-  selectedMenus: Record<PackageCategory, Record<string, number>>;
+  selectedMenus: SelectedMenus;
   specialRequests?: string;
   deliveryOption: "Pickup" | "Delivery";
   deliveryAddress?: string;
@@ -55,7 +81,9 @@ export interface BookNowProps {
   formHook: ReturnType<typeof useReservationForm>;
 }
 
-export type SelectcateringOptionsProps = {
-  showSelectcateringOptions: boolean;
-  setShowSelectcateringOptions: (open: boolean) => void;
-};
+export interface SelectServingSizeProps {
+  category: string;
+  menu: string;
+  value: SelectedMenus;
+  onChange: (value: SelectedMenus) => void;
+}

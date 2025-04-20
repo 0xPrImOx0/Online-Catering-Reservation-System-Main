@@ -125,8 +125,8 @@ export default function PackageManagement() {
               <p className="text-sm text-muted-foreground text-justify">
                 Our plated course packages include professional waitstaff who
                 will serve each course directly to your guests&apos; tables. An
-                additional service fee of ₱100 per hour is included in the price
-                per person.
+                additional service fee of &#8369;100 per hour is included in the
+                price per person.
               </p>
             </div>
           </div>
@@ -182,8 +182,8 @@ export default function PackageManagement() {
                   <p className="text-sm text-muted-foreground text-justify">
                     Our plated event packages include professional waitstaff who
                     will serve each course directly to your guests&apos; tables.
-                    An additional service fee of ₱100 per hour is included in
-                    the price per person.
+                    An additional service fee of &#8369;100 per hour is included
+                    in the price per person.
                   </p>
                 </div>
               </div>

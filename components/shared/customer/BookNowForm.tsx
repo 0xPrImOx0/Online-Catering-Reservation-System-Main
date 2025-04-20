@@ -119,7 +119,13 @@ export default function BookNowForm({ id }: { id: string }) {
       if (isMenu) {
         setValue("cateringOptions", "custom");
         setValue("selectedMenus", {
-          [isMenu.category]: { deconstructedId: 0 },
+          [isMenu.category]: {
+            [deconstructedId]: {
+              quantity: 1,
+              paxSelected: "Regular",
+              pricePerPax: isMenu.regularPricePerPax,
+            },
+          },
         });
         return;
       }

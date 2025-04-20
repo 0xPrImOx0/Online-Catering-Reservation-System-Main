@@ -1,6 +1,9 @@
 "use client";
 import { Textarea } from "@/components/ui/textarea";
-import { ReservationValues } from "@/hooks/use-reservation-form";
+import {
+  ReservationValues,
+  useReservationForm,
+} from "@/hooks/use-reservation-form";
 import { defaultCategoryAndCount } from "@/lib/menu-select";
 import { useEffect, useState } from "react";
 import {
@@ -17,8 +20,9 @@ import { PackageOption } from "@/types/package-types";
 import CheckboxMenus from "./CheckboxMenus";
 import CategoryOptionsBadge from "./CategoryOptionsBadge";
 import { menuItems } from "@/lib/menu-lists";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import AddRemoveMenuQuantity from "./AddRemoveMenuQuantity";
+import SelectServingSize from "./SelectServingSize";
 
 export default function CategoryOptions({
   validateStep,
@@ -36,7 +40,7 @@ export default function CategoryOptions({
   const [categoryAndCount, setCategoryAndCount] = useState<PackageOption[]>(
     defaultCategoryAndCount
   );
-
+  const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     if (cateringOptions === "custom") {
       setCurrentPackage("");
@@ -54,17 +58,29 @@ export default function CategoryOptions({
         setCategoryAndCount(selectedPackageData.options);
       }
     }
-    console.log(getValues("selectedMenus"));
   }, [cateringOptions, selectedPackage]);
 
-  useEffect(() => {
-    console.log(selectedMenus);
-  }, [selectedMenus]);
-
-  const getMenuItem = (menuId: string) => {
+  const getMenuItemName = (menuId: string) => {
     const menu = menuItems.find((item) => item._id === menuId);
     return menu ? menu.name : "";
   };
+
+  useEffect(() => {
+    const calculateTotal = () => {
+      let total = 0;
+
+      // Iterate through each category (Soup, Beverage)
+      Object.values(selectedMenus).forEach((category) => {
+        // Iterate through each menu item in the category
+        Object.values(category).forEach((item) => {
+          total += item.quantity * item.pricePerPax;
+        });
+      });
+
+      setTotalPrice(total);
+    };
+    calculateTotal();
+  }, [selectedMenus]);
 
   return (
     <div className="space-y-6">
@@ -120,64 +136,20 @@ export default function CategoryOptions({
                             key={menu}
                             className="flex items-center justify-between space-x-4"
                           >
-                            <span>{getMenuItem(menu)}</span>
-                            <div className="flex items-center space-x-2">
-                              <Button
-                                variant={"ghost"}
-                                type="button"
-                                onClick={() => {
-                                  const currentCount =
-                                    field.value[category][menu] || 0;
-                                  if (currentCount > 0) {
-                                    field.onChange({
-                                      ...field.value,
-                                      [category]: {
-                                        ...field.value[category],
-                                        [menu]: currentCount - 1,
-                                      },
-                                    });
-                                  }
-                                }}
-                                className="w-9 h-9 flex items-center justify-center border rounded-md text-gray-600 hover:bg-gray-100"
-                              >
-                                -
-                              </Button>
-                              <Input
-                                type="number"
-                                min="0"
-                                value={field.value[category][menu] || 0}
-                                onChange={(e) => {
-                                  const newCount = parseInt(e.target.value, 10);
-                                  if (!isNaN(newCount) && newCount >= 0) {
-                                    field.onChange({
-                                      ...field.value,
-                                      [category]: {
-                                        ...field.value[category],
-                                        [menu]: newCount,
-                                      },
-                                    });
-                                  }
-                                }}
-                                className="w-20 p-0 border rounded-md text-center no-spinners"
+                            <span>{getMenuItemName(menu)}</span>
+                            <div className="flex space-x-2">
+                              <AddRemoveMenuQuantity
+                                value={field.value}
+                                category={category}
+                                menu={menu}
+                                onChange={field.onChange}
                               />
-                              <Button
-                                variant={"ghost"}
-                                type="button"
-                                onClick={() => {
-                                  const currentCount =
-                                    field.value[category][menu] || 0;
-                                  field.onChange({
-                                    ...field.value,
-                                    [category]: {
-                                      ...field.value[category],
-                                      [menu]: currentCount + 1,
-                                    },
-                                  });
-                                }}
-                                className="w-9 h-9 flex items-center justify-center border rounded-md text-gray-600 hover:bg-gray-100"
-                              >
-                                +
-                              </Button>
+                              <SelectServingSize
+                                category={category}
+                                menu={menu}
+                                value={field.value}
+                                onChange={field.onChange}
+                              />
                             </div>
                           </li>
                         ))}
@@ -205,6 +177,10 @@ export default function CategoryOptions({
           </FormItem>
         )}
       />
+      <div className="flex justify-between">
+        <Label>Partial Price</Label>
+        <span className="text-green-500">&#8369; {totalPrice.toFixed(2)}</span>
+      </div>
     </div>
   );
 }

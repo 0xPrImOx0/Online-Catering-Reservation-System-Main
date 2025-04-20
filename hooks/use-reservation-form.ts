@@ -5,7 +5,13 @@ import {
   PackageCategory,
   reservationEventTypes,
 } from "@/types/package-types";
-import { ReservationItem } from "@/types/reservation-types";
+import {
+  MenuReservationDetails,
+  paxArray,
+  PaxArrayType,
+  ReservationItem,
+  SelectedMenus,
+} from "@/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -56,15 +62,23 @@ const reservationSchema = z
       .string({ required_error: "Please select a Package" })
       .min(1, "Package selection is required"),
     selectedMenus: z
-      .record(z.string(), z.record(z.string(), z.number()))
+      .record(
+        z.string(), // category
+        z.record(
+          z.string(), // dish ID
+          z.object({
+            quantity: z.number().min(1),
+            paxSelected: z.enum(paxArray as [PaxArrayType, ...PaxArrayType[]]),
+            pricePerPax: z.number().min(0),
+          })
+        )
+      )
       .refine(
         (menus) =>
           Object.values(menus).some(
-            (dishMap) => Object.keys(dishMap).length > 0
+            (category) => Object.keys(category).length > 0
           ),
-        {
-          message: "You must select at least one menu item.",
-        }
+        { message: "You must select at least one menu item." }
       ),
     specialRequests: z
       .string()
@@ -115,7 +129,7 @@ const defaultValues: ReservationValues = {
   serviceType: "Buffet",
   serviceHours: "",
   selectedPackage: "",
-  selectedMenus: {} as Record<PackageCategory, Record<string, number>>,
+  selectedMenus: {} as Record<string, Record<string, MenuReservationDetails>>,
   specialRequests: "",
   deliveryOption: "Pickup",
   deliveryAddress: "",
@@ -195,37 +209,125 @@ export function useReservationForm() {
     }
   };
 
-const handleCheckboxChange = (
-  checked: boolean | string,
-  field: any,
-  category: PackageCategory,
-  menu: MenuItem,
-  count: number
-) => {
-  const currentSelection = field.value[category] || {};
-  const updatedMenus: Record<string, number> = { ...currentSelection };
-  const uniqueDishesSelected = Object.keys(updatedMenus).length;
+  const handleCheckboxChange = (
+    checked: boolean | string,
+    field: any,
+    category: PackageCategory,
+    menu: MenuItem,
+    count: number,
+    price: number
+  ) => {
+    const currentSelection = field.value[category] || {};
+    const updatedMenus: Record<
+      string,
+      {
+        quantity: number;
+        paxSelected: string;
+        pricePerPax: number;
+      }
+    > = { ...currentSelection };
+    const uniqueMenusSelected = Object.keys(updatedMenus).length;
 
-  if (checked === true) {
-    // Allow adding a new dish if under the limit
-    if (uniqueDishesSelected < count) {
-      updatedMenus[menu._id] = 1; // Set quantity to 1 when checked
+    if (checked === true) {
+      // Allow adding a new dish if under the limit
+      if (uniqueMenusSelected < count) {
+        updatedMenus[menu._id] = {
+          quantity: 1,
+          paxSelected: "Regular",
+          pricePerPax: price,
+        }; // Set quantity to 1 when checked
+      }
+    } else {
+      // Remove the dish completely when unchecked
+      delete updatedMenus[menu._id];
     }
-  } else {
-    // Remove the dish completely when unchecked
-    delete updatedMenus[menu._id];
-  }
 
-  // Clean up: remove category if no dishes are selected
-  const cleanedMenus = { ...field.value };
-  if (Object.keys(updatedMenus).length > 0) {
-    cleanedMenus[category] = updatedMenus;
-  } else {
-    delete cleanedMenus[category];
-  }
+    const newMenus = {
+      ...field.value,
+      [category]: updatedMenus,
+    };
 
-  field.onChange(cleanedMenus);
-};
+    // Optional: remove the category entirely if it's empty
+    if (Object.keys(updatedMenus).length === 0) {
+      delete newMenus[category];
+    }
+
+    field.onChange(newMenus);
+  };
+
+  const handleReduceQuantity = (
+    value: SelectedMenus,
+    category: string,
+    menu: string,
+    onChange: (value: SelectedMenus) => void
+  ) => {
+    // Check if the category exists and get the count of menu items
+    const currentCategory = value[category];
+    const currentCount = currentCategory
+      ? Object.keys(currentCategory).length
+      : 0;
+
+    // Proceed only if the category has menu items and the menu exists
+    if (currentCount > 0 && currentCategory && currentCategory[menu]) {
+      // Create updated category with the new quantity for the menu
+      const updatedCategory: Record<string, MenuReservationDetails> = {
+        ...currentCategory,
+        [menu]: {
+          ...currentCategory[menu],
+          quantity: currentCategory[menu].quantity - 1,
+        },
+      };
+
+      // Remove the menu if its quantity becomes 0
+      if (updatedCategory[menu].quantity === 0) {
+        delete updatedCategory[menu];
+      }
+
+      // If the category becomes empty, remove the category
+      if (Object.keys(updatedCategory).length === 0) {
+        const updatedFieldValue = { ...value };
+        delete updatedFieldValue[category];
+        onChange(updatedFieldValue);
+      } else {
+        onChange({
+          ...value,
+          [category]: updatedCategory,
+        });
+      }
+    }
+  };
+
+  const handleAddQuantity = (
+    value: SelectedMenus,
+    category: string,
+    menu: string,
+    onChange: (value: SelectedMenus) => void
+  ) => {
+    // Get the current category, default to empty object if undefined
+    const currentCategory = value[category] || {};
+
+    // Get the current menu item, default to a new MenuReservationDetails if undefined
+    const currentItem = currentCategory[menu] || {
+      quantity: 0,
+      paxSelected: "Adult", // Default value, adjust as needed
+      pricePerPax: 0, // Default value, adjust as needed
+    };
+
+    // Create updated category with incremented quantity
+    const updatedCategory: Record<string, MenuReservationDetails> = {
+      ...currentCategory,
+      [menu]: {
+        ...currentItem,
+        quantity: currentItem.quantity + 1,
+      },
+    };
+
+    // Update the value with the new category
+    onChange({
+      ...value,
+      [category]: updatedCategory,
+    });
+  };
 
   return {
     reservationForm,
@@ -235,5 +337,7 @@ const handleCheckboxChange = (
     handleCheckboxChange,
     showPackageSelection,
     setShowPackageSelection,
+    handleReduceQuantity,
+    handleAddQuantity,
   };
 }

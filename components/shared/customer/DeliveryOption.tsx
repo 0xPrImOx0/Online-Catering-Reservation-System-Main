@@ -29,7 +29,7 @@ export default function DeliveryOption({ control }: { control: any }) {
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="Delivery" id="delivery" />
-              <Label htmlFor="delivery">Delivery (₱300)</Label>
+              <Label htmlFor="delivery">Delivery (&#8369;300)</Label>
             </div>
           </RadioGroup>
           <FormMessage />
