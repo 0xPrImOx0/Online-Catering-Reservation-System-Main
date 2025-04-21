@@ -50,7 +50,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
             <FormControl>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                  $
+                  &#8369;
                 </span>
                 <Input
                   type="number"
@@ -183,7 +183,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                   <Label htmlFor="price">Discounted Price</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                      $
+                      &#8369;
                     </span>
                     <Input
                       id="price"
@@ -234,7 +234,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                     <Label htmlFor="recommendedPrice">Recommended Price</Label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                        $
+                        &#8369;
                       </span>
                       <Input
                         id="recommendedPrice"
@@ -306,7 +306,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                   <div className="flex justify-between text-sm">
                     <span>Discounted Price:</span>
                     <span className="font-medium">
-                      ${price.price.toFixed(2)}
+                      &#8369; {price.price.toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
@@ -317,7 +317,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                   <div className="flex justify-between text-sm">
                     <span>You saved:</span>
                     <span className="font-medium text-green-600">
-                      $
+                      &#8369;{" "}
                       {(
                         form.getValues("regularPricePerPax") -
                         price.price / price.maximumPax
@@ -328,7 +328,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                   <div className="flex justify-between text-sm">
                     <span>Total save:</span>
                     <span className="font-medium text-green-600">
-                      ${" "}
+                      &#8369;{" "}
                       {calculateSavings({
                         regularPricePerPax:
                           form.getValues("regularPricePerPax"),

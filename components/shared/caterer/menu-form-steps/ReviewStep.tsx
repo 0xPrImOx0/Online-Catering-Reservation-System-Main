@@ -168,7 +168,7 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
                     Regular Price Per Pax
                   </h5>
                   <p className="text-base font-medium">
-                    ${form.watch("regularPricePerPax").toFixed(2)}
+                    &#8369; {form.watch("regularPricePerPax").toFixed(2)}
                   </p>
                 </div>
 
@@ -193,10 +193,10 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
                         </div>
                         <div className="text-right">
                           <div className="font-medium">
-                            $ {price.price.toFixed(2)}
+                            &#8369; {price.price.toFixed(2)}
                           </div>
                           <div className="text-sm text-green-600">
-                            Saved $
+                            Saved &#8369;{" "}
                             {calculateSavings({
                               regularPricePerPax:
                                 form.watch("regularPricePerPax"),
