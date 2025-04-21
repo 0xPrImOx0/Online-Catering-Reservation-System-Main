@@ -132,7 +132,10 @@ export function useMenuForm({
       ingredients: initialData.ingredients,
       allergens: initialData.allergens,
       preparationMethod: initialData.preparationMethod,
-      prices: initialData.prices,
+      prices: initialData.prices.map((price) => ({
+        ...price,
+        discount: Number((price.discount * 100).toFixed(0)), // Convert 0.03 → 3
+      })),
       regularPricePerPax: initialData.regularPricePerPax,
       imageUrl: initialData.imageUrl ?? "",
       imageUploadType: initialData.imageUrl ? "url" : "upload",
