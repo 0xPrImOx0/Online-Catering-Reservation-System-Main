@@ -7,9 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
-  allergens,
   predefinedPaxRanges,
-  categories,
   CategoryProps,
   AllergenProps,
   PriceInfo,
@@ -413,10 +411,10 @@ export function useMenuForm({
   };
 
   // Submit form function
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValues, mode: "create" | "update") => {
     // Create menu item object
     const { imageUrl, ...rest } = data;
-    const [isSuccess, setIsSuccess] = useState(false);
+    let isSuccess = false;
 
     const menuItem: MenuItem = {
       ...rest,
@@ -433,21 +431,27 @@ export function useMenuForm({
     console.log("Submitted data:", JSON.stringify(menuItem, null, 2));
 
     try {
-      const response = await api.post("/menus", menuItem);
+      let response;
 
-      setIsSuccess(true);
-      console.log("MESSAGE", response.data.message);
-      console.log("DATAA", response.data.data);
-      toast.success(response.data.message);
+      if (mode === "create") response = await api.post("/menus", menuItem);
+
+      if (mode === "update") response = await api.put("/menus", menuItem);
+
+      isSuccess = true;
+      console.log("MESSAGE", response?.data.message);
+      console.log("DATAA", response?.data.data);
+      toast.success(response?.data.message);
     } catch (err: unknown) {
-      setIsSuccess(false);
+      isSuccess = false;
       console.log("ERRORRRR", err);
       if (axios.isAxiosError<{ error: string }>(err)) {
         const message = err.response?.data.error || "Unexpected Error Occur";
         if (err.response?.status === 400) {
-          toast.error(`Bad Request ${message}`);
+          toast.error(`Bad Request: ${message}`);
         } else if (err.response?.status === 403) {
-          toast.error(`Unauthorized ${message}`);
+          toast.error(`Unauthorized: ${message}`);
+        } else if (err.response?.status === 404) {
+          toast.error(`Not Found: ${message}`);
         }
       } else {
         toast.error("Something went wrong. Please try again.");

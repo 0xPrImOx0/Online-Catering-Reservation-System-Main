@@ -245,10 +245,8 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
                     <Image
                       src={
                         form.watch("imageUploadType") === "url"
-                          ? form.watch("imageUrl")
-                            ? ""
-                            : previewImage || ""
-                          : ""
+                          ? form.watch("imageUrl") || "/placeholder.svg"
+                          : previewImage ?? "/placeholder.svg"
                       }
                       alt="Menu item preview"
                       fill

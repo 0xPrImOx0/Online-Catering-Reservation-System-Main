@@ -16,6 +16,7 @@ import { NutritionStep } from "./menu-form-steps/NutritionStep";
 import { ImageStep } from "./menu-form-steps/ImageStep";
 import { ReviewStep } from "./menu-form-steps/ReviewStep";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
+import { toast } from "sonner";
 
 export default function EditMenuForm({
   isEditMenuOpen,
@@ -53,11 +54,16 @@ export default function EditMenuForm({
   };
 
   // Handle form submission
-  const handleSubmit = () => {
-    form.handleSubmit((data) => {
-      onSubmit(data);
-      setIsSubmitComplete(true);
-    })();
+  const handleSubmit = async () => {
+    const data = form.getValues();
+    const isSuccess = onSubmit(data);
+
+    if (!isSuccess) {
+      toast.error("Submission Failed");
+      return;
+    }
+
+    setIsSubmitComplete(true);
   };
 
   // Handle form completion (close dialog and reset)

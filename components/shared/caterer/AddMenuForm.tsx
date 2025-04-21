@@ -17,8 +17,8 @@ import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 import { useState } from "react";
 import { toast } from "sonner";
-import api from "@/lib/axiosInstance";
-import axios from "axios";
+// import api from "@/lib/axiosInstance";
+// import axios from "axios";
 
 export function AddMenuDialog({
   isAddMenuOpen,
@@ -29,21 +29,6 @@ export function AddMenuDialog({
   const { form, onSubmit, validateStep, resetForm } = menuFormHook;
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
-
-  // useEffect(() => {
-  //   const postMenu = async () => {
-  //     try {
-  //       const response = await api.post("/menus");
-
-  //       setAddedMenu(response.data.data);
-  //     } catch (err: unknown) {
-  //       if (axios.isAxiosError<{ message: string }>(err))
-  //         toast.error(err.message);
-  //     }
-  //   };
-
-  //   postMenu();
-  // }, [addedMenu]);
 
   // Convert our form steps to the format expected by MultiStepForm
   const multiFormSteps: FormStepType[] = addMenuFormSteps.map((step) => ({
@@ -77,26 +62,6 @@ export function AddMenuDialog({
     }
 
     setIsSubmitComplete(true);
-    // console.log("Submitted data:", JSON.stringify(data, null, 2));
-
-    // try {
-    //   const response = await api.post("/menus", data);
-
-    //   toast(response.data.data);
-    // } catch (err: unknown) {
-    //   console.log("ERRORRRR", err);
-    //   if (axios.isAxiosError<{ message: string }>(err)) {
-    //     toast.error(err.response?.data?.message || err.message);
-    //   } else {
-    //     toast.error("Something went wrong.");
-    //   }
-    // }
-
-    // toast(
-    //   <div className="p-4">
-    //     <p>{JSON.stringify(data, null, 2)}</p>
-    //   </div>
-    // );
   };
 
   // Handle form completion (close dialog and reset)

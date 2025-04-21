@@ -12,7 +12,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import CustomerNavUser from "../shared/customer/CustomerNavUser";
 
 export default function CustomerSiteHeader() {
-  const { customer } = useAuthContext();
+  const { customer } = useAuthContext(); // Temporary Basis if there is a user currently signed in
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 640px)");
   const [mobileMenu, setMobileMenu] = useState(false);

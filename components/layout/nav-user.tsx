@@ -23,11 +23,14 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import clsx from "clsx";
+import api from "@/lib/axiosInstance";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { toast } from "sonner";
 
 export function NavUser({
   user,
@@ -38,8 +41,24 @@ export function NavUser({
     avatar: string;
   };
 }) {
-  const { isMobile } = useSidebar();
   const { setTheme, theme } = useTheme();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    try {
+      await api.post("/auth/sign-out");
+
+      // ✅ Tell AuthProvider to re-fetch customer
+      window.dispatchEvent(new Event("refresh-customer"));
+      router.replace("/");
+      toast.success("Signed out successfully!");
+    } catch (err: unknown) {
+      if (axios.isAxiosError<{ error: string }>(err)) {
+        const message = err.response?.data.error || "Unexpected Error Occur";
+        console.error("Error Sign Out", message);
+      }
+    }
+  };
 
   return (
     <SidebarMenu>
@@ -102,7 +121,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive" asChild>
-              <Link href={"/sign-in"}>
+              <Link href="/" onClick={handleSignOut} className="text-base">
                 <LogOut />
                 Log out
               </Link>
