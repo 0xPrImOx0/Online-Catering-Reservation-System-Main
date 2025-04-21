@@ -95,13 +95,16 @@ export default function CustomPackageForm() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {getDishesByCategory(category as PackageCategory).map(
                     (dish) => (
-                      <div key={dish._id} className="flex items-start space-x-2">
+                      <div
+                        key={dish._id}
+                        className="flex items-start space-x-2"
+                      >
                         <Checkbox
                           id={`dish-${dish._id}`}
                           onCheckedChange={(checked) =>
                             handleDishSelection(
                               category as PackageCategory,
-                              dish._id,
+                              dish._id!,
                               checked as boolean
                             )
                           }
@@ -109,7 +112,7 @@ export default function CustomPackageForm() {
                             formData.selectedMenus[
                               category as PackageCategory
                             ] || []
-                          ).includes(dish._id)}
+                          ).includes(dish._id!)}
                         />
                         <div className="grid gap-1.5">
                           <Label

@@ -246,7 +246,9 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
                       src={
                         form.watch("imageUploadType") === "url"
                           ? form.watch("imageUrl")
-                          : previewImage || ""
+                            ? ""
+                            : previewImage || ""
+                          : ""
                       }
                       alt="Menu item preview"
                       fill

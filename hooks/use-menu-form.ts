@@ -15,52 +15,126 @@ import {
   PriceInfo,
   MenuItem,
   CalculationParams,
+  FOOD_CATEGORIES,
+  FOOD_ALLERGENS,
 } from "@/types/menu-types";
 
 // Form schema using Zod
 const formSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  category: z.enum(categories as [CategoryProps, ...CategoryProps[]]),
+  name: z
+    .string()
+    .min(5, { message: "Menu name must be at least 5 characters long" })
+    .trim(),
+
+  category: z
+    .enum(FOOD_CATEGORIES as [CategoryProps, ...CategoryProps[]])
+    .refine((value) => FOOD_CATEGORIES.includes(value), {
+      message: `Category must be one of: ${FOOD_CATEGORIES.join(", ")}`,
+    }),
+
   available: z.boolean().default(true),
+
   spicy: z.boolean().default(false),
+
   shortDescription: z
     .string()
-    .min(10, { message: "Short description must be at least 10 characters" }),
+    .min(10, { message: "Short description must be at least 10 characters" })
+    .max(200, { message: "Short description must be at most 200 characters" })
+    .trim(),
+
   fullDescription: z
     .string()
-    .min(20, { message: "Full description must be at least 20 characters" }),
+    .min(20, { message: "Full description must be at least 20 characters" })
+    .max(500, { message: "Full description must be at most 500 characters" })
+    .trim(),
+
   ingredients: z
     .array(z.string())
     .min(1, { message: "Add at least one ingredient" }),
-  allergens: z.array(z.enum(allergens as [AllergenProps, ...AllergenProps[]])),
+
+  allergens: z.array(
+    z
+      .enum(FOOD_ALLERGENS as [AllergenProps, ...AllergenProps[]])
+      .refine((value) => FOOD_ALLERGENS.includes(value), {
+        message: `Each allergen must be one of: ${FOOD_ALLERGENS.join(", ")}`,
+      })
+  ),
+
   preparationMethod: z
     .string()
-    .min(10, { message: "Preparation method must be at least 10 characters" }),
-  regularPricePerPax: z.number().min(1),
+    .min(20, { message: "Preparation method must be at least 20 characters" })
+    .max(500, { message: "Preparation method must be at most 500 characters" })
+    .trim(),
+
+  regularPricePerPax: z
+    .number()
+    .min(0, { message: "Regular price per pax must be a positive number" }),
+
   prices: z
     .array(
-      z.object({
-        minimumPax: z.number().min(1),
-        maximumPax: z.number().min(1),
-        price: z.number().min(0),
-        discount: z.number(),
-      })
+      z
+        .object({
+          minimumPax: z
+            .number()
+            .int()
+            .min(1, { message: "Minimum pax must be a positive integer" }),
+
+          maximumPax: z
+            .number()
+            .int()
+            .min(1, { message: "Maximum pax must be a positive integer" }),
+
+          price: z
+            .number()
+            .min(0, { message: "Price must be a positive number" }),
+
+          discount: z
+            .number()
+            .min(0, { message: "Discount must be at least 0" })
+            .max(100, { message: "Discount must be at most 100" }),
+        })
+        .superRefine((data, ctx) => {
+          if (data.maximumPax < data.minimumPax) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: ["maximumPax"], // This ensures it pins the error to maximumPax
+              message:
+                "Maximum pax must be greater than or equal to minimum pax",
+            });
+          }
+        })
     )
     .min(1, { message: "Add at least one price tier" }),
-  imageUrl: z.string().url({ message: "Please enter a valid URL" }),
+
+  imageUrl: z
+    .string()
+    .url({ message: "Image URL must be a valid URL" })
+    .optional(),
+
   imageFile: z.instanceof(File).optional(),
+
   imageUploadType: z.enum(["url", "upload"]).default("url"),
+
   perServing: z.string(),
+
   servingUnit: z.enum(["g", "kg"]).default("g"),
+
   nutritionInfo: z.object({
-    calories: z.string(),
-    protein: z.string(),
-    fat: z.string(),
-    carbs: z.string(),
-    sodium: z.string(),
-    fiber: z.string(),
-    sugar: z.string(),
-    cholesterol: z.string(),
+    calories: z.string().optional(),
+
+    protein: z.string().optional(),
+
+    fat: z.string().optional(),
+
+    carbs: z.string().optional(),
+
+    sodium: z.string().optional(),
+
+    fiber: z.string().optional(),
+
+    sugar: z.string().optional(),
+
+    cholesterol: z.string().optional(),
   }),
 });
 
@@ -223,12 +297,11 @@ export function useMenuForm({
   // Calculate discount from price
   const calculateDiscountFromPrice = (
     price: number,
-    recommendedPrice: number,
-    maximumPax: number
+    recommendedPrice: number
+    // maximumPax: number
   ) => {
     if (recommendedPrice === 0) return 0;
-    const discountPercentage =
-      ((recommendedPrice - price * maximumPax) / recommendedPrice) * 100;
+    const discountPercentage = (recommendedPrice - price) / recommendedPrice;
     return Math.round(discountPercentage * 100) / 100; // Round to 2 decimal places
   };
 
@@ -343,7 +416,7 @@ export function useMenuForm({
       ...data,
       rating: isEditMode && initialData ? initialData.rating : 0,
       ratingCount: isEditMode && initialData ? initialData.ratingCount : 0,
-      _id: "",
+      // _id: "",
     };
 
     console.log(

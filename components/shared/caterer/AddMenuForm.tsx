@@ -4,12 +4,8 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { Form } from "@/components/ui/form";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { FormValues, useMenuForm } from "@/hooks/use-menu-form";
-import {
-  AddMenuDialogProps,
-  addMenuFormSteps,
-  MenuItem,
-} from "@/types/menu-types";
+import { useMenuForm } from "@/hooks/use-menu-form";
+import { AddMenuDialogProps, addMenuFormSteps } from "@/types/menu-types";
 import { BasicInfoStep } from "./menu-form-steps/BasicInfoStep";
 import { IngredientsStep } from "./menu-form-steps/IngredientsStep";
 import { PreparationStep } from "./menu-form-steps/PreparationStep";
@@ -21,6 +17,8 @@ import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 import { useState } from "react";
 import { toast } from "sonner";
+import api from "@/lib/axiosInstance";
+import axios from "axios";
 
 export function AddMenuDialog({
   isAddMenuOpen,
@@ -31,6 +29,21 @@ export function AddMenuDialog({
   const { form, onSubmit, validateStep, resetForm } = menuFormHook;
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
+
+  // useEffect(() => {
+  //   const postMenu = async () => {
+  //     try {
+  //       const response = await api.post("/menus");
+
+  //       setAddedMenu(response.data.data);
+  //     } catch (err: unknown) {
+  //       if (axios.isAxiosError<{ message: string }>(err))
+  //         toast.error(err.message);
+  //     }
+  //   };
+
+  //   postMenu();
+  // }, [addedMenu]);
 
   // Convert our form steps to the format expected by MultiStepForm
   const multiFormSteps: FormStepType[] = addMenuFormSteps.map((step) => ({
@@ -54,16 +67,29 @@ export function AddMenuDialog({
   };
 
   // Handle form submission
-  const handleSubmit = () => {
-    form.handleSubmit((data: FormValues) => {
-      onSubmit(data);
-      setIsSubmitComplete(true);
-      toast(
-        <div className="p-4">
-          <p>{JSON.stringify(data, null, 2)}</p>
-        </div>
-      );
-    })();
+  const handleSubmitForm = async () => {
+    const data = form.getValues();
+    onSubmit(data);
+    setIsSubmitComplete(true);
+    console.log("Submitted data:", JSON.stringify(data, null, 2));
+
+    try {
+      const response = await api.post("/menus", data);
+
+      toast(response.data.data);
+    } catch (err: unknown) {
+      if (axios.isAxiosError<{ message: string }>(err)) {
+        toast.error(err.response?.data?.message || err.message);
+      } else {
+        toast.error("Something went wrong.");
+      }
+    }
+
+    toast(
+      <div className="p-4">
+        <p>{JSON.stringify(data, null, 2)}</p>
+      </div>
+    );
   };
 
   // Handle form completion (close dialog and reset)
@@ -92,7 +118,7 @@ export function AddMenuDialog({
         title={"Add Menu Item"}
         description={"Complete the form to add a new menu item"}
         formSteps={multiFormSteps}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitForm}
         onNextStep={handleNextStep}
         onComplete={handleComplete}
         onCancel={handleCancel}

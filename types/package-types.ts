@@ -4,6 +4,7 @@ import { CategoryProps } from "./menu-types";
 
 // Define types for our packages
 export type PackageCategory =
+  | "All"
   | "Soup"
   | "Salad"
   | "Beef"

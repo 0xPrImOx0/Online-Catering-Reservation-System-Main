@@ -204,13 +204,13 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                         const totalRecommendedPrice =
                           form.getValues("regularPricePerPax") *
                           newPrice.maximumPax;
+
                         let calculatedDiscount = 0;
 
                         if (totalRecommendedPrice > 0 && priceValue >= 0) {
                           calculatedDiscount = calculateDiscountFromPrice(
                             priceValue,
-                            totalRecommendedPrice,
-                            newPrice.maximumPax
+                            totalRecommendedPrice
                           );
                         }
 
@@ -344,9 +344,30 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
         </div>
       )}
       {isValidationAttempted && form.formState.errors.prices && (
-        <p className="text-sm font-medium text-destructive">
-          {form.formState.errors.prices.message}
-        </p>
+        <>
+          {/* Top-level or fallback message */}
+          {(!Array.isArray(form.formState.errors.prices) &&
+            "message" in form.formState.errors.prices) ||
+          (Array.isArray(form.formState.errors.prices) &&
+            form.formState.errors.prices.some(
+              (priceError) => priceError && Object.keys(priceError).length > 0
+            )) ? (
+            <p className="text-sm font-medium text-destructive">
+              {!Array.isArray(form.formState.errors.prices) &&
+              "message" in form.formState.errors.prices
+                ? form.formState.errors.prices.message
+                : "Please fix the price tier errors above."}
+            </p>
+          ) : null}{" "}
+          {Array.isArray(form.formState.errors.prices) &&
+            form.formState.errors.prices.map((priceError, index) =>
+              priceError?.discount ? (
+                <p key={index} className="text-sm font-medium text-destructive">
+                  Tier {index + 1} – {priceError.discount.message}
+                </p>
+              ) : null
+            )}
+        </>
       )}
     </div>
   );

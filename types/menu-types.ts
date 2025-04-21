@@ -18,6 +18,19 @@ export type CategoryProps =
   | "Dessert"
   | "Beverage";
 
+export const FOOD_CATEGORIES = [
+  "Soup",
+  "Salad",
+  "Beef",
+  "Pork",
+  "Noodle",
+  "Chicken",
+  "Seafood",
+  "Vegetable",
+  "Dessert",
+  "Beverage",
+];
+
 export type AllergenProps =
   | "Milk"
   | "Eggs"
@@ -37,16 +50,38 @@ export type AllergenProps =
   | "Soy"
   | "Nuts"
   | "";
+
+export const FOOD_ALLERGENS = [
+  "None",
+  "Milk",
+  "Eggs",
+  "Fish",
+  "Shellfish",
+  "Tree nuts",
+  "Peanuts",
+  "Wheat",
+  "Soybeans",
+  "Sesame",
+  "Gluten",
+  "Mustard",
+  "Celery",
+  "Lupin",
+  "Molluscs",
+  "Sulphites",
+  "Soy",
+  "Nuts",
+];
+
 // Update the interfaces to match the new data structure
 export interface NutritionInfo {
-  calories: string; // Now includes "kcal" unit
-  protein: string; // Now includes "g" unit
-  fat: string; // Now includes "g" unit
-  carbs: string; // Now includes "g" unit
-  sodium: string; // Now includes "mg" unit
-  fiber: string; // Now includes "g" unit
-  sugar: string; // Now includes "g" unit
-  cholesterol: string; // Now includes "mg" unit
+  calories?: string; // Now includes "kcal" unit
+  protein?: string; // Now includes "g" unit
+  fat?: string; // Now includes "g" unit
+  carbs?: string; // Now includes "g" unit
+  sodium?: string; // Now includes "mg" unit
+  fiber?: string; // Now includes "g" unit
+  sugar?: string; // Now includes "g" unit
+  cholesterol?: string; // Now includes "mg" unit
 }
 
 export interface PriceInfo {
