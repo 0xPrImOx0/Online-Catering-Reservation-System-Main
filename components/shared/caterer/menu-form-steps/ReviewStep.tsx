@@ -193,21 +193,16 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
                         </div>
                         <div className="text-right">
                           <div className="font-medium">
-                            ${(price.price * price.maximumPax).toFixed(2)}
+                            $ {price.price.toFixed(2)}
+                          </div>
+                          <div className="text-sm text-green-600">
+                            Saved $
                             {calculateSavings({
                               regularPricePerPax:
                                 form.watch("regularPricePerPax"),
                               price: price.price,
                               servingSize: price.maximumPax,
                             }).toFixed(2)}
-                          </div>
-                          <div className="text-sm text-green-600">
-                            Saved $
-                            {(
-                              (form.getValues("regularPricePerPax") -
-                                price.price) *
-                              price.maximumPax
-                            ).toFixed(2)}
                           </div>
                         </div>
                       </div>
