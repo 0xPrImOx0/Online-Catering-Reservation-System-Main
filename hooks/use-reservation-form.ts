@@ -262,7 +262,7 @@ export function useReservationForm() {
       if (uniqueMenusSelected < count) {
         updatedMenus[menu._id] = {
           quantity: 1,
-          paxSelected: "Regular",
+          paxSelected: "4-6 pax",
           pricePerPax: price,
         }; // Set quantity to 1 when checked
       }

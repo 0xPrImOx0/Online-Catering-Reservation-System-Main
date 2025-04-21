@@ -30,6 +30,7 @@ import PlatedWarning from "../PlatedWarning";
 import DeliveryWarning from "./DeliveryWarning";
 import { useEffect } from "react";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
+import { set } from "date-fns";
 
 export default function EventDetails() {
   const { control, getValues, watch, setValue } =
@@ -40,16 +41,25 @@ export default function EventDetails() {
   const serviceType = watch("serviceType");
   const serviceHours = watch("serviceHours");
   const eventType = watch("eventType");
+  const guestCount = watch("guestCount");
 
   useEffect(() => {
     const hour = serviceHours?.slice(0, 2);
     setValue("serviceFee", 100 * Number(hour));
   }, [serviceHours]);
 
+    // useEffect(() => {
+    //   if (selectedPackage) {
+    //     setValue("totalPrice", );
+    //   }
+    // }, [guestCount]);
+
   const getRecommendedPax = () => {
     const pkg = cateringPackages.find((pkg) => pkg._id === selectedPackage);
     return pkg?.recommendedPax || 0;
   };
+
+
 
   const recommendedPax = getRecommendedPax();
 

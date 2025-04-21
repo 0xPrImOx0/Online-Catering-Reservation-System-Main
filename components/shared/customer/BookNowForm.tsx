@@ -122,8 +122,8 @@ export default function BookNowForm({ id }: { id: string }) {
           [isMenu.category]: {
             [deconstructedId]: {
               quantity: 1,
-              paxSelected: "Regular",
-              pricePerPax: isMenu.regularPricePerPax,
+              paxSelected: "4-6 pax",
+              pricePerPax: isMenu.prices[0].price,
             },
           },
         });
@@ -158,12 +158,15 @@ export default function BookNowForm({ id }: { id: string }) {
           total += item.quantity * item.pricePerPax;
         });
       });
-
       setValue("totalPrice", total + serviceFee + deliveryFee);
     };
     if (isPackage) {
-      setValue("totalPrice", isPackage.pricePerPax * guestCount);
-      return;
+      setValue(
+        "totalPrice",
+        isPackage.pricePerPax * guestCount +
+          isPackage.serviceCharge +
+          deliveryFee
+      );
     }
     calculateTotal();
   }, [selectedMenus, serviceFee, deliveryFee, guestCount]);
