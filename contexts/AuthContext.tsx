@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       // toast(<div className="p-4">{JSON.stringify(res, null, 2)}</div>);
       setCustomer(res.data.customer);
     } catch (err: unknown) {
+      console.log("ERRORRR IN AUTH CONTEXT", err);
       if (!axios.isAxiosError(err) || err.response?.status !== 401) {
         setCustomer(null);
         console.error("Unexpected Error:", err);

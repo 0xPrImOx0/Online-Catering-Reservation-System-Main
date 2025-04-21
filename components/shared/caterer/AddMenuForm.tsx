@@ -69,27 +69,34 @@ export function AddMenuDialog({
   // Handle form submission
   const handleSubmitForm = async () => {
     const data = form.getValues();
-    onSubmit(data);
-    setIsSubmitComplete(true);
-    console.log("Submitted data:", JSON.stringify(data, null, 2));
+    const isSuccess = await onSubmit(data);
 
-    try {
-      const response = await api.post("/menus", data);
-
-      toast(response.data.data);
-    } catch (err: unknown) {
-      if (axios.isAxiosError<{ message: string }>(err)) {
-        toast.error(err.response?.data?.message || err.message);
-      } else {
-        toast.error("Something went wrong.");
-      }
+    if (!isSuccess) {
+      toast.error("Submission Failed");
+      return;
     }
 
-    toast(
-      <div className="p-4">
-        <p>{JSON.stringify(data, null, 2)}</p>
-      </div>
-    );
+    setIsSubmitComplete(true);
+    // console.log("Submitted data:", JSON.stringify(data, null, 2));
+
+    // try {
+    //   const response = await api.post("/menus", data);
+
+    //   toast(response.data.data);
+    // } catch (err: unknown) {
+    //   console.log("ERRORRRR", err);
+    //   if (axios.isAxiosError<{ message: string }>(err)) {
+    //     toast.error(err.response?.data?.message || err.message);
+    //   } else {
+    //     toast.error("Something went wrong.");
+    //   }
+    // }
+
+    // toast(
+    //   <div className="p-4">
+    //     <p>{JSON.stringify(data, null, 2)}</p>
+    //   </div>
+    // );
   };
 
   // Handle form completion (close dialog and reset)

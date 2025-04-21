@@ -1,12 +1,14 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { CustomerMenuCard } from "./CustomerMenuCard";
-import type { AllergenProps } from "@/types/menu-types";
+import { MenuItem, type AllergenProps } from "@/types/menu-types";
 import { usePathname } from "next/navigation";
 import { menuItems } from "@/lib/menu-lists";
 import FilterSection from "../MenuFilter/FilterSection";
 import CatererMenuCard from "../caterer/CatererMenuCard";
 import CustomPagination from "../CustomPagination";
+import api from "@/lib/axiosInstance";
+import axios from "axios";
 
 export default function PaginatedMenus({ open }: { open?: boolean }) {
   const [query, setQuery] = useState("");
@@ -23,6 +25,28 @@ export default function PaginatedMenus({ open }: { open?: boolean }) {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const menusPerPage = 9;
+  const [menus, setMenus] = useState<MenuItem[] | null>(null);
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      try {
+        const response = await api.get("/menus");
+        setMenus(response.data.data);
+      } catch (err: unknown) {
+        console.log("ERRRORRR", err);
+
+        if (axios.isAxiosError<{ error: string }>(err)) {
+          const message = err.response?.data.error || "Unexpected Error Occur";
+
+          console.error("ERROR FETCHING MENUS", message);
+        } else {
+          console.error("Something went wrong. Please try again.");
+        }
+      }
+    };
+
+    fetchFeatured();
+  }, []);
 
   // Add this function before the return statement in PaginatedMenus component
   const sortMenus = (menus: typeof menuItems) => {
@@ -47,51 +71,53 @@ export default function PaginatedMenus({ open }: { open?: boolean }) {
   };
 
   // Update the filterSelectMenus variable to apply sorting
-  const filterSelectMenus = sortMenus(
-    menuItems.filter((menu) => {
-      // Match search query
-      const matchesQuery = menu.name
-        .toLowerCase()
-        .includes(query.toLowerCase());
+  const filterSelectMenus = menus
+    ? sortMenus(
+        menus.filter((menu) => {
+          // Match search query
+          const matchesQuery = menu.name
+            .toLowerCase()
+            .includes(query.toLowerCase());
 
-      // Match category - case insensitive comparison
-      const matchesCategory =
-        !filters.category ||
-        menu.category.toLowerCase() === filters.category.toLowerCase();
+          // Match category - case insensitive comparison
+          const matchesCategory =
+            !filters.category ||
+            menu.category.toLowerCase() === filters.category.toLowerCase();
 
-      // Match allergens
-      const matchesAllergens =
-        !filters.allergens || menu.allergens.includes(filters.allergens);
+          // Match allergens
+          const matchesAllergens =
+            !filters.allergens || menu.allergens.includes(filters.allergens);
 
-      // Exclude selected allergens
-      const noExcludedAllergens =
-        filters.excludedAllergens.length === 0 ||
-        !menu.allergens.some((allergen) =>
-          filters.excludedAllergens.includes(allergen as AllergenProps)
-        );
+          // Exclude selected allergens
+          const noExcludedAllergens =
+            filters.excludedAllergens.length === 0 ||
+            !menu.allergens.some((allergen) =>
+              filters.excludedAllergens.includes(allergen as AllergenProps)
+            );
 
-      // Match price range
-      const matchesPrice =
-        menu.regularPricePerPax >= filters.minPrice &&
-        menu.regularPricePerPax <= filters.maxPrice;
+          // Match price range
+          const matchesPrice =
+            menu.regularPricePerPax >= filters.minPrice &&
+            menu.regularPricePerPax <= filters.maxPrice;
 
-      // Match availability
-      const matchesAvailability = !filters.available || menu.available;
+          // Match availability
+          const matchesAvailability = !filters.available || menu.available;
 
-      // Match spicy
-      const matchesSpicy = !filters.spicy || menu.spicy;
+          // Match spicy
+          const matchesSpicy = !filters.spicy || menu.spicy;
 
-      return (
-        matchesQuery &&
-        matchesCategory &&
-        matchesAllergens &&
-        noExcludedAllergens &&
-        matchesPrice &&
-        matchesAvailability &&
-        matchesSpicy
-      );
-    })
-  );
+          return (
+            matchesQuery &&
+            matchesCategory &&
+            matchesAllergens &&
+            noExcludedAllergens &&
+            matchesPrice &&
+            matchesAvailability &&
+            matchesSpicy
+          );
+        })
+      )
+    : [];
 
   const totalMenus = filterSelectMenus.length;
 

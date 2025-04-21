@@ -18,6 +18,9 @@ import {
   FOOD_CATEGORIES,
   FOOD_ALLERGENS,
 } from "@/types/menu-types";
+import api from "@/lib/axiosInstance";
+import axios from "axios";
+import { toast } from "sonner";
 
 // Form schema using Zod
 const formSchema = z.object({
@@ -410,27 +413,49 @@ export function useMenuForm({
   };
 
   // Submit form function
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     // Create menu item object
+    const { imageUrl, ...rest } = data;
+    const [isSuccess, setIsSuccess] = useState(false);
+
     const menuItem: MenuItem = {
-      ...data,
+      ...rest,
       rating: isEditMode && initialData ? initialData.rating : 0,
       ratingCount: isEditMode && initialData ? initialData.ratingCount : 0,
-      // _id: "",
+      ...(imageUrl !== "" && { imageUrl }), // now this works!
     };
 
     console.log(
       `${isEditMode ? "Updating" : "Submitting"} menu item:`,
       menuItem
     );
-    // Here you would typically send this to your API
-    // If there's an image file, you would upload it first and then update the imageUrl
 
-    // Show success message
-    setIsSubmitSuccess(true);
+    console.log("Submitted data:", JSON.stringify(menuItem, null, 2));
+
+    try {
+      const response = await api.post("/menus", menuItem);
+
+      setIsSuccess(true);
+      console.log("MESSAGE", response.data.message);
+      console.log("DATAA", response.data.data);
+      toast.success(response.data.message);
+    } catch (err: unknown) {
+      setIsSuccess(false);
+      console.log("ERRORRRR", err);
+      if (axios.isAxiosError<{ error: string }>(err)) {
+        const message = err.response?.data.error || "Unexpected Error Occur";
+        if (err.response?.status === 400) {
+          toast.error(`Bad Request ${message}`);
+        } else if (err.response?.status === 403) {
+          toast.error(`Unauthorized ${message}`);
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    }
 
     // Return the new menu item
-    return menuItem;
+    return isSuccess;
   };
 
   // Helper function to get fields to validate for each step
