@@ -57,11 +57,11 @@ export default function About() {
         </div>
         <p className="text-muted-foreground text-justify text-lg max-w-3xl mx-auto">
           At Food Sentinel, we make catering reservations simple, fast, and
-          hassle-free. Whether you're planning an intimate gathering or a grand
-          celebration, our platform connects you with expertly crafted menus and
-          seamless booking options. With a commitment to quality, convenience,
-          and customer satisfaction, we ensure every event is a memorable dining
-          experience.
+          hassle-free. Whether you&#39;re planning an intimate gathering or a
+          grand celebration, our platform connects you with expertly crafted
+          menus and seamless booking options. With a commitment to quality,
+          convenience, and customer satisfaction, we ensure every event is a
+          memorable dining experience.
         </p>
       </div>
 

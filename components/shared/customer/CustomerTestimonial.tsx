@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
@@ -27,10 +27,10 @@ export default function CustomerTestimonial() {
                 </div>
               </div>
               <blockquote className="mb-4">
-                "Your positive feedback here. Aute pharetra nostrud tuis,
+                &qout;Your positive feedback here. Aute pharetra nostrud tuis,
                 consectetur adipiscing elit. Duis sed diam eget mi molestie
                 varius. Nam vestibulum diam nec odio elementum, varius lectus
-                elit at arcu."
+                elit at arcu.&qout;
               </blockquote>
               <div className="flex items-center gap-4">
                 <div className="h-10 w-10 rounded-full bg-muted overflow-hidden relative">
@@ -56,9 +56,9 @@ export default function CustomerTestimonial() {
                 </div>
               </div>
               <blockquote className="mb-4">
-                "Vivamus nec enim and gravida, tristique est sed, hendrerit
+                &qout;Vivamus nec enim and gravida, tristique est sed, hendrerit
                 massa. Fusce eu lorem vitae elit hendrerit varius. Ut vestibulum
-                diam nec odio elementum, varius lectus elit at arcu."
+                diam nec odio elementum, varius lectus elit at arcu.&qout;
               </blockquote>
               <div className="flex items-center gap-4">
                 <div className="h-10 w-10 rounded-full bg-muted overflow-hidden relative">

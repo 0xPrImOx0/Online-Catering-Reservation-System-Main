@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Check, CheckCircle2Icon, Clock, Users } from "lucide-react";
+import { CheckCircle2Icon, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import { PackageCardProps } from "@/types/package-types";
 import PackageDetailsDialog from "./PackageDetailsDialog";
@@ -31,9 +31,7 @@ export default function CustomerPackageCard({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
   const platedInclusions = item.inclusions.filter((plated) =>
-    isPlated
-      ? plated.typeOfCustomer
-      : plated.typeOfCustomer === "Both"
+    isPlated ? plated.typeOfCustomer : plated.typeOfCustomer === "Both"
   );
 
   return (

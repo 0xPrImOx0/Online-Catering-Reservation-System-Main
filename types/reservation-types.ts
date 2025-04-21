@@ -1,5 +1,5 @@
 import { useReservationForm } from "@/hooks/use-reservation-form";
-import { PackageCategory, ServiceType } from "./package-types";
+import { ServiceType } from "./package-types";
 
 //Reservation Related Types
 export type reservationType = {

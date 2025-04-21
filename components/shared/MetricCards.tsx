@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign, LucideIcon } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 type MetricCardProps = {
   metric: {
-    title: String;
-    firstContent: String;
-    secondContent: String;
+    title: string;
+    firstContent: string;
+    secondContent: string;
     Icon: LucideIcon;
   };
 };

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { BookOpen, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
@@ -17,10 +16,10 @@ export default function Testimonial() {
         <h2 className="text-3xl font-bold mb-6">Testimonial</h2>
         <div className="mb-6">
           <blockquote className="text-lg italic">
-            " The food was absolutely outstanding! Our guests couldn't stop
-            raving about the presentation and flavors. The service team was
+            &qout;The food was absolutely outstanding! Our guests couldn&#39;t
+            stop raving about the presentation and flavors. The service team was
             professional and attentive throughout our wedding reception. Highly
-            recommend! "
+            recommend!&qout;
           </blockquote>
           <p className="mt-4 font-semibold">— John Doe</p>
         </div>

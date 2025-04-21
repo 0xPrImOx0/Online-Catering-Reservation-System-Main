@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
-
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -28,7 +27,7 @@ export default function ContactForm() {
           <CardHeader>
             <CardTitle>Send us a message</CardTitle>
             <CardDescription>
-              Fill out the form below and we'll get back to you as soon as
+              Fill out the form below and we&#39;ll get back to you as soon as
               possible.
             </CardDescription>
           </CardHeader>

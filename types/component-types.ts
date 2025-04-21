@@ -49,8 +49,6 @@ export type CustomPaginationProps = {
   title?: string;
 };
 
-//ArrayInputProps
-
 export type Tag = {
   id: string;
   text: string;
@@ -72,13 +70,6 @@ export interface TagInputProps {
   enableAutocomplete?: boolean;
   restrictTagsToAutocompleteOptions?: boolean;
 }
-
-export type ArrayInputProps = {
-  tags: Tag[];
-  title: string;
-  autocomplete?: boolean;
-  suggestions?: Tag[];
-};
 
 export interface ImageDialogProps {
   item: MenuItem | CateringPackagesProps;
