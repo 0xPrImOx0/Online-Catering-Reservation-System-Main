@@ -211,16 +211,21 @@ export function useMenuForm({
   // Calculate price from discount
   const calculatePriceFromDiscount = (
     discount: number,
-    regularPrice: number
+    recommendedPrice: number
   ) => {
-    const discountAmount = (discount / 100) * regularPrice;
-    return Math.ceil(regularPrice - discountAmount);
+    const discountAmount = (discount / 100) * recommendedPrice;
+    return Math.ceil(recommendedPrice - discountAmount);
   };
 
   // Calculate discount from price
-  const calculateDiscountFromPrice = (price: number, regularPrice: number) => {
-    if (regularPrice === 0) return 0;
-    const discountPercentage = ((regularPrice - price) / regularPrice) * 100;
+  const calculateDiscountFromPrice = (
+    price: number,
+    recommendedPrice: number,
+    maximumPax: number
+  ) => {
+    if (recommendedPrice === 0) return 0;
+    const discountPercentage =
+      ((recommendedPrice - price * maximumPax) / recommendedPrice) * 100;
     return Math.round(discountPercentage * 100) / 100; // Round to 2 decimal places
   };
 
@@ -243,6 +248,7 @@ export function useMenuForm({
     []
   );
 
+  // calculate the price by regular price per pax * maximum pax
   const calculatePrice = useCallback(
     (regularPricePerPax: number, servingSize: number): number =>
       regularPricePerPax * servingSize,
@@ -334,7 +340,7 @@ export function useMenuForm({
       ...data,
       rating: isEditMode && initialData ? initialData.rating : 0,
       ratingCount: isEditMode && initialData ? initialData.ratingCount : 0,
-      _id: ""
+      _id: "",
     };
 
     console.log(
@@ -401,7 +407,7 @@ export function useMenuForm({
         if (newPrice.discount > 0) {
           const calculatedPrice = calculatePriceFromDiscount(
             newPrice.discount,
-            regularPrice
+            regularPrice * newPrice.maximumPax
           );
           setNewPrice((prev) => ({
             ...prev,
@@ -446,7 +452,7 @@ export function useMenuForm({
     });
 
     return () => subscription.unsubscribe();
-  }, [form, newPrice.discount, newPrice.price]);
+  }, [form, newPrice.discount, newPrice.price, newPrice.maximumPax]);
 
   return {
     form,

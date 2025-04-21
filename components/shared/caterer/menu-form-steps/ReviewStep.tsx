@@ -8,7 +8,7 @@ import Image from "next/image";
 import { NutritionInfo } from "@/types/menu-types";
 
 export function ReviewStep({ formHook }: AddMenuFormProps) {
-  const { form, previewImage, isSubmitSuccess } = formHook;
+  const { form, previewImage, isSubmitSuccess, calculateSavings } = formHook;
 
   return (
     <div className="space-y-6">
@@ -188,19 +188,26 @@ export function ReviewStep({ formHook }: AddMenuFormProps) {
                           </span>
                           <div className="text-sm text-muted-foreground">
                             {price.discount > 0 &&
-                              `${(price.discount * 100).toFixed(0)}% discount`}
+                              `${price.discount.toFixed(2)}% discount`}
                           </div>
                         </div>
                         <div className="text-right">
                           <div className="font-medium">
-                            ${price.price.toFixed(2)}
+                            ${(price.price * price.maximumPax).toFixed(2)}
+                            {calculateSavings({
+                              regularPricePerPax:
+                                form.watch("regularPricePerPax"),
+                              price: price.price,
+                              servingSize: price.maximumPax,
+                            }).toFixed(2)}
                           </div>
                           <div className="text-sm text-green-600">
-                            Save $
+                            Saved $
                             {(
-                              form.getValues("regularPricePerPax") - price.price
+                              (form.getValues("regularPricePerPax") -
+                                price.price) *
+                              price.maximumPax
                             ).toFixed(2)}
-                            /pax
                           </div>
                         </div>
                       </div>

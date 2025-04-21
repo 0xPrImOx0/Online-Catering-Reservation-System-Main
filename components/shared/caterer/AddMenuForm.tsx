@@ -4,8 +4,12 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { Form } from "@/components/ui/form";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { useMenuForm } from "@/hooks/use-menu-form";
-import { AddMenuDialogProps, addMenuFormSteps } from "@/types/menu-types";
+import { FormValues, useMenuForm } from "@/hooks/use-menu-form";
+import {
+  AddMenuDialogProps,
+  addMenuFormSteps,
+  MenuItem,
+} from "@/types/menu-types";
 import { BasicInfoStep } from "./menu-form-steps/BasicInfoStep";
 import { IngredientsStep } from "./menu-form-steps/IngredientsStep";
 import { PreparationStep } from "./menu-form-steps/PreparationStep";
@@ -16,6 +20,7 @@ import { ReviewStep } from "./menu-form-steps/ReviewStep";
 import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function AddMenuDialog({
   isAddMenuOpen,
@@ -50,9 +55,14 @@ export function AddMenuDialog({
 
   // Handle form submission
   const handleSubmit = () => {
-    form.handleSubmit((data) => {
+    form.handleSubmit((data: FormValues) => {
       onSubmit(data);
       setIsSubmitComplete(true);
+      toast(
+        <div className="p-4">
+          <p>{JSON.stringify(data, null, 2)}</p>
+        </div>
+      );
     })();
   };
 

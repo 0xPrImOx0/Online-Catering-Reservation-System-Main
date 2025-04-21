@@ -34,6 +34,7 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
     calculatePriceFromDiscount,
     calculateDiscountFromPrice,
     calculateSavings,
+    calculatePrice,
   } = formHook;
 
   return (
@@ -90,10 +91,25 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                     value={`${newPrice.minimumPax}-${newPrice.maximumPax}`}
                     onValueChange={(value) => {
                       const [min, max] = value.split("-").map(Number);
+
+                      const regularPricePerPax =
+                        form.getValues("regularPricePerPax");
+                      const discount = newPrice.discount;
+
+                      // Calculate price if regularPricePerPax is available
+                      const calculatedPrice =
+                        regularPricePerPax && discount > 0
+                          ? calculatePriceFromDiscount(
+                              discount,
+                              regularPricePerPax * max
+                            )
+                          : 0;
+
                       setNewPrice((prev) => ({
                         ...prev,
                         minimumPax: min,
                         maximumPax: max,
+                        price: calculatedPrice,
                       }));
                     }}
                     disabled={availablePaxRanges.length === 0}
@@ -127,37 +143,27 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                       value={newPrice.discount || ""}
                       disabled={!form.getValues("regularPricePerPax")}
                       onChange={(e) => {
-                        // Handle the 0 issue
                         const value = e.target.value;
-                        let discountValue;
+                        let discountValue =
+                          value === "" ? 0 : Number(value.replace(/^0+/, ""));
 
-                        if (value === "0" || value === "") {
-                          discountValue = 0;
-                          const regularPrice =
-                            form.getValues("regularPricePerPax");
+                        // Ensure discount is within 0-100 range
+                        discountValue = Math.min(
+                          Math.max(0, Number(value)),
+                          100
+                        );
 
-                          setNewPrice({
-                            ...newPrice,
-                            discount: 0,
-                            price: regularPrice, // No discount means full price
-                          });
-                        } else {
-                          // Remove leading zeros and convert to number
-                          discountValue = Number(value.replace(/^0+/, ""));
+                        const calculatedPrice = calculatePriceFromDiscount(
+                          discountValue,
+                          form.getValues("regularPricePerPax") *
+                            newPrice.maximumPax
+                        );
 
-                          const regularPrice =
-                            form.getValues("regularPricePerPax");
-                          const calculatedPrice = calculatePriceFromDiscount(
-                            discountValue,
-                            regularPrice
-                          );
-
-                          setNewPrice({
-                            ...newPrice,
-                            discount: discountValue,
-                            price: calculatedPrice,
-                          });
-                        }
+                        setNewPrice({
+                          ...newPrice,
+                          discount: discountValue,
+                          price: calculatedPrice,
+                        });
                       }}
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-muted-foreground">
@@ -172,61 +178,84 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                 </div>
               </div>
 
-              <div>
-                <Label htmlFor="price">Price</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                    $
-                  </span>
-                  <Input
-                    id="price"
-                    type="number"
-                    min="0"
-                    step="1"
-                    placeholder="0.00"
-                    className="pl-7"
-                    value={newPrice.price || ""}
-                    disabled={!form.getValues("regularPricePerPax")}
-                    onChange={(e) => {
-                      // Handle the 0 issue
-                      const value = e.target.value;
-                      let priceValue;
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="price">Discounted Price</Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2">
+                      $
+                    </span>
+                    <Input
+                      id="price"
+                      type="number"
+                      min="0"
+                      step="1"
+                      placeholder="0.00"
+                      className="pl-7"
+                      value={newPrice.price || ""}
+                      disabled={!form.getValues("regularPricePerPax")}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        const priceValue =
+                          value === ""
+                            ? 0
+                            : Math.ceil(Number(value.replace(/^0+/, "")));
 
-                      if (value === "0" || value === "") {
-                        priceValue = 0;
+                        const totalRecommendedPrice =
+                          form.getValues("regularPricePerPax") *
+                          newPrice.maximumPax;
+                        let calculatedDiscount = 0;
 
-                        setNewPrice({
-                          ...newPrice,
-                          price: 0,
-                          discount: 100,
-                        });
-                      } else {
-                        // Remove leading zeros and convert to number
-                        priceValue = Math.ceil(
-                          Number(value.replace(/^0+/, ""))
-                        );
-
-                        const regularPrice =
-                          form.getValues("regularPricePerPax");
-                        const calculatedDiscount = calculateDiscountFromPrice(
-                          priceValue,
-                          regularPrice
-                        );
+                        if (totalRecommendedPrice > 0 && priceValue >= 0) {
+                          calculatedDiscount = calculateDiscountFromPrice(
+                            priceValue,
+                            totalRecommendedPrice,
+                            newPrice.maximumPax
+                          );
+                        }
 
                         setNewPrice({
                           ...newPrice,
                           price: priceValue,
                           discount: calculatedDiscount,
                         });
-                      }
-                    }}
-                  />
+                      }}
+                    />
+                  </div>
+                  {!form.getValues("regularPricePerPax") && (
+                    <p className="text-xs text-destructive mt-1">
+                      Regular price per pax must be set first
+                    </p>
+                  )}
                 </div>
-                {!form.getValues("regularPricePerPax") && (
-                  <p className="text-xs text-destructive mt-1">
-                    Regular price per pax must be set first
-                  </p>
-                )}
+
+                <div>
+                  <div>
+                    <Label htmlFor="recommendedPrice">Recommended Price</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2">
+                        $
+                      </span>
+                      <Input
+                        id="recommendedPrice"
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="0.00"
+                        className="pl-7"
+                        value={calculatePrice(
+                          form.getValues("regularPricePerPax"),
+                          newPrice.maximumPax
+                        )}
+                        disabled={true}
+                      />
+                    </div>
+
+                    <p className="text-xs text-green-500 mt-1 text-justify">
+                      Regular Price Per Pax * Maximum Pax
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <Button
@@ -275,22 +304,23 @@ export function PricingStep({ formHook }: AddMenuFormProps) {
                 </CardHeader>
                 <CardContent className="p-4 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Price per pax:</span>
+                    <span>Discounted Price:</span>
                     <span className="font-medium">
                       ${price.price.toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Discount:</span>
-                    <span className="font-medium">{price.discount}%</span>{" "}
+                    <span className="font-medium">{price.discount}%</span>
                     {/* THE MENU META DATA MUST BE CHANGE */}
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>You save:</span>
+                    <span>You saved:</span>
                     <span className="font-medium text-green-600">
                       $
                       {(
-                        form.getValues("regularPricePerPax") - price.price
+                        form.getValues("regularPricePerPax") -
+                        price.price / price.maximumPax
                       ).toFixed(2)}{" "}
                       per pax
                     </span>
