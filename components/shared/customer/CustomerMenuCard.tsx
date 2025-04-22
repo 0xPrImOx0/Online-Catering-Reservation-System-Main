@@ -151,7 +151,7 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
             </CardDescription>
           </div>
           <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
-            {Math.floor(discount * 100)}% OFF
+            {Math.floor(discount)}% OFF
           </Badge>
         </div>
       </CardHeader>

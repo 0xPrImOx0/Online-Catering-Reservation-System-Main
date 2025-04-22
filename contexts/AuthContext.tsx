@@ -21,20 +21,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       // toast(<div className="p-4">{JSON.stringify(res, null, 2)}</div>);
       setCustomer(res.data.customer);
     } catch (err: unknown) {
-      console.log("ERRORRR IN AUTH CONTEXT", err);
-
       if (!axios.isAxiosError(err) || err.response?.status !== 401) {
-        setCustomer(null);
         setErrorMessage("Unexpected error occur");
         console.log(
-          "DEV ERROR IF NOT AXIOS ERROR IN GETTING ACCESS TOKEN",
+          "DEV ERROR IF NOT AXIOS ERROR IN GETTING ACCESS TOKEN | EXPIRED",
           err
         );
-        return;
       }
 
       // This will try to generate new access token using refresh token
       try {
+        console.log("Attempting to refresh the access token...");
         await api.post("/auth/refresh");
 
         const retryRes = await api.get("/auth/me");

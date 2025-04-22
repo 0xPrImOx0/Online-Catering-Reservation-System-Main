@@ -49,7 +49,7 @@ export type AllergenProps =
   | "Sulphites"
   | "Soy"
   | "Nuts"
-  | "";
+  | "None";
 
 export const FOOD_ALLERGENS = [
   "None",
