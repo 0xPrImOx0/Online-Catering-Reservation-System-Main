@@ -11,7 +11,6 @@ import {
   MenuReservationDetails,
   paxArray,
   PaxArrayType,
-  SelectedMenus,
   SelectServingSizeProps,
 } from "@/types/reservation-types";
 import { ReservationValues } from "@/hooks/use-reservation-form";
@@ -30,13 +29,12 @@ export default function SelectServingSize({
   };
 
   const currentCategory = value[category] || {};
-  const paxSelected = value[category]?.[menu]?.paxSelected || "Regular";
+  const paxSelected = value[category]?.[menu]?.paxSelected || "4-6 pax";
   const handlePaxChange = (newPax: PaxArrayType) => {
     const menuItem = getMenuItem();
     if (!menuItem) return;
 
     const priceMap = {
-      Regular: menuItem.regularPricePerPax,
       "4-6 pax": menuItem.prices[0].price ?? 0,
       "8-10 pax": menuItem.prices[1].price ?? 0,
       "13-15 pax": menuItem.prices[2].price ?? 0,
@@ -48,7 +46,7 @@ export default function SelectServingSize({
       paxSelected: paxSelected,
       pricePerPax: priceMap[paxSelected],
     };
-
+    ;
     const updatedCategory: Record<string, MenuReservationDetails> = {
       ...currentCategory,
       [menu]: {

@@ -27,14 +27,12 @@ export type reservationType = {
 };
 
 export type PaxArrayType =
-  | "Regular"
   | "4-6 pax"
   | "8-10 pax"
   | "13-15 pax"
   | "18-20 pax";
 
 export const paxArray: PaxArrayType[] = [
-  "Regular",
   "4-6 pax",
   "8-10 pax",
   "13-15 pax",
