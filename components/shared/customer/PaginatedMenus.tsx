@@ -47,10 +47,19 @@ export default function PaginatedMenus({ open }: { open?: boolean }) {
     });
   };
 
+  const handleMenuDeleted = (deletedMenu: MenuItem) => {
+    console.log("❌ Menu deleted from socket:", deletedMenu);
+    setMenus(
+      (prevMenus) =>
+        prevMenus?.filter((menu) => menu._id !== deletedMenu._id) || null
+    );
+  };
+
   // Use the socket hook to listen for updates
   useSocket({
     onMenuUpdated: handleMenuUpdated,
     onMenuCreated: handleMenuCreated,
+    onMenuDeleted: handleMenuDeleted,
   });
 
   useEffect(() => {

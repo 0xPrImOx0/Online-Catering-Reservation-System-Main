@@ -39,6 +39,10 @@ export const subscribeToMenuCreated = (callback: (menu: MenuItem) => void) => {
   }
 };
 
+export const subscribeToMenuDeleted = (callback: (menu: MenuItem) => void) => {
+  socket?.on("menuDeleted", callback);
+};
+
 export const unsubscribeFromMenuUpdates = () => {
   if (socket) {
     socket.off("menuUpdated"); // Stop listening for menu updates
@@ -49,4 +53,8 @@ export const unsubscribeFromMenuCreated = () => {
   if (socket) {
     socket.off("menuCreated"); // Stop listening for menu created
   }
+};
+
+export const unsubscribeFromMenuDeleted = () => {
+  socket?.off("menuDeleted");
 };
