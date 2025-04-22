@@ -56,7 +56,7 @@ export default function EditMenuForm({
   // Handle form submission
   const handleSubmit = async () => {
     const data = form.getValues();
-    const isSuccess = onSubmit(data);
+    const isSuccess = onSubmit(data, "update", menu._id);
 
     if (!isSuccess) {
       toast.error("Submission Failed");

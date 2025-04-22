@@ -35,6 +35,7 @@ const nextConfig: NextConfig = {
       "ual-media-res.cloudinary.com",
       "miro.medium.com",
       "www.travelwisconsin.com",
+      "www.flyacecorp.com",
     ],
   },
 };

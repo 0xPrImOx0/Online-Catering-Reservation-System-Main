@@ -54,7 +54,7 @@ export function AddMenuDialog({
   // Handle form submission
   const handleSubmitForm = async () => {
     const data = form.getValues();
-    const isSuccess = await onSubmit(data);
+    const isSuccess = await onSubmit(data, "create");
 
     if (!isSuccess) {
       toast.error("Submission Failed");

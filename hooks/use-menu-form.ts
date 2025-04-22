@@ -207,10 +207,7 @@ export function useMenuForm({
       ingredients: initialData.ingredients,
       allergens: initialData.allergens,
       preparationMethod: initialData.preparationMethod,
-      prices: initialData.prices.map((price) => ({
-        ...price,
-        discount: Number((price.discount * 100).toFixed(0)), // Convert 0.03 → 3
-      })),
+      prices: initialData.prices,
       regularPricePerPax: initialData.regularPricePerPax,
       imageUrl: initialData.imageUrl ?? "",
       imageUploadType: initialData.imageUrl ? "url" : "upload",
@@ -411,7 +408,11 @@ export function useMenuForm({
   };
 
   // Submit form function
-  const onSubmit = async (data: FormValues, mode: "create" | "update") => {
+  const onSubmit = async (
+    data: FormValues,
+    mode: "create" | "update",
+    id?: string
+  ) => {
     // Create menu item object
     const { imageUrl, ...rest } = data;
     let isSuccess = false;
@@ -420,7 +421,7 @@ export function useMenuForm({
       ...rest,
       rating: isEditMode && initialData ? initialData.rating : 0,
       ratingCount: isEditMode && initialData ? initialData.ratingCount : 0,
-      ...(imageUrl !== "" && { imageUrl }), // now this works!
+      ...(imageUrl !== "" && { imageUrl }), // Exclude the imageUrl if its null
     };
 
     console.log(
@@ -433,14 +434,19 @@ export function useMenuForm({
     try {
       let response;
 
-      if (mode === "create") response = await api.post("/menus", menuItem);
-
-      if (mode === "update") response = await api.put("/menus", menuItem);
+      if (mode === "create") {
+        response = await api.post("/menus", menuItem);
+        toast.success(`${menuItem.name} is successfully added to menus`);
+      } else if (mode === "update") {
+        console.log("ID OF THE MENUS", id);
+        response = await api.put(`/menus/${id}`, data);
+        toast.success(`${menuItem.name} is successfully updated`);
+      }
 
       isSuccess = true;
       console.log("MESSAGE", response?.data.message);
       console.log("DATAA", response?.data.data);
-      toast.success(response?.data.message);
+      // toast.success(response?.data.message);
     } catch (err: unknown) {
       isSuccess = false;
       console.log("ERRORRRR", err);
