@@ -3,7 +3,10 @@
 import { AppSidebar } from "@/components/layout/dashboard-sidebar";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { useState } from "react";
+import { useAuthContext } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function DashBoardLayout({
   children,
@@ -11,6 +14,14 @@ export default function DashBoardLayout({
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState<boolean>(false);
+  const { customer } = useAuthContext();
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   if (!customer) return toast.error("Authentication Required!");
+
+  //   if (customer.role !== "caterer")
+  // }, [customer]);
   return (
     <div className="[--header-height:calc(theme(spacing.14))]">
       <SidebarProvider
