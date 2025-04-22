@@ -33,20 +33,20 @@ export const subscribeToMenuUpdates = (callback: (menu: MenuItem) => void) => {
   }
 };
 
+export const subscribeToMenuCreated = (callback: (menu: MenuItem) => void) => {
+  if (socket) {
+    socket.on("menuCreated", callback); // Listen for menu created event
+  }
+};
+
 export const unsubscribeFromMenuUpdates = () => {
   if (socket) {
     socket.off("menuUpdated"); // Stop listening for menu updates
   }
 };
 
-export const subscribeToMenuCreated = (callback: (menu: MenuItem) => void) => {
-  if (socket) {
-    socket.on("menuUpdated", callback); // Listen for menu created event
-  }
-};
-
 export const unsubscribeFromMenuCreated = () => {
   if (socket) {
-    socket.off("menuUpdated"); // Stop listening for menu created
+    socket.off("menuCreated"); // Stop listening for menu created
   }
 };

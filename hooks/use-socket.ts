@@ -9,20 +9,24 @@ import {
 import { MenuItem } from "@/types/menu-types";
 import { useEffect } from "react";
 
-const useSocket = (onMenuChanges: (menu: MenuItem) => void) => {
+const useSocket = ({
+  onMenuUpdated,
+  onMenuCreated,
+}: {
+  onMenuUpdated: (menu: MenuItem) => void;
+  onMenuCreated: (menu: MenuItem) => void;
+}) => {
   useEffect(() => {
-    initSocket(); // Initialize socket connection
+    initSocket();
 
-    // Subscribe to menu updates
-    subscribeToMenuUpdates(onMenuChanges);
-    subscribeToMenuCreated(onMenuChanges);
+    subscribeToMenuUpdates(onMenuUpdated);
+    subscribeToMenuCreated(onMenuCreated);
 
-    // Clean up the socket event listener when component is unmounted
     return () => {
       unsubscribeFromMenuUpdates();
       unsubscribeFromMenuCreated();
     };
-  }, [onMenuChanges]);
+  }, [onMenuUpdated, onMenuCreated]);
 };
 
 export default useSocket;

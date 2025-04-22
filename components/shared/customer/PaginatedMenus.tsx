@@ -39,8 +39,19 @@ export default function PaginatedMenus({ open }: { open?: boolean }) {
     });
   };
 
+  const handleMenuCreated = (createdMenu: MenuItem) => {
+    console.log("🆕 New menu created from socket:", createdMenu);
+    setMenus((prevMenus) => {
+      if (prevMenus === null) return [createdMenu];
+      return [...prevMenus, createdMenu];
+    });
+  };
+
   // Use the socket hook to listen for updates
-  useSocket(handleMenuUpdated);
+  useSocket({
+    onMenuUpdated: handleMenuUpdated,
+    onMenuCreated: handleMenuCreated,
+  });
 
   useEffect(() => {
     const getMenus = async () => {
