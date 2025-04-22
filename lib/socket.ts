@@ -2,7 +2,7 @@
 import { MenuItem } from "@/types/menu-types";
 import { io, Socket } from "socket.io-client";
 
-let socket: Socket | null = null;
+let socket: Socket;
 
 export const initSocket = () => {
   if (typeof window !== "undefined" && !socket) {
@@ -12,9 +12,7 @@ export const initSocket = () => {
 
     // ✅ Log successful connection
     socket.on("connect", () => {
-      if (socket) {
-        console.log("✅ Socket connected with ID:", socket.id);
-      }
+      console.log("✅ Socket connected with ID:", socket.id);
     });
 
     // Optional: handle connection errors
@@ -38,5 +36,17 @@ export const subscribeToMenuUpdates = (callback: (menu: MenuItem) => void) => {
 export const unsubscribeFromMenuUpdates = () => {
   if (socket) {
     socket.off("menuUpdated"); // Stop listening for menu updates
+  }
+};
+
+export const subscribeToMenuCreated = (callback: (menu: MenuItem) => void) => {
+  if (socket) {
+    socket.on("menuUpdated", callback); // Listen for menu created event
+  }
+};
+
+export const unsubscribeFromMenuCreated = () => {
+  if (socket) {
+    socket.off("menuUpdated"); // Stop listening for menu created
   }
 };

@@ -30,6 +30,7 @@ export default function PaginatedMenus({ open }: { open?: boolean }) {
 
   // Callback to handle menu updates
   const handleMenuUpdated = (updatedMenu: MenuItem) => {
+    console.log("🔄 Received updated menu from socket:", updatedMenu);
     setMenus((prevMenus) => {
       if (prevMenus === null) return [updatedMenu]; // If prevMenus is null, start a new array with the updated menu
       return prevMenus.map((menu) =>
