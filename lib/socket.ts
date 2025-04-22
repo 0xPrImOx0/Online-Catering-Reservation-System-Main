@@ -2,15 +2,29 @@
 import { MenuItem } from "@/types/menu-types";
 import { io, Socket } from "socket.io-client";
 
-let socket: Socket;
-
-const SOCKET_URL = "http://localhost:5500"; // Adjust your backend URL here
+let socket: Socket | null = null;
 
 export const initSocket = () => {
-  if (typeof window !== "undefined") {
-    socket = io(SOCKET_URL, {
-      transports: ["websocket"], // Use WebSocket for communication
-      withCredentials: true, // Enable cookie-based authentication if necessary
+  if (typeof window !== "undefined" && !socket) {
+    socket = io("http://localhost:5500", {
+      withCredentials: true,
+    });
+
+    // ✅ Log successful connection
+    socket.on("connect", () => {
+      if (socket) {
+        console.log("✅ Socket connected with ID:", socket.id);
+      }
+    });
+
+    // Optional: handle connection errors
+    socket.on("connect_error", (err) => {
+      console.error("❌ Socket connection error:", err);
+    });
+
+    // Optional: listen for the custom welcome event from backend
+    socket.on("connected", (data) => {
+      console.log("🟢 Server says:", data.message);
     });
   }
 };

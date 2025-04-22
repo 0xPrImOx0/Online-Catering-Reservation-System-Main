@@ -9,6 +9,7 @@ import CatererMenuCard from "../caterer/CatererMenuCard";
 import CustomPagination from "../CustomPagination";
 import api from "@/lib/axiosInstance";
 import axios from "axios";
+import useSocket from "@/hooks/use-socket";
 
 export default function PaginatedMenus({ open }: { open?: boolean }) {
   const [query, setQuery] = useState("");
@@ -27,8 +28,21 @@ export default function PaginatedMenus({ open }: { open?: boolean }) {
   const menusPerPage = 9;
   const [menus, setMenus] = useState<MenuItem[] | null>(null);
 
+  // Callback to handle menu updates
+  const handleMenuUpdated = (updatedMenu: MenuItem) => {
+    setMenus((prevMenus) => {
+      if (prevMenus === null) return [updatedMenu]; // If prevMenus is null, start a new array with the updated menu
+      return prevMenus.map((menu) =>
+        menu._id === updatedMenu._id ? updatedMenu : menu
+      );
+    });
+  };
+
+  // Use the socket hook to listen for updates
+  useSocket(handleMenuUpdated);
+
   useEffect(() => {
-    const fetchFeatured = async () => {
+    const getMenus = async () => {
       try {
         const response = await api.get("/menus");
         setMenus(response.data.data);
@@ -45,7 +59,7 @@ export default function PaginatedMenus({ open }: { open?: boolean }) {
       }
     };
 
-    fetchFeatured();
+    getMenus();
   }, []);
 
   // Add this function before the return statement in PaginatedMenus component
