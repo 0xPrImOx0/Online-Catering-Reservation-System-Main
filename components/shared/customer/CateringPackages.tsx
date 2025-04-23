@@ -38,7 +38,7 @@ export default function CateringPackages() {
   );
 
   useEffect(() => {
-    activeTab === "Plated" ? setIsPlated(true) : setIsPlated(false);
+    setIsPlated(activeTab === "Plated");
   }, [activeTab]);
 
   const TabsTriggerStyle = ({
@@ -51,7 +51,7 @@ export default function CateringPackages() {
     return (
       <TabsTrigger
         value={value}
-        className="flex-1 hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+        className="flex-1 hover:bg-muted-foreground/10 data-[state=active]:after:bg-foreground data-[state=active]:hover:bg-muted-foreground/10 relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
       >
         {title}
       </TabsTrigger>
@@ -76,7 +76,7 @@ export default function CateringPackages() {
         className="w-full"
         onValueChange={setActiveTab}
       >
-        <TabsList className="text-foreground overflow-x-auto scrollbar-thin w-full justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1">
+        <TabsList className="text-foreground overflow-x-auto scrollbar-none w-full justify-between h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1">
           <TabsTriggerStyle value="Buffet" title="Buffet Packages" />
           <TabsTriggerStyle value="Plated" title="Plated Course" />
           <TabsTriggerStyle value="Event" title="Event Packages" />

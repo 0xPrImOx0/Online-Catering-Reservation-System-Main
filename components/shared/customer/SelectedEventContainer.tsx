@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import PlatedWarning from "../PlatedWarning";
 import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 export default function SelectedEventContainer({
   cateringPackages,
@@ -22,7 +23,7 @@ export default function SelectedEventContainer({
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    serviceType === "Plated" ? setIsPlated(true) : setIsPlated(false);
+    setIsPlated(serviceType === "Plated");
     setChangeEventMobile(false);
   }, [serviceType, selectedEventType]);
 
@@ -64,9 +65,10 @@ export default function SelectedEventContainer({
 
   return (
     <div
-      className={clsx("flex gap-10 relative min-h-screen overflow-y-auto", {
-        "flex-col !gap-0": isMobile,
-      })}
+      className={cn(
+        "flex gap-10 relative min-h-screen overflow-y-auto",
+        isMobile && "flex-col gap-0"
+      )}
     >
       <div className={clsx("mt-4 -mb-3 w-full", !isMobile && "hidden")}>
         <Button
