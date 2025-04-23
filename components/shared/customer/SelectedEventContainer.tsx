@@ -4,12 +4,11 @@ import { Button } from "@/components/ui/button";
 import { EventType, eventTypes } from "@/types/package-types";
 import CustomerPackageCard from "./CustomerPackageCard";
 import { SelectedEventContainerProps } from "@/types/component-types";
-import clsx from "clsx";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import PlatedWarning from "../PlatedWarning";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
@@ -64,13 +63,13 @@ export default function SelectedEventContainer({
   ];
 
   return (
-    <div
+    <section
       className={cn(
         "flex gap-10 relative min-h-screen overflow-y-auto",
         isMobile && "flex-col gap-0"
       )}
     >
-      <div className={clsx("mt-4 -mb-3 w-full", !isMobile && "hidden")}>
+      <div className={cn("mt-4 -mb-3 w-full", !isMobile && "hidden")}>
         <Button
           className=""
           onClick={() => setChangeEventMobile((prev) => !prev)}
@@ -81,28 +80,18 @@ export default function SelectedEventContainer({
         </Button>
       </div>
       <div
-        className={clsx(
+        className={cn(
           "border border-t-0 rounded-lg rounded-t-none p-4 min-w-[200px] bg-background z-10",
           isMobile ? "absolute top-0 left-0 right-0" : "relative",
           !changeEventMobile && isMobile && "hidden"
         )}
       >
-        {isMobile && (
-          <Button
-            className="max-w-fit ml-auto text-destructive "
-            onClick={() => setChangeEventMobile((prev) => !prev)}
-            size={"custom"}
-            variant={"link"}
-          >
-            <X className="min-h-5 min-w-5" /> Close
-          </Button>
-        )}
         <div>
           <Label className="text-muted-foreground">Event Types</Label>
           <div className="flex flex-col items-s space-y-4 mt-4">
             <Button
               variant={selectedEventType === "All" ? "default" : "ghost"}
-              className={clsx("font-medium rounded-sm justify-start", {
+              className={cn("font-medium rounded-sm justify-start", {
                 "text-muted-foreground": selectedEventType !== "All",
               })}
               onClick={() => setSelectedEventType("All")}
@@ -112,7 +101,7 @@ export default function SelectedEventContainer({
             {eventTypes.map((event) => (
               <Button
                 variant={selectedEventType === event ? "default" : "ghost"}
-                className={clsx("font-medium rounded-sm justify-start", {
+                className={cn("font-medium rounded-sm justify-start", {
                   "text-muted-foreground": selectedEventType !== event,
                 })}
                 onClick={() => setSelectedEventType(event)}
@@ -130,7 +119,7 @@ export default function SelectedEventContainer({
           {["Buffet", "Plated"].map((type) => (
             <Button
               variant={type === serviceType ? "default" : "ghost"}
-              className={clsx("font-medium rounded-sm justify-start", {
+              className={cn("font-medium rounded-sm justify-start", {
                 "text-muted-foreground": type !== serviceType,
               })}
               onClick={() => setServiceType(type)}
@@ -157,7 +146,6 @@ export default function SelectedEventContainer({
                 {selectedEventType === event && description}
               </p>
             ))}
-            {/* <Info className="absolute top-0 right-0" /> */}
           </div>
           <PlatedWarning isPlated={serviceType === "Plated"} />
         </div>
@@ -169,6 +157,6 @@ export default function SelectedEventContainer({
           })}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

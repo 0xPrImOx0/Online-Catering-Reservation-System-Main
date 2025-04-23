@@ -27,7 +27,7 @@ export default function PlatedWarning({ isPlated }: { isPlated: boolean }) {
       <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative text-yellow-500" />
       <div className="space-y-2">
         <h3 className="font-medium dark:text-background">
-          Plated Course Service
+          Plated Course Service Fee
         </h3>
         <p className="text-sm text-foreground dark:text-background text-justify max-w-[1000px]">
           Our plated course packages include professional waitstaff who will
