@@ -178,7 +178,7 @@ export default function SelectedEventContainer({
               </p>
             ))}
           </div>
-          <PlatedWarning isPlated={serviceType === "Plated"} />
+          {serviceType === "Plated" && <PlatedWarning />}
         </div>
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-10">
           {eventPackages.map((pkg, index) => {

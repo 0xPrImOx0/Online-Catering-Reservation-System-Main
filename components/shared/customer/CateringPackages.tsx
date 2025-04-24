@@ -92,7 +92,7 @@ export default function CateringPackages() {
         </TabsContent>
 
         <TabsContent value="Plated" className="mt-6 space-y-8">
-          <PlatedWarning isPlated />
+          <PlatedWarning />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {buffetPlatedPackages.map((pkg, index) => (
               <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />

@@ -4,7 +4,7 @@ import { Info, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 
-export default function PlatedWarning({ isPlated }: { isPlated: boolean }) {
+export default function PlatedWarning() {
   const [closePlatedWarning, setClosePlatedWarning] = useState(false);
 
   return (
@@ -12,7 +12,7 @@ export default function PlatedWarning({ isPlated }: { isPlated: boolean }) {
       className={clsx(
         "mb-4 p-4 bg-yellow-50 border-2 border-amber-400 rounded-lg flex items-start gap-3 relative",
         {
-          hidden: closePlatedWarning || !isPlated,
+          hidden: closePlatedWarning,
         }
       )}
     >
