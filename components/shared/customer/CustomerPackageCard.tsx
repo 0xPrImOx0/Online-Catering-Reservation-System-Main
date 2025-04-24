@@ -48,6 +48,7 @@ export default function CustomerPackageCard({
                   src={item.imageUrl || "/placeholder.svg"}
                   alt={item.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="w-full object-cover overflow-hidden transition-transform duration-500 hover:scale-105"
                 />
               </TooltipTrigger>
