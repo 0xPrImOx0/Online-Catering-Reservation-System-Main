@@ -1,4 +1,5 @@
 import { cateringPackages } from "@/lib/customer/packages-metadata";
+import { menuItems } from "@/lib/menu-lists";
 import { MenuItem } from "@/types/menu-types";
 import {
   EventType,
@@ -196,6 +197,11 @@ export function useReservationForm() {
     return isValid;
   };
 
+  const getMenuItem = (menuId: string, isMenuName: boolean = false) => {
+    const menu = menuItems.find((item) => item._id === menuId);
+    return menu;
+  };
+
   // Submit form function
   const onSubmit = (data: ReservationValues) => {
     // Create menu item object
@@ -357,6 +363,7 @@ export function useReservationForm() {
   return {
     reservationForm,
     validateStep,
+    getMenuItem,
     onSubmit,
     isSubmitSuccess,
     handleCheckboxChange,

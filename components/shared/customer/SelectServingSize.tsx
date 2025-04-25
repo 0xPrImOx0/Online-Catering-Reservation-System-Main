@@ -13,7 +13,10 @@ import {
   PaxArrayType,
   SelectServingSizeProps,
 } from "@/types/reservation-types";
-import { ReservationValues } from "@/hooks/use-reservation-form";
+import {
+  ReservationValues,
+  useReservationForm,
+} from "@/hooks/use-reservation-form";
 import { useEffect } from "react";
 
 export default function SelectServingSize({
@@ -23,15 +26,13 @@ export default function SelectServingSize({
   onChange,
 }: SelectServingSizeProps) {
   const { setValue, watch } = useFormContext<ReservationValues>();
+  const { getMenuItem } = useReservationForm();
   const selectedMenus = watch("selectedMenus");
-  const getMenuItem = () => {
-    return menuItems.find((item) => item._id === menu);
-  };
 
   const currentCategory = value[category] || {};
   const paxSelected = value[category]?.[menu]?.paxSelected || "4-6 pax";
   const handlePaxChange = (newPax: PaxArrayType) => {
-    const menuItem = getMenuItem();
+    const menuItem = getMenuItem(menu);
     if (!menuItem) return;
 
     const priceMap = {
@@ -46,7 +47,6 @@ export default function SelectServingSize({
       paxSelected: paxSelected,
       pricePerPax: priceMap[paxSelected],
     };
-    ;
     const updatedCategory: Record<string, MenuReservationDetails> = {
       ...currentCategory,
       [menu]: {

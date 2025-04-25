@@ -29,14 +29,14 @@ export default function CheckboxMenus({
   count: number;
   selectedMenus: SelectedMenus;
 }) {
-  const { handleCheckboxChange } = useReservationForm();
+  const { handleCheckboxChange, getMenuItem } = useReservationForm();
   // Function to get dishes by category
   const getMenusByCategory = (category: CategoryProps) => {
     return menuItems.filter((menu: MenuItem) => menu.category === category);
   };
 
   const getMenuItemPrice = (menuId: string) => {
-    const menu = menuItems.find((item) => item._id === menuId);
+    const menu = getMenuItem(menuId);
     return menu ? menu.prices[0].price : 0;
   };
 

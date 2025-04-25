@@ -1,7 +1,10 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import type { ReservationValues } from "@/hooks/use-reservation-form";
+import {
+  useReservationForm,
+  type ReservationValues,
+} from "@/hooks/use-reservation-form";
 import { menuItems } from "@/lib/menu-lists";
 import {
   Calendar,
@@ -22,12 +25,13 @@ import { PaxArrayType } from "@/types/reservation-types";
 
 export default function SummaryBooking() {
   const { watch } = useFormContext<ReservationValues>();
+  const { getMenuItem } = useReservationForm();
 
   // Use watch to get reactive form values
   const formValues = watch();
 
-  const formattedDate = formValues.eventDate
-    ? formValues.eventDate.toLocaleDateString("en-US", {
+  const formattedDate = formValues.reservationDate
+    ? formValues.reservationDate.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -201,7 +205,7 @@ export default function SummaryBooking() {
                       </h4>
                       <ul className="space-y-3">
                         {menuIdArray.map((id: string) => {
-                          const menu = menuItems.find((d) => d._id === id);
+                          const menu = getMenuItem(id);
                           return menu ? (
                             <li
                               key={id}

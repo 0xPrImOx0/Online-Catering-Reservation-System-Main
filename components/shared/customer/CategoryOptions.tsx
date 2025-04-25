@@ -27,6 +27,8 @@ export default function CategoryOptions() {
   const { control, getValues, setValue, watch, clearErrors } =
     useFormContext<ReservationValues>();
 
+  const { getMenuItem } = useReservationForm();
+
   const selectedMenus = watch("selectedMenus");
 
   const cateringOptions = watch("cateringOptions");
@@ -57,11 +59,6 @@ export default function CategoryOptions() {
       }
     }
   }, [cateringOptions, selectedPackage]);
-
-  const getMenuItemName = (menuId: string) => {
-    const menu = menuItems.find((item) => item._id === menuId);
-    return menu ? menu.name : "";
-  };
 
   return (
     <div className="space-y-6">
@@ -117,7 +114,7 @@ export default function CategoryOptions() {
                             key={menu}
                             className="flex items-center justify-between space-x-4"
                           >
-                            <span>{getMenuItemName(menu)}</span>
+                            <span>{getMenuItem(menu)?.name}</span>
                             <div className="flex space-x-2">
                               <AddRemoveMenuQuantity
                                 value={field.value}

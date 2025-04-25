@@ -38,6 +38,7 @@ export default function BookNowForm({ id }: { id: string }) {
     onSubmit,
     showPackageSelection,
     setShowPackageSelection,
+    getMenuItem,
   } = useReservationForm();
 
   const { watch } = reservationForm;
@@ -111,7 +112,7 @@ export default function BookNowForm({ id }: { id: string }) {
   };
 
   useEffect(() => {
-    const isMenu = menuItems.find((pkg) => pkg._id === deconstructedId);
+    const isMenu = getMenuItem(deconstructedId);
     const isPackage = cateringPackages.some(
       (pkg) => pkg._id === deconstructedId
     );
