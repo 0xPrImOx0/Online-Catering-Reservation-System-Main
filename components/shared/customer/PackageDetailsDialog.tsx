@@ -52,7 +52,7 @@ export default function PackageDetailsDialog({
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full"
+              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-foreground rounded-full"
               onClick={() => onOpenChange(false)}
             >
               <X className="h-4 w-4" />

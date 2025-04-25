@@ -96,8 +96,8 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
             variant={menu.available ? "default" : "destructive"}
             className={
               menu.available
-                ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                : "bg-red-500 text-white"
+                ? "bg-emerald-600 hover:bg-emerald-700 text-foreground"
+                : "bg-red-500 text-foreground"
             }
           >
             {menu.available ? "Available" : "Unavailable"}
@@ -108,7 +108,7 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
           {menu.spicy && (
             <Badge
               variant="outline"
-              className="bg-red-500 text-white border-red-500 flex items-center gap-1 hover:bg-red-600"
+              className="bg-red-500 text-foreground border-red-500 flex items-center gap-1 hover:bg-red-600"
             >
               <Flame className="h-3 w-3" /> Spicy
             </Badge>
@@ -133,7 +133,7 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
         </div>
 
         <div className="absolute bottom-3 right-3">
-          <div className="bg-black/70 backdrop-blur-sm text-white rounded px-2.5 py-1.5 font-bold">
+          <div className="bg-black/70 backdrop-blur-sm text-foreground rounded px-2.5 py-1.5 font-bold">
             &#8369;
             {menuPricePax.toFixed(2)}
           </div>
@@ -150,7 +150,7 @@ export function CustomerMenuCard({ menu }: MenuCardProps) {
               {menu.shortDescription}
             </CardDescription>
           </div>
-          <Badge className="bg-emerald-600 text-white border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
+          <Badge className="bg-emerald-600 text-foreground border-emerald-600 whitespace-nowrap text-base py-1.5 h-auto hover:bg-emerald-700">
             {Math.floor(discount * 100)}% OFF
           </Badge>
         </div>

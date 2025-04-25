@@ -218,8 +218,8 @@ export default function BookNowForm({ id }: { id: string }) {
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center justify-center py-4">
-            <div className="rounded-full p-3 bg-green-500">
-              <Check className="size-10 text-white" />
+            <div className="p-3 bg-green-500 rounded-full">
+              <Check className="text-foreground size-10" />
             </div>
           </div>
           <DialogFooter>

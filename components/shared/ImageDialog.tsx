@@ -68,7 +68,7 @@ export default function ImageDialog({
                       height={725}
                       alt={item.name}
                     />
-                    <DialogClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/70 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black transition-colors">
+                    <DialogClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/70 backdrop-blur-sm text-foreground flex items-center justify-center hover:bg-black transition-colors">
                       <X className="h-5 w-5" />
                     </DialogClose>
                   </div>

@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { motion } from "framer-motion";
+import { PaxArrayType } from "@/types/reservation-types";
 
 export default function SummaryBooking() {
   const { watch } = useFormContext<ReservationValues>();
@@ -52,41 +53,41 @@ export default function SummaryBooking() {
     >
       <motion.div
         variants={fadeIn}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="grid grid-cols-1 gap-6 md:grid-cols-2"
       >
         <Card className="overflow-hidden border-none shadow-md">
           <CardContent className="p-6">
             <div className="flex items-center mb-4">
-              <User className="h-5 w-5 text-gray-500 mr-2" />
+              <User className="w-5 h-5 mr-2 text-gray-500" />
               <h3 className="text-lg font-semibold text-gray-800">
                 Customer Information
               </h3>
             </div>
             <ul className="space-y-4">
               <li className="flex items-start">
-                <span className="flex items-center text-gray-500 flex-1 shrink-0">
-                  <User className="h-4 w-4 mr-2" />
+                <span className="flex items-center flex-1 text-gray-500 shrink-0">
+                  <User className="w-4 h-4 mr-2" />
                   Name
                 </span>
-                <span className="font-medium text-gray-800 ml-2">
+                <span className="ml-2 font-medium text-gray-800">
                   {formValues.fullName || "Not provided"}
                 </span>
               </li>
               <li className="flex items-start">
-                <span className="flex items-center text-gray-500 flex-1 shrink-0">
-                  <Mail className="h-4 w-4 mr-2" />
+                <span className="flex items-center flex-1 text-gray-500 shrink-0">
+                  <Mail className="w-4 h-4 mr-2" />
                   Email
                 </span>
-                <span className="font-medium text-gray-800 ml-2 break-all">
+                <span className="ml-2 font-medium text-gray-800 break-all">
                   {formValues.email || "Not provided"}
                 </span>
               </li>
               <li className="flex items-start">
-                <span className="flex items-center text-gray-500 flex-1 shrink-0">
-                  <Phone className="h-4 w-4 mr-2" />
+                <span className="flex items-center flex-1 text-gray-500 shrink-0">
+                  <Phone className="w-4 h-4 mr-2" />
                   Phone
                 </span>
-                <span className="font-medium text-gray-800 ml-2">
+                <span className="ml-2 font-medium text-gray-800">
                   {formValues.contactNumber || "Not provided"}
                 </span>
               </li>
@@ -97,7 +98,7 @@ export default function SummaryBooking() {
         <Card className="overflow-hidden border-none shadow-md">
           <CardContent className="p-6">
             <div className="flex items-center mb-4">
-              <Calendar className="h-5 w-5 text-gray-500 mr-2" />
+              <Calendar className="w-5 h-5 mr-2 text-gray-500" />
               <h3 className="text-lg font-semibold text-gray-800">
                 Event Details
               </h3>
@@ -105,28 +106,28 @@ export default function SummaryBooking() {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <span className="flex items-center text-gray-500 w-28 shrink-0">
-                  <Utensils className="h-4 w-4 mr-2" />
+                  <Utensils className="w-4 h-4 mr-2" />
                   Event Type
                 </span>
-                <span className="font-medium text-gray-800 ml-2">
+                <span className="ml-2 font-medium text-gray-800">
                   {formValues.eventType || "Not provided"}
                 </span>
               </li>
               <li className="flex items-start">
                 <span className="flex items-center text-gray-500 w-28 shrink-0">
-                  <Calendar className="h-4 w-4 mr-2" />
+                  <Calendar className="w-4 h-4 mr-2" />
                   Date
                 </span>
-                <span className="font-medium text-gray-800 ml-2">
+                <span className="ml-2 font-medium text-gray-800">
                   {formattedDate}
                 </span>
               </li>
               <li className="flex items-start">
                 <span className="flex items-center text-gray-500 w-28 shrink-0">
-                  <Users className="h-4 w-4 mr-2" />
+                  <Users className="w-4 h-4 mr-2" />
                   Guests
                 </span>
-                <span className="font-medium text-gray-800 ml-2">
+                <span className="ml-2 font-medium text-gray-800">
                   {formValues.guestCount || "Not provided"}
                 </span>
               </li>
@@ -134,19 +135,19 @@ export default function SummaryBooking() {
                 <>
                   <li className="flex items-start">
                     <span className="flex items-center text-gray-500 w-28 shrink-0">
-                      <Building className="h-4 w-4 mr-2" />
+                      <Building className="w-4 h-4 mr-2" />
                       Venue
                     </span>
-                    <span className="font-medium text-gray-800 ml-2">
+                    <span className="ml-2 font-medium text-gray-800">
                       {formValues.venue || "Not provided"}
                     </span>
                   </li>
                   <li className="flex items-start">
                     <span className="flex items-center text-gray-500 w-28 shrink-0">
-                      <Utensils className="h-4 w-4 mr-2" />
+                      <Utensils className="w-4 h-4 mr-2" />
                       Service
                     </span>
-                    <span className="font-medium text-gray-800 ml-2">
+                    <span className="ml-2 font-medium text-gray-800">
                       {formValues.serviceType || "Not provided"}
                     </span>
                   </li>
@@ -154,10 +155,10 @@ export default function SummaryBooking() {
                     formValues.serviceHours && (
                       <li className="flex items-start">
                         <span className="flex items-center text-gray-500 w-28 shrink-0">
-                          <Clock className="h-4 w-4 mr-2" />
+                          <Clock className="w-4 h-4 mr-2" />
                           Hours
                         </span>
-                        <span className="font-medium text-gray-800 ml-2">
+                        <span className="ml-2 font-medium text-gray-800">
                           {formValues.serviceHours}
                         </span>
                       </li>
@@ -173,19 +174,29 @@ export default function SummaryBooking() {
         <Card className="overflow-hidden border-none shadow-md">
           <CardContent className="p-6">
             <div className="flex items-center mb-6">
-              <Utensils className="h-5 w-5 text-gray-500 mr-2" />
+              <Utensils className="w-5 h-5 mr-2 text-gray-500" />
               <h3 className="text-lg font-semibold text-gray-800">
                 Selected Menu
               </h3>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {Object.entries(formValues.selectedMenus).map(
-                ([category, menuIds]: [string, Record<string, number>]) => {
+                ([category, menuIds]: [
+                  string,
+                  Record<
+                    string,
+                    {
+                      quantity: number;
+                      paxSelected: PaxArrayType;
+                      pricePerPax: number;
+                    }
+                  >
+                ]) => {
                   const menuIdArray = Object.keys(menuIds);
                   if (menuIdArray.length === 0) return null;
                   return (
                     <div key={category} className="space-y-4">
-                      <h4 className="text-md font-medium text-gray-700 pb-2 border-b border-gray-100">
+                      <h4 className="pb-2 font-medium text-gray-700 border-b border-gray-100 text-md">
                         {category}
                       </h4>
                       <ul className="space-y-3">
@@ -220,7 +231,7 @@ export default function SummaryBooking() {
           <Card className="overflow-hidden border-none shadow-md">
             <CardContent className="p-6">
               <div className="flex items-center mb-6">
-                <MessageSquare className="h-5 w-5 text-gray-500 mr-2" />
+                <MessageSquare className="w-5 h-5 mr-2 text-gray-500" />
                 <h3 className="text-lg font-semibold text-gray-800">
                   Additional Information
                 </h3>
@@ -229,11 +240,11 @@ export default function SummaryBooking() {
               <div className="space-y-6">
                 {formValues.specialRequests && (
                   <div className="space-y-2">
-                    <h4 className="text-md font-medium text-gray-700 flex items-center">
-                      <MessageSquare className="h-4 w-4 mr-2 text-gray-500" />
+                    <h4 className="flex items-center font-medium text-gray-700 text-md">
+                      <MessageSquare className="w-4 h-4 mr-2 text-gray-500" />
                       Special Requests
                     </h4>
-                    <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-md">
+                    <p className="p-3 text-sm text-gray-700 rounded-md bg-gray-50">
                       {formValues.specialRequests}
                     </p>
                   </div>
@@ -241,11 +252,11 @@ export default function SummaryBooking() {
 
                 {formValues.deliveryAddress && (
                   <div className="space-y-2">
-                    <h4 className="text-md font-medium text-gray-700 flex items-center">
-                      <MapPin className="h-4 w-4 mr-2 text-gray-500" />
+                    <h4 className="flex items-center font-medium text-gray-700 text-md">
+                      <MapPin className="w-4 h-4 mr-2 text-gray-500" />
                       Delivery Address
                     </h4>
-                    <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-md">
+                    <p className="p-3 text-sm text-gray-700 rounded-md bg-gray-50">
                       {formValues.deliveryAddress}
                     </p>
                   </div>
@@ -253,11 +264,11 @@ export default function SummaryBooking() {
 
                 {formValues.deliveryInstructions && (
                   <div className="space-y-2">
-                    <h4 className="text-md font-medium text-gray-700 flex items-center">
-                      <MessageSquare className="h-4 w-4 mr-2 text-gray-500" />
+                    <h4 className="flex items-center font-medium text-gray-700 text-md">
+                      <MessageSquare className="w-4 h-4 mr-2 text-gray-500" />
                       Delivery Instructions
                     </h4>
-                    <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-md">
+                    <p className="p-3 text-sm text-gray-700 rounded-md bg-gray-50">
                       {formValues.deliveryInstructions}
                     </p>
                   </div>

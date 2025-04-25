@@ -41,7 +41,7 @@ export default function SearchInput({
               )}
             />
             {activeFilterCount > 0 && (
-              <span className="absolute top-0.5 right-0.5 flex items-center justify-center bg-green-500 text-white text-xs rounded-full w-4 h-4">
+              <span className="absolute top-0.5 right-0.5 flex items-center justify-center bg-green-500 text-foreground text-xs rounded-full w-4 h-4">
                 {activeFilterCount}
               </span>
             )}

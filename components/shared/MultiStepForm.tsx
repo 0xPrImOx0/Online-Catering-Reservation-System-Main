@@ -109,7 +109,7 @@ export function MultiStepForm({
           "sticky top-0 z-10": !isReservationForm,
         })}
       >
-        <div className="text-center mb-4">
+        <div className="mb-4 text-center">
           <h2
             className={clsx(
               "font-bold",
@@ -128,8 +128,8 @@ export function MultiStepForm({
         </div>
 
         {/* Mobile step indicator */}
-        <div className="flex flex-col mb-2 sm:hidden space-y-2">
-          <span className="text-muted-foreground text-sm">
+        <div className="flex flex-col mb-2 space-y-2 sm:hidden">
+          <span className="text-sm text-muted-foreground">
             Step {formStep + 1} of {formSteps.length}
           </span>
           <div className="flex items-center gap-2 mt-1">
@@ -138,14 +138,14 @@ export function MultiStepForm({
                 isSubmitComplete && "bg-primary text-primary-foreground"
               }`}
             >
-              {isSubmitComplete ? <Check className="h-4 w-4" /> : formStep + 1}
+              {isSubmitComplete ? <Check className="w-4 h-4" /> : formStep + 1}
             </div>
             <span className="font-medium">{formSteps[formStep].title}</span>
           </div>
         </div>
 
         {/* Desktop step indicators */}
-        <div className="justify-between items-start hidden sm:flex">
+        <div className="items-start justify-between hidden sm:flex">
           {formSteps.map((step, index) => (
             <div
               key={step.id}
@@ -200,11 +200,11 @@ export function MultiStepForm({
         </div>
       </div>
 
-      <div className="flex-1 overflow-hidden flex flex-col">
-        <div className="flex-1 overflow-y-auto px-6 py-4">
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <div className="flex-1 px-6 py-4 overflow-y-auto">
           <Card className="border-0 shadow-none">
             <CardHeader className="px-0 pt-4">
-              <CardTitle className="text-lg flex">
+              <CardTitle className="flex text-lg">
                 {!isSubmitComplete && formSteps[formStep].title}
               </CardTitle>
               <CardDescription>
@@ -217,7 +217,7 @@ export function MultiStepForm({
           </Card>
         </div>
 
-        <div className="sticky bottom-0 bg-background pt-2 pb-6 md:py-2 px-6 border-t ">
+        <div className="sticky bottom-0 px-6 pt-2 pb-6 border-t bg-background md:py-2 ">
           <div className="flex justify-between mt-2">
             {isSubmitComplete ? (
               <Button className="ml-auto" onClick={completeForm}>
