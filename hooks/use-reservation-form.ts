@@ -10,6 +10,7 @@ import {
   paxArray,
   PaxArrayType,
   ReservationItem,
+  SelectedMenu,
   SelectedMenus,
 } from "@/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -247,14 +248,7 @@ export function useReservationForm() {
     price: number
   ) => {
     const currentSelection = field.value[category] || {};
-    const updatedMenus: Record<
-      string,
-      {
-        quantity: number;
-        paxSelected: string;
-        pricePerPax: number;
-      }
-    > = { ...currentSelection };
+    const updatedMenus: SelectedMenu = { ...currentSelection };
     const uniqueMenusSelected = Object.keys(updatedMenus).length;
 
     if (checked === true) {
@@ -276,8 +270,8 @@ export function useReservationForm() {
       [category]: updatedMenus,
     };
 
-    // Optional: remove the category entirely if it's empty
-    if (Object.keys(updatedMenus).length === 0) {
+    // // Optional: remove the category entirely if it's empty
+    if (Object.keys(updatedMenus).length === 0 && selectedPackage.length < 0) {
       delete newMenus[category];
     }
 

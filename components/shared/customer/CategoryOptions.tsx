@@ -16,7 +16,6 @@ import {
 import { useFormContext } from "react-hook-form";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { PackageOption } from "@/types/package-types";
-
 import CheckboxMenus from "./CheckboxMenus";
 import CategoryOptionsBadge from "./CategoryOptionsBadge";
 import { menuItems } from "@/lib/menu-lists";
@@ -47,6 +46,7 @@ export default function CategoryOptions({
     if (cateringOptions === "custom") {
       setCurrentPackage("");
       setValue("selectedPackage", "");
+      setValue("selectedMenus", {});
       clearErrors("selectedMenus");
       setCategoryAndCount(defaultCategoryAndCount);
       return;
@@ -71,7 +71,7 @@ export default function CategoryOptions({
     <div className="space-y-6">
       {selectedPackage && (
         <div>
-          <h3 className="font-medium mb-2">
+          <h3 className="mb-2 font-medium">
             Available Categories for {currentPackage}
           </h3>
 
@@ -111,8 +111,8 @@ export default function CategoryOptions({
               <FormControl>
                 <div className="space-y-6">
                   {Object.keys(field.value).map((category) => (
-                    <div key={category} className="border-b pb-4">
-                      <h3 className="text-md font-medium text-gray-700 mb-2">
+                    <div key={category} className="pb-4 border-b">
+                      <h3 className="mb-2 font-medium text-gray-700 text-md">
                         {category}
                       </h3>
                       <ul className="space-y-2">
@@ -163,9 +163,9 @@ export default function CategoryOptions({
         )}
       />
       {watch("totalPrice") > 0 && (
-        <div className="flex justify-between items-end">
+        <div className="flex items-end justify-between">
           <Label>{serviceFee && deliveryFee ? "Total" : "Partial"} Price</Label>
-          <span className="text-green-500 text-2xl underline underline-offset-4">
+          <span className="text-2xl text-green-500 underline underline-offset-4">
             &#8369;{" "}
             {`${new Intl.NumberFormat("en-US").format(watch("totalPrice"))}.00`}
           </span>

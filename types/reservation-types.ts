@@ -26,11 +26,7 @@ export type reservationType = {
   isUrgent: boolean;
 };
 
-export type PaxArrayType =
-  | "4-6 pax"
-  | "8-10 pax"
-  | "13-15 pax"
-  | "18-20 pax";
+export type PaxArrayType = "4-6 pax" | "8-10 pax" | "13-15 pax" | "18-20 pax";
 
 export const paxArray: PaxArrayType[] = [
   "4-6 pax",
@@ -45,10 +41,9 @@ export interface MenuReservationDetails {
   pricePerPax: number;
 }
 
-export type SelectedMenus = Record<
-  string,
-  Record<string, MenuReservationDetails>
->;
+export type SelectedMenu = Record<string, MenuReservationDetails>;
+
+export type SelectedMenus = Record<string, SelectedMenu>;
 
 export interface ReservationItem {
   fullName: string;

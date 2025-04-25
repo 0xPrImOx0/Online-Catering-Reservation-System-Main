@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem } from "@/components/ui/form";
 import { ReservationValues } from "@/hooks/use-reservation-form";
 import { cateringPackages, options } from "@/lib/customer/packages-metadata";
 import { useFormContext } from "react-hook-form";
@@ -31,6 +26,7 @@ export default function PackageSelection({
   const { control, watch, setValue, getValues } =
     useFormContext<ReservationValues>();
   const packageSelection = watch("selectedPackage");
+  const cateringOptions = watch("cateringOptions");
 
   useEffect(() => {
     const selectedPackage = cateringPackages.find(
@@ -46,8 +42,11 @@ export default function PackageSelection({
       setValue("eventType", selectedPackage?.eventType ?? "No Event");
       setValue("reservationType", "event");
     }
-    setValue("selectedMenus", {});
   }, [packageSelection]);
+
+  useEffect(() => {
+    console.log(watch("selectedMenus"));
+  }, []);
 
   return (
     <section>
@@ -57,7 +56,7 @@ export default function PackageSelection({
             control={control}
             name="cateringOptions"
             render={({ field }) => (
-              <FormItem className="flex gap-4 space-y-0  max-sm:flex-col">
+              <FormItem className="flex gap-4 space-y-0 max-sm:flex-col">
                 {options.map((option) => (
                   <FormControl key={option.value} className="flex-1">
                     <Card
@@ -75,7 +74,7 @@ export default function PackageSelection({
                           alt={option.label}
                           width={200}
                           height={200}
-                          className="w-full h-40 rounded-t-lg mb-2 object-cover"
+                          className="object-cover w-full h-40 mb-2 rounded-t-lg"
                         />
                       </CardHeader>
                       <CardContent className="mt-4 space-y-2">
@@ -89,13 +88,13 @@ export default function PackageSelection({
             )}
           />
         )}
-        {/* <h3 className="font-medium text-base">Main Cuisine Packages</h3> */}
+        {/* <h3 className="text-base font-medium">Main Cuisine Packages</h3> */}
         {showPackageSelection && (
           <FormField
             control={control}
             name="selectedPackage"
             render={({ field }) => (
-              <FormItem className="grid sm:grid-cols-2 gap-4 space-y-0">
+              <FormItem className="grid gap-4 space-y-0 sm:grid-cols-2">
                 {cateringPackages.map((pkg) => (
                   <MiniCateringPackageCard
                     pkg={pkg}
