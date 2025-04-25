@@ -4,11 +4,12 @@ import { useState, useMemo } from "react";
 import SearchInput from "@/components/shared/SearchInput";
 import AddPackageDialog from "@/components/shared/caterer/AddPackageForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CatererPackageCard } from "@/components/shared/caterer/CatererPackageCard";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 import type { CateringPackagesProps } from "@/types/package-types";
+import PlatedWarning from "@/components/shared/PlatedWarning";
 
 export default function PackageManagement() {
   // Simple state for dialog visibility
@@ -118,18 +119,7 @@ export default function PackageManagement() {
         </TabsContent>
 
         <TabsContent value="plated course" className="mt-6 space-y-8">
-          <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
-            <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative" />
-            <div className="space-y-2">
-              <h3 className="font-medium">Plated Course Service</h3>
-              <p className="text-sm text-muted-foreground text-justify">
-                Our plated course packages include professional waitstaff who
-                will serve each course directly to your guests&apos; tables. An
-                additional service fee of &#8369;100 per hour is included in the
-                price per person.
-              </p>
-            </div>
-          </div>
+          <PlatedWarning />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {platedPackages.map((pkg) => (
               <CatererPackageCard key={pkg.name} item={pkg} isPlated={true} />
@@ -175,18 +165,7 @@ export default function PackageManagement() {
             </TabsContent>
 
             <TabsContent value="Plated" className="space-y-10">
-              <div className="mb-4 p-4 bg-muted rounded-lg flex items-start gap-3">
-                <Info className="w-20 sm:w-14 md:w-10 lg:w-6 relative" />
-                <div className="space-y-2">
-                  <h3 className="font-medium">Plated Service for Events</h3>
-                  <p className="text-sm text-muted-foreground text-justify">
-                    Our plated event packages include professional waitstaff who
-                    will serve each course directly to your guests&apos; tables.
-                    An additional service fee of &#8369;100 per hour is included
-                    in the price per person.
-                  </p>
-                </div>
-              </div>
+              <PlatedWarning />
 
               {Object.entries(eventPackages).map(
                 ([eventType, packages]) =>

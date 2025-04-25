@@ -70,13 +70,10 @@ export default function CustomerPackageCard({
             </Badge>
             <Badge
               className={clsx(
-                "bg-background text-foreground border-foreground",
-                {
-                  hidden: !isPlated,
-                }
+                "bg-background text-foreground border-foreground"
               )}
             >
-              Plated
+              {isPlated ? "Plated" : "Buffet"}
             </Badge>
           </div>
 
