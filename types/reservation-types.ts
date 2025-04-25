@@ -10,7 +10,7 @@ export type reservationType = {
     phone: string;
     isRegistered: boolean;
   };
-  eventDate: Date | string | number;
+  reservationDate: Date | string | number;
   totalPrice: number;
   status: string;
   createdDate: Date | null;
@@ -51,7 +51,8 @@ export interface ReservationItem {
   contactNumber: string;
   reservationType: "event" | "personal";
   eventType: string;
-  eventDate: Date;
+  reservationDate: Date;
+  reservationTime: Date,
   eventTime: string;
   guestCount: number;
   venue: string;

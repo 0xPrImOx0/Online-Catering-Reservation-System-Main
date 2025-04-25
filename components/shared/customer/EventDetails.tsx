@@ -22,7 +22,7 @@ import { useFormContext } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
 import WhatsTheOccasionCard from "./WhatsTheOccasionCard";
 import EventType from "./EventType";
-import EventDate from "./EventDate";
+import ReservationDateAndTime from "./ReservationDateAndTime";
 import DeliveryDetails from "./DeliveryDetails";
 import DeliveryOption from "./DeliveryOption";
 import { hoursArray } from "@/types/package-types";
@@ -30,7 +30,6 @@ import PlatedWarning from "../PlatedWarning";
 import DeliveryWarning from "./DeliveryWarning";
 import { useEffect } from "react";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
-import { set } from "date-fns";
 
 export default function EventDetails() {
   const { control, getValues, watch, setValue } =
@@ -41,38 +40,29 @@ export default function EventDetails() {
   const serviceType = watch("serviceType");
   const serviceHours = watch("serviceHours");
   const eventType = watch("eventType");
-  const guestCount = watch("guestCount");
+  const deliveryOption = watch("deliveryOption");
 
   useEffect(() => {
     const hour = serviceHours?.slice(0, 2);
     setValue("serviceFee", 100 * Number(hour));
   }, [serviceHours]);
 
-    // useEffect(() => {
-    //   if (selectedPackage) {
-    //     setValue("totalPrice", );
-    //   }
-    // }, [guestCount]);
-
   const getRecommendedPax = () => {
     const pkg = cateringPackages.find((pkg) => pkg._id === selectedPackage);
     return pkg?.recommendedPax || 0;
   };
 
-
-
   const recommendedPax = getRecommendedPax();
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {cateringOptions === "custom" && (
           <WhatsTheOccasionCard control={control} />
         )}
         {reservationType === "event" && eventType !== "No Event" && (
           <EventType control={control} />
         )}
-        <EventDate control={control} />
         {reservationType === "event" && (
           <FormField
             control={control}
@@ -113,27 +103,10 @@ export default function EventDetails() {
             )}
           />
         )}
-        {reservationType === "event" && (
-          <FormField
-            control={control}
-            name="venue"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="">
-                  Venue <span className="text-destructive">*</span>{" "}
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter your event venue" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
       </div>
 
       {reservationType === "event" && (
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="serviceType"
@@ -213,25 +186,26 @@ export default function EventDetails() {
       <Separator className="" />
       <div>
         <div className="mb-4">
-          <h3 className="text-lg font-semibold">Delivery Details</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            Please provide details about the delivery location and any special
-            instructions for the delivery team.
+          <h3 className="text-lg font-semibold">{deliveryOption} Details</h3>
+          <p className="mb-4 text-sm text-muted-foreground">
+            Please provide details about the{" "}
+            {deliveryOption === "Delivery"
+              ? "delivery location"
+              : "pickup details"}{" "}
+            and any special instructions for the{" "}
+            {deliveryOption === "Delivery" ? "delivery team" : "catering team"}.
           </p>
-          <DeliveryWarning
-            isDelivery={getValues("deliveryOption") === "Delivery"}
-          />
+          <DeliveryWarning isDelivery={deliveryOption === "Delivery"} />
         </div>
         <DeliveryOption control={control} />
-        {getValues("deliveryOption") === "Delivery" && (
-          <DeliveryDetails control={control} />
-        )}
+        <ReservationDateAndTime control={control} deliveryOption={deliveryOption} />
+        {deliveryOption === "Delivery" && <DeliveryDetails control={control} />}
       </div>
       <Separator />
 
-      <div className="flex justify-between items-end">
+      <div className="flex items-end justify-between">
         <Label>Total Bill</Label>
-        <span className="text-green-500 text-2xl underline underline-offset-4">
+        <span className="text-2xl text-green-500 underline underline-offset-4">
           &#8369;{" "}
           {`${new Intl.NumberFormat("en-US").format(watch("totalPrice"))}.00`}
         </span>

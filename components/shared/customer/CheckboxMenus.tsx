@@ -37,7 +37,7 @@ export default function CheckboxMenus({
 
   const getMenuItemPrice = (menuId: string) => {
     const menu = menuItems.find((item) => item._id === menuId);
-    return menu ? menu.regularPricePerPax : 0;
+    return menu ? menu.prices[0].price : 0;
   };
 
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
@@ -45,10 +45,10 @@ export default function CheckboxMenus({
   return (
     <div>
       <div key={category} className="space-y-3">
-        <FormLabel className="font-medium text-base">
+        <FormLabel className="text-base font-medium">
           {category} Options
         </FormLabel>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {getMenusByCategory(category).map((menu) => (
             <div key={menu._id} className="flex items-start space-x-2">
               <FormControl>
@@ -95,7 +95,7 @@ export default function CheckboxMenus({
                 </TooltipProvider>
                 <Label
                   htmlFor={menu._id}
-                  className="text-sm text-muted-foreground cursor-pointer"
+                  className="text-sm cursor-pointer text-muted-foreground"
                 >
                   {menu.shortDescription}
                 </Label>
@@ -110,11 +110,12 @@ export default function CheckboxMenus({
             </div>
           ))}
         </div>
-        {Array.isArray(selectedMenus[category]) && selectedMenus[category].length >= count && (
-          <p className="text-xs text-muted-foreground italic">
-            *You can only select up to {count} item/s for {category}.*
-          </p>
-        )}
+        {Array.isArray(selectedMenus[category]) &&
+          selectedMenus[category].length >= count && (
+            <p className="text-xs italic text-muted-foreground">
+              *You can only select up to {count} item/s for {category}.*
+            </p>
+          )}
       </div>
       <Separator className="mt-4" />
     </div>

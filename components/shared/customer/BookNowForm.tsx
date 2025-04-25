@@ -42,7 +42,7 @@ export default function BookNowForm({ id }: { id: string }) {
 
   const { watch } = reservationForm;
 
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(3);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [nextPageCount, setNextPageCount] = useState(0);
@@ -177,7 +177,7 @@ export default function BookNowForm({ id }: { id: string }) {
       key={"package-selection"}
       showPackageSelection={showPackageSelection}
     />,
-    <CategoryOptions key={"category-options"} validateStep={validateStep} />,
+    <CategoryOptions key={"category-options"} />,
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,
   ];

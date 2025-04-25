@@ -23,11 +23,7 @@ import { Label } from "@/components/ui/label";
 import AddRemoveMenuQuantity from "./AddRemoveMenuQuantity";
 import SelectServingSize from "./SelectServingSize";
 
-export default function CategoryOptions({
-  validateStep,
-}: {
-  validateStep: (step: number) => void;
-}) {
+export default function CategoryOptions() {
   const { control, getValues, setValue, watch, clearErrors } =
     useFormContext<ReservationValues>();
 

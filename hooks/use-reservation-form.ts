@@ -35,9 +35,10 @@ const reservationSchema = z
     eventType: z.enum(reservationEventTypes as [EventType, ...EventType[]], {
       required_error: "Please select an Event Type",
     }),
-    eventDate: z.date({
+    reservationDate: z.date({
       required_error: "Please provide the Event Date",
     }),
+    reservationTime: z.date(),
     eventTime: z
       .string({ required_error: "Please provide the Event Time" })
       .regex(
@@ -148,7 +149,8 @@ const defaultValues: ReservationValues = {
   contactNumber: "0",
   reservationType: "event",
   eventType: "Birthday",
-  eventDate: new Date(),
+  reservationDate: new Date(),
+  reservationTime: new Date(),
   eventTime: "",
   guestCount: 0,
   venue: "",
@@ -224,15 +226,15 @@ export function useReservationForm() {
         if (reservationType === "event") {
           return [
             "eventType",
-            "eventDate",
+            "reservationDate",
+            "reservationTime",
             "guestCount",
-            "venue",
             "serviceType",
             "serviceHours",
           ];
         }
         if (reservationType === "personal") {
-          return ["eventDate"];
+          return ["reservationDate"];
         }
       default:
         return [];
