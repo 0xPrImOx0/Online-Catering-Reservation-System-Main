@@ -65,7 +65,7 @@ export default function SelectedEventContainer({
 
   // Filter content that will be used in both desktop and mobile views
   const filterContent = (
-    <>
+    <section>
       <div>
         <Label className="text-muted-foreground">Event Types</Label>
         <div className="flex flex-col items-s space-y-4 mt-4">
@@ -110,7 +110,7 @@ export default function SelectedEventContainer({
           </Button>
         ))}
       </div>
-    </>
+    </section>
   );
 
   return (

@@ -61,7 +61,7 @@ export default function CateringPackages() {
         <SearchInput
           query={query}
           setQuery={setQuery}
-          placeholderTitle="for dishes..."
+          placeholderTitle="for packages..."
           iconStyle="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-5"
           inputStyle="pl-10 pr-10 py-5 rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
           hasFilter={true}

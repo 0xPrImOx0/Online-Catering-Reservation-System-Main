@@ -28,11 +28,15 @@ export default function CustomerPackageCard({
   item,
   isPlated,
 }: PackageCardProps) {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
-  const platedInclusions = item.inclusions.filter((plated) =>
-    isPlated ? plated.typeOfCustomer : plated.typeOfCustomer === "Both"
-  );
+
+  const packageInclusions = [
+    ...item.inclusions.filter((inc) => inc.typeOfCustomer === "Both"),
+    ...item.inclusions.filter(
+      (inc) => inc.typeOfCustomer === (isPlated ? "Plated" : "Buffet")
+    ),
+  ];
 
   return (
     <Card className="w-full flex flex-col h-full">
@@ -157,24 +161,24 @@ export default function CustomerPackageCard({
               {item.packageType !== "Event" && (
                 <li className="flex items-center gap-2">
                   <CheckCircle2Icon className="h-4 w-4 text-green-500" />
-                  {Math.ceil(item.minimumPax / 2)} trays of steamed rice (good
-                  for {item.minimumPax * 2} pax)
+                  {Math.ceil(item.minimumPax / 4)} trays of steamed rice (good
+                  for {item.minimumPax * 1.5} pax)
                 </li>
               )}
-              {platedInclusions.slice(0, 4).map((inclusion, index) => (
+              {packageInclusions.slice(0, 4).map((inclusion, index) => (
                 <li key={index} className="flex items-center gap-2">
                   <CheckCircle2Icon className="h-4 w-4 text-green-500" />
                   {inclusion.includes}
                 </li>
               ))}
-              {platedInclusions.slice(4).length >= 1 && (
+              {packageInclusions.slice(4).length >= 1 && (
                 <Button
                   variant="link"
                   size="sm"
                   className="p-0 h-auto"
-                  onClick={() => setDialogOpen(true)}
+                  onClick={() => setIsDialogOpen(true)}
                 >
-                  +{platedInclusions.slice(4).length} more inclusions
+                  +{packageInclusions.slice(4).length} more inclusions
                 </Button>
               )}
             </ul>
@@ -182,17 +186,17 @@ export default function CustomerPackageCard({
         </div>
       </CardContent>
       <CardFooter className="mt-auto">
-        <Button className="w-full" onClick={() => setDialogOpen(true)}>
+        <Button className="w-full" onClick={() => setIsDialogOpen(true)}>
           View Details
         </Button>
       </CardFooter>
 
       <PackageDetailsDialog
         pkg={item}
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
         isPlated={isPlated}
-        platedInclusions={platedInclusions}
+        platedInclusions={packageInclusions}
       />
 
       <ImageDialog
