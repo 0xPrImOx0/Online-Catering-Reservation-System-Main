@@ -9,13 +9,18 @@ import PlatedWarning from "../PlatedWarning";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 import TabsTriggerStyle from "../CustomTabsTrigger";
 import SearchInput from "../SearchInput";
+import { CatererPackageCard } from "../caterer/CatererPackageCard";
 
 // async function fetchPackages() {
 //   const packages = await axios.get("http://localhost:5500/api/packages");
 //   return packages.data.data;
 // }
 
-export default function CateringPackages() {
+export default function CateringPackages({
+  isCaterer,
+}: {
+  isCaterer: boolean;
+}) {
   const [activeTab, setActiveTab] = useState<string>("Buffet");
   const [isPlated, setIsPlated] = useState(false);
   const [query, setQuery] = useState("");
@@ -82,23 +87,50 @@ export default function CateringPackages() {
 
         <TabsContent value="Buffet" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {buffetPlatedPackages.map((pkg, index) => (
-              <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />
-            ))}
+            {buffetPlatedPackages.map((pkg, index) =>
+              isCaterer ? (
+                <CatererPackageCard
+                  key={index}
+                  item={pkg}
+                  isPlated={isPlated}
+                />
+              ) : (
+                <CustomerPackageCard
+                  key={index}
+                  item={pkg}
+                  isPlated={isPlated}
+                />
+              )
+            )}
           </div>
         </TabsContent>
 
         <TabsContent value="Plated" className="mt-6 space-y-8">
           <PlatedWarning />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {buffetPlatedPackages.map((pkg, index) => (
-              <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />
-            ))}
+            {buffetPlatedPackages.map((pkg, index) =>
+              isCaterer ? (
+                <CatererPackageCard
+                  key={index}
+                  item={pkg}
+                  isPlated={isPlated}
+                />
+              ) : (
+                <CustomerPackageCard
+                  key={index}
+                  item={pkg}
+                  isPlated={isPlated}
+                />
+              )
+            )}
           </div>
         </TabsContent>
 
         <TabsContent value="Event" className="mt-0">
-          <SelectedEventContainer cateringPackages={cateringPackages} />
+          <SelectedEventContainer
+            cateringPackages={cateringPackages}
+            isCaterer={isCaterer}
+          />
         </TabsContent>
         <TabsContent value="Custom" className="mt-12 sm:mx-0 lg:mx-8 xl:mx-20">
           <CustomPackageForm />

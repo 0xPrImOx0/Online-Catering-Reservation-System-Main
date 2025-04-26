@@ -12,7 +12,7 @@ export default function Page() {
     <main className="max-w-[1400px] mx-auto px-2 sm:px-14 md:px-10">
       <div className="py-12">
         {/* Package Showcase */}
-        <CateringPackages />
+        <CateringPackages isCaterer={false} />
 
         {/* Testimonials */}
         <section className="mt-16 rounded-lg">

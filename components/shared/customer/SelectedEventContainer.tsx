@@ -12,9 +12,11 @@ import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import PlatedWarning from "../PlatedWarning";
 import CustomerPackageCard from "./CustomerPackageCard";
+import { CatererPackageCard } from "../caterer/CatererPackageCard";
 
 export default function SelectedEventContainer({
   cateringPackages,
+  isCaterer,
 }: SelectedEventContainerProps) {
   const [serviceType, setServiceType] = useState("Buffet");
   const [selectedEventType, setSelectedEventType] = useState<EventType>("All");
@@ -181,11 +183,13 @@ export default function SelectedEventContainer({
           {serviceType === "Plated" && <PlatedWarning />}
         </div>
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {eventPackages.map((pkg, index) => {
-            return (
+          {eventPackages.map((pkg, index) =>
+            isCaterer ? (
+              <CatererPackageCard key={index} item={pkg} isPlated={isPlated} />
+            ) : (
               <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />
-            );
-          })}
+            )
+          )}
         </div>
       </div>
     </section>
