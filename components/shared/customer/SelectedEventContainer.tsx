@@ -32,11 +32,8 @@ export default function SelectedEventContainer({
 
   const eventPackages =
     selectedEventType === "All"
-      ? cateringPackages.filter((pkg) => pkg.packageType === "Event")
-      : cateringPackages.filter(
-          (pkg) =>
-            pkg.packageType === "Event" && pkg.eventType === selectedEventType
-        );
+      ? cateringPackages
+      : cateringPackages.filter((pkg) => pkg.eventType === selectedEventType);
 
   const pkgDescriptions = [
     {
@@ -190,12 +187,26 @@ export default function SelectedEventContainer({
               : "lg:grid-cols-2"
           } gap-10`}
         >
-          {eventPackages.map((pkg, index) =>
-            isCaterer ? (
-              <CatererPackageCard key={index} item={pkg} isPlated={isPlated} />
-            ) : (
-              <CustomerPackageCard key={index} item={pkg} isPlated={isPlated} />
+          {eventPackages.length > 0 ? (
+            eventPackages.map((pkg, index) =>
+              isCaterer ? (
+                <CatererPackageCard
+                  key={index}
+                  item={pkg}
+                  isPlated={isPlated}
+                />
+              ) : (
+                <CustomerPackageCard
+                  key={index}
+                  item={pkg}
+                  isPlated={isPlated}
+                />
+              )
             )
+          ) : (
+            <div className="col-span-3 min-h-[50vh] flex justify-center items-center">
+              <span className="font-bold text-4xl">No Package Found</span>{" "}
+            </div>
           )}
         </div>
       </div>

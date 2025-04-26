@@ -13,7 +13,6 @@ export default function Page() {
       <div className="py-12">
         {/* Package Showcase */}
         <CateringPackages isCaterer={false} />
-
         {/* Testimonials */}
         <section className="mt-16 rounded-lg">
           <h2 className="text-2xl font-bold mb-8 text-center">
@@ -55,7 +54,6 @@ export default function Page() {
             </div>
           </div>
         </section>
-
         {/* Reserve CTA */}
         <FooterCTA
           title="Ready to Book Your Catering?"

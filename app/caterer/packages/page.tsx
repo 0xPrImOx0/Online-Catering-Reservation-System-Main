@@ -13,8 +13,8 @@ export default function PackageManagement() {
   const { open } = useSidebar();
 
   return (
-    <main className="max-w-[1400px] mx-auto px-2 sm:px-14 md:px-10">
-      <div className="flex items-center justify-between">
+    <main className="space-y-8 px-2 md:px-5 max-w-[1440px] w-full mx-auto">
+      <div className="flex items-center justify-between mb-0">
         <h1 className="tracking-tight mb-4 text-5xl font-bold">Packages</h1>
 
         <div className="flex gap-4">
@@ -32,7 +32,7 @@ export default function PackageManagement() {
         </div>
       </div>
 
-      <div className="py-12">
+      <div className="py-2">
         <CateringPackages isCaterer={true} open={open} />
       </div>
 

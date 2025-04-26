@@ -45,7 +45,15 @@ export default function CateringPackages({
   // }, []);
 
   const buffetPlatedPackages = cateringPackages.filter(
-    (pkg) => pkg.packageType === "BuffetPlated"
+    (pkg) =>
+      pkg.packageType === "BuffetPlated" &&
+      pkg.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const eventPackages = cateringPackages.filter(
+    (pkg) =>
+      pkg.packageType === "Event" &&
+      pkg.name.toLowerCase().includes(query.toLowerCase())
   );
 
   useEffect(() => {
@@ -53,7 +61,7 @@ export default function CateringPackages({
   }, [activeTab]);
 
   return (
-    <div>
+    <div className="flex flex-col max-w-[1440px]">
       {!isCaterer && (
         <div className="">
           <h1 className="text-5xl font-bold mb-4 ">
@@ -67,14 +75,13 @@ export default function CateringPackages({
         </div>
       )}
 
-      <div className="w-full md:w-[80%]">
+      <div className="w-full md:w-[80%] flex self-center mb-6">
         <SearchInput
           query={query}
           setQuery={setQuery}
           placeholderTitle="for packages..."
           iconStyle="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-5"
           inputStyle="pl-10 pr-10 py-5 rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
-          hasFilter={true}
         />
       </div>
 
@@ -92,7 +99,7 @@ export default function CateringPackages({
           )}
         </TabsList>
 
-        <TabsContent value="Buffet" className="mt-6">
+        <TabsContent value="Buffet" className="mt-6 space-y-8">
           <div
             className={`grid grid-cols-1 ${
               open
@@ -100,20 +107,26 @@ export default function CateringPackages({
                 : "md:grid-cols-2 lg:grid-cols-3"
             }  gap-6`}
           >
-            {buffetPlatedPackages.map((pkg, index) =>
-              isCaterer ? (
-                <CatererPackageCard
-                  key={index}
-                  item={pkg}
-                  isPlated={isPlated}
-                />
-              ) : (
-                <CustomerPackageCard
-                  key={index}
-                  item={pkg}
-                  isPlated={isPlated}
-                />
+            {buffetPlatedPackages.length > 0 ? (
+              buffetPlatedPackages.map((pkg, index) =>
+                isCaterer ? (
+                  <CatererPackageCard
+                    key={index}
+                    item={pkg}
+                    isPlated={isPlated}
+                  />
+                ) : (
+                  <CustomerPackageCard
+                    key={index}
+                    item={pkg}
+                    isPlated={isPlated}
+                  />
+                )
               )
+            ) : (
+              <div className="col-span-3 min-h-[50vh] flex justify-center items-center">
+                <span className="font-bold text-4xl">No Package Found</span>
+              </div>
             )}
           </div>
         </TabsContent>
@@ -127,27 +140,33 @@ export default function CateringPackages({
                 : "md:grid-cols-2 lg:grid-cols-3"
             }  gap-6`}
           >
-            {buffetPlatedPackages.map((pkg, index) =>
-              isCaterer ? (
-                <CatererPackageCard
-                  key={index}
-                  item={pkg}
-                  isPlated={isPlated}
-                />
-              ) : (
-                <CustomerPackageCard
-                  key={index}
-                  item={pkg}
-                  isPlated={isPlated}
-                />
+            {buffetPlatedPackages.length > 0 ? (
+              buffetPlatedPackages.map((pkg, index) =>
+                isCaterer ? (
+                  <CatererPackageCard
+                    key={index}
+                    item={pkg}
+                    isPlated={isPlated}
+                  />
+                ) : (
+                  <CustomerPackageCard
+                    key={index}
+                    item={pkg}
+                    isPlated={isPlated}
+                  />
+                )
               )
+            ) : (
+              <div className="col-span-3 min-h-[50vh] flex justify-center items-center">
+                <span className="font-bold text-4xl">No Package Found</span>{" "}
+              </div>
             )}
           </div>
         </TabsContent>
 
         <TabsContent value="Event" className="mt-0">
           <SelectedEventContainer
-            cateringPackages={cateringPackages}
+            cateringPackages={eventPackages}
             isCaterer={isCaterer}
             open={open}
           />
