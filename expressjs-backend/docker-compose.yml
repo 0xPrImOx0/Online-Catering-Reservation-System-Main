@@ -1,0 +1,39 @@
+services:
+  mongo_db:
+    container_name: online-catering-reservation-system-db
+    image: mongo:6.0 # Changed from mongo:latest to mongo:6.0 ga error sakong end if mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+    ports:
+      - "27017:27017"
+
+  catering_api:
+    container_name: online-catering-reservation-system-api
+    image: drey34/catering:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5500:5500"
+    depends_on:
+      - mongo_db
+    command: npm run dev # Ensure your dev script is set up to watch changes
+    env_file:
+      - .env.development.local # Load environment variables from this file
+    develop:
+      watch:
+        - path: ./package-lock.json
+          action: rebuild
+        - path: ./package.json
+          action: rebuild
+        - path: .
+          target: /src
+          ignore:
+            - node_modules
+            - .git
+          action: rebuild
+
+volumes:
+  mongo_db: {}
