@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import CustomerPackageCard from "./CustomerPackageCard";
 import CustomPackageForm from "./CustomPacakgeForm";
 import SelectedEventContainer from "./SelectedEventContainer";
 import PlatedWarning from "../PlatedWarning";
 import { cateringPackages } from "@/lib/customer/packages-metadata";
+import TabsTriggerStyle from "../CustomTabsTrigger";
+import SearchInput from "../SearchInput";
 
 // async function fetchPackages() {
 //   const packages = await axios.get("http://localhost:5500/api/packages");
@@ -16,6 +18,7 @@ import { cateringPackages } from "@/lib/customer/packages-metadata";
 export default function CateringPackages() {
   const [activeTab, setActiveTab] = useState<string>("Buffet");
   const [isPlated, setIsPlated] = useState(false);
+  const [query, setQuery] = useState("");
   // const [cateringPackages, setCateringPackages] = useState<
   //   CateringPackagesProps[]
   // >([]);
@@ -41,34 +44,28 @@ export default function CateringPackages() {
     setIsPlated(activeTab === "Plated");
   }, [activeTab]);
 
-  const TabsTriggerStyle = ({
-    value,
-    title,
-  }: {
-    value: string;
-    title: string;
-  }) => {
-    return (
-      <TabsTrigger
-        value={value}
-        className="flex-1 hover:bg-muted-foreground/10 data-[state=active]:after:bg-foreground data-[state=active]:hover:bg-muted-foreground/10 relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
-      >
-        {title}
-      </TabsTrigger>
-    );
-  };
-
   return (
     <div>
       <div className="">
         <h1 className="text-5xl font-bold mb-4 ">
-          <span className="capitalize">{activeTab}</span> Packages
+          <span>{activeTab}</span> Packages
         </h1>
 
         <p className="text-muted-foreground mb-10">
           Authentic filipino {activeTab} cuisine for your special events and
           celebrations
         </p>
+      </div>
+
+      <div className="w-full md:w-[80%]">
+        <SearchInput
+          query={query}
+          setQuery={setQuery}
+          placeholderTitle="for dishes..."
+          iconStyle="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-5"
+          inputStyle="pl-10 pr-10 py-5 rounded-full border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          hasFilter={true}
+        />
       </div>
 
       <Tabs

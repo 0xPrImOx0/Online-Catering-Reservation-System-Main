@@ -10,6 +10,7 @@ import { CatererPackageCard } from "@/components/shared/caterer/CatererPackageCa
 import { cateringPackages } from "@/lib/customer/packages-metadata";
 import type { CateringPackagesProps } from "@/types/package-types";
 import PlatedWarning from "@/components/shared/PlatedWarning";
+import TabsTriggerStyle from "@/components/shared/CustomTabsTrigger";
 
 export default function PackageManagement() {
   // Simple state for dialog visibility
@@ -50,23 +51,6 @@ export default function PackageManagement() {
     };
   }, [query]);
 
-  const TabsTriggerStyle = ({
-    value,
-    title,
-  }: {
-    value: string;
-    title: string;
-  }) => {
-    return (
-      <TabsTrigger
-        value={value}
-        className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
-      >
-        {title}
-      </TabsTrigger>
-    );
-  };
-
   // Filter inclusions based on service type
   const getFilteredInclusions = (
     pkg: CateringPackagesProps,
@@ -81,7 +65,28 @@ export default function PackageManagement() {
 
   return (
     <main className="space-y-8 max-w-[1440px] mx-auto">
-      <h1 className="text-2xl font-bold tracking-tight mb-4">Packages</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="tracking-tight mb-4 text-5xl font-bold">Packages</h1>
+
+        <div className="flex gap-4">
+          <SearchInput
+            query={query}
+            setQuery={setQuery}
+            placeholderTitle="packages"
+          />
+          <Button
+            variant="outline"
+            className=""
+            onClick={() => setIsAddPackageOpen((prev) => !prev)}
+          >
+            <PlusIcon
+              strokeWidth={2.5}
+              className="min-w-5 min-h-5 text-muted-foreground"
+            />
+            Create Package
+          </Button>
+        </div>
+      </div>
       {/* Search and View Controls */}
       <Tabs defaultValue="buffet" className="w-full">
         <div className="flex justify-between mb-6">
@@ -90,24 +95,6 @@ export default function PackageManagement() {
             <TabsTriggerStyle value="plated course" title="Plated Course" />
             <TabsTriggerStyle value="event" title="Event Packages" />
           </TabsList>
-          <div className="flex gap-4">
-            <SearchInput
-              query={query}
-              setQuery={setQuery}
-              placeholderTitle="packages"
-            />
-            <Button
-              variant="outline"
-              className=""
-              onClick={() => setIsAddPackageOpen((prev) => !prev)}
-            >
-              <PlusIcon
-                strokeWidth={2.5}
-                className="min-w-5 min-h-5 text-muted-foreground"
-              />
-              Create Package
-            </Button>
-          </div>
         </div>
 
         <TabsContent value="buffet" className="mt-6">
