@@ -31,7 +31,7 @@ const reservationSchema = z
       .email("Please enter a valid email address"),
     contactNumber: z
       .string({ required_error: "Please provide your Contact Number" })
-      .regex(/^\d{10}$/, "Contact Number must have exactly 10 digits"),
+      .regex(/^\d{11}$/, "Contact Number must have exactly 11 digits"),
     reservationType: z.enum(["event", "personal"]),
     eventType: z.enum(reservationEventTypes as [EventType, ...EventType[]], {
       required_error: "Please select an Event Type",
@@ -39,13 +39,13 @@ const reservationSchema = z
     reservationDate: z.date({
       required_error: "Please provide the Event Date",
     }),
-    reservationTime: z.date(),
-    eventTime: z
+    reservationTime: z
       .string({ required_error: "Please provide the Event Time" })
       .regex(
         /^([01]\d|2[0-3]):([0-5]\d)$/,
         "Please enter a valid time (HH:mm)"
       ),
+    period: z.enum(["A.M.", "P.M."]),
     guestCount: z.number({ required_error: "Please provide the Guest Count" }),
     venue: z
       .string({ required_error: "Please provide the Venue" })
@@ -101,6 +101,29 @@ const reservationSchema = z
       .optional(),
   })
   .superRefine((data, ctx) => {
+    const match = data.reservationTime.match(/^(\d+):([0-5]\d)$/);
+    if (match) {
+      const [_, hoursStr, minutesStr] = match;
+      const hours = parseInt(hoursStr);
+      const minutes = parseInt(minutesStr);
+      let hours24 = hours;
+      if (data.period === "P.M." && hours !== 12) {
+        hours24 += 12;
+      } else if (data.period === "A.M." && hours === 12) {
+        hours24 = 0;
+      }
+
+      const totalMinutes = hours24 * 60 + minutes;
+      const isValidTime = totalMinutes >= 8 * 60 && totalMinutes <= 17 * 60;
+      if (!isValidTime) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["reservationTime"],
+          message: "Time must be between 8:00 AM and 5:00 PM",
+        });
+      }
+    }
+
     if (data.selectedPackage) {
       const selectedPackage = cateringPackages.find(
         (pkg) => pkg._id === data.selectedPackage
@@ -130,14 +153,14 @@ const reservationSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["guestCount"],
-        message: `Guest count must be at least 20 persons`,
+        message: `Guest count must be at least 20 people`,
       });
     }
     if (data.guestCount > 200) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["guestCount"],
-        message: `Guest count must be at most 200 persons`,
+        message: `Guest count must be at most 200 people`,
       });
     }
   });
@@ -151,8 +174,8 @@ const defaultValues: ReservationValues = {
   reservationType: "event",
   eventType: "Birthday",
   reservationDate: new Date(),
-  reservationTime: new Date(),
-  eventTime: "",
+  reservationTime: "08:00",
+  period: "A.M.",
   guestCount: 0,
   venue: "",
   cateringOptions: "event",
@@ -232,7 +255,6 @@ export function useReservationForm() {
     }
   }, [selectedPackage]);
 
-  
   // Validate a specific step
   const validateStep = async (step: number): Promise<boolean> => {
     if (cateringOptions === "event" && selectedPackage === "" && step !== 0) {

@@ -52,8 +52,8 @@ export interface ReservationItem {
   reservationType: "event" | "personal";
   eventType: string;
   reservationDate: Date;
-  reservationTime: Date,
-  eventTime: string;
+  reservationTime: string;
+  period: "A.M." | "P.M.";
   guestCount: number;
   venue: string;
   cateringOptions: "event" | "custom";
