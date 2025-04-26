@@ -22,7 +22,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import ImageDialog from "../ImageDialog";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 export default function CustomerPackageCard({
   item,
@@ -69,9 +69,13 @@ export default function CustomerPackageCard({
               {item.available ? "Available" : "Unavailable"}
             </Badge>
             <Badge
-              className={clsx(
-                "bg-background text-foreground border-foreground"
+              className={cn(
+                "bg-background text-foreground border-foreground hover:bg-muted-background",
+                isPlated
+                  ? "bg-indigo-200 text-indigo-800 border-indigo-400"
+                  : "bg-red-200 text-red-800 border-red-400"
               )}
+              variant={"default"}
             >
               {isPlated ? "Plated" : "Buffet"}
             </Badge>

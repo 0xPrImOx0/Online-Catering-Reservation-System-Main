@@ -16,7 +16,7 @@ export default function PlatedWarning() {
         }
       )}
     >
-      <div className="flex w-full border border-red-500 relative justify-between items-start ">
+      <div className="flex w-full relative justify-between items-start ">
         <div className="flex space-x-2">
           <Info className="w-6 relative text-yellow-500" />
           <h3 className="font-medium dark:text-background">
@@ -32,7 +32,7 @@ export default function PlatedWarning() {
           <X className="min-w-5 min-h-5" />
         </Button>
       </div>
-      <p className="text-sm text-foreground dark:text-background text-justify ml-8">
+      <p className="text-sm text-foreground dark:text-background text-justify mx-8">
         Our plated course packages include professional waitstaff who will serve
         each course directly to your guests&apos; tables. An additional service
         fee of &#8369;100 per hour is included in the price per person.
