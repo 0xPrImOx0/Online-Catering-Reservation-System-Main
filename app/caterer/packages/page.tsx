@@ -5,10 +5,12 @@ import AddPackageDialog from "@/components/shared/caterer/AddPackageForm";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CateringPackages from "@/components/shared/customer/CateringPackages";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export default function PackageManagement() {
   // Simple state for dialog visibility
   const [isAddPackageOpen, setIsAddPackageOpen] = useState(false);
+  const { open } = useSidebar();
 
   return (
     <main className="max-w-[1400px] mx-auto px-2 sm:px-14 md:px-10">
@@ -31,7 +33,7 @@ export default function PackageManagement() {
       </div>
 
       <div className="py-12">
-        <CateringPackages isCaterer={true} />
+        <CateringPackages isCaterer={true} open={open} />
       </div>
 
       {/* Add Package Dialog */}

@@ -41,7 +41,7 @@ export default function CustomerPackageCard({
   return (
     <Card className="w-full flex flex-col h-full">
       <CardHeader className="p-0 relative overflow-hidden rounded-t-lg z-0">
-        <div
+        <Button
           className="relative h-52 w-full cursor-pointer"
           onClick={() => setIsImageDialogOpen((prev) => !prev)}
         >
@@ -107,7 +107,7 @@ export default function CustomerPackageCard({
               &#8369; {item.pricePerPax.toFixed(2)} / pax
             </div>
           </div>
-        </div>
+        </Button>
       </CardHeader>
       <CardContent className="p-6 flex-grow">
         <div className="space-y-4">

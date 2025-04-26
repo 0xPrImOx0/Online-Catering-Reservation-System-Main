@@ -18,12 +18,15 @@ import { CatererPackageCard } from "../caterer/CatererPackageCard";
 
 export default function CateringPackages({
   isCaterer,
+  open,
 }: {
   isCaterer: boolean;
+  open?: boolean;
 }) {
   const [activeTab, setActiveTab] = useState<string>("Buffet");
   const [isPlated, setIsPlated] = useState(false);
   const [query, setQuery] = useState("");
+
   // const [cateringPackages, setCateringPackages] = useState<
   //   CateringPackagesProps[]
   // >([]);
@@ -90,7 +93,13 @@ export default function CateringPackages({
         </TabsList>
 
         <TabsContent value="Buffet" className="mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            className={`grid grid-cols-1 ${
+              open
+                ? "md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
+                : "md:grid-cols-2 lg:grid-cols-3"
+            }  gap-6`}
+          >
             {buffetPlatedPackages.map((pkg, index) =>
               isCaterer ? (
                 <CatererPackageCard
@@ -111,7 +120,13 @@ export default function CateringPackages({
 
         <TabsContent value="Plated" className="mt-6 space-y-8">
           <PlatedWarning />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            className={`grid grid-cols-1 ${
+              open
+                ? "md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
+                : "md:grid-cols-2 lg:grid-cols-3"
+            }  gap-6`}
+          >
             {buffetPlatedPackages.map((pkg, index) =>
               isCaterer ? (
                 <CatererPackageCard
@@ -134,6 +149,7 @@ export default function CateringPackages({
           <SelectedEventContainer
             cateringPackages={cateringPackages}
             isCaterer={isCaterer}
+            open={open}
           />
         </TabsContent>
         <TabsContent value="Custom" className="mt-12 sm:mx-0 lg:mx-8 xl:mx-20">

@@ -17,6 +17,7 @@ import { CatererPackageCard } from "../caterer/CatererPackageCard";
 export default function SelectedEventContainer({
   cateringPackages,
   isCaterer,
+  open,
 }: SelectedEventContainerProps) {
   const [serviceType, setServiceType] = useState("Buffet");
   const [selectedEventType, setSelectedEventType] = useState<EventType>("All");
@@ -157,7 +158,7 @@ export default function SelectedEventContainer({
 
       {/* Desktop Sticky Sidebar */}
       {!isMobile && (
-        <div className="sticky top-16 self-start h-fit min-w-[250px] border rounded-lg p-4 bg-background z-10 mt-5">
+        <div className="sticky top-16 self-start h-fit min-w-[250px] border rounded-lg p-4 bg-background z-20 mt-5">
           {filterContent}
         </div>
       )}
@@ -182,7 +183,13 @@ export default function SelectedEventContainer({
           </div>
           {serviceType === "Plated" && <PlatedWarning />}
         </div>
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div
+          className={`flex-1 grid grid-cols-1 ${
+            open && isCaterer
+              ? "lg:grid-cols-1 xl:grid-cols-2"
+              : "lg:grid-cols-2"
+          } gap-10`}
+        >
           {eventPackages.map((pkg, index) =>
             isCaterer ? (
               <CatererPackageCard key={index} item={pkg} isPlated={isPlated} />
