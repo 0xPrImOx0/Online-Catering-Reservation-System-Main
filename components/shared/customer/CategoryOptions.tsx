@@ -14,25 +14,23 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
-import { cateringPackages } from "@/lib/customer/packages-metadata";
 import { PackageOption } from "@/types/package-types";
 import CheckboxMenus from "./CheckboxMenus";
 import CategoryOptionsBadge from "./CategoryOptionsBadge";
-import { menuItems } from "@/lib/menu-lists";
 import { Label } from "@/components/ui/label";
 import AddRemoveMenuQuantity from "./AddRemoveMenuQuantity";
 import SelectServingSize from "./SelectServingSize";
 
 export default function CategoryOptions() {
-  const { control, getValues, setValue, watch, clearErrors } =
+  const { control, setValue, watch, clearErrors } =
     useFormContext<ReservationValues>();
 
-  const { getMenuItem } = useReservationForm();
+  const { getMenuItem, getPackageItem } = useReservationForm();
 
   const selectedMenus = watch("selectedMenus");
 
   const cateringOptions = watch("cateringOptions");
-  const selectedPackage = getValues("selectedPackage");
+  const selectedPackage = watch("selectedPackage");
   const serviceFee = watch("serviceFee");
   const deliveryFee = watch("deliveryFee");
 
@@ -40,6 +38,7 @@ export default function CategoryOptions() {
   const [categoryAndCount, setCategoryAndCount] = useState<PackageOption[]>(
     defaultCategoryAndCount
   );
+
   useEffect(() => {
     if (cateringOptions === "custom") {
       setCurrentPackage("");
@@ -50,9 +49,8 @@ export default function CategoryOptions() {
       return;
     }
     if (selectedPackage) {
-      const selectedPackageData = cateringPackages.find(
-        (pkg) => pkg._id === selectedPackage
-      );
+      const selectedPackageData = getPackageItem(selectedPackage);
+
       if (selectedPackageData) {
         setCurrentPackage(selectedPackageData.name);
         setCategoryAndCount(selectedPackageData.options);

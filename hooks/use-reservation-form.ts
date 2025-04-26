@@ -15,7 +15,7 @@ import {
   SelectedMenus,
 } from "@/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -180,10 +180,59 @@ export function useReservationForm() {
     reValidateMode: "onSubmit",
   });
 
-  const { watch } = reservationForm;
+  const { watch, setValue } = reservationForm;
   const cateringOptions = watch("cateringOptions");
   const selectedPackage = watch("selectedPackage");
   const reservationType = watch("reservationType");
+  const serviceFee = watch("serviceFee");
+  const deliveryFee = watch("deliveryFee");
+  const selectedMenus = watch("selectedMenus");
+  const guestCount = watch("guestCount") || 1;
+
+  //This was formerly from BookNowForm.tsx which calculates the partial/total price of the reservation
+  useEffect(() => {
+    const isPackage = cateringPackages.find(
+      (pkg) => pkg._id === selectedPackage
+    );
+    const calculateTotal = () => {
+      let total = 0;
+
+      // Iterate through each category (Soup, Beverage)
+      Object.values(selectedMenus).forEach((category) => {
+        // Iterate through each menu item in the category
+        Object.values(category).forEach((item) => {
+          total += item.quantity * item.pricePerPax;
+        });
+      });
+      setValue("totalPrice", total + serviceFee + deliveryFee);
+    };
+    if (isPackage) {
+      setValue(
+        "totalPrice",
+        isPackage.pricePerPax * guestCount +
+          isPackage.serviceCharge +
+          deliveryFee
+      );
+    }
+    calculateTotal();
+  }, [selectedMenus, serviceFee, deliveryFee, guestCount]);
+
+  //This was formerly from Package Selection, where if there is a selected package, it will assign the Menu Category but with a blank menu to trigger the zod validation which says "At least one menu item must be selected for each category"
+  useEffect(() => {
+    const pkg = cateringPackages.find((pkg) => pkg._id === selectedPackage);
+    if (pkg) {
+      // Update the form with the blank categories
+      const selectedMenus = Object.fromEntries(
+        pkg?.options.map((opt) => [opt.category, {}])
+      );
+
+      setValue("selectedMenus", selectedMenus);
+      setValue("eventType", pkg?.eventType ?? "No Event");
+      setValue("reservationType", "event");
+    }
+  }, [selectedPackage]);
+
+  
   // Validate a specific step
   const validateStep = async (step: number): Promise<boolean> => {
     if (cateringOptions === "event" && selectedPackage === "" && step !== 0) {
@@ -197,9 +246,16 @@ export function useReservationForm() {
     return isValid;
   };
 
-  const getMenuItem = (menuId: string, isMenuName: boolean = false) => {
+  //Find all menus (will transfer to the socket later on)
+  const getMenuItem = (menuId: string) => {
     const menu = menuItems.find((item) => item._id === menuId);
     return menu;
+  };
+
+  ///Find all packages (will transfer to socket later on)
+  const getPackageItem = (pkgId: string) => {
+    const pkg = cateringPackages.find((item) => item._id === pkgId);
+    return pkg;
   };
 
   // Submit form function
@@ -364,6 +420,7 @@ export function useReservationForm() {
     reservationForm,
     validateStep,
     getMenuItem,
+    getPackageItem,
     onSubmit,
     isSubmitSuccess,
     handleCheckboxChange,

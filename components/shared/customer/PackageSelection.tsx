@@ -23,30 +23,7 @@ interface PackageSelectionProps {
 export default function PackageSelection({
   showPackageSelection,
 }: PackageSelectionProps) {
-  const { control, watch, setValue, getValues } =
-    useFormContext<ReservationValues>();
-  const packageSelection = watch("selectedPackage");
-  const cateringOptions = watch("cateringOptions");
-
-  useEffect(() => {
-    const selectedPackage = cateringPackages.find(
-      (pkg) => pkg._id === packageSelection
-    );
-    if (selectedPackage) {
-      // Update the form with the selected package details
-      const selectedMenus = Object.fromEntries(
-        selectedPackage.options.map((opt) => [opt.category, {}])
-      );
-
-      setValue("selectedMenus", selectedMenus);
-      setValue("eventType", selectedPackage?.eventType ?? "No Event");
-      setValue("reservationType", "event");
-    }
-  }, [packageSelection]);
-
-  useEffect(() => {
-    console.log(watch("selectedMenus"));
-  }, []);
+  const { control } = useFormContext<ReservationValues>();
 
   return (
     <section>

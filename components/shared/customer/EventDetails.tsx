@@ -9,7 +9,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ReservationValues } from "@/hooks/use-reservation-form";
+import {
+  ReservationValues,
+  useReservationForm,
+} from "@/hooks/use-reservation-form";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -29,11 +32,11 @@ import { hoursArray } from "@/types/package-types";
 import PlatedWarning from "../PlatedWarning";
 import DeliveryWarning from "./DeliveryWarning";
 import { useEffect } from "react";
-import { cateringPackages } from "@/lib/customer/packages-metadata";
 
 export default function EventDetails() {
   const { control, getValues, watch, setValue } =
     useFormContext<ReservationValues>();
+  const { getPackageItem } = useReservationForm();
   const reservationType = watch("reservationType");
   const cateringOptions = watch("cateringOptions");
   const selectedPackage = getValues("selectedPackage");
@@ -48,8 +51,11 @@ export default function EventDetails() {
   }, [serviceHours]);
 
   const getRecommendedPax = () => {
-    const pkg = cateringPackages.find((pkg) => pkg._id === selectedPackage);
-    return pkg?.recommendedPax || 0;
+    const pkg = getPackageItem(selectedPackage);
+    if (pkg) {
+      return pkg.recommendedPax;
+    }
+    return 0;
   };
 
   const recommendedPax = getRecommendedPax();
@@ -198,7 +204,10 @@ export default function EventDetails() {
           <DeliveryWarning isDelivery={deliveryOption === "Delivery"} />
         </div>
         <DeliveryOption control={control} />
-        <ReservationDateAndTime control={control} deliveryOption={deliveryOption} />
+        <ReservationDateAndTime
+          control={control}
+          deliveryOption={deliveryOption}
+        />
         {deliveryOption === "Delivery" && <DeliveryDetails control={control} />}
       </div>
       <Separator />
