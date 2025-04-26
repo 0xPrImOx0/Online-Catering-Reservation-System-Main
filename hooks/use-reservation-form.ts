@@ -1,4 +1,5 @@
 import { cateringPackages } from "@/lib/customer/packages-metadata";
+import { menuItems } from "@/lib/menu-lists";
 import { MenuItem } from "@/types/menu-types";
 import {
   EventType,
@@ -10,10 +11,11 @@ import {
   paxArray,
   PaxArrayType,
   ReservationItem,
+  SelectedMenu,
   SelectedMenus,
 } from "@/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -29,20 +31,21 @@ const reservationSchema = z
       .email("Please enter a valid email address"),
     contactNumber: z
       .string({ required_error: "Please provide your Contact Number" })
-      .regex(/^\d{10}$/, "Contact Number must have exactly 10 digits"),
+      .regex(/^\d{11}$/, "Contact Number must have exactly 11 digits"),
     reservationType: z.enum(["event", "personal"]),
     eventType: z.enum(reservationEventTypes as [EventType, ...EventType[]], {
       required_error: "Please select an Event Type",
     }),
-    eventDate: z.date({
+    reservationDate: z.date({
       required_error: "Please provide the Event Date",
     }),
-    eventTime: z
+    reservationTime: z
       .string({ required_error: "Please provide the Event Time" })
       .regex(
         /^([01]\d|2[0-3]):([0-5]\d)$/,
         "Please enter a valid time (HH:mm)"
       ),
+    period: z.enum(["A.M.", "P.M."]),
     guestCount: z.number({ required_error: "Please provide the Guest Count" }),
     venue: z
       .string({ required_error: "Please provide the Venue" })
@@ -98,6 +101,29 @@ const reservationSchema = z
       .optional(),
   })
   .superRefine((data, ctx) => {
+    const match = data.reservationTime.match(/^(\d+):([0-5]\d)$/);
+    if (match) {
+      const [_, hoursStr, minutesStr] = match;
+      const hours = parseInt(hoursStr);
+      const minutes = parseInt(minutesStr);
+      let hours24 = hours;
+      if (data.period === "P.M." && hours !== 12) {
+        hours24 += 12;
+      } else if (data.period === "A.M." && hours === 12) {
+        hours24 = 0;
+      }
+
+      const totalMinutes = hours24 * 60 + minutes;
+      const isValidTime = totalMinutes >= 8 * 60 && totalMinutes <= 17 * 60;
+      if (!isValidTime) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["reservationTime"],
+          message: "Time must be between 8:00 AM and 5:00 PM",
+        });
+      }
+    }
+
     if (data.selectedPackage) {
       const selectedPackage = cateringPackages.find(
         (pkg) => pkg._id === data.selectedPackage
@@ -127,14 +153,14 @@ const reservationSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["guestCount"],
-        message: `Guest count must be at least 20 persons`,
+        message: `Guest count must be at least 20 people`,
       });
     }
     if (data.guestCount > 200) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["guestCount"],
-        message: `Guest count must be at most 200 persons`,
+        message: `Guest count must be at most 200 people`,
       });
     }
   });
@@ -147,8 +173,9 @@ const defaultValues: ReservationValues = {
   contactNumber: "0",
   reservationType: "event",
   eventType: "Birthday",
-  eventDate: new Date(),
-  eventTime: "",
+  reservationDate: new Date(),
+  reservationTime: "08:00",
+  period: "A.M.",
   guestCount: 0,
   venue: "",
   cateringOptions: "event",
@@ -176,10 +203,58 @@ export function useReservationForm() {
     reValidateMode: "onSubmit",
   });
 
-  const { watch } = reservationForm;
+  const { watch, setValue } = reservationForm;
   const cateringOptions = watch("cateringOptions");
   const selectedPackage = watch("selectedPackage");
   const reservationType = watch("reservationType");
+  const serviceFee = watch("serviceFee");
+  const deliveryFee = watch("deliveryFee");
+  const selectedMenus = watch("selectedMenus");
+  const guestCount = watch("guestCount") || 1;
+
+  //This was formerly from BookNowForm.tsx which calculates the partial/total price of the reservation
+  useEffect(() => {
+    const isPackage = cateringPackages.find(
+      (pkg) => pkg._id === selectedPackage
+    );
+    const calculateTotal = () => {
+      let total = 0;
+
+      // Iterate through each category (Soup, Beverage)
+      Object.values(selectedMenus).forEach((category) => {
+        // Iterate through each menu item in the category
+        Object.values(category).forEach((item) => {
+          total += item.quantity * item.pricePerPax;
+        });
+      });
+      setValue("totalPrice", total + serviceFee + deliveryFee);
+    };
+    if (isPackage) {
+      setValue(
+        "totalPrice",
+        isPackage.pricePerPax * guestCount +
+          isPackage.serviceCharge +
+          deliveryFee
+      );
+    }
+    calculateTotal();
+  }, [selectedMenus, serviceFee, deliveryFee, guestCount]);
+
+  //This was formerly from Package Selection, where if there is a selected package, it will assign the Menu Category but with a blank menu to trigger the zod validation which says "At least one menu item must be selected for each category"
+  useEffect(() => {
+    const pkg = cateringPackages.find((pkg) => pkg._id === selectedPackage);
+    if (pkg) {
+      // Update the form with the blank categories
+      const selectedMenus = Object.fromEntries(
+        pkg?.options.map((opt) => [opt.category, {}])
+      );
+
+      setValue("selectedMenus", selectedMenus);
+      setValue("eventType", pkg?.eventType ?? "No Event");
+      setValue("reservationType", "event");
+    }
+  }, [selectedPackage]);
+
   // Validate a specific step
   const validateStep = async (step: number): Promise<boolean> => {
     if (cateringOptions === "event" && selectedPackage === "" && step !== 0) {
@@ -191,6 +266,18 @@ export function useReservationForm() {
     const fieldsToValidate = getFieldsToValidate(step);
     const isValid = await reservationForm.trigger(fieldsToValidate);
     return isValid;
+  };
+
+  //Find all menus (will transfer to the socket later on)
+  const getMenuItem = (menuId: string) => {
+    const menu = menuItems.find((item) => item._id === menuId);
+    return menu;
+  };
+
+  ///Find all packages (will transfer to socket later on)
+  const getPackageItem = (pkgId: string) => {
+    const pkg = cateringPackages.find((item) => item._id === pkgId);
+    return pkg;
   };
 
   // Submit form function
@@ -223,15 +310,15 @@ export function useReservationForm() {
         if (reservationType === "event") {
           return [
             "eventType",
-            "eventDate",
+            "reservationDate",
+            "reservationTime",
             "guestCount",
-            "venue",
             "serviceType",
             "serviceHours",
           ];
         }
         if (reservationType === "personal") {
-          return ["eventDate"];
+          return ["reservationDate"];
         }
       default:
         return [];
@@ -247,14 +334,7 @@ export function useReservationForm() {
     price: number
   ) => {
     const currentSelection = field.value[category] || {};
-    const updatedMenus: Record<
-      string,
-      {
-        quantity: number;
-        paxSelected: string;
-        pricePerPax: number;
-      }
-    > = { ...currentSelection };
+    const updatedMenus: SelectedMenu = { ...currentSelection };
     const uniqueMenusSelected = Object.keys(updatedMenus).length;
 
     if (checked === true) {
@@ -276,8 +356,8 @@ export function useReservationForm() {
       [category]: updatedMenus,
     };
 
-    // Optional: remove the category entirely if it's empty
-    if (Object.keys(updatedMenus).length === 0) {
+    // // Optional: remove the category entirely if it's empty
+    if (Object.keys(updatedMenus).length === 0 && selectedPackage.length < 0) {
       delete newMenus[category];
     }
 
@@ -361,6 +441,8 @@ export function useReservationForm() {
   return {
     reservationForm,
     validateStep,
+    getMenuItem,
+    getPackageItem,
     onSubmit,
     isSubmitSuccess,
     handleCheckboxChange,

@@ -77,7 +77,7 @@ export function MenuDetailsDialog({
               {menu.spicy && (
                 <Badge
                   variant="outline"
-                  className="bg-red-500 dark:bg-red-600 text-white border-red-500 dark:border-red-600 flex items-center gap-1"
+                  className="bg-red-500 dark:bg-red-600 text-foreground border-red-500 dark:border-red-600 flex items-center gap-1"
                 >
                   <Flame className="h-3 w-3" /> Spicy
                 </Badge>

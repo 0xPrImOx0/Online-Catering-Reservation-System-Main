@@ -439,7 +439,7 @@ export default function Page() {
               <Button
                 type="button"
                 onClick={addSocialLink}
-                className="bg-sidebar-accent-foreground hover:bg-[#218838] text-white"
+                className="bg-sidebar-accent-foreground hover:bg-[#218838] text-foreground"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Link

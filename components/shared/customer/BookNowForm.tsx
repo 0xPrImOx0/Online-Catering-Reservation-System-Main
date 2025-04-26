@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import {
   eventPackageFormSteps,
-  customPackageFormSteps,
   cateringPackages,
 } from "@/lib/customer/packages-metadata";
 import CustomerInformation from "@/components/shared/customer/CustomerInformation";
@@ -16,7 +14,6 @@ import { useReservationForm } from "@/hooks/use-reservation-form";
 import { FormStepType, MultiStepForm } from "../MultiStepForm";
 import { usePathname, useRouter } from "next/navigation";
 import PackageSelection from "./PackageSelection";
-import { menuItems } from "@/lib/menu-lists";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -38,18 +35,18 @@ export default function BookNowForm({ id }: { id: string }) {
     onSubmit,
     showPackageSelection,
     setShowPackageSelection,
+    getMenuItem,
   } = useReservationForm();
-
-  const { watch } = reservationForm;
-
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(3);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [nextPageCount, setNextPageCount] = useState(0);
+  const { watch, setValue } = reservationForm;
 
-  const { setValue } = reservationForm;
-  const deconstructedId = id && id[0];
   const cateringOptions = watch("cateringOptions");
+
+  const deconstructedId = id && id[0];
+
   const dynamicPreviousBtn =
     showPackageSelection && currentStep === 1
       ? "Change Catering Options"
@@ -111,7 +108,7 @@ export default function BookNowForm({ id }: { id: string }) {
   };
 
   useEffect(() => {
-    const isMenu = menuItems.find((pkg) => pkg._id === deconstructedId);
+    const isMenu = getMenuItem(deconstructedId);
     const isPackage = cateringPackages.some(
       (pkg) => pkg._id === deconstructedId
     );
@@ -136,40 +133,7 @@ export default function BookNowForm({ id }: { id: string }) {
         return;
       }
     }
-  }, [id, deconstructedId, setValue]);
-
-  const serviceFee = watch("serviceFee");
-  const selectedPackage = watch("selectedPackage");
-  const deliveryFee = watch("deliveryFee");
-  const selectedMenus = watch("selectedMenus");
-  const guestCount = watch("guestCount") || 1;
-
-  useEffect(() => {
-    const isPackage = cateringPackages.find(
-      (pkg) => pkg._id === selectedPackage
-    );
-    const calculateTotal = () => {
-      let total = 0;
-
-      // Iterate through each category (Soup, Beverage)
-      Object.values(selectedMenus).forEach((category) => {
-        // Iterate through each menu item in the category
-        Object.values(category).forEach((item) => {
-          total += item.quantity * item.pricePerPax;
-        });
-      });
-      setValue("totalPrice", total + serviceFee + deliveryFee);
-    };
-    if (isPackage) {
-      setValue(
-        "totalPrice",
-        isPackage.pricePerPax * guestCount +
-          isPackage.serviceCharge +
-          deliveryFee
-      );
-    }
-    calculateTotal();
-  }, [selectedMenus, serviceFee, deliveryFee, guestCount]);
+  }, [id, deconstructedId]);
 
   const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,
@@ -177,7 +141,7 @@ export default function BookNowForm({ id }: { id: string }) {
       key={"package-selection"}
       showPackageSelection={showPackageSelection}
     />,
-    <CategoryOptions key={"category-options"} validateStep={validateStep} />,
+    <CategoryOptions key={"category-options"} />,
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,
   ];
@@ -218,8 +182,8 @@ export default function BookNowForm({ id }: { id: string }) {
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center justify-center py-4">
-            <div className="rounded-full p-3 bg-green-500">
-              <Check className="size-10 text-white" />
+            <div className="p-3 bg-green-500 rounded-full">
+              <Check className="text-foreground size-10" />
             </div>
           </div>
           <DialogFooter>

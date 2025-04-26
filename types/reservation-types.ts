@@ -10,7 +10,7 @@ export type reservationType = {
     phone: string;
     isRegistered: boolean;
   };
-  eventDate: Date | string | number;
+  reservationDate: Date | string | number;
   totalPrice: number;
   status: string;
   createdDate: Date | null;
@@ -26,11 +26,7 @@ export type reservationType = {
   isUrgent: boolean;
 };
 
-export type PaxArrayType =
-  | "4-6 pax"
-  | "8-10 pax"
-  | "13-15 pax"
-  | "18-20 pax";
+export type PaxArrayType = "4-6 pax" | "8-10 pax" | "13-15 pax" | "18-20 pax";
 
 export const paxArray: PaxArrayType[] = [
   "4-6 pax",
@@ -45,10 +41,9 @@ export interface MenuReservationDetails {
   pricePerPax: number;
 }
 
-export type SelectedMenus = Record<
-  string,
-  Record<string, MenuReservationDetails>
->;
+export type SelectedMenu = Record<string, MenuReservationDetails>;
+
+export type SelectedMenus = Record<string, SelectedMenu>;
 
 export interface ReservationItem {
   fullName: string;
@@ -56,8 +51,9 @@ export interface ReservationItem {
   contactNumber: string;
   reservationType: "event" | "personal";
   eventType: string;
-  eventDate: Date;
-  eventTime: string;
+  reservationDate: Date;
+  reservationTime: string;
+  period: "A.M." | "P.M.";
   guestCount: number;
   venue: string;
   cateringOptions: "event" | "custom";
