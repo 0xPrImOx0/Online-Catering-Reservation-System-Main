@@ -1,15 +1,15 @@
 "use client";
-import clsx from "clsx";
 import { Info, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 export default function PlatedWarning() {
   const [closePlatedWarning, setClosePlatedWarning] = useState(false);
 
   return (
     <div
-      className={clsx(
+      className={cn(
         "relative bg-yellow-50 border-2 border-amber-400 rounded-lg flex flex-col gap-3 p-4",
         {
           hidden: closePlatedWarning,

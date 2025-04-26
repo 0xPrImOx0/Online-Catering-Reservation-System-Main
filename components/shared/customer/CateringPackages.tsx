@@ -51,16 +51,18 @@ export default function CateringPackages({
 
   return (
     <div>
-      <div className="">
-        <h1 className="text-5xl font-bold mb-4 ">
-          <span>{activeTab}</span> Packages
-        </h1>
+      {!isCaterer && (
+        <div className="">
+          <h1 className="text-5xl font-bold mb-4 ">
+            <span>{activeTab}</span> Packages
+          </h1>
 
-        <p className="text-muted-foreground mb-10">
-          Authentic filipino {activeTab} cuisine for your special events and
-          celebrations
-        </p>
-      </div>
+          <p className="text-muted-foreground mb-10">
+            Authentic filipino {activeTab} cuisine for your special events and
+            celebrations
+          </p>
+        </div>
+      )}
 
       <div className="w-full md:w-[80%]">
         <SearchInput
@@ -82,7 +84,9 @@ export default function CateringPackages({
           <TabsTriggerStyle value="Buffet" title="Buffet Packages" />
           <TabsTriggerStyle value="Plated" title="Plated Course" />
           <TabsTriggerStyle value="Event" title="Event Packages" />
-          <TabsTriggerStyle value="Custom" title="Create Your Own Package" />
+          {!isCaterer && (
+            <TabsTriggerStyle value="Custom" title="Create Your Own Package" />
+          )}
         </TabsList>
 
         <TabsContent value="Buffet" className="mt-6">
